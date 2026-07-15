@@ -1,0 +1,158 @@
+[
+  {
+    "slug": "Testors",
+    "name": "Testors",
+    "desc": "Bottled acrylic and enamel paints",
+    "url": "http://www.testors.com/product-catalog/testors-brands/model-master/"
+  },
+  {
+    "slug": "Tamiya",
+    "name": "Tamiya",
+    "desc": "Bottled and spray acrylic and enamel paints",
+    "url": "http://www.tamiya.com"
+  },
+  {
+    "slug": "RLM",
+    "name": "RLM",
+    "desc": "Reichsluftfahrt Ministerium color standard",
+    "url": "https://www.ipmsstockholm.se/home/urbans-color-reference-charts-part-i/urbans-colour-reference-charts-germany/"
+  },
+  {
+    "slug": "Scale75",
+    "name": "Scale 75",
+    "desc": "Bottled acrylic paints",
+    "url": "https://scale75.com"
+  },
+  {
+    "slug": "Revell",
+    "name": "Revell",
+    "desc": "Bottled acrylic and enamel paints",
+    "url": "https://revell.com"
+  },
+  {
+    "slug": "Reaper",
+    "name": "Reaper",
+    "desc": "Bottled acrylic paints for figures",
+    "url": "https://www.reapermini.com/paints"
+  },
+  {
+    "slug": "RAL",
+    "name": "RAL",
+    "desc": "Germany official color standard",
+    "url": "https://www.ral-farben.de"
+  },
+  {
+    "slug": "QB",
+    "name": "Que Bacán!",
+    "desc": "Bottled lacquer paints for modeling",
+    "url": "https://www.facebook.com/quebacanscalemodelingproducts/"
+  },
+  {
+    "slug": "P3",
+    "name": "Formula P3",
+    "desc": "Bottled acrylic paints for figures",
+    "url": "https://privateerpress.com"
+  },
+  {
+    "slug": "MRP",
+    "name": "MRP",
+    "desc": "Bottled paints for airbrush",
+    "url": "http://mrpaint.sk/farby&tracking=5d6e734eccc1b"
+  },
+  {
+    "slug": "MMP",
+    "name": "Monkey MP",
+    "desc": "Bottled lacquer paints for airbrush",
+    "url": "https://monkeymodellingpaints.wordpress.com"
+  },
+  {
+    "slug": "Mission",
+    "name": "Mission Models",
+    "desc": "Bottled acrylic paints",
+    "url": "https://www.missionmodelsus.com/collections/complete-mmp-line?page=2"
+  },
+  {
+    "slug": "LifeColor",
+    "name": "LifeColor",
+    "desc": "Bottled acrylic paints",
+    "url": "https://www.astromodelstore.com/brand/lifecolor"
+  },
+  {
+    "slug": "Italeri",
+    "name": "Italeri",
+    "desc": "Bottled acrylic paints",
+    "url": "https://www.italeri.com/colori"
+  },
+  {
+    "slug": "Humbrol",
+    "name": "Humbrol",
+    "desc": "Bottled acrylic and enamel paints",
+    "url": "https://www.humbrol.com"
+  },
+  {
+    "slug": "Hataka",
+    "name": "Hataka",
+    "desc": "Bottled acrylic and lacquer paints",
+    "url": "http://hataka-hobby.com"
+  },
+  {
+    "slug": "Gunze",
+    "name": "Gunze",
+    "desc": "Bottled lacquer and acrylic paints",
+    "url": "http://www.mr-hobby.com/en"
+  },
+  {
+    "slug": "GSW",
+    "name": "Green Stuff World",
+    "desc": "Bottled acrylic paints",
+    "url": "http://www.greenstuffworld.com/en/118-paints"
+  },
+  {
+    "slug": "FS",
+    "name": "Federal Standard",
+    "desc": "United States color standard",
+    "url": "https://www.federalstandardcolor.com/"
+  },
+  {
+    "slug": "Citadel",
+    "name": "Citadel",
+    "desc": "Bottled acrylic paints",
+    "url": "https://www.games-workshop.com/en-US/Painting-Modelling"
+  },
+  {
+    "slug": "BS",
+    "name": "British Standard",
+    "desc": "United Kingdom color standard",
+    "url": "https://www.bsigroup.com/"
+  },
+  {
+    "slug": "Army",
+    "name": "Army Painter",
+    "desc": "Bottled and spray acrylic and enamel paints",
+    "url": "https://www.thearmypainter.com/"
+  },
+  {
+    "slug": "Ammo",
+    "name": "Ammo Mig",
+    "desc": "Bottled acrylic and enamel paints",
+    "url": "http://www.migjimenez.com/es/15-colores-acrilicos"
+  },
+  {
+    "slug": "Alclad",
+    "name": "Alclad II",
+    "desc": "Bottled enamel metallic paints",
+    "url": "https://alclad2.com/"
+  },
+  {
+    "slug": "Akan",
+    "name": "AKAH",
+    "desc": "Bottled acrylic paints",
+    "url": "https://www.google.com/search?q=akan+paints"
+  },
+  {
+    "slug": "Ak",
+    "name": "Ak Interactive",
+    "desc": "Bottled acrylic paints",
+    "url": "https://ak-interactive.com/product-category/paints/"
+  }
+]

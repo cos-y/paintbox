@@ -3,16 +3,8 @@
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
-	import { Box, ChevronUp, Cylinder, Pipette } from 'lucide-svelte';
-	import {
-		Button,
-		Dropdown,
-		DropdownItem,
-		Accordion,
-		AccordionItem,
-		Checkbox,
-		Toggle
-	} from 'flowbite-svelte';
+	import { Box, ChevronUp, ChevronDown, Cylinder, Pipette, Check, Plus } from 'lucide-svelte';
+	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import {
 		listPaints,
 		groupPaints,
@@ -24,6 +16,7 @@
 		type SearchResult
 	} from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
+	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { clamp } from '$lib/utils';
 
 	let oklch: Oklch = $state({ mode: 'oklch', l: 0, c: 0, h: 0 });
@@ -75,6 +68,8 @@
 
 	let selectedSeries: Set<string> = $state(new Set());
 	let ownedOnly = $state(false);
+	let ownedDropdownOpen = $state(false);
+	let activeFilterBrand: string | null = $state(null);
 	// TODO: 混合搜索(max_mix>0)在候选集较大时会长时间阻塞主线程，
 	// 在wasm端做出让步（分批/worker）之前先固定为0，禁止混色查询。
 	const maxMix = 0;
@@ -89,6 +84,9 @@
 
 	const isBrandFullySelected = (g: BrandGroup) =>
 		g.series.every((s) => selectedSeries.has(serieKey(g.brand, s.serie)));
+
+	const selectedCountInBrand = (g: BrandGroup) =>
+		g.series.filter((s) => selectedSeries.has(serieKey(g.brand, s.serie))).length;
 
 	const toggleBrandAll = (g: BrandGroup) => {
 		const on = !isBrandFullySelected(g);
@@ -182,65 +180,174 @@
 		{@render picker()}
 	</div>
 
-	<div class="mt-6 space-y-3 border-y border-gray-200 py-4 dark:border-gray-700">
-		<div class="flex items-center justify-between">
-			<h3 class="text-sm font-semibold">过滤器</h3>
+	<div class="mt-4 flex flex-wrap items-center gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
+		<span class="text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
+			过滤器 · {results.length} 个结果
+		</span>
+
+		<Button size="xs" color="alternative" class="gap-1">
+			按系列筛选{selectedSeries.size > 0 ? ` (${selectedSeries.size})` : ''}
+			<ChevronDown class="h-3 w-3" />
+		</Button>
+		<Dropdown class="w-136 p-0" placement="bottom-start">
+			<div class="flex h-96">
+				<div
+					class="w-40 shrink-0 overflow-y-auto border-r border-gray-200 py-1 dark:border-gray-700"
+				>
+					{#each groups as g (g.brand)}
+						{@const selectedCount = selectedCountInBrand(g)}
+						<button
+							type="button"
+							onmouseenter={() => (activeFilterBrand = g.brand)}
+							onclick={() => (activeFilterBrand = g.brand)}
+							class="flex w-full items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
+							g.brand
+								? 'bg-gray-100 dark:bg-gray-600'
+								: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
+						>
+							<img
+								src="/brands/{g.brand}.png"
+								alt=""
+								class="h-7 w-7 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
+							/>
+							<span class="min-w-0 flex-1 truncate">{getBrandMeta(g.brand)?.name ?? g.brand}</span>
+							{#if selectedCount > 0}
+								<span
+									class="flex h-4 min-w-4 shrink-0 items-center justify-center rounded-full bg-green-500 px-1 text-[10px] font-medium text-white"
+								>
+									{selectedCount}
+								</span>
+							{/if}
+						</button>
+					{/each}
+				</div>
+				<div class="flex-1 overflow-y-auto p-3">
+					{#if activeFilterBrand}
+						{@const g = groups.find((x) => x.brand === activeFilterBrand)}
+						{#if g}
+							<div class="mb-2 flex items-center justify-between">
+								<span class="text-xs text-gray-400">{g.series.length} 系列</span>
+								<button
+									type="button"
+									class="text-primary-600 dark:text-primary-400 text-xs hover:underline"
+									onclick={() => toggleBrandAll(g)}
+								>
+									{isBrandFullySelected(g) ? '取消全选' : '全选'}
+								</button>
+							</div>
+							<div class="grid grid-cols-4 gap-1.5">
+								{#each g.series as s (s.serie)}
+									{@const serieMeta = getSerieMeta(g.brand, s.serie)}
+									{@const selected = selectedSeries.has(serieKey(g.brand, s.serie))}
+									<div
+										role="button"
+										tabindex="0"
+										onclick={() => toggleSerie(g.brand, s.serie)}
+										onkeydown={(e) => e.key === 'Enter' && toggleSerie(g.brand, s.serie)}
+										title={serieMeta?.desc}
+										class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md bg-gray-100 shadow-sm transition-transform hover:scale-105 dark:bg-gray-800 {selected
+											? 'ring-[3px] ring-green-500'
+											: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
+									>
+										<img
+											src={serieThumb(g.brand, s.serie)}
+											alt=""
+											class="h-full w-full object-cover"
+											onerror={(e) => {
+												if (e.currentTarget instanceof HTMLElement) {
+													e.currentTarget.style.visibility = 'hidden';
+												}
+											}}
+										/>
+										<button
+											type="button"
+											aria-label={selected ? '取消选择系列' : '选择系列'}
+											onclick={(e) => {
+												e.stopPropagation();
+												toggleSerie(g.brand, s.serie);
+												e.currentTarget.blur();
+											}}
+											class="absolute top-0 right-0 h-6 w-6 scale-75 text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {selected
+												? 'scale-100 opacity-100'
+												: ''}"
+										>
+											<span
+												class="absolute inset-0 [clip-path:polygon(100%_0,0_0,100%_100%)] {selected
+													? 'bg-green-500'
+													: 'bg-black/60 hover:bg-black/75'}"
+											></span>
+											<span class="absolute top-0.5 right-0.5">
+												{#if selected}
+													<Check class="h-2.5 w-2.5" />
+												{:else}
+													<Plus class="h-2.5 w-2.5" />
+												{/if}
+											</span>
+										</button>
+										<div
+											class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
+										>
+											<div class="truncate text-[10px] leading-tight font-semibold text-white">
+												{serieMeta?.name ?? s.serie}
+											</div>
+											<div class="truncate text-[9px] leading-tight text-white/75">
+												{s.paints.length} 型号
+											</div>
+										</div>
+									</div>
+								{/each}
+							</div>
+						{/if}
+					{:else}
+						<div class="flex h-full items-center justify-center text-center text-xs text-gray-400">
+							将鼠标悬停在品牌上<br />查看系列
+						</div>
+					{/if}
+				</div>
+			</div>
+		</Dropdown>
+
+		<Button size="xs" color="alternative" class="gap-1">
+			{ownedOnly ? '仅我拥有的' : '库存：全部'}
+			<ChevronDown class="h-3 w-3" />
+		</Button>
+		<Dropdown placement="bottom-start" class="w-32 text-xs" bind:isOpen={ownedDropdownOpen}>
+			<DropdownItem
+				class={!ownedOnly ? 'bg-gray-100 dark:bg-gray-600' : ''}
+				onclick={() => {
+					ownedOnly = false;
+					ownedDropdownOpen = false;
+				}}
+			>
+				全部
+			</DropdownItem>
+			<DropdownItem
+				class={ownedOnly ? 'bg-gray-100 dark:bg-gray-600' : ''}
+				onclick={() => {
+					ownedOnly = true;
+					ownedDropdownOpen = false;
+				}}
+			>
+				仅我拥有的
+			</DropdownItem>
+		</Dropdown>
+
+		{#if selectedSeries.size > 0 || ownedOnly}
 			<button
 				type="button"
-				class="text-primary-600 dark:text-primary-400 text-xs hover:underline"
+				class="text-primary-600 dark:text-primary-400 text-xs whitespace-nowrap hover:underline"
 				onclick={clearFilters}
 			>
 				清除筛选
 			</button>
-		</div>
-
-		<div class="flex flex-wrap items-center gap-6">
-			<Toggle bind:checked={ownedOnly}>仅查询我拥有的油漆</Toggle>
-			<span class="text-xs text-gray-400">
-				混色查询暂时禁用（性能优化中），当前仅返回单一油漆的匹配结果
-			</span>
-		</div>
-
-		<div>
-			<div class="mb-1 text-xs text-gray-500 dark:text-gray-400">
-				按系列筛选（不选则不限制）{selectedSeries.size > 0 ? `· 已选 ${selectedSeries.size}` : ''}
-			</div>
-			<Accordion class="max-h-64 overflow-y-auto">
-				{#each groups as g (g.brand)}
-					<AccordionItem>
-						{#snippet header()}
-							<div class="flex w-full items-center justify-between pr-2">
-								<span class="uppercase">{g.brand}</span>
-								<span class="text-xs text-gray-400">{g.series.length} 系列</span>
-							</div>
-						{/snippet}
-						<div class="mb-2 flex justify-end">
-							<button
-								type="button"
-								class="text-primary-600 dark:text-primary-400 text-xs hover:underline"
-								onclick={() => toggleBrandAll(g)}
-							>
-								{isBrandFullySelected(g) ? '取消全选' : '全选'}
-							</button>
-						</div>
-						<div class="grid grid-cols-2 gap-1 sm:grid-cols-3">
-							{#each g.series as s (s.serie)}
-								<Checkbox
-									checked={selectedSeries.has(serieKey(g.brand, s.serie))}
-									onchange={() => toggleSerie(g.brand, s.serie)}
-								>
-									{s.serie} <span class="text-gray-400">({s.paints.length})</span>
-								</Checkbox>
-							{/each}
-						</div>
-					</AccordionItem>
-				{/each}
-			</Accordion>
-		</div>
+		{/if}
 	</div>
 
 	<div class="mt-4 space-y-2 pb-4">
-		<h3 class="text-sm font-semibold">查询结果</h3>
+		<div class="flex items-center justify-between">
+			<h3 class="text-sm font-semibold">查询结果</h3>
+			<span class="text-xs text-gray-400">混色查询暂时禁用（性能优化中）</span>
+		</div>
 		{#each results as r, i (i)}
 			<div
 				class="flex items-center gap-3 rounded-lg border border-gray-200 p-3 dark:border-gray-700"

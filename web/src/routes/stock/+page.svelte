@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { ChevronLeft } from 'lucide-svelte';
-	import { Card, Button } from 'flowbite-svelte';
+	import { ChevronLeft, Check, Plus } from 'lucide-svelte';
+	import { Card, Button, Badge } from 'flowbite-svelte';
 	import {
 		listPaints,
 		groupPaints,
@@ -10,9 +10,11 @@
 		floatRgbToCss,
 		searchNearest,
 		type PaintInfo,
-		type BrandGroup
+		type BrandGroup,
+		type SerieGroup
 	} from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
+	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 
 	const groups: BrandGroup[] = groupPaints(listPaints());
 
@@ -28,6 +30,12 @@
 	);
 
 	const totalModels = (g: BrandGroup) => g.series.reduce((n, s) => n + s.paints.length, 0);
+
+	const ownedCountInBrand = (g: BrandGroup) =>
+		g.series.reduce((n, s) => n + ownedCountInSerie(s), 0);
+
+	const ownedCountInSerie = (s: SerieGroup) =>
+		s.paints.reduce((n, p) => n + (stock.has(paintId(p)) ? 1 : 0), 0);
 
 	const selectBrand = (brand: string) => {
 		selectedBrand = brand;
@@ -96,11 +104,11 @@
 				<button
 					type="button"
 					onclick={goToLevel1}
-					class="uppercase hover:underline {level === 1
+					class="hover:underline {level === 1
 						? 'font-semibold text-gray-900 dark:text-white'
 						: 'text-gray-500 dark:text-gray-400'}"
 				>
-					{selectedBrand}
+					{getBrandMeta(selectedBrand)?.name ?? selectedBrand}
 				</button>
 			{/if}
 			{#if selectedPaint}
@@ -123,17 +131,29 @@
 							role="button"
 							tabindex={0}
 							size="sm"
-							class="cursor-pointer p-3 hover:bg-gray-50 dark:hover:bg-gray-700"
+							class="relative cursor-pointer p-3 hover:bg-gray-50 dark:hover:bg-gray-700"
 						>
-							<div class="flex items-center gap-3">
-								<div
-									class="bg-primary-600 flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-white uppercase"
+							{#if ownedCountInBrand(g) > 0}
+								<Badge
+									color="green"
+									class="absolute top-2 right-2 bg-green-500 text-white dark:bg-green-500 dark:text-white"
 								>
-									{g.brand.slice(0, 2)}
-								</div>
+									{ownedCountInBrand(g)}
+								</Badge>
+							{/if}
+							{@const meta = getBrandMeta(g.brand)}
+							<div class="flex items-center gap-3">
+								<img
+									src="/brands/{g.brand}.png"
+									alt={g.brand}
+									class="h-10 w-10 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
+								/>
 								<div class="min-w-0">
-									<div class="truncate font-semibold uppercase">{g.brand}</div>
-									<div class="text-xs text-gray-500 dark:text-gray-400">
+									<div class="truncate font-semibold">{meta?.name ?? g.brand}</div>
+									{#if meta?.desc}
+										<div class="truncate text-xs text-gray-500 dark:text-gray-400">{meta.desc}</div>
+									{/if}
+									<div class="text-[11px] text-gray-400">
 										{g.series.length} 系列 · {totalModels(g)} 型号
 									</div>
 								</div>
@@ -146,50 +166,103 @@
 			{#key `${level}-${selectedBrand}`}
 				<div class="flex h-full" in:fly={{ x: 24, duration: 150 }}>
 					<div
-						class="w-32 shrink-0 overflow-y-auto border-r border-gray-200 sm:w-44 dark:border-gray-700"
+						class="w-40 shrink-0 overflow-y-auto border-r border-gray-200 sm:w-56 dark:border-gray-700"
 					>
 						{#each currentBrandGroup?.series ?? [] as s (s.serie)}
+							{@const serieMeta = getSerieMeta(selectedBrand ?? '', s.serie)}
 							<button
 								type="button"
 								onclick={() => selectSerie(s.serie)}
-								class="w-full px-3 py-2 text-left text-sm {s.serie === selectedSerie
+								title={serieMeta?.desc}
+								class="flex w-full items-center gap-2 px-2 py-1.5 text-left text-xs {s.serie ===
+								selectedSerie
 									? 'bg-primary-50 text-primary-700 dark:bg-gray-700 dark:text-white font-medium'
 									: 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'}"
 							>
-								{s.serie}
-								<span class="text-xs text-gray-400">({s.paints.length})</span>
+								<img
+									src={serieThumb(selectedBrand ?? '', s.serie)}
+									alt=""
+									class="h-7 w-7 shrink-0 rounded bg-white object-cover ring-1 ring-black/10"
+									onerror={(e) => {
+									if (e.currentTarget instanceof HTMLElement) {
+										e.currentTarget.style.visibility = 'hidden';
+									}
+								}}
+								/>
+								<span class="min-w-0 flex-1">
+									<span class="block truncate">{serieMeta?.name ?? s.serie}</span>
+									<span class="block truncate text-[10px] text-gray-400"
+										>{s.serie} · {s.paints.length}型号</span
+									>
+								</span>
+								{#if ownedCountInSerie(s) > 0}
+									<Badge color="green" class="bg-green-500 text-white dark:bg-green-500 dark:text-white">
+										{ownedCountInSerie(s)}
+									</Badge>
+								{/if}
 							</button>
 						{/each}
 					</div>
 					<div
-						class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-2 overflow-y-auto p-2"
+						class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
 					>
 						{#each currentSerieGroup?.paints ?? [] as paint (paint.code)}
-							<button
-								type="button"
+							{@const owned = stock.has(paintId(paint))}
+							<div
+								role="button"
+								tabindex="0"
 								onclick={() => selectPaint(paint)}
-								class="group relative flex flex-col items-center rounded-lg p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800"
+								onkeydown={(e) => e.key === 'Enter' && selectPaint(paint)}
+								class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-sm transition-transform hover:scale-105 {owned
+									? 'ring-[3px] ring-green-500'
+									: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
+								style="background-color: {rgbToHex(paint.rgb)}"
 								title={paint.desc}
 							>
-								{#if stock.has(paintId(paint))}
+								<button
+									type="button"
+									aria-label={owned ? '移出油漆库' : '加入油漆库'}
+									onclick={(e) => {
+										e.stopPropagation();
+										stock.toggle(paintId(paint));
+										e.currentTarget.blur();
+									}}
+									class="absolute top-0 right-0 h-6 w-6 scale-75 text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {owned
+										? 'scale-100 opacity-100'
+										: ''}"
+								>
 									<span
-										class="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-gray-900"
+										class="absolute inset-0 [clip-path:polygon(100%_0,0_0,100%_100%)] {owned
+											? 'bg-green-500'
+											: 'bg-black/60 hover:bg-black/75'}"
 									></span>
-								{/if}
+									<span class="absolute top-0.5 right-0.5">
+										{#if owned}
+											<Check class="h-2.5 w-2.5" />
+										{:else}
+											<Plus class="h-2.5 w-2.5" />
+										{/if}
+									</span>
+								</button>
 								<div
-									class="aspect-square w-full rounded-md shadow-inner"
-									style="background-color: {rgbToHex(paint.rgb)}"
-								></div>
-								<div class="mt-1 w-full truncate text-center text-xs font-medium">
-									{paint.code}
+									class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
+								>
+									<div class="truncate text-[10px] leading-tight font-semibold text-white">
+										{paint.code}
+									</div>
+									<div class="truncate text-[9px] leading-tight text-white/75">
+										{paint.desc}
+									</div>
 								</div>
-							</button>
+							</div>
 						{/each}
 					</div>
 				</div>
 			{/key}
 		{:else if level === 2 && selectedPaint}
 			{@const paint = selectedPaint}
+			{@const brandMeta = getBrandMeta(paint.brand)}
+			{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
 			{#key `${level}-${paint.brand}-${paint.code}`}
 				<div class="h-full overflow-y-auto p-4" in:fly={{ x: 24, duration: 150 }}>
 					<div class="mx-auto max-w-xl space-y-4">
@@ -201,9 +274,19 @@
 						<div>
 							<div class="text-2xl font-bold">{paint.code}</div>
 							<div class="text-gray-600 dark:text-gray-300">{paint.desc}</div>
-							<div class="mt-1 text-xs text-gray-400 uppercase">
-								{paint.brand} · {paint.serie}
+							<div class="mt-1 flex items-center gap-2">
+								<img
+									src="/brands/{paint.brand}.png"
+									alt=""
+									class="h-4 w-4 rounded-full bg-white object-cover ring-1 ring-black/10"
+								/>
+								<span class="text-xs text-gray-400">
+									{brandMeta?.name ?? paint.brand} · {serieMeta?.name ?? paint.serie}
+								</span>
 							</div>
+							{#if serieMeta?.desc}
+								<div class="mt-0.5 text-xs text-gray-400">{serieMeta.desc}</div>
+							{/if}
 						</div>
 
 						<div class="flex items-center gap-3">
