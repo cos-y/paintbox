@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Copy } from 'lucide-svelte';
 	import { tick } from 'svelte';
+	import { Tooltip } from 'flowbite-svelte';
 
 	interface Props {
 		re: string;
@@ -59,17 +60,18 @@
 		bind:value={localText}
 		oninput={handleInput}
 	/>
-	<div
-		role="button"
-		tabindex="-1"
-		class="
-			copy-code flex font-mono
-			dx-tooltip dx-tooltip-bottom before:text-xs {isCopied ? 'before:text-green-300' : ''}"
-		data-tip={isCopied ? 'copied!' : 'copy to clipboard'}
-		onmouseenter={handleMouseEnter}
-	>
-		<button aria-label="copy code" type="button" class="flex-1" onclick={handleCopy}>
+	<div class="copy-code flex font-mono">
+		<button
+			aria-label="copy code"
+			type="button"
+			class="flex-1"
+			onclick={handleCopy}
+			onmouseenter={handleMouseEnter}
+		>
 			<Copy size="1rem" color="#666" />
 		</button>
+		<Tooltip placement="bottom" class="text-xs {isCopied ? 'text-green-300' : ''}"
+			>{isCopied ? 'copied!' : 'copy to clipboard'}</Tooltip
+		>
 	</div>
 </div>

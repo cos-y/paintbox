@@ -3,7 +3,8 @@
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
-	import { Box, ChevronUp, Cylinder, icons, Pipette } from 'lucide-svelte';
+	import { Box, ChevronUp, Cylinder, Pipette } from 'lucide-svelte';
+	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 
 	let oklch: Oklch = $state({ mode: 'oklch', l: 0, c: 0, h: 0 });
 
@@ -19,11 +20,11 @@
 		{ name: 'RGB', icon: Box, picker: Rgb }
 	];
 
+	let modelDropdownOpen = $state(false);
+
 	const handleSelectModel = (newModel: number) => {
 		model = newModel;
-		if (document.activeElement instanceof HTMLElement) {
-			document.activeElement.blur();
-		}
+		modelDropdownOpen = false;
 	};
 
 	const eyedrop = () => {
@@ -58,40 +59,29 @@
 
 		<div>
 			<div class="color-swatch relative">
-				<div class="dx-tooltip dx-tooltip-bottom flex right-0">
+				<div class="flex right-0">
 					<button type="button" class="flex-1" onclick={eyedrop}>
 						<Pipette size="1rem" color="#666" />
 					</button>
 				</div>
 			</div>
 
-			<div class="dx-dropdown dx-dropdown-top">
-				<button
-					type="button"
-					tabindex="0"
-					class="w-24 dx-btn dx-btn-sm"
-					// border-base-content/10 outline-base-content inline-flex h-10 cursor-pointer rounded-4xl
-					// border-1 outline-offset-2 focus:outline-2 text-sm
-					// text-primary-content bg-primary
-					// w-24 place-items-center
-					aria-label="Choose --color-base-content: oklch(83.768% 0.001 17.911)"
-					title="--color-base-content: oklch(83.768% 0.001 17.911)"
-				>
+			<div>
+				<Button size="xs" class="w-24" aria-label="Choose color model">
 					<Icon class="size-4" />
 					{name}
 					<ChevronUp size="12" />
-				</button>
-				<ul class="dx-dropdown-content dx-menu rounded-box bg-base-200 w-30 text-xs">
+				</Button>
+				<Dropdown placement="top" class="w-30 text-xs" bind:isOpen={modelDropdownOpen}>
 					{#each models as { name, icon: Icon }, i}
-						<li>
-							<button
-								type="button"
-								class={i === model ? 'menu-active' : ''}
-								onclick={() => handleSelectModel(i)}><Icon class="size-4" />{name}</button
-							>
-						</li>
+						<DropdownItem
+							class={i === model ? 'bg-gray-100 dark:bg-gray-600' : ''}
+							onclick={() => handleSelectModel(i)}
+						>
+							<span class="flex items-center gap-1"><Icon class="size-4" />{name}</span>
+						</DropdownItem>
 					{/each}
-				</ul>
+				</Dropdown>
 			</div>
 		</div>
 

@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 wasm-pkg
 static/colors.csv
+
+shot*.cjs
+shot*.png

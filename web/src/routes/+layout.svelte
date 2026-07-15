@@ -2,6 +2,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { Boxes, Search, Palette } from 'lucide-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 
 	// import { navigating } from '$app/state';
 	import { search } from '../wasm-pkg/paintbox_wasm';
@@ -37,14 +38,17 @@
 <!-- TODO: -->
 
 <div class="flex h-screen w-screen overflow-hidden">
-	<aside class="w-16 bg-base-300 shrink-0 h-full overflow-y-auto">
-		<ul class="dx-menu w-full grow">
-			<!-- bg-base-200 rounded-box -->
+	<aside class="w-16 bg-gray-50 dark:bg-gray-800 shrink-0 h-full overflow-y-auto">
+		<ul class="w-full grow py-2 space-y-1">
 			{#each navs as { title, route, svg: Icon }}
 				<li>
-					<a class="dx-tooltip dx-tooltip-right block w-full" href={route} data-tip={title}>
-						<Icon class="mx-auto" />
+					<a
+						class="flex w-full justify-center rounded-lg p-3 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+						href={route}
+					>
+						<Icon />
 					</a>
+					<Tooltip placement="right">{title}</Tooltip>
 				</li>
 			{/each}
 		</ul>
