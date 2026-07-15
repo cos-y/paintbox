@@ -19,7 +19,9 @@
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
+		"@types/culori": "^4.0.1",
 		"@types/node": "^24",
+		"daisyui": "^5.6.18",
 		"eslint": "^10.4.1",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.19.0",
@@ -33,5 +35,9 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.60.1",
 		"vite": "^8.0.16"
+	},
+	"dependencies": {
+		"culori": "^4.0.2",
+		"lucide-svelte": "^1.0.1"
 	}
 }
