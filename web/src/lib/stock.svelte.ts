@@ -1,37 +1,36 @@
 const STORAGE_KEY = 'paintbox:stock';
 
-const loadFromStorage = (): Record<string, number> => {
-	if (typeof localStorage === 'undefined') return {};
+const loadFromStorage = (): string[] => {
+	if (typeof localStorage === 'undefined') return [];
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? JSON.parse(raw) : {};
+		return raw ? JSON.parse(raw) : [];
 	} catch {
-		return {};
+		return [];
 	}
 };
 
 class StockStore {
-	quantities = $state<Record<string, number>>(loadFromStorage());
+	owned = $state<Set<string>>(new Set(loadFromStorage()));
 
-	get(id: string): number {
-		return this.quantities[id] ?? 0;
+	has(id: string): boolean {
+		return this.owned.has(id);
 	}
 
-	set(id: string, qty: number) {
-		if (qty <= 0) {
-			delete this.quantities[id];
-		} else {
-			this.quantities[id] = qty;
-		}
+	set(id: string, owned: boolean) {
+		const next = new Set(this.owned);
+		if (owned) next.add(id);
+		else next.delete(id);
+		this.owned = next;
 		this.persist();
 	}
 
-	add(id: string, delta: number) {
-		this.set(id, this.get(id) + delta);
+	toggle(id: string) {
+		this.set(id, !this.has(id));
 	}
 
 	private persist() {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(this.quantities));
+		localStorage.setItem(STORAGE_KEY, JSON.stringify([...this.owned]));
 	}
 }
 

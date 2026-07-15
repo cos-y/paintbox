@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { ChevronLeft } from 'lucide-svelte';
-	import { Card, Button, ButtonGroup } from 'flowbite-svelte';
+	import { Card, Button } from 'flowbite-svelte';
 	import {
 		listPaints,
 		groupPaints,
@@ -171,7 +171,7 @@
 								class="group relative flex flex-col items-center rounded-lg p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800"
 								title={paint.desc}
 							>
-								{#if stock.get(paintId(paint)) > 0}
+								{#if stock.has(paintId(paint))}
 									<span
 										class="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-gray-900"
 									></span>
@@ -208,13 +208,13 @@
 
 						<div class="flex items-center gap-3">
 							<span class="text-sm text-gray-500 dark:text-gray-400">库存</span>
-							<ButtonGroup>
-								<Button size="sm" onclick={() => stock.add(paintId(paint), -1)}>-</Button>
-								<Button size="sm" color="light" class="pointer-events-none w-12 justify-center">
-									{stock.get(paintId(paint))}
-								</Button>
-								<Button size="sm" onclick={() => stock.add(paintId(paint), 1)}>+</Button>
-							</ButtonGroup>
+							<Button
+								size="sm"
+								color={stock.has(paintId(paint)) ? 'red' : 'primary'}
+								onclick={() => stock.toggle(paintId(paint))}
+							>
+								{stock.has(paintId(paint)) ? '移出油漆库' : '加入油漆库'}
+							</Button>
 						</div>
 
 						<div>

@@ -1,4 +1,4 @@
-use std::{cmp::Reverse, num::NonZero};
+use std::{cmp::Reverse, collections::HashSet, num::NonZero};
 
 use empfindung::cie00;
 use fixedbitset::FixedBitSet;
@@ -21,6 +21,33 @@ pub struct PaintInfo {
     pub desc: String,
     pub serie: String,
     pub serie_code: String,
+    pub rgb: u32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct SerieKey {
+    pub brand: String,
+    pub serie: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Default)]
+pub struct FilterOptions {
+    /// 允许的系列（brand+serie）集合；为空表示不限制
+    #[serde(default)]
+    pub series: Vec<SerieKey>,
+    /// 允许的油漆下标（对应 list() 返回的 index）集合；为None表示不限制（不按库存过滤）
+    #[serde(default)]
+    pub owned: Option<Vec<usize>>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct PaintEntry<'a> {
+    pub index: usize,
+    pub brand: &'a str,
+    pub code: &'a str,
+    pub desc: &'a str,
+    pub serie: &'a str,
+    pub serie_code: &'a str,
     pub rgb: u32,
 }
 
@@ -122,8 +149,20 @@ impl Searcher {
         })
     }
 
-    pub fn list(&self) -> &[PaintInfo] {
-        &self.majors
+    pub fn list(&self) -> Vec<PaintEntry<'_>> {
+        self.majors
+            .iter()
+            .enumerate()
+            .map(|(index, p)| PaintEntry {
+                index,
+                brand: &p.brand,
+                code: &p.code,
+                desc: &p.desc,
+                serie: &p.serie,
+                serie_code: &p.serie_code,
+                rgb: p.rgb,
+            })
+            .collect()
     }
 
     pub fn search(
@@ -131,10 +170,29 @@ impl Searcher {
         rgb: u32,
         max_mix: u32,
         limit: usize,
+        filter: &FilterOptions,
     ) -> Result<Vec<SearchResult>, JsError> {
+        let series_filter: Option<HashSet<(&str, &str)>> = if filter.series.is_empty() {
+            None
+        } else {
+            Some(
+                filter
+                    .series
+                    .iter()
+                    .map(|s| (s.brand.as_str(), s.serie.as_str()))
+                    .collect(),
+            )
+        };
+        let owned_filter: Option<HashSet<usize>> =
+            filter.owned.as_ref().map(|ids| ids.iter().copied().collect());
+
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
-            if maj.brand == "gunze" && maj.serie == "C" {
+            let serie_ok = series_filter
+                .as_ref()
+                .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())));
+            let owned_ok = owned_filter.as_ref().is_none_or(|s| s.contains(&i));
+            if serie_ok && owned_ok {
                 unsafe {
                     candidates.insert_unchecked(i);
                 }

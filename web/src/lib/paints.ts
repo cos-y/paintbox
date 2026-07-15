@@ -1,6 +1,7 @@
 import { list_paints, search } from '../wasm-pkg/paintbox_wasm';
 
 export interface PaintInfo {
+	index: number;
 	brand: string;
 	code: string;
 	desc: string;
@@ -34,8 +35,23 @@ export interface SearchResult {
 	portions: SearchResultPortion[];
 }
 
-export const searchNearest = (rgb: number, maxMix: number, limit: number): SearchResult[] => {
-	return (search(rgb, maxMix, limit) as SearchResult[]) ?? [];
+export interface SerieKey {
+	brand: string;
+	serie: string;
+}
+
+export interface FilterOptions {
+	series: SerieKey[];
+	owned?: number[];
+}
+
+export const searchNearest = (
+	rgb: number,
+	maxMix: number,
+	limit: number,
+	filter: FilterOptions = { series: [] }
+): SearchResult[] => {
+	return (search(rgb, maxMix, limit, filter) as SearchResult[]) ?? [];
 };
 
 export interface SerieGroup {
