@@ -122,6 +122,10 @@ impl Searcher {
         })
     }
 
+    pub fn list(&self) -> &[PaintInfo] {
+        &self.majors
+    }
+
     pub fn search(
         &self,
         rgb: u32,

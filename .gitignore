@@ -1,3 +1,5 @@
 *.smali
+
+.claude
 CLAUDE.md
 demo.png
