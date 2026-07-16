@@ -1,0 +1,15 @@
+{
+  "name": "paintbox-wasm",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "paintbox_wasm_bg.wasm",
+    "paintbox_wasm.js",
+    "paintbox_wasm.d.ts"
+  ],
+  "main": "paintbox_wasm.js",
+  "types": "paintbox_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
