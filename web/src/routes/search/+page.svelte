@@ -3,7 +3,7 @@
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
-	import { Box, ChevronUp, ChevronDown, Cylinder, Pipette, Check, Plus } from 'lucide-svelte';
+	import { Box, ChevronUp, ChevronDown, Cylinder, Pipette, Check, Plus, Filter } from 'lucide-svelte';
 	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import {
 		listPaints,
@@ -189,18 +189,21 @@
 
 			<div>
 				<div class="color-swatch relative">
-					<div class="flex right-0">
-						<button type="button" class="flex-1" onclick={eyedrop}>
-							<Pipette size="1rem" color="#666" />
-						</button>
-					</div>
+					<button
+						type="button"
+						aria-label="取色器"
+						class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+						onclick={eyedrop}
+					>
+						<Pipette size="1rem" />
+					</button>
 				</div>
 
 				<div>
-					<Button size="xs" class="w-24" aria-label="Choose color model">
+					<Button size="xs" color="alternative" class="w-full" aria-label="Choose color model">
 						<Icon class="size-4" />
 						{name}
-						<ChevronUp size="12" />
+						<ChevronUp class="ms-auto h-3 w-3" />
 					</Button>
 					<Dropdown placement="top" class="w-30 text-xs" bind:isOpen={modelDropdownOpen}>
 						{#each models as { name, icon: Icon }, i}
@@ -224,8 +227,11 @@
 	<div
 		class="mt-4 flex flex-wrap items-center gap-2 border-y border-gray-200 py-2 dark:border-gray-700"
 	>
-		<span class="text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
-			过滤器 · {results.length} 个结果
+		<span
+			class="flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
+		>
+			<Filter class="h-3.5 w-3.5" />
+			{results.length} 个结果
 		</span>
 
 		<Button size="xs" color="alternative" class="gap-1">

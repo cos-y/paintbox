@@ -68,7 +68,7 @@
 			onclick={handleCopy}
 			onmouseenter={handleMouseEnter}
 		>
-			<Copy size="1rem" color="#666" />
+			<Copy size="1rem" />
 		</button>
 		<Tooltip placement="bottom" class="text-xs {isCopied ? 'text-green-300' : ''}"
 			>{isCopied ? 'copied!' : 'copy to clipboard'}</Tooltip
