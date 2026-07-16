@@ -1,4 +1,4 @@
-import { list_paints, search } from '../wasm-pkg/paintbox_wasm';
+import { list_paints, search, color_diff, find_direct_equivalences } from '../wasm-pkg/paintbox_wasm';
 
 export interface PaintInfo {
 	index: number;
@@ -10,7 +10,7 @@ export interface PaintInfo {
 	rgb: number;
 }
 
-export const paintId = (paint: PaintInfo) => `${paint.brand}:${paint.code}`;
+export const paintId = (paint: { brand: string; code: string }) => `${paint.brand}:${paint.code}`;
 
 export const rgbToHex = (rgb: number) => `#${rgb.toString(16).padStart(6, '0')}`;
 
@@ -44,6 +44,13 @@ export interface FilterOptions {
 	series: SerieKey[];
 	owned?: number[];
 }
+
+export const colorDiff = (rgbA: number, rgbB: number): number => color_diff(rgbA, rgbB);
+
+// 直接等价：数据来源里的品牌对照表（例如Gunze H9 <-> Gunze C9），名字/型号对应但颜色不一定相近；
+// 索引在wasm init时就建好了，这里只是O(1)查询
+export const findDirectEquivalences = (index: number): PaintInfo[] =>
+	(find_direct_equivalences(index) as PaintInfo[]) ?? [];
 
 export const searchNearest = (
 	rgb: number,

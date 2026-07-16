@@ -16,6 +16,9 @@ type Latent = [f32; 7];
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PaintInfo {
+    /// 在majors/list()里的下标；从csv按行位置解析时是跳过的（不占列），load()里按顺序补上
+    #[serde(skip_deserializing, default)]
+    pub index: usize,
     pub brand: String,
     pub code: String,
     pub desc: String,
@@ -40,22 +43,13 @@ pub struct FilterOptions {
     pub owned: Option<Vec<usize>>,
 }
 
-#[derive(Debug, Serialize)]
-pub struct PaintEntry<'a> {
-    pub index: usize,
-    pub brand: &'a str,
-    pub code: &'a str,
-    pub desc: &'a str,
-    pub serie: &'a str,
-    pub serie_code: &'a str,
-    pub rgb: u32,
-}
-
 pub struct Searcher {
     majors: Vec<PaintInfo>,
     labs: Vec<Lab>,
     latents: Vec<Latent>,
     kdtree: ImmutableKdTree<f32, 3>,
+    /// 每个油漆型号的直接对应关系（例如Gunze H9 <-> Gunze C9），direct_equivs[i]是与majors[i]对应的其他型号下标
+    direct_equivs: Vec<Vec<usize>>,
 }
 
 #[derive(Debug, Serialize)]
@@ -104,6 +98,12 @@ struct SearchNearest {
     delta_e: f32,
 }
 
+pub fn color_diff(rgb_a: u32, rgb_b: u32) -> f32 {
+    let lab_a = Lab::from_rgb_normalized(&hex_to_rgb(rgb_a));
+    let lab_b = Lab::from_rgb_normalized(&hex_to_rgb(rgb_b));
+    cie00::diff(&lab_a, &lab_b)
+}
+
 fn hex_to_rgb(hex: u32) -> Rgb {
     let b = (hex >> 0) as u8;
     let g = (hex >> 8) as u8;
@@ -112,10 +112,10 @@ fn hex_to_rgb(hex: u32) -> Rgb {
 }
 
 impl Searcher {
-    pub fn load(blob: &[u8]) -> Result<Self, JsError> {
-        // TODO: change csv to blob
+    /// blob是colors.csv；equiv_blob是一份"a,b"两列下标的csv（下标对应majors/list()的index），
+    /// 代表两个型号互为直接等价（例如Gunze H9 <-> Gunze C9）
+    pub fn load(blob: &[u8], equiv_blob: &[u8]) -> Result<Self, JsError> {
         let s = std::str::from_utf8(blob)?;
-        // return Err(JsError::new(s));
 
         let mut rdr = csv::ReaderBuilder::new()
             .delimiter(b',')
@@ -127,7 +127,8 @@ impl Searcher {
 
         for v in rdr.records() {
             let ref rec = v?;
-            let row: PaintInfo = rec.deserialize(None)?;
+            let mut row: PaintInfo = rec.deserialize(None)?;
+            row.index = majors.len();
 
             let rgb = hex_to_rgb(row.rgb);
             let lab = Lab::from_rgb_normalized(&rgb);
@@ -140,29 +141,41 @@ impl Searcher {
 
         let points: Vec<[f32; 3]> = labs.iter().map(|x| [x.l, x.a, x.b]).collect();
         let kdtree = ImmutableKdTree::new_from_slice(points.as_slice());
+        let mut direct_equivs = vec![Vec::new(); majors.len()];
+
+        let equiv_s = std::str::from_utf8(equiv_blob)?;
+        let mut equiv_rdr = csv::ReaderBuilder::new()
+            .delimiter(b',')
+            .has_headers(false)
+            .from_reader(equiv_s.as_bytes());
+        for v in equiv_rdr.records() {
+            let ref rec = v?;
+            let a: usize = rec.get(0).ok_or_else(|| JsError::new("missing column a"))?.parse()?;
+            let b: usize = rec.get(1).ok_or_else(|| JsError::new("missing column b"))?.parse()?;
+            if a < direct_equivs.len() && b < direct_equivs.len() {
+                direct_equivs[a].push(b);
+                direct_equivs[b].push(a);
+            }
+        }
 
         Ok(Searcher {
             majors,
             labs,
             latents,
             kdtree,
+            direct_equivs,
         })
     }
 
-    pub fn list(&self) -> Vec<PaintEntry<'_>> {
-        self.majors
-            .iter()
-            .enumerate()
-            .map(|(index, p)| PaintEntry {
-                index,
-                brand: &p.brand,
-                code: &p.code,
-                desc: &p.desc,
-                serie: &p.serie,
-                serie_code: &p.serie_code,
-                rgb: p.rgb,
-            })
-            .collect()
+    pub fn direct_equivalences(&self, index: usize) -> Vec<&PaintInfo> {
+        let Some(indices) = self.direct_equivs.get(index) else {
+            return vec![];
+        };
+        indices.iter().map(|&i| &self.majors[i]).collect()
+    }
+
+    pub fn list(&self) -> Vec<&PaintInfo> {
+        self.majors.iter().collect()
     }
 
     pub fn search(

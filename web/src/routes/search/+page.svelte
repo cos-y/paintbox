@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useMode, modeHwb, modeRgb, modeOklch, type Oklch } from 'culori/fn';
+	import { useMode, modeHwb, modeRgb, modeOklch, modeHsl, type Oklch } from 'culori/fn';
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
@@ -10,22 +10,37 @@
 		groupPaints,
 		paintId,
 		floatRgbToCss,
-		searchNearest,
 		type BrandGroup,
 		type FilterOptions,
 		type SearchResult
 	} from '$lib/paints';
+	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp } from '$lib/utils';
+	import { clamp, similarity } from '$lib/utils';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
-	let oklch: Oklch = $state({ mode: 'oklch', l: 0, c: 0, h: 0 });
-
+	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
 	const toRgb = useMode(modeRgb);
 	const toOklch = useMode(modeOklch);
+
+	let oklch: Oklch = $state(toOklch({ mode: 'hsl', h: 220, s: 0.714, l: 0.439 }));
 	const hwb = $derived(toHwb(oklch));
 	const rgb = $derived(toRgb(oklch));
+
+	// 取色板初始颜色优先级：URL的?color=参数 > localStorage里存的上次颜色 > 默认黑色
+	const LAST_COLOR_KEY = 'paintbox:lastColor';
+	const initialColorParam =
+		page.url.searchParams.get('color') ?? localStorage.getItem(LAST_COLOR_KEY);
+	if (initialColorParam && /^[0-9a-fA-F]{6}$/.test(initialColorParam)) {
+		const hex = parseInt(initialColorParam, 16);
+		const r = ((hex >> 16) & 0xff) / 255;
+		const g = ((hex >> 8) & 0xff) / 255;
+		const b = (hex & 0xff) / 255;
+		oklch = toOklch({ mode: 'rgb', r, g, b });
+	}
 
 	let model = $state(0);
 	const models = [
@@ -63,6 +78,27 @@
 
 	const allPaints = listPaints();
 	const groups: BrandGroup[] = groupPaints(allPaints);
+	const paintByKey = new Map(allPaints.map((p) => [`${p.brand}:${p.code}`, p]));
+	const stockLink = (brand: string, code: string) => {
+		const paint = paintByKey.get(`${brand}:${code}`);
+		const params = new URLSearchParams({ brand });
+		if (paint) params.set('serie', paint.serie);
+		params.set('code', code);
+		return `/stock?${params.toString()}`;
+	};
+
+	$effect(() => {
+		const hex = rgbInt.toString(16).padStart(6, '0');
+		const handle = setTimeout(() => {
+			localStorage.setItem(LAST_COLOR_KEY, hex);
+			const url = new URL(page.url);
+			if (url.searchParams.get('color') !== hex) {
+				url.searchParams.set('color', hex);
+				goto(url, { replaceState: true, keepFocus: true, noScroll: true });
+			}
+		}, 300);
+		return () => clearTimeout(handle);
+	});
 
 	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
 
@@ -70,9 +106,8 @@
 	let ownedOnly = $state(false);
 	let ownedDropdownOpen = $state(false);
 	let activeFilterBrand: string | null = $state(null);
-	// TODO: 混合搜索(max_mix>0)在候选集较大时会长时间阻塞主线程，
-	// 在wasm端做出让步（分批/worker）之前先固定为0，禁止混色查询。
-	const maxMix = 0;
+	let maxMix = $state(0);
+	let maxMixDropdownOpen = $state(false);
 
 	const toggleSerie = (brand: string, serie: string) => {
 		const key = serieKey(brand, serie);
@@ -116,18 +151,24 @@
 	});
 
 	let results: SearchResult[] = $state([]);
+	let searching = $state(false);
+	let searchSeq = 0;
 
 	$effect(() => {
 		const targetRgb = rgbInt;
 		const filter = filterOptions;
 		const mix = maxMix;
-		const handle = setTimeout(() => {
-			results = searchNearest(targetRgb, mix, 12, filter);
+		const seq = ++searchSeq;
+		searching = true;
+		const handle = setTimeout(async () => {
+			const r = await searchAsync(targetRgb, mix, 12, filter);
+			if (seq === searchSeq) {
+				results = r;
+				searching = false;
+			}
 		}, 150);
 		return () => clearTimeout(handle);
 	});
-
-	const similarity = (deltaE: number) => clamp(100 - deltaE * 4, 0, 100);
 </script>
 
 <div class="flex h-full flex-col overflow-y-auto p-4">
@@ -180,7 +221,9 @@
 		{@render picker()}
 	</div>
 
-	<div class="mt-4 flex flex-wrap items-center gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
+	<div
+		class="mt-4 flex flex-wrap items-center gap-2 border-y border-gray-200 py-2 dark:border-gray-700"
+	>
 		<span class="text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
 			过滤器 · {results.length} 个结果
 		</span>
@@ -332,50 +375,97 @@
 			</DropdownItem>
 		</Dropdown>
 
-		{#if selectedSeries.size > 0 || ownedOnly}
+		<Button size="xs" color="alternative" class="gap-1">
+			最大混色：{maxMix}
+			<ChevronDown class="h-3 w-3" />
+		</Button>
+		<Dropdown placement="bottom-start" class="w-28 text-xs" bind:isOpen={maxMixDropdownOpen}>
+			{#each [0, 1, 2] as n}
+				<DropdownItem
+					class={maxMix === n ? 'bg-gray-100 dark:bg-gray-600' : ''}
+					onclick={() => {
+						maxMix = n;
+						maxMixDropdownOpen = false;
+					}}
+				>
+					{n}
+				</DropdownItem>
+			{/each}
+		</Dropdown>
+
+		{#if selectedSeries.size > 0 || ownedOnly || maxMix > 0}
 			<button
 				type="button"
 				class="text-primary-600 dark:text-primary-400 text-xs whitespace-nowrap hover:underline"
-				onclick={clearFilters}
+				onclick={() => {
+					clearFilters();
+					maxMix = 0;
+				}}
 			>
 				清除筛选
 			</button>
 		{/if}
 	</div>
 
-	<div class="mt-4 space-y-2 pb-4">
-		<div class="flex items-center justify-between">
-			<h3 class="text-sm font-semibold">查询结果</h3>
-			<span class="text-xs text-gray-400">混色查询暂时禁用（性能优化中）</span>
-		</div>
-		{#each results as r, i (i)}
-			<div
-				class="flex items-center gap-3 rounded-lg border border-gray-200 p-3 dark:border-gray-700"
-			>
-				<div
-					class="h-12 w-12 shrink-0 rounded-md shadow-inner"
-					style="background-color: {floatRgbToCss(r.rgb)}"
-				></div>
-				<div class="min-w-0 flex-1">
-					<div class="flex items-center gap-2">
-						<span class="text-sm font-semibold">{similarity(r.delta_e).toFixed(0)}% 相似</span>
-						<span class="text-xs text-gray-400">ΔE {r.delta_e.toFixed(2)}</span>
+	<div class="mt-4 pb-4">
+		<h3 class="mb-2 text-sm font-semibold">查询结果</h3>
+		<div class="grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3">
+			{#if searching}
+				{#each Array(8) as _}
+					<div
+						class="animate-pulse overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
+					>
+						<div class="h-16 w-full bg-gray-200 dark:bg-gray-700"></div>
+						<div class="space-y-1.5 p-2">
+							<div class="h-2.5 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+							<div class="h-2 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
+						</div>
 					</div>
-					<div class="mt-1 flex flex-wrap gap-2">
-						{#each r.portions as p}
-							<div
-								class="flex items-center gap-1.5 rounded border border-gray-200 px-1.5 py-0.5 dark:border-gray-700"
-							>
-								<div class="h-3.5 w-3.5 rounded-sm" style="background-color: {floatRgbToCss(p.rgb)}"
-								></div>
-								<span class="text-xs uppercase">{p.brand}/{p.code} {(p.t * 100).toFixed(0)}%</span>
+				{/each}
+			{:else}
+				{#each results as r, i (i)}
+					{@const isMix = r.portions.length > 1}
+					<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+						<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
+						<div class="p-2">
+							<div class="flex flex-col gap-1">
+								{#each r.portions as p}
+									<a
+										href={stockLink(p.brand, p.code)}
+										class="flex items-center gap-1.5 rounded-sm text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
+									>
+										<span
+											class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
+											style="background-color: {floatRgbToCss(p.rgb)}"
+										></span>
+										<span class="min-w-0 flex-1 truncate font-medium uppercase"
+											>{p.brand}/{p.code}</span
+										>
+										{#if isMix}
+											<span
+												class="text-primary-700 dark:text-primary-300 shrink-0 rounded-sm bg-gray-100 px-1.5 py-0.5 font-medium dark:bg-gray-700"
+											>
+												{(p.t * 100).toFixed(0)}%
+											</span>
+										{/if}
+									</a>
+								{/each}
 							</div>
-						{/each}
+							{#if !isMix}
+								<div class="mt-0.5 truncate pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
+									{r.portions[0].desc}
+								</div>
+							{/if}
+							<div class="mt-1.5 flex items-center justify-between text-[10px] text-gray-400">
+								<span>ΔE {r.delta_e.toFixed(2)}</span>
+								<span>{similarity(r.delta_e).toFixed(0)}% 相似</span>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-		{:else}
-			<div class="text-sm text-gray-400">没有匹配结果</div>
-		{/each}
+				{:else}
+					<div class="text-sm text-gray-400">没有匹配结果</div>
+				{/each}
+			{/if}
+		</div>
 	</div>
 </div>

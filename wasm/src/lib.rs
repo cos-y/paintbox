@@ -7,15 +7,31 @@ use wasm_bindgen::prelude::*;
 
 use crate::searcher::{FilterOptions, Searcher};
 
+#[wasm_bindgen]
+pub fn color_diff(rgb_a: u32, rgb_b: u32) -> f32 {
+    searcher::color_diff(rgb_a, rgb_b)
+}
+
 static SEARCHER: Lazy<Mutex<Option<Searcher>>> = Lazy::new(|| Mutex::new(None));
 
 #[wasm_bindgen]
-pub fn init_searcher(blob: &[u8]) -> Result<(), JsError> {
+pub fn init_searcher(blob: &[u8], equiv_blob: &[u8]) -> Result<(), JsError> {
     let mut searcher = SEARCHER.lock()?;
     if let None = *searcher {
-        *searcher = Some(Searcher::load(blob)?);
+        *searcher = Some(Searcher::load(blob, equiv_blob)?);
     }
     Ok(())
+}
+
+#[wasm_bindgen]
+pub fn find_direct_equivalences(index: usize) -> Result<JsValue, JsError> {
+    let searcher = SEARCHER.lock()?;
+    if let Some(ref searcher) = *searcher {
+        let r = serde_wasm_bindgen::to_value(&searcher.direct_equivalences(index))?;
+        Ok(r)
+    } else {
+        Ok(JsValue::null())
+    }
 }
 
 #[wasm_bindgen]

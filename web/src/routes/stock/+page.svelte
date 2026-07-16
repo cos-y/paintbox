@@ -2,32 +2,49 @@
 	import { fly } from 'svelte/transition';
 	import { ChevronLeft, Check, Plus } from 'lucide-svelte';
 	import { Card, Button, Badge } from 'flowbite-svelte';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import {
 		listPaints,
 		groupPaints,
 		paintId,
 		rgbToHex,
-		floatRgbToCss,
 		searchNearest,
+		colorDiff,
+		findDirectEquivalences,
 		type PaintInfo,
 		type BrandGroup,
 		type SerieGroup
 	} from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
+	import { similarity } from '$lib/utils';
 
-	const groups: BrandGroup[] = groupPaints(listPaints());
+	const allPaints = listPaints();
+	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
+	const groups: BrandGroup[] = groupPaints(allPaints);
 
-	type Level = 0 | 1 | 2;
-	let level: Level = $state(0);
-	let selectedBrand: string | null = $state(null);
-	let selectedSerie: string | null = $state(null);
-	let selectedPaint: PaintInfo | null = $state(null);
+	// 用查询参数（?brand=&serie=&code=）驱动状态，而不是纯内部state：
+	// 这样浏览时地址栏会实时更新，且任意页面都能通过完整URL直接分享/刷新进入，
+	// 同时因为只有查询参数在变、路径始终是同一个/stock，静态文件服务器不需要
+	// 为每个品牌/系列/型号单独生成页面文件。
+	const selectedBrand = $derived(page.url.searchParams.get('brand'));
+	const selectedSerieParam = $derived(page.url.searchParams.get('serie'));
+	const selectedCode = $derived(page.url.searchParams.get('code'));
 
 	const currentBrandGroup = $derived(groups.find((g) => g.brand === selectedBrand) ?? null);
+	const selectedSerie = $derived(selectedSerieParam ?? currentBrandGroup?.series[0]?.serie ?? null);
 	const currentSerieGroup = $derived(
 		currentBrandGroup?.series.find((s) => s.serie === selectedSerie) ?? null
 	);
+	const selectedPaint = $derived(
+		selectedCode
+			? (currentBrandGroup?.series.flatMap((s) => s.paints).find((p) => p.code === selectedCode) ??
+					null)
+			: null
+	);
+
+	const level = $derived(selectedPaint ? 2 : selectedBrand ? 1 : 0);
 
 	const totalModels = (g: BrandGroup) => g.series.reduce((n, s) => n + s.paints.length, 0);
 
@@ -37,42 +54,70 @@
 	const ownedCountInSerie = (s: SerieGroup) =>
 		s.paints.reduce((n, p) => n + (stock.has(paintId(p)) ? 1 : 0), 0);
 
+	const navigateTo = (params: {
+		brand?: string | null;
+		serie?: string | null;
+		code?: string | null;
+	}) => {
+		const url = new URL(page.url);
+		url.search = '';
+		if (params.brand) url.searchParams.set('brand', params.brand);
+		if (params.serie) url.searchParams.set('serie', params.serie);
+		if (params.code) url.searchParams.set('code', params.code);
+		goto(url, { replaceState: false, keepFocus: true, noScroll: true });
+	};
+
 	const selectBrand = (brand: string) => {
-		selectedBrand = brand;
-		selectedSerie = groups.find((g) => g.brand === brand)?.series[0]?.serie ?? null;
-		level = 1;
+		const serie = groups.find((g) => g.brand === brand)?.series[0]?.serie ?? null;
+		navigateTo({ brand, serie });
 	};
 
 	const selectSerie = (serie: string) => {
-		selectedSerie = serie;
+		if (!selectedBrand) return;
+		navigateTo({ brand: selectedBrand, serie });
 	};
 
 	const selectPaint = (paint: PaintInfo) => {
-		selectedPaint = paint;
-		level = 2;
+		navigateTo({ brand: paint.brand, serie: paint.serie, code: paint.code });
 	};
 
-	const goToLevel0 = () => {
-		level = 0;
-		selectedBrand = null;
-		selectedSerie = null;
-		selectedPaint = null;
-	};
+	const goToLevel0 = () => navigateTo({});
 
 	const goToLevel1 = () => {
-		level = 1;
-		selectedPaint = null;
+		if (!selectedBrand) return goToLevel0();
+		navigateTo({ brand: selectedBrand, serie: selectedSerie });
 	};
 
 	const goBack = () => (level === 2 ? goToLevel1() : goToLevel0());
 
-	const equivalences = $derived.by(() => {
+	// 相近同色漆：按颜色距离查询得到的、颜色相近但名字不一定相关的油漆
+	const colorEquivalences = $derived.by(() => {
 		if (!selectedPaint) return [];
 		const paint = selectedPaint;
 		return searchNearest(paint.rgb, 0, 8)
-			.map((r) => r.portions[0])
-			.filter((p) => p && !(p.brand === paint.brand && p.code === paint.code));
+			.map((r) => paintByKey.get(paintId(r.portions[0])))
+			.filter((p): p is PaintInfo => !!p && !(p.brand === paint.brand && p.code === paint.code));
 	});
+
+	// 直接等价：数据来源里的品牌对照表（例如Gunze H9 <-> Gunze C9），名字/型号对应但颜色不一定相近
+	const directEquivalences = $derived(
+		selectedPaint ? findDirectEquivalences(selectedPaint.index) : []
+	);
+
+	// 点击相近同色漆/直接等价里的某个方块时，在原色下方拼接一个对比条（单选，再点一次取消）
+	let compareCode = $state<string | null>(null);
+	$effect(() => {
+		selectedPaint;
+		compareCode = null;
+	});
+	const comparePaint = $derived(compareCode ? (paintByKey.get(compareCode) ?? null) : null);
+	const compareDeltaE = $derived(
+		selectedPaint && comparePaint ? colorDiff(selectedPaint.rgb, comparePaint.rgb) : null
+	);
+	const toggleCompare = (p: PaintInfo) => {
+		const key = paintId(p);
+		compareCode = compareCode === key ? null : key;
+	};
 </script>
 
 <div class="flex h-full flex-col">
@@ -184,10 +229,10 @@
 									alt=""
 									class="h-7 w-7 shrink-0 rounded bg-white object-cover ring-1 ring-black/10"
 									onerror={(e) => {
-									if (e.currentTarget instanceof HTMLElement) {
-										e.currentTarget.style.visibility = 'hidden';
-									}
-								}}
+										if (e.currentTarget instanceof HTMLElement) {
+											e.currentTarget.style.visibility = 'hidden';
+										}
+									}}
 								/>
 								<span class="min-w-0 flex-1">
 									<span class="block truncate">{serieMeta?.name ?? s.serie}</span>
@@ -196,7 +241,10 @@
 									>
 								</span>
 								{#if ownedCountInSerie(s) > 0}
-									<Badge color="green" class="bg-green-500 text-white dark:bg-green-500 dark:text-white">
+									<Badge
+										color="green"
+										class="bg-green-500 text-white dark:bg-green-500 dark:text-white"
+									>
 										{ownedCountInSerie(s)}
 									</Badge>
 								{/if}
@@ -263,41 +311,116 @@
 			{@const paint = selectedPaint}
 			{@const brandMeta = getBrandMeta(paint.brand)}
 			{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
+			{@const owned = stock.has(paintId(paint))}
 			{#key `${level}-${paint.brand}-${paint.code}`}
 				<div class="h-full overflow-y-auto p-4" in:fly={{ x: 24, duration: 150 }}>
 					<div class="mx-auto max-w-xl space-y-4">
-						<div
-							class="h-32 rounded-lg shadow-inner"
-							style="background-color: {rgbToHex(paint.rgb)}"
-						></div>
+						<div class="flex items-start justify-between gap-3">
+							<div class="min-w-0">
+								<div>
+									<span class="text-4xl font-bold">{paint.code}</span>
+									<span class="text-gray-600 dark:text-gray-300">
+										{serieMeta?.name ?? paint.serie} / {brandMeta?.name ?? paint.brand}
+									</span>
+								</div>
+								<div class="font-bold text-gray-500 dark:text-gray-400">{paint.desc}</div>
+							</div>
+							<button
+								type="button"
+								aria-label={owned ? '移出油漆库' : '加入油漆库'}
+								onclick={() => stock.toggle(paintId(paint))}
+								class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors {owned
+									? 'bg-green-500 text-white hover:bg-green-600'
+									: 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}"
+							>
+								{#if owned}
+									<Check class="h-5 w-5" />
+								{:else}
+									<Plus class="h-5 w-5" />
+								{/if}
+							</button>
+						</div>
 
-						<div>
-							<div class="text-2xl font-bold">{paint.code}</div>
-							<div class="text-gray-600 dark:text-gray-300">{paint.desc}</div>
-							<div class="mt-1 flex items-center gap-2">
+						<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
+							<div
+								class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}"
+								style="background-color: {rgbToHex(paint.rgb)}"
+							>
 								<img
 									src="/brands/{paint.brand}.png"
 									alt=""
-									class="h-4 w-4 rounded-full bg-white object-cover ring-1 ring-black/10"
+									class="absolute top-1.5 left-1.5 h-8 w-8 object-contain drop-shadow"
 								/>
-								<span class="text-xs text-gray-400">
-									{brandMeta?.name ?? paint.brand} · {serieMeta?.name ?? paint.serie}
-								</span>
 							</div>
-							{#if serieMeta?.desc}
-								<div class="mt-0.5 text-xs text-gray-400">{serieMeta.desc}</div>
+							{#if comparePaint}
+								<button
+									type="button"
+									aria-label="跳转到{comparePaint.brand}/{comparePaint.code}"
+									onclick={() => selectPaint(comparePaint)}
+									class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
+									style="background-color: {rgbToHex(comparePaint.rgb)}"
+								>
+									<img
+										src="/brands/{comparePaint.brand}.png"
+										alt=""
+										class="absolute right-1.5 bottom-1.5 h-8 w-8 object-contain drop-shadow"
+									/>
+								</button>
 							{/if}
 						</div>
 
-						<div class="flex items-center gap-3">
-							<span class="text-sm text-gray-500 dark:text-gray-400">库存</span>
-							<Button
-								size="sm"
-								color={stock.has(paintId(paint)) ? 'red' : 'primary'}
-								onclick={() => stock.toggle(paintId(paint))}
+						{#if comparePaint}
+							{@const compareBrandMeta = getBrandMeta(comparePaint.brand)}
+							{@const compareSerieMeta = getSerieMeta(comparePaint.brand, comparePaint.serie)}
+							<button
+								type="button"
+								onclick={() => selectPaint(comparePaint)}
+								class="flex w-full cursor-pointer text-left"
 							>
-								{stock.has(paintId(paint)) ? '移出油漆库' : '加入油漆库'}
-							</Button>
+								{#if compareDeltaE !== null}
+									<div class="text-xs text-gray-400 flex-1">
+										{similarity(compareDeltaE).toFixed(0)}% 相似
+									</div>
+								{/if}
+								<div class="text-right">
+									<div class="font-bold text-gray-500 dark:text-gray-400">
+										{comparePaint.desc}
+									</div>
+									<div>
+										<span class=" text-gray-600 dark:text-gray-300">
+											{compareSerieMeta?.name ?? comparePaint.serie} / {compareBrandMeta?.name ??
+												comparePaint.brand}
+										</span>
+										<span class="text-4xl font-bold">{comparePaint.code}</span>
+									</div>
+								</div>
+							</button>
+						{/if}
+
+						<div>
+							<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
+								直接等价
+							</h3>
+							<div class="flex flex-wrap gap-2">
+								{#each directEquivalences as p (paintId(p))}
+									<button
+										type="button"
+										onclick={() => toggleCompare(p)}
+										class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+										paintId(p)
+											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
+											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
+									>
+										<div
+											class="h-5 w-5 shrink-0 rounded"
+											style="background-color: {rgbToHex(p.rgb)}"
+										></div>
+										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
+									</button>
+								{:else}
+									<div class="text-xs text-gray-400">暂无同名的其他油漆</div>
+								{/each}
+							</div>
 						</div>
 
 						<div>
@@ -305,13 +428,21 @@
 								相近同色漆
 							</h3>
 							<div class="flex flex-wrap gap-2">
-								{#each equivalences as p}
-									<div
-										class="flex items-center gap-2 rounded-lg border border-gray-200 px-2 py-1 dark:border-gray-700"
+								{#each colorEquivalences as p (paintId(p))}
+									<button
+										type="button"
+										onclick={() => toggleCompare(p)}
+										class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+										paintId(p)
+											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
+											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
 									>
-										<div class="h-5 w-5 rounded" style="background-color: {floatRgbToCss(p.rgb)}"></div>
+										<div
+											class="h-5 w-5 shrink-0 rounded"
+											style="background-color: {rgbToHex(p.rgb)}"
+										></div>
 										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-									</div>
+									</button>
 								{:else}
 									<div class="text-xs text-gray-400">暂无相近的其他油漆</div>
 								{/each}

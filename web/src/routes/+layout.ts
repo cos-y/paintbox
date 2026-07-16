@@ -6,10 +6,11 @@ export const ssr = false;
 export const prerender = true;
 
 export const load: LayoutLoad = async ({ fetch }) => {
-	let [_, data] = await Promise.all([
+	let [_, data, equivData] = await Promise.all([
 		init(),
 		fetch('/colors.csv').then((data) => data.arrayBuffer()),
+		fetch('/equivalences.csv').then((data) => data.arrayBuffer()),
 		loadMeta(fetch)
 	]);
-	init_searcher(new Uint8Array(data));
+	init_searcher(new Uint8Array(data), new Uint8Array(equivData));
 };
