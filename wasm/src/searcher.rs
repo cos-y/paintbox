@@ -20,27 +20,45 @@ pub struct PaintInfo {
     #[serde(skip_deserializing, default)]
     pub index: usize,
     pub brand: String,
-    pub code: String,
-    pub desc: String,
     pub serie: String,
-    pub serie_code: String,
+    pub code: String,
     pub rgb: u32,
+    pub desc: String,
+    pub lacquer: u8,
+    pub prop: SurfaceType,
 }
 
-#[derive(Debug, Clone, Deserialize)]
-pub struct SerieKey {
-    pub brand: String,
-    pub serie: String,
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub enum SurfaceType {
+    G,
+    SG,
+    M,
+    ME,
+    C,
+    PA,
+    W,
 }
 
 #[derive(Debug, Clone, Deserialize, Default)]
 pub struct FilterOptions {
     /// 允许的系列（brand+serie）集合；为空表示不限制
     #[serde(default)]
-    pub series: Vec<SerieKey>,
+    pub series: Vec<(String, String)>,
     /// 允许的油漆下标（对应 list() 返回的 index）集合；为None表示不限制（不按库存过滤）
     #[serde(default)]
-    pub owned: Option<Vec<usize>>,
+    pub all: Option<Vec<usize>>,
+
+    #[serde(default)]
+    pub surfaces: Vec<SurfaceType>,
+
+    #[serde(default)]
+    pub bases: Vec<u8>,
+
+    #[serde(default)]
+    pub mix: u32,
+
+    #[serde(default)]
+    pub limit: Option<usize>,
 }
 
 pub struct Searcher {
@@ -150,8 +168,14 @@ impl Searcher {
             .from_reader(equiv_s.as_bytes());
         for v in equiv_rdr.records() {
             let ref rec = v?;
-            let a: usize = rec.get(0).ok_or_else(|| JsError::new("missing column a"))?.parse()?;
-            let b: usize = rec.get(1).ok_or_else(|| JsError::new("missing column b"))?.parse()?;
+            let a: usize = rec
+                .get(0)
+                .ok_or_else(|| JsError::new("missing column a"))?
+                .parse()?;
+            let b: usize = rec
+                .get(1)
+                .ok_or_else(|| JsError::new("missing column b"))?
+                .parse()?;
             if a < direct_equivs.len() && b < direct_equivs.len() {
                 direct_equivs[a].push(b);
                 direct_equivs[b].push(a);
@@ -178,40 +202,54 @@ impl Searcher {
         self.majors.iter().collect()
     }
 
-    pub fn search(
-        &self,
-        rgb: u32,
-        max_mix: u32,
-        limit: usize,
-        filter: &FilterOptions,
-    ) -> Result<Vec<SearchResult>, JsError> {
-        let series_filter: Option<HashSet<(&str, &str)>> = if filter.series.is_empty() {
+    pub fn search(&self, rgb: u32, opts: &FilterOptions) -> Result<Vec<SearchResult>, JsError> {
+        let series_filter: Option<HashSet<(&str, &str)>> = if opts.series.is_empty() {
             None
         } else {
             Some(
-                filter
-                    .series
+                opts.series
                     .iter()
-                    .map(|s| (s.brand.as_str(), s.serie.as_str()))
+                    .map(|(a, b)| (a.as_str(), b.as_str()))
                     .collect(),
             )
         };
-        let owned_filter: Option<HashSet<usize>> =
-            filter.owned.as_ref().map(|ids| ids.iter().copied().collect());
+        let all_filter: Option<HashSet<usize>> =
+            opts.all.as_ref().map(|ids| ids.iter().copied().collect());
+        let prop_filter: Option<HashSet<SurfaceType>> = if opts.surfaces.is_empty() {
+            None
+        } else {
+            Some(opts.surfaces.iter().map(|x| *x).collect())
+        };
+        let lacquer_filter: u8 = if opts.bases.is_empty() {
+            u8::MAX
+        } else {
+            opts.bases.iter().fold(0, |acc, e| acc | (1 << e))
+        };
 
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
-            let serie_ok = series_filter
-                .as_ref()
-                .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())));
-            let owned_ok = owned_filter.as_ref().is_none_or(|s| s.contains(&i));
-            if serie_ok && owned_ok {
-                unsafe {
-                    candidates.insert_unchecked(i);
+            // lacquer
+            if ((1 << maj.lacquer) & lacquer_filter) != 0 {
+                // idxs
+                if all_filter.as_ref().is_none_or(|s| s.contains(&i)) {
+                    // prop
+                    if prop_filter.as_ref().is_none_or(|s| s.contains(&maj.prop)) {
+                        //serie
+                        let serie_ok = series_filter
+                            .as_ref()
+                            .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())));
+
+                        if serie_ok {
+                            unsafe {
+                                candidates.insert_unchecked(i);
+                            }
+                        }
+                    }
                 }
             }
         }
 
+        let limit = opts.limit.unwrap_or(10);
         let mut ctx = SearchContext {
             candidates,
             limit,
@@ -222,6 +260,8 @@ impl Searcher {
         };
 
         let mut results = vec![];
+        let max_mix = if let Some(_) = opts.all { opts.mix } else { 0 };
+
         for SearchMix {
             mut portions,
             latent,

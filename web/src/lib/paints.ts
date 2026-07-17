@@ -1,4 +1,9 @@
-import { list_paints, search, color_diff, find_direct_equivalences } from '../wasm-pkg/paintbox_wasm';
+import {
+	list_paints,
+	search,
+	color_diff,
+	find_direct_equivalences
+} from '../wasm-pkg/paintbox_wasm';
 
 export interface PaintInfo {
 	index: number;
@@ -35,14 +40,13 @@ export interface SearchResult {
 	portions: SearchResultPortion[];
 }
 
-export interface SerieKey {
-	brand: string;
-	serie: string;
-}
-
 export interface FilterOptions {
-	series: SerieKey[];
-	owned?: number[];
+	series?: string[][];
+	all?: number[];
+	surfaces?: string[];
+	bases?: number[];
+	mix?: number;
+	limit?: number;
 }
 
 export const colorDiff = (rgbA: number, rgbB: number): number => color_diff(rgbA, rgbB);
@@ -52,48 +56,30 @@ export const colorDiff = (rgbA: number, rgbB: number): number => color_diff(rgbA
 export const findDirectEquivalences = (index: number): PaintInfo[] =>
 	(find_direct_equivalences(index) as PaintInfo[]) ?? [];
 
-export const searchNearest = (
-	rgb: number,
-	maxMix: number,
-	limit: number,
-	filter: FilterOptions = { series: [] }
-): SearchResult[] => {
-	return (search(rgb, maxMix, limit, filter) as SearchResult[]) ?? [];
+export const searchNearest = (rgb: number, opts: FilterOptions = {}): SearchResult[] => {
+	return (search(rgb, opts) as SearchResult[]) ?? [];
 };
 
-export interface SerieGroup {
-	serie: string;
-	paints: PaintInfo[];
+export interface PaintCatalog {
+	[k: string]: {
+		[k: string]: PaintInfo[];
+	};
 }
 
-export interface BrandGroup {
-	brand: string;
-	series: SerieGroup[];
-}
-
-export const groupPaints = (paints: PaintInfo[]): BrandGroup[] => {
-	const brandMap = new Map<string, Map<string, PaintInfo[]>>();
-
+export const getCatalog = (paints: PaintInfo[]): PaintCatalog => {
+	const catalog: PaintCatalog = {};
 	for (const paint of paints) {
-		let serieMap = brandMap.get(paint.brand);
-		if (!serieMap) {
-			serieMap = new Map();
-			brandMap.set(paint.brand, serieMap);
+		let brand = catalog[paint.brand];
+		if (brand === undefined) {
+			brand = catalog[paint.brand] = {};
 		}
-		let list = serieMap.get(paint.serie);
-		if (!list) {
-			list = [];
-			serieMap.set(paint.serie, list);
-		}
-		list.push(paint);
-	}
 
-	return [...brandMap.entries()]
-		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([brand, serieMap]) => ({
-			brand,
-			series: [...serieMap.entries()]
-				.sort(([a], [b]) => a.localeCompare(b))
-				.map(([serie, paints]) => ({ serie, paints }))
-		}));
+		let serie = brand[paint.serie];
+		if (serie === undefined) {
+			serie = brand[paint.serie] = [];
+		}
+
+		serie.push(paint);
+	}
+	return catalog;
 };

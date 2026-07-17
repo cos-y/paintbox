@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Copy } from 'lucide-svelte';
 	import { tick } from 'svelte';
-	import { Tooltip } from 'flowbite-svelte';
+	import { Input, Tooltip } from 'flowbite-svelte';
 
 	interface Props {
 		re: string;
@@ -20,8 +20,9 @@
 		return match ? match.slice(1).map((x) => +x) : [];
 	});
 
-	const handleInput = (e: Event & { currentTarget: HTMLInputElement }) => {
-		const match = e.currentTarget.value.match(regexp);
+	const handleInput = (e: Event) => {
+		const el = e.currentTarget! as HTMLInputElement;
+		const match = el.value.match(regexp);
 		if (match) {
 			localParams = match.slice(1).map((x) => +x);
 			oninput(...localParams);
@@ -48,8 +49,8 @@
 </script>
 
 <div class="color-code">
-	<input
-		class="text-sm! font-mono"
+	<Input
+		class="text-xs! font-mono p-2 text-center"
 		type="text"
 		name="rgb"
 		pattern={re}
@@ -70,7 +71,7 @@
 		>
 			<Copy size="1rem" />
 		</button>
-		<Tooltip placement="bottom" class="text-xs {isCopied ? 'text-green-300' : ''}"
+		<Tooltip placement="bottom" class="text-xs"
 			>{isCopied ? 'copied!' : 'copy to clipboard'}</Tooltip
 		>
 	</div>

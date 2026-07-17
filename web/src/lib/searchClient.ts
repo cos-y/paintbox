@@ -35,17 +35,12 @@ const getWorker = (): Worker => {
 	return worker;
 };
 
-export const searchAsync = (
-	rgb: number,
-	maxMix: number,
-	limit: number,
-	filter: FilterOptions
-): Promise<SearchResult[]> => {
+export const searchAsync = (rgb: number, opts: FilterOptions): Promise<SearchResult[]> => {
 	cancelInFlight();
 	const w = getWorker();
 	const id = nextId++;
 	return new Promise((resolve) => {
 		pending.set(id, resolve);
-		w.postMessage({ id, rgb, maxMix, limit, filter });
+		w.postMessage({ id, rgb, opts });
 	});
 };

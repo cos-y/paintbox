@@ -119,7 +119,7 @@
 	/>
 
 	<ColorCode
-		re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+%)\s*(?:,|\s)\s*([\d.]+%)\)$"
+		re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)%\s*(?:,|\s)\s*([\d.]+)%\)$"
 		text={toText(localHue, localSaturation, localLuminosity)}
 		oninput={handleInput}
 	/>

@@ -4,13 +4,7 @@
 	import { Boxes, Search, Palette } from 'lucide-svelte';
 	import { Tooltip } from 'flowbite-svelte';
 
-	// import { navigating } from '$app/state';
-	import { search } from '../wasm-pkg/paintbox_wasm';
-
 	let { children } = $props();
-
-	// let li = search(0x1189bd, 2, 10);
-	// console.log(li);
 
 	const navs = [
 		{

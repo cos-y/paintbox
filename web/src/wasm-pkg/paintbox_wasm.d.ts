@@ -9,7 +9,7 @@ export function init_searcher(blob: Uint8Array, equiv_blob: Uint8Array): void;
 
 export function list_paints(): any;
 
-export function search(rgb: number, max_mix: number, limit: number, filter: any): any;
+export function search(rgb: number, opts: any): any;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -18,7 +18,7 @@ export interface InitOutput {
     readonly find_direct_equivalences: (a: number) => [number, number, number];
     readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
     readonly list_paints: () => [number, number, number];
-    readonly search: (a: number, b: number, c: number, d: any) => [number, number, number];
+    readonly search: (a: number, b: any) => [number, number, number];
     readonly color_diff: (a: number, b: number) => number;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

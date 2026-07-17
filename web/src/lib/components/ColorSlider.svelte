@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { clamp } from '$lib/utils';
+	import { Input } from 'flowbite-svelte';
 	import './style.css';
 
 	interface Props {
@@ -21,11 +22,16 @@
 
 	const validate = (v: number) => {
 		v = clamp(v, min, max);
-		return +v.toFixed(precision);
+		v = +v.toFixed(precision);
+		if (isNaN(v)) {
+			v = 0;
+		}
+		return v;
 	};
 
-	const handleInput = (e: Event & { currentTarget: HTMLInputElement }) => {
-		oninput(+e.currentTarget.value);
+	const handleInput = (e: Event) => {
+		const el = e.currentTarget! as HTMLInputElement;
+		oninput(+el.value);
 	};
 </script>
 
@@ -34,8 +40,8 @@
 		<input tabindex="-1" type="range" {min} {max} {step} {value} {style} oninput={handleInput} />
 		<div class="custom-slider-handle" style="left: {left}%"></div>
 	</div>
-	<input
-		class="text-sm! font-mono"
+	<Input
+		class="text-xs! font-mono p-1 text-right"
 		type="number"
 		{min}
 		{max}

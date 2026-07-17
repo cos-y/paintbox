@@ -4,9 +4,7 @@ import type { FilterOptions, SearchResult } from './paints';
 interface SearchRequest {
 	id: number;
 	rgb: number;
-	maxMix: number;
-	limit: number;
-	filter: FilterOptions;
+	opts: FilterOptions;
 }
 
 interface SearchResponse {
@@ -31,9 +29,9 @@ const ensureReady = (): Promise<void> => {
 };
 
 self.onmessage = async (e: MessageEvent<SearchRequest>) => {
-	const { id, rgb, maxMix, limit, filter } = e.data;
+	const { id, rgb, opts } = e.data;
 	await ensureReady();
-	const results = (search(rgb, maxMix, limit, filter) as SearchResult[]) ?? [];
+	const results = (search(rgb, opts) as SearchResult[]) ?? [];
 	const response: SearchResponse = { id, results };
 	(self as unknown as Worker).postMessage(response);
 };
