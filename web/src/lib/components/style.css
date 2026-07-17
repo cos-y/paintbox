@@ -14,9 +14,9 @@
   --picker-input-copied-bg: color-mix(in oklab, var(--color-green-900) 40%, var(--picker-input-bg));
   --picker-input-copied-border: var(--color-green-500);
   --picker-input-copied-color: var(--color-green-300);
-  --picker-thumb-box-shadow: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px var(--color-gray-900) inset, 0 0 0 1px rgba(0, 0, 0, .3);
-  --picker-thumb-box-shadow-hover: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px var(--color-gray-900) inset, 0 0 0 1px var(--color-primary-500);
-  --picker-thumb-box-shadow-focus: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px var(--color-gray-900) inset, 0 0 0 1px var(--color-primary-500), 0 0 0 3px color-mix(in oklab, var(--color-primary-500) 40%, transparent);
+  --picker-thumb-box-shadow: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .3) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / .3);
+  --picker-thumb-box-shadow-hover: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5);
+  --picker-thumb-box-shadow-focus: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / 1), 0 0 0 4px hwb(var(--picker-hue) 25% 0%), 0 0 0 5px rgb(0 0 0 / .3);
   --picker-input-focus-ring: var(--color-primary-500);
   --picker-text-shadow: none;
 }
