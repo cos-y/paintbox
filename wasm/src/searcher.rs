@@ -89,7 +89,6 @@ pub struct SearchResult {
 struct SearchContext {
     candidates: FixedBitSet,
     limit: usize,
-    kdtree_nearest_max_qty: NonZero<usize>,
     mix_limit: usize,
     mix2_prec: f32,
     mix2_iter: usize,
@@ -111,7 +110,7 @@ struct SearchMix2Portion {
     delta_e: f32,
 }
 
-struct SearchNearest {
+struct MeasuredItem {
     i: usize,
     delta_e: f32,
 }
@@ -253,7 +252,6 @@ impl Searcher {
         let mut ctx = SearchContext {
             candidates,
             limit,
-            kdtree_nearest_max_qty: unsafe { NonZero::new_unchecked(1000) },
             mix_limit: limit,
             mix2_prec: 0.01,
             mix2_iter: 5,
@@ -338,8 +336,8 @@ impl Searcher {
                 0 => vec![],
                 1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let lab = Lab::from_rgb_normalized(&rgb);
-                    self.search_nearest(ctx, &lab)
-                        .map(|SearchNearest { i, delta_e }| SearchMix {
+                    self.search_mix_target(ctx, &lab)
+                        .map(|MeasuredItem { i, delta_e }| SearchMix {
                             portions: smallvec![Portion { i, t: 1f32 }],
                             latent: self.latents[i],
                             delta_e,
@@ -348,9 +346,7 @@ impl Searcher {
                         .collect()
                 }),
                 _ => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
-                    let lab = Lab::from_rgb_normalized(&rgb);
-                    let li = self.search_nearest_n(ctx, &lab);
-                    let li: Vec<_> = li.into_iter().map(|x| x.i).collect();
+                    let li: Vec<_> = ctx.candidates.ones().collect();
                     self.search_mix(
                         ctx,
                         rgb,
@@ -479,51 +475,53 @@ impl Searcher {
         }
     }
 
-    fn search_nearest_n(&self, ctx: &SearchContext, lab: &Lab) -> Vec<SearchNearest> {
+    fn search_nearest_n(&self, ctx: &SearchContext, lab: &Lab) -> Vec<MeasuredItem> {
         let point = [lab.l, lab.a, lab.b];
-        let nearest_n = self
-            .kdtree
-            .nearest_n::<SquaredEuclidean>(&point, ctx.kdtree_nearest_max_qty);
-
-        let mut results: Vec<_> = nearest_n
-            .into_iter()
-            .filter_map(|x| {
-                let i = x.item as usize;
-                if ctx.candidates.contains(i) {
-                    let lab = self.labs[x.item as usize];
-                    let d = cie00::diff(point, lab);
-                    Some(SearchNearest { i, delta_e: d })
-                } else {
-                    None
-                }
-            })
-            .collect();
+        let mut results: Vec<_> = if ctx.candidates.count_ones(..) > 3000 {
+            // use kdtree
+            let nearest_n = self.kdtree.nearest_n::<SquaredEuclidean>(&point, unsafe {
+                NonZero::new_unchecked(ctx.limit * 10)
+            });
+            nearest_n
+                .into_iter()
+                .filter_map(|x| {
+                    let i = x.item as usize;
+                    if ctx.candidates.contains(i) {
+                        let lab = self.labs[x.item as usize];
+                        let d = cie00::diff(point, lab);
+                        Some(MeasuredItem { i, delta_e: d })
+                    } else {
+                        None
+                    }
+                })
+                .collect()
+        } else {
+            ctx.candidates
+                .ones()
+                .map(|i| MeasuredItem {
+                    i,
+                    delta_e: cie00::diff(point, self.labs[i]),
+                })
+                .collect()
+        };
 
         results.sort_by_key(|x| OrderedFloat(x.delta_e));
         results
     }
 
-    fn search_nearest(&self, ctx: &SearchContext, lab: &Lab) -> Option<SearchNearest> {
+    fn search_mix_target(&self, ctx: &SearchContext, lab: &Lab) -> Option<MeasuredItem> {
         let point = [lab.l, lab.a, lab.b];
-        let nearest_n = self
-            .kdtree
-            .nearest_n::<SquaredEuclidean>(&point, ctx.kdtree_nearest_max_qty);
-
         let mut mini = None;
         let mut mind = f32::MAX;
-        for x in nearest_n.into_iter() {
-            let i = x.item as usize;
-            if ctx.candidates.contains(i) {
-                // 按欧氏距离粗筛的点还要用CIE2000做一次筛选
-                let lab = self.labs[x.item as usize];
-                let d = cie00::diff(point, lab);
-                if d < mind {
-                    mini = Some(i);
-                    mind = d;
-                }
+        for i in ctx.candidates.ones() {
+            // 按欧氏距离粗筛的点还要用CIE2000做一次筛选
+            let d = cie00::diff(point, self.labs[i]);
+            if d < mind {
+                mini = Some(i);
+                mind = d;
             }
         }
 
-        mini.map(|i| SearchNearest { i, delta_e: mind })
+        mini.map(|i| MeasuredItem { i, delta_e: mind })
     }
 }
