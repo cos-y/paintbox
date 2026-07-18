@@ -20,7 +20,7 @@
 	const toRgb = useMode(modeRgb);
 	const toOklch = useMode(modeOklch);
 
-	let oklch: Oklch = $state(toOklch({ mode: 'hsl', h: 220, s: 0.714, l: 0.439 }));
+	let oklch: Oklch = $state(toOklch({ mode: 'hsl', h: 189, s: 0.797, l: 0.465 }));
 	const hwb = $derived(toHwb(oklch));
 	const rgb = $derived(toRgb(oklch));
 
