@@ -4,10 +4,10 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		title?: string;
 		options: (string | Snippet)[];
 		value: number;
 		class?: string;
+		tooltip?: string;
 		disabled?: boolean;
 		disabledValue?: number;
 		disabledTooltip?: string;
@@ -17,8 +17,8 @@
 		disabled,
 		disabledValue,
 		disabledTooltip,
+		tooltip,
 		class: clz,
-		title,
 		options,
 		value = $bindable()
 	}: Props = $props();
@@ -48,14 +48,17 @@
 		color="alternative"
 		class="gap-1 justify-start! cursor-pointer {clz}"
 	>
-		{#if title}
-			{title + ': '}
-		{/if}
 		{@render renderDesc(options[value])}
 		<ChevronDown class="h-3 w-3 ms-auto" />
 	</Button>
-	{#if disabledTooltip}
-		<Tooltip placement="top" class="text-xs p-1">{disabledTooltip}</Tooltip>
+	{#if disabled}
+		{#if disabledTooltip}
+			<Tooltip placement="top" class="text-xs p-1">{disabledTooltip}</Tooltip>
+		{/if}
+	{:else}
+		{#if tooltip}
+			<Tooltip placement="top" class="text-xs p-1">{tooltip}</Tooltip>
+		{/if}
 	{/if}
 </div>
 {#if !disabled}

@@ -62,7 +62,9 @@
 
 <div
 	class="color-picker"
-	style="--picker-red: {r * 255}; --picker-green: {g * 255}; --picker-blue: {b * 255}"
+	style="--picker-red: {r * 255}; 
+		--picker-green: {g * 255}; 
+		--picker-blue: {b * 255};"
 >
 	<ColorSlider
 		min={0}

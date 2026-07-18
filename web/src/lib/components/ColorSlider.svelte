@@ -35,18 +35,33 @@
 	};
 </script>
 
-<div class="color-slider">
-	<div class="slider-track relative">
-		<input tabindex="-1" type="range" {min} {max} {step} {value} {style} oninput={handleInput} />
-		<div class="custom-slider-handle" style="left: {left}%"></div>
+<div class="flex items-center gap-2 h-9 sm:h-6">
+	<div class="relative w-full h-full flex-4">
+		<input
+			class="no-handle m-0 w-full h-full
+				outline-0 rounded-lg border border-gray-600
+				select-none appearance-none pointer-auto
+				touch-pan-y touch-pinch-zoom disabled:opacity-50"
+			tabindex="-1"
+			type="range"
+			{min}
+			{max}
+			{step}
+			{value}
+			{style}
+			oninput={handleInput}
+		/>
+		<div class="color-slider-handle" style="left: {left}%"></div>
 	</div>
-	<Input
-		class="text-xs! font-mono p-1 text-right"
-		type="number"
-		{min}
-		{max}
-		{step}
-		value={validate(value)}
-		oninput={handleInput}
-	/>
+	<div class="not-sm:flex-1 sm:w-16 h-full">
+		<Input
+			class="text-xs! font-mono p-1 text-right h-full"
+			type="number"
+			{min}
+			{max}
+			{step}
+			value={validate(value)}
+			oninput={handleInput}
+		/>
+	</div>
 </div>

@@ -10,6 +10,75 @@ body {
   @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
 }
 
+@layer base {
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield !important;
+  }
+
+  input[type=range].no-handle::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    cursor: ew-resize
+  }
+
+  input[type=range].no-handle::-moz-range-track {
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    cursor: ew-resize
+  }
+
+  input[type=range].no-handle::-ms-track {
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    cursor: ew-resize
+  }
+
+  input[type=range].no-handle::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 44px;
+    width: 44px;
+    opacity: .01;
+    cursor: ew-resize;
+    position: relative;
+    z-index: 20
+  }
+
+  input[type=range].no-handle::-moz-range-thumb {
+    -moz-appearance: none;
+    height: 44px;
+    width: 44px;
+    opacity: .01;
+    cursor: ew-resize;
+    position: relative;
+    z-index: 20
+  }
+
+  input[type=range].no-handle::-ms-thumb {
+    -ms-appearance: none;
+    height: 44px;
+    width: 44px;
+    opacity: .01;
+    cursor: ew-resize;
+    position: relative;
+    z-index: 20
+  }
+}
+
 @theme {
   --color-primary-50: var(--color-blue-50);
   --color-primary-100: var(--color-blue-100);

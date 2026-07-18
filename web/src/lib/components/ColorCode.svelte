@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Copy } from 'lucide-svelte';
-	import { tick } from 'svelte';
 	import { Input, Tooltip } from 'flowbite-svelte';
 
 	interface Props {
@@ -48,9 +47,9 @@
 	};
 </script>
 
-<div class="color-code">
+<div class="relative">
 	<Input
-		class="text-xs! font-mono p-2 text-center"
+		class="text-xs! font-mono p-2 text-center w-full"
 		type="text"
 		name="rgb"
 		pattern={re}
@@ -61,11 +60,10 @@
 		bind:value={localText}
 		oninput={handleInput}
 	/>
-	<div class="copy-code flex font-mono">
+	<div class="absolute -right-px top-0 bottom-0 flex font-mono">
 		<button
-			aria-label="copy code"
-			type="button"
-			class="flex-1"
+			class="flex-1 px-[10px] cursor-pointer text-gray-400 hover:text-gray-200
+				outline-offset-0 focus:rounded-lg focus:outline-2 focus:outline-primary-500"
 			onclick={handleCopy}
 			onmouseenter={handleMouseEnter}
 		>

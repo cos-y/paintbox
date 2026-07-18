@@ -31,7 +31,7 @@
 {/if} -->
 <!-- TODO: -->
 
-<div class="flex h-screen w-screen overflow-hidden">
+<div class="flex h-dvh w-screen overflow-hidden">
 	<aside class="w-16 bg-gray-50 dark:bg-gray-800 shrink-0 h-full overflow-y-auto">
 		<ul class="w-full h-full flex flex-col py-2 space-y-1 overflow-hidden">
 			{#each navs as { title, route, svg: Icon }}

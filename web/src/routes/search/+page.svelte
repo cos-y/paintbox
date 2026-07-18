@@ -177,10 +177,11 @@
 	{@const Picker = [Hsl, Rgb][model]}
 
 	<div>
-		<div class="color-swatch relative">
+		<div
+			class="relative overflow-hidden h-24 mb-3 rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
+		>
 			<button
 				type="button"
-				aria-label="取色器"
 				class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
 				onclick={eyedrop}
 			>
@@ -199,7 +200,9 @@
 		<Select class="w-full" options={[hsl, rgb]} bind:value={model} />
 	</div>
 
-	<Picker bind:oklch />
+	<div class="min-w-45 sm:max-w-135">
+		<Picker bind:oklch />
+	</div>
 {/snippet}
 
 {#snippet selectSeries()}
@@ -311,7 +314,7 @@
 
 <div class="flex h-full flex-col overflow-y-auto p-4">
 	<div
-		class="color-picker-root"
+		class="color-picker-root grid gap-3 sm:grid-flow-col sm:auto-cols-[125px_1fr]"
 		style="
     --picker-oklchLightness: {oklch.l};
     --picker-oklchChroma: {oklch.c};
@@ -337,14 +340,15 @@
 		{@render selectSeries()}
 
 		<MultiSelect
-			class="w-48 text-xs"
+			tooltip="surface type"
+			class="w-36 text-xs"
 			options={{
 				G: 'Gloss',
 				SG: 'Semi-Gloss',
 				M: 'Flat',
 				ME: 'Metallic',
 				C: 'Clear',
-				PA: 'Pearl',
+				PA: 'Mica',
 				FL: 'Fluorescence',
 				W: 'Weathering'
 			}}
@@ -353,7 +357,8 @@
 		/>
 
 		<MultiSelect
-			class="w-38 text-xs"
+			tooltip="solvent base type"
+			class="w-28 text-xs"
 			options={{
 				0: 'Lacquer',
 				1: 'Alcohol',
@@ -365,20 +370,20 @@
 		/>
 
 		<Select
-			class="w-36 text-xs"
+			tooltip="search scope"
+			class="w-28 text-xs"
 			options={['Market', 'My Stock']}
-			title="Scope"
 			bind:value={searchScope}
 		/>
 
 		<Select
-			class="w-24 text-xs"
-			options={['0', '1', '2']}
-			title="Mix"
+			tooltip="mixing"
+			class="w-28 text-xs"
+			options={['Mix Off', 'Mix-1', 'Mix-2']}
 			bind:value={mixingLimit}
 			disabled={searchScope != 1}
 			disabledValue={0}
-			disabledTooltip={'requires scope: my stock'}
+			disabledTooltip={'mixing requires search scope: my stock'}
 		/>
 
 		{#if !isDefaultFilter}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Checkbox, Dropdown, DropdownItem } from 'flowbite-svelte';
+	import { Badge, Button, Checkbox, Dropdown, DropdownItem, Tooltip } from 'flowbite-svelte';
 	import { ChevronDown } from 'lucide-svelte';
 
 	interface Props {
@@ -7,23 +7,29 @@
 		options: { [_: string]: string };
 		value: string[];
 		class?: string;
+		tooltip?: string;
 	}
 
-	let { class: clz, title, options, value = $bindable() }: Props = $props();
+	let { tooltip, class: clz, title, options, value = $bindable() }: Props = $props();
 
 	let isOpen = $state(false);
 </script>
 
-<Button size="xs" color="alternative" class="relative gap-1 justify-start! cursor-pointer {clz}">
-	{title}: {value.length == 0 ? 'Any' : options[value[0]]}
-	{#if value.length > 1}
-		<Badge
-			class="absolute pl-1.5 pr-1.5 text-xs top-1.5 right-7 rounded-full bg-primary-500 dark:bg-primary-500 dark:text-white"
-			>{value.length}
-		</Badge>
+<div>
+	<Button size="xs" color="alternative" class="relative gap-1 justify-start! cursor-pointer {clz}">
+		{value.length == 0 ? title : options[value[0]]}
+		{#if value.length > 1}
+			<Badge
+				class="absolute pl-1.5 pr-1.5 text-xs top-1.5 right-7 rounded-full bg-primary-500 dark:bg-primary-500 dark:text-white"
+				>{value.length}
+			</Badge>
+		{/if}
+		<ChevronDown class="h-3 w-3 ms-auto" />
+	</Button>
+	{#if tooltip}
+		<Tooltip placement="top" class="text-xs p-1">{tooltip}</Tooltip>
 	{/if}
-	<ChevronDown class="h-3 w-3 ms-auto" />
-</Button>
+</div>
 <Dropdown
 	placement="bottom-start"
 	class="list-none overflow-hidden! cursor-pointer! {clz}"

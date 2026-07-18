@@ -91,8 +91,9 @@
 
 <div
 	class="color-picker"
-	style="--picker-hue: {localHue}; --picker-saturation: {localSaturation *
-		100}; --picker-luminosity: {localLuminosity * 100}"
+	style="--picker-hue: {localHue};
+		--picker-saturation: {localSaturation * 100}; 
+		--picker-luminosity: {localLuminosity * 100};"
 >
 	<SliderTrack
 		min={0}
