@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { Boxes, Search, Palette } from 'lucide-svelte';
+	import { Boxes, Search, Palette, Info } from 'lucide-svelte';
 	import { Tooltip } from 'flowbite-svelte';
 
 	let { children } = $props();
@@ -33,7 +33,7 @@
 
 <div class="flex h-screen w-screen overflow-hidden">
 	<aside class="w-16 bg-gray-50 dark:bg-gray-800 shrink-0 h-full overflow-y-auto">
-		<ul class="w-full grow py-2 space-y-1">
+		<ul class="w-full h-full flex flex-col py-2 space-y-1 overflow-hidden">
 			{#each navs as { title, route, svg: Icon }}
 				<li>
 					<a
@@ -45,6 +45,16 @@
 					<Tooltip placement="right">{title}</Tooltip>
 				</li>
 			{/each}
+			<li class="mt-auto">
+				<a
+					class="flex w-full justify-center rounded-lg p-3 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+					href="/about"
+				>
+					<!-- < /> -->
+					<Info />
+				</a>
+				<Tooltip placement="right">about</Tooltip>
+			</li>
 		</ul>
 	</aside>
 

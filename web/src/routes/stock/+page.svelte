@@ -125,7 +125,7 @@
 				type="button"
 				aria-label="返回"
 				onclick={goBack}
-				class="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700"
+				class="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700"
 			>
 				<ChevronLeft />
 			</button>
@@ -134,18 +134,18 @@
 			<button
 				type="button"
 				onclick={goToLevel0}
-				class="hover:underline {level === 0
+				class="cursor-pointer hover:underline {level === 0
 					? 'font-semibold text-gray-900 dark:text-white'
 					: 'text-gray-500 dark:text-gray-400'}"
 			>
-				全部
+				Paints
 			</button>
 			{#if selectedBrand}
 				<span class="text-gray-400">/</span>
 				<button
 					type="button"
 					onclick={goToLevel1}
-					class="hover:underline {level === 1
+					class="cursor-pointer hover:underline {level === 1
 						? 'font-semibold text-gray-900 dark:text-white'
 						: 'text-gray-500 dark:text-gray-400'}"
 				>
@@ -154,10 +154,34 @@
 			{/if}
 			{#if selectedPaint}
 				<span class="text-gray-400">/</span>
-				<span class="font-semibold text-gray-900 dark:text-white">{selectedPaint.code}</span>
+				<span class="cursor-pointer font-semibold text-gray-900 dark:text-white"
+					>{selectedPaint.code}
+				</span>
 			{/if}
 		</nav>
 	</div>
+
+	{#snippet labelPrimary(paint: PaintInfo)}
+		{@const brandMeta = getBrandMeta(paint.brand)}
+		{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
+		<span class="text-gray-600 dark:text-gray-300">
+			<Button
+				color="secondary"
+				class="inline-block cursor-pointer p-0 text-gray-600 dark:text-gray-300"
+				onclick={() => navigateTo({ brand: paint.brand, serie: paint.serie })}
+			>
+				{serieMeta?.name ?? paint.serie}
+			</Button>
+			/
+			<Button
+				color="secondary"
+				class="inline-block cursor-pointer p-0 text-gray-600 dark:text-gray-300"
+				onclick={() => navigateTo({ brand: paint.brand })}
+			>
+				{brandMeta?.name ?? paint.brand}
+			</Button>
+		</span>
+	{/snippet}
 
 	<div class="flex-1 overflow-hidden">
 		{#if level === 0}
@@ -216,7 +240,7 @@
 								type="button"
 								onclick={() => selectSerie(serie)}
 								title={serieMeta?.desc}
-								class="flex w-full items-center gap-2 px-2 py-1.5 text-left text-xs {serie ===
+								class="cursor-pointer flex w-full items-center gap-2 px-2 py-1.5 text-left text-xs {serie ===
 								selectedSerie
 									? 'bg-primary-50 text-primary-700 dark:bg-gray-700 dark:text-white font-medium'
 									: 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'}"
@@ -263,13 +287,13 @@
 							>
 								<button
 									type="button"
-									aria-label={inStock ? '移出油漆库' : '加入油漆库'}
+									title={inStock ? 'remove from stock' : 'add to stock'}
 									onclick={(e) => {
 										e.stopPropagation();
 										stock.toggle(paintId(paint));
 										e.currentTarget.blur();
 									}}
-									class="absolute top-0 right-0 h-6 w-6 scale-75 text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
+									class="cursor-pointer absolute top-0 right-0 h-6 w-6 scale-75 text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
 										? 'scale-100 opacity-100'
 										: ''}"
 								>
@@ -303,8 +327,6 @@
 			{/key}
 		{:else if level === 2 && selectedPaint}
 			{@const paint = selectedPaint}
-			{@const brandMeta = getBrandMeta(paint.brand)}
-			{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
 			{@const inStock = stock.has(paintId(paint))}
 			{#key `${level}-${paint.brand}-${paint.code}`}
 				<div class="h-full overflow-y-auto p-4" in:fly={{ x: 24, duration: 150 }}>
@@ -313,9 +335,7 @@
 							<div class="min-w-0">
 								<div>
 									<span class="text-4xl font-bold">{paint.code}</span>
-									<span class="text-gray-600 dark:text-gray-300">
-										{serieMeta?.name ?? paint.serie} / {brandMeta?.name ?? paint.brand}
-									</span>
+									{@render labelPrimary(paint)}
 								</div>
 								<div class="font-bold text-gray-500 dark:text-gray-400">{paint.desc}</div>
 							</div>
@@ -323,7 +343,7 @@
 								type="button"
 								aria-label={inStock ? '移出油漆库' : '加入油漆库'}
 								onclick={() => stock.toggle(paintId(paint))}
-								class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors {inStock
+								class="cursor-pointer flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors {inStock
 									? 'bg-primary-500 text-white hover:bg-primary-600'
 									: 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}"
 							>
@@ -349,7 +369,6 @@
 							{#if comparePaint}
 								<button
 									type="button"
-									aria-label="跳转到{comparePaint.brand}/{comparePaint.code}"
 									onclick={() => selectPaint(comparePaint)}
 									class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
 									style="background-color: {rgbToHex(comparePaint.rgb)}"
@@ -364,13 +383,7 @@
 						</div>
 
 						{#if comparePaint}
-							{@const compareBrandMeta = getBrandMeta(comparePaint.brand)}
-							{@const compareSerieMeta = getSerieMeta(comparePaint.brand, comparePaint.serie)}
-							<button
-								type="button"
-								onclick={() => selectPaint(comparePaint)}
-								class="flex w-full cursor-pointer text-left"
-							>
+							<div class="flex w-full text-left">
 								{#if compareDeltaE !== null}
 									<div class="text-xs text-gray-400 flex-1">
 										{similarity(compareDeltaE).toFixed(0)}% 相似
@@ -381,14 +394,11 @@
 										{comparePaint.desc}
 									</div>
 									<div>
-										<span class=" text-gray-600 dark:text-gray-300">
-											{compareSerieMeta?.name ?? comparePaint.serie} / {compareBrandMeta?.name ??
-												comparePaint.brand}
-										</span>
+										{@render labelPrimary(comparePaint)}
 										<span class="text-4xl font-bold">{comparePaint.code}</span>
 									</div>
 								</div>
-							</button>
+							</div>
 						{/if}
 
 						<div>
@@ -426,7 +436,7 @@
 									<button
 										type="button"
 										onclick={() => toggleCompare(p)}
-										class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+										class="cursor-pointer flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
 										paintId(p)
 											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"

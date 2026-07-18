@@ -9,7 +9,8 @@ export default defineConfig({
 		sveltekit({
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
-				runes: ({ filename }) => filename.split(/[/\\]/).includes('node_modules') ? undefined : true
+				runes: ({ filename }) =>
+					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
 			// 纯静态输出：全站ssr=false+prerender=true、没有动态路由段，
@@ -18,7 +19,7 @@ export default defineConfig({
 			adapter: adapter({
 				pages: 'build',
 				assets: 'build',
-				fallback: undefined,
+				fallback: 'index.html',
 				strict: true
 			})
 		})
