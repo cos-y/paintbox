@@ -354,8 +354,10 @@
 		<MultiSelect
 			class="w-38 text-xs"
 			options={{
-				0: 'Water',
-				1: 'Solvent'
+				0: 'Lacquer',
+				1: 'Alcohol',
+				2: 'Enamel',
+				3: 'Water'
 			}}
 			title="Base"
 			bind:value={baseTypes}

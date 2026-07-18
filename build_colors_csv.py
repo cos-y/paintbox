@@ -1,18 +1,18 @@
 import csv
 
-li = [['brand', 'serie', 'code', 'color', 'desc', 'lacquer', 'prop']]
+li = [['brand', 'serie', 'code', 'color', 'desc', 'base', 'prop']]
 
 with open("gunze.csv", "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
-    for lacquer, serie, code, color, desc, prop, _ in reader:
+    for base, serie, code, color, desc, prop, _ in reader:
         li.append((
             'gunze',
             serie,
             code,
             int(color[1:], 16),
             desc,
-            lacquer,
+            base,
             prop,
         ))
 
