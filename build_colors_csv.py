@@ -12,9 +12,34 @@ with open("gunze.csv", "r", encoding='utf-8') as f:
             code,
             int(color[1:], 16),
             desc,
+            1 << int(base),
+            prop,
+        ))
+
+
+with open("tamiya.csv", "r", encoding='utf-8') as f:
+    reader = csv.reader(f.readlines())
+    next(reader)
+    tamiya = []
+    for color, serie, code, desc, prop, base in reader:
+        tamiya.append((
+            'tamiya',
+            serie,
+            code,
+            int(color[1:], 16),
+            desc,
             base,
             prop,
         ))
+
+    def f(x):
+        s = x[2]
+        if s[-1].isalpha():
+            s = s[:-1]
+        return int(s[len(x[1]):])
+
+    tamiya.sort(key=f)
+    li += tamiya
 
 
 with open("web/static/colors.csv", "w", newline="", encoding="utf-8") as f:

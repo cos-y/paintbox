@@ -36,7 +36,9 @@ pub enum SurfaceType {
     ME,
     C,
     PA,
+    FL,
     W,
+    U,
 }
 
 #[derive(Debug, Clone, Deserialize, Default)]
@@ -253,7 +255,7 @@ impl Searcher {
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
             // base
-            if ((1 << maj.base) & base_filter) != 0 {
+            if (maj.base & base_filter) != 0 {
                 // idxs
                 if all_filter.as_ref().is_none_or(|s| s.contains(&i)) {
                     // prop
@@ -333,7 +335,14 @@ impl Searcher {
         let li1: Vec<_> = li.iter().map(|x| x.i).collect();
 
         for rem in 1..=max_mix {
-            results.append(&mut self.search_mix(ctx, &rgb_out, li1.as_slice(), rem, ctx.limit * 3));
+            results.append(&mut self.search_mix(
+                ctx,
+                &rgb_out,
+                li1.as_slice(),
+                rem,
+                ctx.limit * 3,
+                u8::MAX,
+            ));
         }
 
         results.sort_by_key(|x| OrderedFloat(x.delta_e));
@@ -347,8 +356,12 @@ impl Searcher {
         is: &[usize],
         rem: u32,
         limit: usize,
+        base: u8,
     ) -> Vec<SearchMix> {
         let mut results: Vec<SearchMix> = vec![];
+        if base == 0 {
+            return results;
+        }
 
         // console::log_1(
         //     &format!(
@@ -360,12 +373,16 @@ impl Searcher {
 
         for i in is.iter() {
             ctx.candidates.set(*i, false);
+            let mix_base = base & self.majors[*i].base;
+            if mix_base == 0 {
+                continue;
+            }
 
             let li = match rem {
                 0 => vec![],
-                1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb, base| {
+                1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let lab = Lab::from_rgb_normalized(&rgb);
-                    self.search_mix_target(ctx, &lab, base)
+                    self.search_mix_target(ctx, &lab, mix_base)
                         .map(|MeasuredItem { i, delta_e }| SearchMix {
                             portions: smallvec![Portion { i, t: 1f32 }],
                             latent: self.latents[i],
@@ -374,13 +391,20 @@ impl Searcher {
                         .into_iter()
                         .collect()
                 }),
-                _ => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb, base| {
+                _ => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let li: Vec<_> = ctx
                         .candidates
                         .ones()
-                        .filter(|i| self.majors[*i].base == base)
+                        .filter(|i| (self.majors[*i].base & mix_base) != 0)
                         .collect();
-                    self.search_mix(ctx, rgb, li.as_slice(), rem - 1, limit * 3 / is.len())
+                    self.search_mix(
+                        ctx,
+                        rgb,
+                        li.as_slice(),
+                        rem - 1,
+                        limit * 3 / is.len(),
+                        mix_base,
+                    )
                 }),
             };
 
@@ -398,7 +422,7 @@ impl Searcher {
         ctx: &mut SearchContext,
         rgb_out: &Rgb,
         i_0: usize,
-        search_next: &dyn Fn(&mut SearchContext, &Rgb, u8) -> Vec<SearchMix>,
+        search_next: &dyn Fn(&mut SearchContext, &Rgb) -> Vec<SearchMix>,
     ) -> Vec<SearchMix> {
         let latent_out = float_rgb_to_latent(rgb_out);
         let lab_out = Lab::from_rgb_normalized(rgb_out);
@@ -430,7 +454,7 @@ impl Searcher {
                 mut portions,
                 mut latent,
                 ..
-            } in search_next(ctx, &rgb_1, self.majors[i_0].base)
+            } in search_next(ctx, &rgb_1)
             {
                 // console::log_1(&format!(":: search_next -> {:?}", portions).into());
                 let SearchMix2Portion { t, delta_e } =
@@ -553,7 +577,7 @@ impl Searcher {
         let mut mind = f32::MAX;
         for i in ctx.candidates.ones() {
             // cannot mix paint of different base
-            if self.majors[i].base == base {
+            if (self.majors[i].base & base) != 0 {
                 let d = cie00::diff(point, self.labs[i]);
                 if d < mind {
                     mini = Some(i);

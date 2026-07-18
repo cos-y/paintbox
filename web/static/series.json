@@ -64,5 +64,41 @@
     "serie": "V",
     "name": "Various",
     "desc": "Paints from various ranges"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "X",
+    "name": "X",
+    "desc": "Acrylic / Enamel gloss paints"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "XF",
+    "name": "XF",
+    "desc": "Acrylic / Enamel flat paints"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "TS",
+    "name": "TS",
+    "desc": "Spray acrylic lacquer"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "AS",
+    "name": "AS",
+    "desc": "Aviation spray acrylic lacquer"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "PS",
+    "name": "PS",
+    "desc": "Spray for policarbonate (PS)"
+  },
+  {
+    "brand": "tamiya",
+    "serie": "LP",
+    "name": "LP",
+    "desc": "Acrylic lacquer paints"
   }
 ]

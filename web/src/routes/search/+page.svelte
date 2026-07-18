@@ -345,6 +345,7 @@
 				ME: 'Metallic',
 				C: 'Clear',
 				PA: 'Pearl',
+				FL: 'Fluorescence',
 				W: 'Weathering'
 			}}
 			title="Surface"
@@ -449,7 +450,7 @@
 						</div>
 					</div>
 				{:else}
-					<div class="text-sm text-gray-400">没有匹配结果</div>
+					<!-- no result -->
 				{/each}
 			{/if}
 		</div>
