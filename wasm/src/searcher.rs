@@ -94,22 +94,26 @@ struct SearchContext {
     mix2_iter: usize,
 }
 
+#[derive(Debug)]
 struct Portion {
     t: f32,
     i: usize,
 }
 
+#[derive(Debug)]
 struct SearchMix {
     portions: SmallVec<[Portion; 8]>,
     latent: Latent,
     delta_e: f32,
 }
 
+#[derive(Debug)]
 struct SearchMix2Portion {
     t: f32,
     delta_e: f32,
 }
 
+#[derive(Debug)]
 struct MeasuredItem {
     i: usize,
     delta_e: f32,
@@ -126,6 +130,27 @@ fn hex_to_rgb(hex: u32) -> Rgb {
     let g = (hex >> 8) as u8;
     let r = (hex >> 16) as u8;
     [(r as f32) / 255.0, (g as f32) / 255.0, (b as f32) / 255.0]
+}
+
+fn lerp_latent(l0: &Latent, l1: &Latent, t: f32) -> Latent {
+    std::array::from_fn(|i| t * l0[i] + (1f32 - t) * l1[i])
+}
+
+fn collect_mix_dedup(results: &mut Vec<SearchMix>, new: impl Iterator<Item = SearchMix>) {
+    for mix in new {
+        if let Some(x) = results.iter_mut().find(|x| {
+            x.portions
+                .iter()
+                .zip(mix.portions.iter())
+                .all(|(a, b)| a.i == b.i)
+        }) {
+            if mix.delta_e < x.delta_e {
+                *x = mix;
+            }
+        } else {
+            results.push(mix);
+        }
+    }
 }
 
 impl Searcher {
@@ -279,11 +304,13 @@ impl Searcher {
                 })
                 .collect();
             results.push(SearchResult {
-                delta_e: delta_e,
-                rgb: rgb,
-                portions: portions,
+                delta_e,
+                rgb,
+                portions,
             });
         }
+
+        // console::log_1(&format!(":: results = {:?}", results).into());
 
         Ok(results)
     }
@@ -302,16 +329,13 @@ impl Searcher {
             })
             .collect();
 
+        // TODO: use this or iter candidates
         let li1: Vec<_> = li.iter().map(|x| x.i).collect();
 
         for rem in 1..=max_mix {
-            let mut li1 = self.search_mix(ctx, &rgb_out, li1.as_slice(), rem, true, ctx.limit);
+            let mut li = self.search_mix(ctx, &rgb_out, li1.as_slice(), rem, ctx.limit * 3);
 
-            for x in li.iter() {
-                ctx.candidates.set(x.i, true);
-            }
-
-            results.append(&mut li1);
+            results.append(&mut li);
         }
 
         results.sort_by_key(|x| OrderedFloat(x.delta_e));
@@ -324,15 +348,22 @@ impl Searcher {
         rgb_out: &Rgb,
         is: &[usize],
         rem: u32,
-        exclude: bool,
         limit: usize,
     ) -> Vec<SearchMix> {
-        let mut results = vec![];
+        let mut results: Vec<SearchMix> = vec![];
+
+        // console::log_1(
+        //     &format!(
+        //         ":: candidates = {:?}",
+        //         ctx.candidates.ones().collect::<Vec<_>>()
+        //     )
+        //     .into(),
+        // );
 
         for i in is.iter() {
             ctx.candidates.set(*i, false);
 
-            let mut li = match rem {
+            let li = match rem {
                 0 => vec![],
                 1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let lab = Lab::from_rgb_normalized(&rgb);
@@ -347,21 +378,13 @@ impl Searcher {
                 }),
                 _ => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let li: Vec<_> = ctx.candidates.ones().collect();
-                    self.search_mix(
-                        ctx,
-                        rgb,
-                        li.as_slice(),
-                        rem - 1,
-                        false,
-                        limit * 3 / is.len(),
-                    )
+                    self.search_mix(ctx, rgb, li.as_slice(), rem - 1, limit * 3 / is.len())
                 }),
             };
 
-            results.append(&mut li);
-            if !exclude {
-                ctx.candidates.set(*i, true);
-            }
+            collect_mix_dedup(&mut results, li.into_iter());
+
+            ctx.candidates.set(*i, true);
         }
 
         results.sort_by_key(|x| OrderedFloat(x.delta_e));
@@ -384,43 +407,45 @@ impl Searcher {
 
         let mut results: Vec<SearchMix> = vec![];
 
-        for k in 1..n {
+        for k in 1..=n {
             let t0 = k as f32 * dt;
             let latent_1: Latent =
                 std::array::from_fn(|i| (latent_out[i] - t0 * latent_0[i]) / (1f32 - t0));
             let rgb_1 = latent_to_float_rgb(&latent_1);
 
+            // console::log_1(
+            //     &format!(
+            //         "do_search_mix({}={:?}, dst={:?}) :: {} -> {:?}",
+            //         self.majors[i_0].code,
+            //         hex_to_rgb(self.majors[i_0].rgb),
+            //         rgb_out,
+            //         t0,
+            //         rgb_1
+            //     )
+            //     .into(),
+            // );
             for SearchMix {
                 mut portions,
-                latent,
+                mut latent,
                 ..
             } in search_next(ctx, &rgb_1)
             {
+                // console::log_1(&format!(":: search_next -> {:?}", portions).into());
                 let SearchMix2Portion { t, delta_e } =
                     self.search_mix2_portion(ctx, latent_0, &latent, &lab_out, t0, dt * 0.5f32);
-
                 for e in portions.iter_mut() {
                     e.t *= 1f32 - t;
                 }
                 portions.push(Portion { t, i: i_0 });
-                let mix = SearchMix {
-                    portions,
-                    latent,
-                    delta_e,
-                };
-
-                if let Some(x) = results.iter_mut().find(|x| {
-                    x.portions
-                        .iter()
-                        .zip(mix.portions.iter())
-                        .all(|(a, b)| a.i == b.i)
-                }) {
-                    if delta_e < x.delta_e {
-                        *x = mix;
-                    }
-                } else {
-                    results.push(mix);
-                }
+                latent = lerp_latent(&latent_0, &latent, t);
+                collect_mix_dedup(
+                    &mut results,
+                    std::iter::once(SearchMix {
+                        portions,
+                        latent,
+                        delta_e,
+                    }),
+                );
             }
         }
 
@@ -450,7 +475,7 @@ impl Searcher {
             let mut mink = None;
             for k in -n..=n {
                 let t = t0 + k as f32 * dt;
-                let latent = std::array::from_fn(|i| (1f32 - t) * latent_1[i] - t * latent_0[i]);
+                let latent = std::array::from_fn(|i| t * latent_0[i] + (1f32 - t) * latent_1[i]);
 
                 let rgb = latent_to_float_rgb(&latent);
                 let lab = Lab::from_rgb_normalized(&rgb);
@@ -467,6 +492,17 @@ impl Searcher {
             }
 
             if dt < ctx.mix2_prec {
+                // console::log_1(
+                //     &format!(
+                //         "search_mix2_portion() -> t={} rgb={:?} d={}",
+                //         t0,
+                //         latent_to_float_rgb(&std::array::from_fn(
+                //             |i| t0 * latent_0[i] + (1f32 - t0) * latent_1[i]
+                //         )),
+                //         mind
+                //     )
+                //     .into(),
+                // );
                 return SearchMix2Portion {
                     t: t0,
                     delta_e: mind,
