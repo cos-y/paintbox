@@ -237,3 +237,178 @@ C,MC,70.937,Transparent Yellow,#FAA41A
 C,MC,70.938,Transparent Blue,#353F61
 M,MC,70.942,Light Green,#449A6B
 M,MC,70.973,Light Sea Grey,#97ACB0
+SG,GC,72.001,Dead White,#FFFFFF
+SG,GC,72.003,Pale Flesh,#C39E7E
+SG,GC,72.004,Elf Skin Tone,#C5895B
+SG,GC,72.005,Moon Yellow,#EDB524
+SG,GC,72.006,Sun Yellow,#FAA222
+SG,GC,72.007,Gold Yellow,#D6792D
+SG,GC,72.008,Orange Fire,#F2652A
+SG,GC,72.009,Hot Orange,#E9462E
+SG,GC,72.010,Bloody Red,#D9282A
+SG,GC,72.011,Gory Red,#7A1E25
+SG,GC,72.012,Scarlet Red,#721C23
+SG,GC,72.013,Squid Pink,#C277A4
+SG,GC,72.014,Warlord Purple,#832859
+SG,GC,72.015,Hexed Lichen,#4B2A5B
+SG,GC,72.016,Royal Purple,#271E39
+SG,GC,72.019,Night Blue,#141F30
+SG,GC,72.020,Imperial Blue,#1F2B4B
+SG,GC,72.021,Magic Blue,#0071AB
+SG,GC,72.022,Ultramarine Blue,#36426F
+SG,GC,72.023,Electric Blue,#439AB1
+SG,GC,72.024,Turquoise,#036666
+SG,GC,72.025,Foul Green,#00AA87
+SG,GC,72.026,Jade Green,#007A5E
+SG,GC,72.027,Scurvy Green,#164F46
+SG,GC,72.028,Dark Green,#133423
+SG,GC,72.029,Sick Green,#3F643D
+SG,GC,72.030,Goblin Green,#54623A
+SG,GC,72.031,Camouflage Green,#8A7A40
+SG,GC,72.032,Scorpy Green,#538844
+SG,GC,72.034,Bone White,#B79F77
+SG,GC,72.035,Dead Flesh,#BBA758
+SG,GC,72.036,Bronze Brown,#AF6E32
+SG,GC,72.038,Scrofulous Brown,#A16929
+SG,GC,72.039,Plague Brown,#A7743D
+SG,GC,72.040,Leather Brown,#896134
+SG,GC,72.042,Parasite Brown,#9D5F2A
+SG,GC,72.043,Beasty Brown,#75532A
+SG,GC,72.044,Dark Fleshtone,#59362A
+SG,GC,72.045,Charred Brown,#3C2826
+SG,GC,72.047,Wolf Grey,#B8CACA
+SG,GC,72.048,Sombre Grey,#54646F
+SG,GC,72.049,Stonewall Grey,#969084
+SG,GC,72.050,Neutral Grey,#6D6F66
+SG,GC,72.051,Black,#000000
+ME,GC,72.052,Silver,#A9B3B4
+ME,GC,72.053,Chainmail,#8B939B
+ME,GC,72.054,Dark Gunmetal,#696E73
+ME,GC,72.055,Polished Gold,#E1B233
+ME,GC,72.056,Glorious Gold,#CF8C34
+ME,GC,72.057,Bright Bronze,#9F5A18
+ME,GC,72.058,Brassy Brass,#AA6B46
+ME,GC,72.059,Hammered Copper,#724633
+ME,GC,72.060,Tinny Tin,#522B27
+SG,GC,72.061,Khaki,#957D55
+SG,GC,72.062,Earth,#715735
+SG,GC,72.063,Desert Yellow,#946B3D
+SG,GC,72.066,Tan,#936758
+SG,GC,72.067,Cayman Green,#55532E
+SG,GC,72.071,Barbarian Skin,#8D6849
+SG,GC,72.076,Alien Purple,#6B66AE
+SG,GC,72.082,White,#FFFFFF
+SG,GC,72.083,Magenta Magenta,#A52C60
+SG,GC,72.084,Dark Turquoise,#00748A
+SG,GC,72.085,Yellow,#EBA72A
+SG,GC,72.086,Red,#D21F26
+SG,GC,72.087,Violet,#6F467B
+SG,GC,72.088,Blue,#095C95
+SG,GC,72.089,Green,#08743C
+SG,GC,72.090,Black Green,#3A644E
+SG,GC,72.091,Sepia,#53412D
+SG,GC,72.093,Skin,#5A2D2A
+SG,GC,72.094,Black,#000000
+SG,GC,72.095,Glacier Blue,#BFD2EC
+SG,GC,72.096,Verdigris,#7AC9AA
+SG,GC,72.098,Elfic Flesh,#E4D0B1
+SG,GC,72.099,Skin Tone,#E0A682
+SG,GC,72.100,Rosy Flesh,#E4896C
+SG,GC,72.101,Off-White,#FCEFD3
+SG,GC,72.102,Steel Grey,#7591A0
+FL,GC,72.103,Fluorescent Yellow,#EAE84B
+FL,GC,72.104,Fluorescent Green,#6EBE44
+SG,GC,72.106,Scarlet Blood,#C62B30
+SG,GC,72.107,Anthea Skin,#C7635B
+SG,GC,72.108,Succubus Skin,#8E4550
+SG,GC,72.109,Toxic Yellow,#E2D262
+SG,GC,72.110,Sunset Orange,#F89644
+SG,GC,72.111,Nocturnal Red,#4F1624
+SG,GC,72.112,Evil Red,#3F1826
+SG,GC,72.113,Deep Magenta,#632748
+SG,GC,72.114,Lustful Purple,#AE86BB
+SG,GC,72.115,Marrón Mugre,#84482E
+SG,GC,72.116,Midnight Purple,#271636
+SG,GC,72.117,Elfic Blue,#506780
+SG,GC,72.118,Sunrise Blue,#60C9E9
+SG,GC,72.119,Aquamarine,#10827B
+SG,GC,72.120,Abyssal Turquoise,#18445A
+SG,GC,72.121,Ghost Green,#78C396
+SG,GC,72.122,Bile Green,#CDDC33
+SG,GC,72.123,Angel Green,#304F31
+SG,GC,72.124,Gorgon Brown,#552E26
+SG,GC,72.145,Dirty Grey,#646138
+SG,GC,72.148,Warm Grey,#AA9999
+SG,GC,72.155,Charcoal,#313539
+FL,GC,72.156,Fluorescent Orange,#F15A22
+FL,GC,72.157,Fluorescent Red,#E03A5B
+FL,GC,72.158,Fluoresc. Magenta,#EE4097
+FL,GC,72.159,Fluorescent Violet,#6F2C84
+FL,GC,72.160,Fluorescent Blue,#008CD1
+FL,GC,72.161,Fluo. Cold Green,#007579
+W,GC,73.200,Sepia,#835F30
+W,GC,73.201,Black,#2B2C33
+W,GC,73.203,Umber,#6A5C53
+W,GC,73.204,Flesh,#AF7A75
+W,GC,73.206,Red,#D46388
+W,GC,73.207,Blue,#0C72BA
+W,GC,73.208,Yellow,#D4DE24
+W,GC,73.209,Violet,#56368D
+SG,GA,70.600,White,#FFFFFF
+SG,GA,70.602,Black,#231F20
+SG,GA,70.625,Ultramarine Blue,#36426F
+SG,GA,70.629,Sun Yellow,#FAA222
+SG,GA,70.630,Steel Grey,#7591A0
+SG,GA,70.631,Chainmail Silver,#8B939B
+SG,GA,70.632,Bloody Red,#D9282A
+SG,GA,76.001,Dead White,#FFFFFF
+SG,GA,76.003,Pale Flesh,#DD9C7A
+SG,GA,76.004,Elf Skin Tone,#D1844E
+SG,GA,76.005,Moon Yellow,#EEA125
+SG,GA,76.006,Sun Yellow,#F8971D
+SG,GA,76.007,Gold Yellow,#F47720
+SG,GA,76.008,Orange Fire,#F15822
+SG,GA,76.010,Bloody Red,#9C1F1E
+SG,GA,76.012,Scarlet Red,#390108
+SG,GA,76.013,Squid Pink,#B1639D
+SG,GA,76.014,Warlord Purple,#570F3A
+SG,GA,76.016,Royal Purple,#201634
+SG,GA,76.019,Night Blue,#0E0F23
+SG,GA,76.020,Imperial Blue,#091030
+SG,GA,76.021,Magic Blue,#154B93
+SG,GA,76.022,Ultramarine Blue,#191F42
+SG,GA,76.023,Electric Blue,#2B799F
+SG,GA,76.024,Turquoise,#004F57
+SG,GA,76.026,Jade Green,#006E56
+SG,GA,76.027,Scurvy Green,#0D3A34
+SG,GA,76.028,Dark Green,#1A2A21
+SG,GA,76.031,Camouflage Green,#746A36
+SG,GA,76.032,Scorpy Green,#568042
+SG,GA,76.034,Bone White,#CCC4A3
+SG,GA,76.035,Dead Flesh,#9C884D
+SG,GA,76.036,Bronze Brown,#AF6E32
+SG,GA,76.040,Leather Brown,#563A1A
+SG,GA,76.042,Parasite Brown,#5F330D
+SG,GA,76.043,Beasty Brown,#412906
+SG,GA,76.045,Charred Brown,#261209
+SG,GA,76.047,Wolf Grey,#9CB4B8
+SG,GA,76.048,Sombre Grey,#2F3B42
+SG,GA,76.049,Stonewall Grey,#67655F
+SG,GA,76.050,Neutral Grey,#3F4345
+SG,GA,76.051,Black,#000000
+SG,GA,76.062,Earth,#3A2C15
+SG,GA,76.063,Desert Yellow,#755B30
+SG,GA,76.071,Barbarian Skin,#755C3E
+SG,GA,76.076,Alien Purple,#4E417F
+SG,GA,76.100,Rosy Flesh,#E2745F
+SG,GA,76.107,Athena Skin,#AA574B
+SG,GA,76.109,Toxic Yellow,#EAC143
+SG,GA,76.111,Nocturnal Red,#26040B
+SG,GA,76.114,Lustful Purple,#8268AD
+SG,GA,76.115,Grunge Brown,#5E3729
+SG,GA,76.116,Midnight Purple,#060013
+SG,GA,76.118,Sunrise Blue,#49B0D1
+SG,GA,76.120,Abyssal Turquoise,#052432
+SG,GA,76.121,Ghost Green,#4FB98B
+SG,GA,76.122,Bile Green,#CDDC33
+SG,GA,76.123,Angel Green,#172919

@@ -160,5 +160,17 @@
     "serie": "LM",
     "name": "Liquid Metal",
     "desc": "Alcohol-based quick dry metallic paints"
+  },
+  {
+    "brand": "av",
+    "serie": "GC",
+    "name": "Game Color",
+    "desc": "Acrylic colors for fantasy and wargame figures"
+  },
+  {
+    "brand": "av",
+    "serie": "GA",
+    "name": "Game Air",
+    "desc": "Acrylic colors for fantasy and wargame figures"
   }
 ]

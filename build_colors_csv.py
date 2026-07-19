@@ -51,7 +51,7 @@ with open("ak.csv", "r", encoding='utf-8') as f:
         ak.append((
             'ak',
             serie,
-            code,
+            code[2:],
             int(color[1:], 16),
             desc,
             1 << 3,
