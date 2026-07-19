@@ -100,5 +100,53 @@
     "serie": "LP",
     "name": "LP",
     "desc": "Acrylic lacquer paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "S",
+    "name": "3rd Gen",
+    "desc": "New formulation acrylic paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "IC",
+    "name": "Intense Colors 3rd Gen",
+    "desc": "New formulation acrylic paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "INK",
+    "name": "Ink Colors 3rd Gen",
+    "desc": "New formulation acrylic paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "PC",
+    "name": "Pastel Colors 3rd Gen",
+    "desc": "New formulation acrylic paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "M",
+    "name": "Metallic Colors 3rd Gen",
+    "desc": "New formulation acrylic paints"
+  },
+  {
+    "brand": "ak",
+    "serie": "AFV",
+    "name": "AFV 3rd Gen",
+    "desc": "New formulation acrylic paints for AFVs"
+  },
+  {
+    "brand": "ak",
+    "serie": "FIG",
+    "name": "Figures 3rd Gen",
+    "desc": "New formulation acrylic paints for figures"
+  },
+  {
+    "brand": "ak",
+    "serie": "AIR",
+    "name": "AIR 3rd Gen",
+    "desc": "New formulation acrylic paints for planes"
   }
 ]

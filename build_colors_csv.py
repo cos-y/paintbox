@@ -42,6 +42,25 @@ with open("tamiya.csv", "r", encoding='utf-8') as f:
     li += tamiya
 
 
+with open("ak.csv", "r", encoding='utf-8') as f:
+    reader = csv.reader(f.readlines())
+    next(reader)
+    for row in reader:
+        code, serie, desc, color = row[0:4]
+        li.append((
+            'ak',
+            serie,
+            code,
+            int(color[1:], 16),
+            desc,
+            1 << 3,
+            'ME' if serie == 'M' else \
+            'C' if desc.startswith('Clear ') else \
+            'FL' if desc.startswith('Fluorescent ') else \
+            'M',
+        ))
+
+
 with open("web/static/colors.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerows(li)
