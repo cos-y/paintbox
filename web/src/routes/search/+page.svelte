@@ -206,7 +206,7 @@
 {/snippet}
 
 {#snippet selectSeries()}
-	<Button size="xs" color="alternative" class="relative gap-1 justify-start w-32">
+	<Button size="xs" color="alternative" class="cursor-pointer relative gap-1 justify-start w-32">
 		Series:
 		{#if selectedSeries.size > 0}
 			<Badge
@@ -224,11 +224,13 @@
 			<div class="w-40 shrink-0 overflow-y-auto border-r border-gray-200 py-1 dark:border-gray-700">
 				{#each Object.entries(catalog) as [brand, series]}
 					{@const selectedCount = selectedCountInBrand(brand)}
+					{@const name = getBrandMeta(brand)?.name ?? brand}
 					<button
 						type="button"
 						onmouseenter={() => (activeFilterBrand = brand)}
 						onclick={() => (activeFilterBrand = brand)}
-						class="flex w-full items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
+						title={name}
+						class="cursor-pointer flex w-full items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
 						brand
 							? 'bg-gray-100 dark:bg-gray-600'
 							: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
@@ -238,7 +240,7 @@
 							alt=""
 							class="h-7 w-7 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
 						/>
-						<span class="min-w-0 flex-1 truncate">{getBrandMeta(brand)?.name ?? brand}</span>
+						<span class="min-w-0 flex-1 truncate">{name}</span>
 						{#if selectedCount > 0}
 							<Badge
 								class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
@@ -273,7 +275,7 @@
 									tabindex="0"
 									onclick={() => toggleSerie(brand, serie)}
 									onkeydown={(e) => e.key === 'Enter' && toggleSerie(brand, serie)}
-									title={serieMeta?.desc}
+									title={serieMeta?.name}
 									class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md bg-gray-100 shadow-sm transition-transform hover:scale-105 dark:bg-gray-800 {selected
 										? 'ring-[3px] ring-primary-500'
 										: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"

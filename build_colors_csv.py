@@ -45,9 +45,10 @@ with open("tamiya.csv", "r", encoding='utf-8') as f:
 with open("ak.csv", "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
+    ak = []
     for row in reader:
         code, serie, desc, color = row[0:4]
-        li.append((
+        ak.append((
             'ak',
             serie,
             code,
@@ -59,6 +60,28 @@ with open("ak.csv", "r", encoding='utf-8') as f:
             'FL' if desc.startswith('Fluorescent ') else \
             'M',
         ))
+
+    ak.sort(key=lambda x:int(x[2][2:]))
+    li += ak
+
+
+with open("av.csv", "r", encoding='utf-8') as f:
+    reader = csv.reader(f.readlines())
+    next(reader)
+    av = []
+    for prop, serie, ref, desc, color in reader:
+        av.append((
+            'av',
+            serie,
+            ref,
+            int(color[1:], 16),
+            desc,
+            1 << 1 if serie == 'LM' else 1 << 3,
+            prop,
+        ))
+
+    av.sort(key=lambda x:float(x[2]))
+    li += av
 
 
 with open("web/static/colors.csv", "w", newline="", encoding="utf-8") as f:

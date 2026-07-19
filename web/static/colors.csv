@@ -1447,3 +1447,241 @@ ak,AIR,AK11917,4676193,AMT-11 Blue-Grey,8,M
 ak,AIR,AK11918,2831928,AMT-12 Dark Grey,8,M
 ak,AIR,AK11919,2909486,Radome & Wheel Hub Green,8,M
 ak,AIR,AK11920,12500922,MiG-25/MiG-31 Grey,8,M
+av,MC,70.730,15394897,Yellow Fluo,8,FL
+av,MC,70.733,15755044,Orange Fluo,8,FL
+av,MC,70.735,15486107,Magenta Fluo,8,FL
+av,MC,70.736,1209528,Blue Fluo,8,FL
+av,MC,70.737,10210663,Green Fluo,8,FL
+av,MC,70.740,4733729,Cam. Middle Brown,8,M
+av,MC,70.741,2764072,Cam. Black Green,8,M
+av,MC,70.745,7885652,Dark Rose,8,M
+av,MC,70.746,5848635,Chestnut Brown,8,M
+av,MC,70.747,12083288,Faded Red,8,M
+av,MC,70.748,14584479,Light Pink,8,M
+av,MC,70.749,4137781,Dark Purple,8,M
+av,MC,70.750,10390966,Light Violet,8,M
+av,MC,70.751,3286834,Black Violet,8,M
+av,MC,70.752,1776171,Infantry Blue,8,M
+av,MC,70.753,957606,Light Blue Green,8,M
+av,MC,70.754,1777194,Continental Blue,8,M
+av,MC,70.755,950905,Light Emerald,8,M
+av,MC,70.756,4482887,Splinter Green,8,M
+av,MC,70.757,5928299,Pacific Green,8,M
+av,MC,70.758,7177042,Bright Green,8,M
+av,MC,70.759,4933694,German Tank Crew,8,M
+av,MC,70.760,7960930,Light Mud,8,M
+av,MC,70.761,8154457,Old Wood,8,M
+av,MC,70.762,5523237,Grey Brown,8,M
+av,MC,70.763,4340254,Canvas,8,M
+av,MC,70.764,9073457,Military Yellow,8,M
+av,MC,70.765,11378309,Desert Tan,8,M
+av,MC,70.766,14338747,Cream White,8,M
+av,MC,70.767,10978397,Desert Brown,8,M
+av,MC,70.768,7165248,BC Dark Brown,8,M
+av,MC,70.769,9924944,Mustard Brown,8,M
+av,MC,70.770,8544321,New Wood,8,M
+av,MC,70.771,3481636,Dark Rust,8,M
+av,MC,70.772,7510931,Medium Grey Blue,8,M
+av,MC,70.773,5527384,Violet Grey,8,M
+av,MC,70.774,8221299,Lavender Grey,8,M
+av,LM,70.790,13226967,Silver,2,ME
+av,LM,70.791,11246214,Gold,2,ME
+av,LM,70.792,12497207,Old Gold,2,ME
+av,LM,70.793,10780981,Rich Gold,2,ME
+av,LM,70.794,13143851,Red Gold,2,ME
+av,LM,70.795,8811058,Green Gold,2,ME
+av,LM,70.796,14080474,White Gold,2,ME
+av,LM,70.797,9979690,Copper,2,ME
+av,MC,70.800,1778482,Gunmetal Blue,8,ME
+av,MC,70.801,6241314,Brass,8,ME
+av,MC,70.802,12464981,Sunset Red,8,M
+av,MC,70.803,9922917,Brown Rose,8,M
+av,MC,70.804,11301203,Beige Red,8,M
+av,MC,70.805,12085341,German Orange,8,M
+av,MC,70.806,12956262,German Yellow,8,M
+av,MC,70.807,3948122,Oxford Blue,8,M
+av,MC,70.808,622474,Blue Green,8,M
+av,MC,70.809,1396359,Royal Blue,8,M
+av,MC,70.810,4662596,Royal Purple,8,M
+av,MC,70.811,5853318,Blue Violet,8,M
+av,MC,70.812,6108738,Violet Red,8,M
+av,MC,70.814,7224639,Burnt Red,8,M
+av,MC,70.815,15115912,Basic Skin Tone,8,M
+av,MC,70.816,4343121,Luftwaffe Uniform,8,M
+av,MC,70.817,12601145,Scarlet,8,M
+av,MC,70.818,9722948,Red Leather,8,M
+av,MC,70.819,11176799,Iraqi Sand,8,M
+av,MC,70.820,15787999,Off-White,8,M
+av,MC,70.821,7629655,Germ. Beige WWII,8,M
+av,MC,70.822,3945270,Cam. Black Brown,8,M
+av,MC,70.823,3161124,Luftwaffe Green,8,M
+av,MC,70.824,10978115,Orange Ochre,8,M
+av,MC,70.825,10125942,Pale Brown,8,M
+av,MC,70.826,5456956,Medium Brown,8,M
+av,MC,70.827,8099396,Lime Green,8,M
+av,MC,70.828,6506565,Mahogany Ink,8,C
+av,MC,70.829,13916221,Amaranth Red,8,M
+av,MC,70.830,5394749,Ger. Fieldgrey WWII,8,M
+av,MC,70.831,13668417,Tan Glaze,8,M
+av,MC,70.832,9031880,Verdigris Glaze,8,M
+av,MC,70.833,4347960,Fern Green,8,M
+av,MC,70.834,15310910,Natural Woodgrain,8,C
+av,MC,70.835,14716027,Salmon Rose,8,M
+av,MC,70.836,6908265,London Grey,8,M
+av,MC,70.837,14597258,Pale Sand,8,M
+av,MC,70.838,26191,Emerald,8,M
+av,MC,70.839,3431847,Ultramarine,8,M
+av,MC,70.840,27787,Light Turquoise,8,M
+av,MC,70.841,29870,Andrea Blue,8,M
+av,MC,70.842,15724527,Gloss White,8,G
+av,MC,70.843,10253143,Cork Brown,8,M
+av,MC,70.844,4888001,Deep Sky Blue,8,M
+av,MC,70.845,15504974,Sunny Skin Tone,8,M
+av,MC,70.846,7887188,Mahogany Brown,8,M
+av,MC,70.847,12886635,Dark Sand,8,M
+av,MC,70.850,3952180,Medium Olive,8,M
+av,MC,70.851,14770990,Bright Orange,8,M
+av,MC,70.853,15724532,White Glaze,8,M
+av,MC,70.854,4800061,Brown Glaze,8,M
+av,MC,70.855,3356217,Black Glaze,8,M
+av,MC,70.856,10976330,Ochre Brown,8,M
+av,MC,70.857,8093518,Golden Olive,8,M
+av,MC,70.858,15190900,Ice Yellow,8,M
+av,MC,70.859,5254445,Black Red,8,M
+av,MC,70.860,11237961,Med. Flesh Tone,8,M
+av,MC,70.861,1709597,Gloss Black,8,G
+av,MC,70.862,2564383,Black Grey,8,M
+av,MC,70.863,2827821,Gunmetal,8,ME
+av,MC,70.864,5330525,Natural Steel,8,ME
+av,MC,70.865,4538952,Oily Steel,8,ME
+av,MC,70.866,4014144,Grey Green,8,M
+av,MC,70.867,3949126,Dark Blue Grey,8,M
+av,MC,70.868,4473669,Dark Sea Green,8,M
+av,MC,70.869,5921889,Basalt Grey,8,M
+av,MC,70.870,8027517,Medium Sea Grey,8,M
+av,MC,70.871,5456696,Leather Brown,8,M
+av,MC,70.872,5653825,Chocolate Brown,8,M
+av,MC,70.873,7955786,US Field Drab,8,M
+av,MC,70.874,9400923,Tan Earth,8,M
+av,MC,70.875,8019784,Beige Brown,8,M
+av,MC,70.876,9200459,Brown Sand,8,M
+av,MC,70.877,12224328,Gold Brown,8,M
+av,MC,70.878,5125663,Old Gold,8,ME
+av,MC,70.879,8022584,Green Brown,8,M
+av,MC,70.880,8087362,Khaki Grey,8,M
+av,MC,70.881,7367494,Green Yellow,8,M
+av,MC,70.882,9009734,Middle Stone,8,M
+av,MC,70.883,13485756,Silver Grey,8,M
+av,MC,70.884,8814186,Stone Grey,8,M
+av,MC,70.885,9081456,Pastel Green,8,M
+av,MC,70.886,6645590,Green Grey,8,M
+av,MC,70.887,5657665,US Olive Drab,8,M
+av,MC,70.888,3816748,Olive Grey,8,M
+av,MC,70.889,3615781,Olive Brown,8,M
+av,MC,70.890,4146997,Refractive Green,8,M
+av,MC,70.891,5204040,Intermediate Green,8,M
+av,MC,70.892,3160112,Yellow Olive,8,M
+av,MC,70.893,4474681,US Dark Green,8,M
+av,MC,70.894,3488046,Cam. Olive Green,8,M
+av,MC,70.895,4609346,Gunship Green,8,M
+av,MC,70.896,2237453,Extra Dark Green,8,M
+av,MC,70.897,2635301,Bronze Green,8,M
+av,MC,70.898,1911608,Dark Sea Blue,8,M
+av,MC,70.899,3351619,Dark Prussian Blue,8,M
+av,MC,70.900,6056054,French Mirage Blue,8,M
+av,MC,70.901,6323345,Pastel Blue,8,M
+av,MC,70.902,5926815,Azure,8,M
+av,MC,70.903,6450297,Intermediate Blue,8,M
+av,MC,70.904,6914699,Dark Blue Grey,8,M
+av,MC,70.905,8225927,Blue Grey Pale,8,M
+av,MC,70.906,8756641,Pale Blue,8,M
+av,MC,70.907,10399663,Pale Grey Blue,8,M
+av,MC,70.908,9774376,Carmine Red,8,M
+av,MC,70.909,12989237,Vermilion,8,M
+av,MC,70.910,14765349,Orange Red,8,M
+av,MC,70.911,16021810,Light Orange,8,M
+av,MC,70.912,12162417,Tan Yellow,8,M
+av,MC,70.913,14329681,Yellow Ochre,8,M
+av,MC,70.914,10322243,Green Ochre,8,M
+av,MC,70.915,15582506,Deep Yellow,8,M
+av,MC,70.916,15121501,Sand Yellow,8,M
+av,MC,70.917,14399857,Beige,8,M
+av,MC,70.918,14998730,Ivory,8,M
+av,MC,70.919,15921654,Cold White,8,M
+av,MC,70.920,4280390,German Uniform,8,M
+av,MC,70.921,7034162,English Uniform,8,M
+av,MC,70.922,4543539,Uniform Green,8,M
+av,MC,70.923,9993783,Japan. Unif. WWII,8,M
+av,MC,70.924,5329465,Russian Unif. WWII,8,M
+av,MC,70.925,3485265,Blue,8,M
+av,MC,70.926,7743788,Red,8,M
+av,MC,70.927,13603398,Dark Flesh,8,M
+av,MC,70.928,15781296,Light Flesh,8,M
+av,MC,70.929,10314044,Light Brown,8,M
+av,MC,70.930,2439785,Dark Blue,8,M
+av,MC,70.934,11808062,Transparent Red,8,C
+av,MC,70.935,15952678,Transparent Orange,8,C
+av,MC,70.936,98897,Transparent Green,8,C
+av,MC,70.937,16426010,Transparent Yellow,8,C
+av,MC,70.938,3489633,Transparent Blue,8,C
+av,MC,70.939,5917513,Smoke Ink,8,C
+av,MC,70.940,9005668,Saddle Brown,8,M
+av,MC,70.941,4732206,Burnt Umber,8,M
+av,MC,70.942,4495979,Light Green,8,M
+av,MC,70.943,5927559,Grey Blue,8,M
+av,MC,70.944,12087666,Old Rose,8,M
+av,MC,70.945,9254493,Magenta,8,M
+av,MC,70.946,6434344,Dark Red,8,M
+av,MC,70.947,11809074,Dark Vermilion,8,M
+av,MC,70.948,16426815,Golden Yellow,8,M
+av,MC,70.949,16044369,Light Yellow,8,M
+av,MC,70.950,1577754,Black,8,M
+av,MC,70.951,16777215,White,8,M
+av,MC,70.952,14733614,Lemon Yellow,8,M
+av,MC,70.953,16103234,Flat Yellow,8,M
+av,MC,70.954,14082112,Yellow Green,8,M
+av,MC,70.955,14456671,Flat Flesh,8,M
+av,MC,70.956,13521203,Clear Orange,8,C
+av,MC,70.957,10498354,Flat Red,8,M
+av,MC,70.958,11359617,Pink,8,M
+av,MC,70.959,5387609,Purple,8,M
+av,MC,70.960,3747152,Violet,8,M
+av,MC,70.961,6796234,Sky Blue,8,M
+av,MC,70.962,4149884,Flat Blue,8,M
+av,MC,70.963,1067380,Medium Blue,8,M
+av,MC,70.964,5003101,Field Blue,8,M
+av,MC,70.965,3623011,Prussian Blue,8,M
+av,MC,70.966,542559,Turquoise,8,M
+av,MC,70.967,5137213,Olive Green,8,M
+av,MC,70.968,3296560,Flat Green,8,M
+av,MC,70.969,1927249,Park Green Flat,8,M
+av,MC,70.970,1133616,Deep Green,8,M
+av,MC,70.971,11251622,Light Green Grey,8,M
+av,MC,70.972,8492173,Light Green Blue,8,M
+av,MC,70.973,9940144,Light Sea Grey,8,M
+av,MC,70.974,7376231,Green Sky,8,M
+av,MC,70.975,3882546,Military Green,8,M
+av,MC,70.976,13675864,Buff,8,M
+av,MC,70.977,11568465,Desert Yellow,8,M
+av,MC,70.978,9144133,Dark Yellow,8,M
+av,MC,70.979,1846560,Cam. Dark Green,8,M
+av,MC,70.980,2110507,Black Green,8,M
+av,MC,70.981,11168070,Orange Brown,8,M
+av,MC,70.982,8472896,Cavalry Brown,8,M
+av,MC,70.983,6308652,Flat Earth,8,M
+av,MC,70.984,7095358,Flat Brown,8,M
+av,MC,70.985,5584440,Hull Red,8,M
+av,MC,70.986,10657422,Deck Tan,8,M
+av,MC,70.987,8286300,Medium Grey,8,M
+av,MC,70.988,7102529,Khaki,8,M
+av,MC,70.989,10462375,Sky Grey,8,M
+av,MC,70.990,8686478,Light Grey,8,M
+av,MC,70.991,6645864,Dark Sea Grey,8,M
+av,MC,70.992,6251363,Neutral Grey,8,M
+av,MC,70.993,14473174,White Grey,8,M
+av,MC,70.994,2763572,Dark Grey,8,M
+av,MC,70.995,2435369,German Grey,8,M
+av,MC,70.996,9660980,Gold,8,ME
+av,MC,70.997,9211791,Silver,8,ME
+av,MC,70.998,5061153,Bronze,8,ME
+av,MC,70.999,8075054,Copper,8,ME

@@ -154,5 +154,11 @@
     "name": "Ak Interactive",
     "desc": "Bottled acrylic paints",
     "url": "https://ak-interactive.com/product-category/paints/"
+  },
+  {
+    "slug": "AV",
+    "name": "Acrylicos Vallejo",
+    "desc": "Bottled acrylic paints",
+    "url": "https://acrylicosvallejo.com/"
   }
 ]

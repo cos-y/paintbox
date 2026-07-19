@@ -1,0 +1,239 @@
+prop,serie,ref,name,color
+M,MC,70.740,Cam. Middle Brown,#483B21
+M,MC,70.741,Cam. Black Green,#2A2D28
+M,MC,70.745,Dark Rose,#785354
+M,MC,70.746,Chestnut Brown,#593E3B
+M,MC,70.747,Faded Red,#B86058
+M,MC,70.748,Light Pink,#DE8A9F
+M,MC,70.749,Dark Purple,#3F2335
+M,MC,70.750,Light Violet,#9E8DB6
+M,MC,70.751,Black Violet,#322732
+M,MC,70.752,Infantry Blue,#1B1A2B
+M,MC,70.753,Light Blue Green,#0E9CA6
+M,MC,70.754,Continental Blue,#1B1E2A
+M,MC,70.755,Light Emerald,#0E8279
+M,MC,70.756,Splinter Green,#446747
+M,MC,70.757,Pacific Green,#5A756B
+M,MC,70.758,Bright Green,#6D8352
+M,MC,70.759,German Tank Crew,#4B483E
+M,MC,70.760,Light Mud,#797962
+M,MC,70.761,Old Wood,#7C6D59
+M,MC,70.762,Grey Brown,#544725
+M,MC,70.763,Canvas,#423A1E
+M,MC,70.764,Military Yellow,#8A7331
+M,MC,70.765,Desert Tan,#AD9E85
+M,MC,70.766,Cream White,#DACABB
+M,MC,70.767,Desert Brown,#A7845D
+M,MC,70.768,BC Dark Brown,#6D5540
+M,MC,70.769,Mustard Brown,#977150
+M,MC,70.770,New Wood,#826041
+M,MC,70.771,Dark Rust,#352024
+M,MC,70.772,Medium Grey Blue,#729B93
+M,MC,70.773,Violet Grey,#545758
+M,MC,70.774,Lavender Grey,#7D7273
+ME,MC,70.800,Gunmetal Blue,#1B2332
+ME,MC,70.801,Brass,#5F3C22
+M,MC,70.802,Sunset Red,#BE3355
+M,MC,70.803,Brown Rose,#976965
+M,MC,70.804,Beige Red,#AC7153
+M,MC,70.805,German Orange,#B8685D
+M,MC,70.806,German Yellow,#C5B266
+M,MC,70.807,Oxford Blue,#3C3E5A
+M,MC,70.808,Blue Green,#097F8A
+M,MC,70.809,Royal Blue,#154E87
+M,MC,70.810,Royal Purple,#472544
+M,MC,70.811,Blue Violet,#595086
+M,MC,70.812,Violet Red,#5D3642
+M,MC,70.814,Burnt Red,#6E3D3F
+M,MC,70.815,Basic Skin Tone,#E6A688
+M,MC,70.816,Luftwaffe Uniform,#424551
+M,MC,70.817,Scarlet,#C04739
+M,MC,70.818,Red Leather,#945C44
+M,MC,70.819,Iraqi Sand,#AA8B5F
+M,MC,70.820,Off-White,#F0E7DF
+M,MC,70.821,Germ. Beige WWII,#746B57
+M,MC,70.822,Cam. Black Brown,#3C3336
+M,MC,70.823,Luftwaffe Green,#303C24
+M,MC,70.824,Orange Ochre,#A78343
+M,MC,70.825,Pale Brown,#9A8276
+M,MC,70.826,Medium Brown,#53443C
+M,MC,70.827,Lime Green,#7B9644
+C,MC,70.828,Mahogany Ink,#634845
+M,MC,70.829,Amaranth Red,#D4583D
+M,MC,70.830,Ger. Fieldgrey WWII,#52513D
+M,MC,70.833,Fern Green,#425838
+M,MC,70.835,Salmon Rose,#E08C7B
+M,MC,70.836,London Grey,#696969
+M,MC,70.837,Pale Sand,#DEBC8A
+M,MC,70.838,Emerald,#00664F
+M,MC,70.840,Light Turquoise,#006C8B
+M,MC,70.841,Andrea Blue,#0074AE
+M,MC,70.843,Cork Brown,#9C7357
+M,MC,70.844,Deep Sky Blue,#4A95C1
+M,MC,70.845,Sunny Skin Tone,#EC964E
+M,MC,70.846,Mahogany Brown,#785954
+M,MC,70.847,Dark Sand,#C4A26B
+M,MC,70.850,Medium Olive,#3C4E34
+M,MC,70.851,Bright Orange,#E1632E
+M,MC,70.856,Ochre Brown,#A77C4A
+M,MC,70.858,Ice Yellow,#E7CB74
+M,MC,70.859,Black Red,#502D2D
+M,MC,70.860,Med. Flesh Tone,#AB7A49
+G,MC,70.861,Gloss Black,#1A161D
+M,MC,70.862,Black Grey,#27211F
+ME,MC,70.863,Gunmetal,#2B262D
+ME,MC,70.864,Natural Steel,#51565D
+ME,MC,70.865,Oily Steel,#454248
+M,MC,70.866,Grey Green,#3D4040
+M,MC,70.867,Dark Blue Grey,#3C4246
+M,MC,70.868,Dark Sea Green,#444345
+M,MC,70.869,Basalt Grey,#5A5C61
+M,MC,70.870,Medium Sea Grey,#7A7D7D
+M,MC,70.871,Leather Brown,#534338
+M,MC,70.872,Chocolate Brown,#564541
+M,MC,70.873,US Field Drab,#79654A
+M,MC,70.874,Tan Earth,#8F725B
+M,MC,70.875,Beige Brown,#7A5F48
+M,MC,70.876,Brown Sand,#8C634B
+M,MC,70.877,Gold Brown,#BA8748
+ME,MC,70.878,Old Gold,#4E361F
+M,MC,70.879,Green Brown,#7A6A38
+M,MC,70.880,Khaki Grey,#7B6742
+M,MC,70.881,Green Yellow,#706B46
+M,MC,70.882,Middle Stone,#897A46
+M,MC,70.883,Silver Grey,#CDC6BC
+M,MC,70.884,Stone Grey,#867E6A
+M,MC,70.885,Pastel Green,#8A9270
+M,MC,70.886,Green Grey,#656756
+M,MC,70.887,US Olive Drab,#565441
+M,MC,70.888,Olive Grey,#3A3D2C
+M,MC,70.889,Olive Brown,#372C25
+M,MC,70.890,Refractive Green,#3F4735
+M,MC,70.891,Intermediate Green,#4F6848
+M,MC,70.892,Yellow Olive,#303830
+M,MC,70.893,US Dark Green,#444739
+M,MC,70.894,Cam. Olive Green,#35392E
+M,MC,70.895,Gunship Green,#465542
+M,MC,70.896,Extra Dark Green,#22240D
+M,MC,70.897,Bronze Green,#283625
+M,MC,70.898,Dark Sea Blue,#1D2B38
+M,MC,70.899,Dark Prussian Blue,#332443
+M,MC,70.901,Pastel Blue,#607C91
+M,MC,70.902,Azure,#5A6F9F
+M,MC,70.905,Blue Grey Pale,#7D8487
+M,MC,70.906,Pale Blue,#859DA1
+M,MC,70.907,Pale Grey Blue,#9EAFAF
+M,MC,70.908,Carmine Red,#952528
+M,MC,70.909,Vermilion,#C63335
+M,MC,70.911,Light Orange,#F47932
+M,MC,70.913,Yellow Ochre,#DAA751
+M,MC,70.914,Green Ochre,#9D8143
+M,MC,70.915,Deep Yellow,#EDC52A
+M,MC,70.916,Sand Yellow,#E6BC5D
+M,MC,70.917,Beige,#DBB971
+M,MC,70.918,Ivory,#E4DCCA
+M,MC,70.919,Cold White,#F2F1F6
+M,MC,70.920,German Uniform,#415046
+M,MC,70.921,English Uniform,#6B5532
+M,MC,70.922,Uniform Green,#455433
+M,MC,70.923,Japan. Unif. WWII,#987E37
+M,MC,70.924,Russian Unif. WWII,#515239
+M,MC,70.925,Blue,#352E51
+M,MC,70.926,Red,#76292C
+M,MC,70.927,Dark Flesh,#CF9246
+M,MC,70.928,Light Flesh,#F0CDB0
+M,MC,70.929,Light Brown,#9D613C
+M,MC,70.930,Dark Blue,#253A69
+C,MC,70.939,Smoke Ink,#5A4B49
+M,MC,70.940,Saddle Brown,#896A64
+M,MC,70.941,Burnt Umber,#48352E
+M,MC,70.943,Grey Blue,#5A7287
+M,MC,70.944,Old Rose,#B87172
+M,MC,70.945,Magenta,#8D365D
+M,MC,70.946,Dark Red,#622E28
+M,MC,70.947,Dark Vermilion,#B43132
+M,MC,70.948,Golden Yellow,#FAA73F
+M,MC,70.949,Light Yellow,#F4D151
+M,MC,70.950,Black,#18131A
+M,MC,70.951,White,#FFFFFF
+M,MC,70.952,Lemon Yellow,#E0D12E
+M,MC,70.953,Flat Yellow,#F5B742
+M,MC,70.954,Yellow Green,#D6E040
+M,MC,70.955,Flat Flesh,#DC975F
+C,MC,70.956,Clear Orange,#CE5133
+M,MC,70.957,Flat Red,#A03132
+M,MC,70.958,Pink,#AD5581
+M,MC,70.959,Purple,#523559
+M,MC,70.960,Violet,#392D50
+M,MC,70.961,Sky Blue,#67B3CA
+M,MC,70.962,Flat Blue,#3F527C
+M,MC,70.963,Medium Blue,#104974
+M,MC,70.964,Field Blue,#4C575D
+M,MC,70.965,Prussian Blue,#374863
+M,MC,70.966,Turquoise,#08475F
+M,MC,70.967,Olive Green,#4E633D
+M,MC,70.968,Flat Green,#324D30
+M,MC,70.969,Park Green Flat,#1D6851
+M,MC,70.970,Deep Green,#114C30
+M,MC,70.971,Light Green Grey,#ABAFA6
+M,MC,70.972,Light Green Blue,#81948D
+M,MC,70.974,Green Sky,#708D67
+M,MC,70.975,Military Green,#3B3E32
+M,MC,70.976,Buff,#D0AD58
+M,MC,70.977,Desert Yellow,#B08551
+M,MC,70.978,Dark Yellow,#8B8745
+M,MC,70.979,Cam. Dark Green,#1C2D20
+M,MC,70.980,Black Green,#20342B
+M,MC,70.981,Orange Brown,#AA6946
+M,MC,70.982,Cavalry Brown,#814940
+M,MC,70.983,Flat Earth,#60432C
+M,MC,70.984,Flat Brown,#6C443E
+M,MC,70.985,Hull Red,#553638
+M,MC,70.986,Deck Tan,#A29E8E
+M,MC,70.987,Medium Grey,#7E705C
+M,MC,70.988,Khaki,#6C6041
+M,MC,70.989,Sky Grey,#9FA4A7
+M,MC,70.990,Light Grey,#848B8E
+M,MC,70.991,Dark Sea Grey,#656868
+M,MC,70.992,Neutral Grey,#5F6363
+M,MC,70.993,White Grey,#DCD7D6
+M,MC,70.994,Dark Grey,#2A2B34
+M,MC,70.995,German Grey,#252929
+ME,MC,70.996,Gold,#936A34
+ME,MC,70.997,Silver,#8C8F8F
+ME,MC,70.998,Bronze,#4D3A21
+ME,MC,70.999,Copper,#7B372E
+ME,LM,70.790,Silver,#c9d3d7
+ME,LM,70.791,Gold,#ab9a86
+ME,LM,70.792,Old Gold,#beb137
+ME,LM,70.793,Rich Gold,#a48135
+ME,LM,70.794,Red Gold,#c88f2b
+ME,LM,70.795,Green Gold,#867232
+ME,LM,70.796,White Gold,#d6d9da
+ME,LM,70.797,Copper,#98472a
+FL,MC,70.730,Yellow Fluo,#EAE851
+FL,MC,70.733,Orange Fluo,#F06724
+FL,MC,70.735,Magenta Fluo,#EC4C9B
+FL,MC,70.736,Blue Fluo,#1274B8
+FL,MC,70.737,Green Fluo,#9BCD67
+M,MC,70.831,Tan Glaze,#D09041
+M,MC,70.832,Verdigris Glaze,#89D0C8
+C,MC,70.834,Natural Woodgrain,#E9A03E
+M,MC,70.839,Ultramarine,#345DA7
+G,MC,70.842,Gloss White,#EFEFEF
+M,MC,70.853,White Glaze,#EFEFF4
+M,MC,70.854,Brown Glaze,#493E3D
+M,MC,70.855,Black Glaze,#333639
+M,MC,70.857,Golden Olive,#7B7F4E
+M,MC,70.900,French Mirage Blue,#5C6876
+M,MC,70.903,Intermediate Blue,#626C79
+M,MC,70.904,Dark Blue Grey,#69828B
+M,MC,70.910,Orange Red,#E14D25
+M,MC,70.912,Tan Yellow,#B99571
+C,MC,70.934,Transparent Red,#B42D3E
+C,MC,70.935,Transparent Orange,#F36B26
+C,MC,70.936,Transparent Green,#018251
+C,MC,70.937,Transparent Yellow,#FAA41A
+C,MC,70.938,Transparent Blue,#353F61
+M,MC,70.942,Light Green,#449A6B
+M,MC,70.973,Light Sea Grey,#97ACB0

@@ -148,5 +148,17 @@
     "serie": "AIR",
     "name": "AIR 3rd Gen",
     "desc": "New formulation acrylic paints for planes"
+  },
+  {
+    "brand": "av",
+    "serie": "MC",
+    "name": "Model Color",
+    "desc": "Quick dry acrylic paints for brush"
+  },
+  {
+    "brand": "av",
+    "serie": "LM",
+    "name": "Liquid Metal",
+    "desc": "Alcohol-based quick dry metallic paints"
   }
 ]
