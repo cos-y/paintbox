@@ -1,59 +1,34 @@
-mod searcher;
+mod search;
+mod sim;
+mod wasm;
 
-use std::sync::Mutex;
+pub type Rgb = [f32; 3];
+pub type Latent = [f32; 7];
 
-use once_cell::sync::Lazy;
-use wasm_bindgen::prelude::*;
+pub type BoxError = Box<dyn std::error::Error>;
 
-use crate::searcher::{FilterOptions, Searcher};
-
-#[wasm_bindgen]
-pub fn color_diff(rgb_a: u32, rgb_b: u32) -> f32 {
-    searcher::color_diff(rgb_a, rgb_b)
+pub fn hex_to_rgb(hex: u32) -> Rgb {
+    let b = (hex >> 0) as u8;
+    let g = (hex >> 8) as u8;
+    let r = (hex >> 16) as u8;
+    [(r as f32) / 255.0, (g as f32) / 255.0, (b as f32) / 255.0]
 }
 
-static SEARCHER: Lazy<Mutex<Option<Searcher>>> = Lazy::new(|| Mutex::new(None));
-
-#[wasm_bindgen]
-pub fn init_searcher(blob: &[u8], equiv_blob: &[u8]) -> Result<(), JsError> {
-    let mut searcher = SEARCHER.lock()?;
-    if let None = *searcher {
-        *searcher = Some(Searcher::load(blob, equiv_blob)?);
-    }
-    Ok(())
+pub fn lerp_latent(l0: &Latent, l1: &Latent, t: f32) -> Latent {
+    std::array::from_fn(|i| t * l0[i] + (1f32 - t) * l1[i])
 }
 
-#[wasm_bindgen]
-pub fn find_direct_equivalences(index: usize) -> Result<JsValue, JsError> {
-    let searcher = SEARCHER.lock()?;
-    if let Some(ref searcher) = *searcher {
-        let r = serde_wasm_bindgen::to_value(&searcher.direct_equivalences(index))?;
-        Ok(r)
-    } else {
-        Ok(JsValue::null())
-    }
-}
+#[macro_export]
+macro_rules! log {
+    ($($t:tt)*) => {
+        #[cfg(target_arch = "wasm32")]
+        {
+            web_sys::console::log_1(&format!($($t)*).into());
+        }
 
-#[wasm_bindgen]
-pub fn list_paints() -> Result<JsValue, JsError> {
-    let searcher = SEARCHER.lock()?;
-    if let Some(ref searcher) = *searcher {
-        let r = serde_wasm_bindgen::to_value(&searcher.list())?;
-        Ok(r)
-    } else {
-        Ok(JsValue::null())
-    }
-}
-
-#[wasm_bindgen]
-pub fn search(rgb: u32, opts: JsValue) -> Result<JsValue, JsError> {
-    let searcher = SEARCHER.lock()?;
-    if let Some(ref searcher) = *searcher {
-        let filter: FilterOptions = serde_wasm_bindgen::from_value(opts)?;
-        let r = searcher.search(rgb, &filter)?;
-        let r = serde_wasm_bindgen::to_value(&r)?;
-        Ok(r)
-    } else {
-        Ok(JsValue::null())
-    }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            println!($($t)*);
+        }
+    };
 }

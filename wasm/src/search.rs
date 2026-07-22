@@ -8,11 +8,8 @@ use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
-use wasm_bindgen::JsError;
-use web_sys::console;
 
-type Rgb = [f32; 3];
-type Latent = [f32; 7];
+use crate::{BoxError, Latent, Rgb, hex_to_rgb, lerp_latent};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PaintInfo {
@@ -121,23 +118,6 @@ struct MeasuredItem {
     delta_e: f32,
 }
 
-pub fn color_diff(rgb_a: u32, rgb_b: u32) -> f32 {
-    let lab_a = Lab::from_rgb_normalized(&hex_to_rgb(rgb_a));
-    let lab_b = Lab::from_rgb_normalized(&hex_to_rgb(rgb_b));
-    cie00::diff(&lab_a, &lab_b)
-}
-
-fn hex_to_rgb(hex: u32) -> Rgb {
-    let b = (hex >> 0) as u8;
-    let g = (hex >> 8) as u8;
-    let r = (hex >> 16) as u8;
-    [(r as f32) / 255.0, (g as f32) / 255.0, (b as f32) / 255.0]
-}
-
-fn lerp_latent(l0: &Latent, l1: &Latent, t: f32) -> Latent {
-    std::array::from_fn(|i| t * l0[i] + (1f32 - t) * l1[i])
-}
-
 fn collect_mix_dedup(results: &mut Vec<SearchMix>, new: impl Iterator<Item = SearchMix>) {
     for mix in new {
         if let Some(x) = results.iter_mut().find(|x| {
@@ -158,7 +138,7 @@ fn collect_mix_dedup(results: &mut Vec<SearchMix>, new: impl Iterator<Item = Sea
 impl Searcher {
     /// blob是colors.csv；equiv_blob是一份"a,b"两列下标的csv（下标对应majors/list()的index），
     /// 代表两个型号互为直接等价（例如Gunze H9 <-> Gunze C9）
-    pub fn load(blob: &[u8], equiv_blob: &[u8]) -> Result<Self, JsError> {
+    pub fn load(blob: &[u8], equiv_blob: &[u8]) -> Result<Self, BoxError> {
         let s = std::str::from_utf8(blob)?;
 
         let mut rdr = csv::ReaderBuilder::new()
@@ -185,28 +165,29 @@ impl Searcher {
 
         let points: Vec<[f32; 3]> = labs.iter().map(|x| [x.l, x.a, x.b]).collect();
         let kdtree = ImmutableKdTree::new_from_slice(points.as_slice());
-        let mut direct_equivs = vec![Vec::new(); majors.len()];
 
-        let equiv_s = std::str::from_utf8(equiv_blob)?;
-        let mut equiv_rdr = csv::ReaderBuilder::new()
-            .delimiter(b',')
-            .has_headers(false)
-            .from_reader(equiv_s.as_bytes());
-        for v in equiv_rdr.records() {
-            let ref rec = v?;
-            let a: usize = rec
-                .get(0)
-                .ok_or_else(|| JsError::new("missing column a"))?
-                .parse()?;
-            let b: usize = rec
-                .get(1)
-                .ok_or_else(|| JsError::new("missing column b"))?
-                .parse()?;
-            if a < direct_equivs.len() && b < direct_equivs.len() {
-                direct_equivs[a].push(b);
-                direct_equivs[b].push(a);
-            }
-        }
+        let direct_equivs = vec![Vec::new(); majors.len()];
+        // let mut direct_equivs = vec![Vec::new(); majors.len()];
+        // let equiv_s = std::str::from_utf8(equiv_blob)?;
+        // let mut equiv_rdr = csv::ReaderBuilder::new()
+        //     .delimiter(b',')
+        //     .has_headers(false)
+        //     .from_reader(equiv_s.as_bytes());
+        // for v in equiv_rdr.records() {
+        //     let ref rec = v?;
+        //     let a: usize = rec
+        //         .get(0)
+        //         .ok_or_else(|| BoxError::new("missing column a"))?
+        //         .parse()?;
+        //     let b: usize = rec
+        //         .get(1)
+        //         .ok_or_else(|| BoxError::new("missing column b"))?
+        //         .parse()?;
+        //     if a < direct_equivs.len() && b < direct_equivs.len() {
+        //         direct_equivs[a].push(b);
+        //         direct_equivs[b].push(a);
+        //     }
+        // }
 
         Ok(Searcher {
             majors,
@@ -228,7 +209,7 @@ impl Searcher {
         self.majors.iter().collect()
     }
 
-    pub fn search(&self, rgb: u32, opts: &FilterOptions) -> Result<Vec<SearchResult>, JsError> {
+    pub fn search(&self, rgb: u32, opts: &FilterOptions) -> Result<Vec<SearchResult>, BoxError> {
         let series_filter: Option<HashSet<(&str, &str)>> = if opts.series.is_empty() {
             None
         } else {
@@ -312,7 +293,7 @@ impl Searcher {
             });
         }
 
-        // console::log_1(&format!(":: results = {:?}", results).into());
+        // log!(":: results = {:?}", results);
 
         Ok(results)
     }
@@ -363,12 +344,9 @@ impl Searcher {
             return results;
         }
 
-        // console::log_1(
-        //     &format!(
-        //         ":: candidates = {:?}",
-        //         ctx.candidates.ones().collect::<Vec<_>>()
-        //     )
-        //     .into(),
+        // log!(
+        //     ":: candidates = {:?}",
+        //     ctx.candidates.ones().collect::<Vec<_>>()
         // );
 
         for i in is.iter() {
@@ -439,16 +417,13 @@ impl Searcher {
                 std::array::from_fn(|i| (latent_out[i] - t0 * latent_0[i]) / (1f32 - t0));
             let rgb_1 = latent_to_float_rgb(&latent_1);
 
-            // console::log_1(
-            //     &format!(
-            //         "do_search_mix({}={:?}, dst={:?}) :: {} -> {:?}",
-            //         self.majors[i_0].code,
-            //         hex_to_rgb(self.majors[i_0].rgb),
-            //         rgb_out,
-            //         t0,
-            //         rgb_1
-            //     )
-            //     .into(),
+            // log!(
+            //     "do_search_mix({}={:?}, dst={:?}) :: {} -> {:?}",
+            //     self.majors[i_0].code,
+            //     hex_to_rgb(self.majors[i_0].rgb),
+            //     rgb_out,
+            //     t0,
+            //     rgb_1
             // );
             for SearchMix {
                 mut portions,
@@ -456,7 +431,7 @@ impl Searcher {
                 ..
             } in search_next(ctx, &rgb_1)
             {
-                // console::log_1(&format!(":: search_next -> {:?}", portions).into());
+                // log!(":: search_next -> {:?}", portions);
                 let SearchMix2Portion { t, delta_e } =
                     self.search_mix2_portion(ctx, latent_0, &latent, &lab_out, t0, dt * 0.5f32);
                 for e in portions.iter_mut() {
@@ -518,16 +493,13 @@ impl Searcher {
             }
 
             if dt < ctx.mix2_prec {
-                // console::log_1(
-                //     &format!(
-                //         "search_mix2_portion() -> t={} rgb={:?} d={}",
-                //         t0,
-                //         latent_to_float_rgb(&std::array::from_fn(
-                //             |i| t0 * latent_0[i] + (1f32 - t0) * latent_1[i]
-                //         )),
-                //         mind
-                //     )
-                //     .into(),
+                // log!(
+                //     "search_mix2_portion() -> t={} rgb={:?} d={}",
+                //     t0,
+                //     latent_to_float_rgb(&std::array::from_fn(
+                //         |i| t0 * latent_0[i] + (1f32 - t0) * latent_1[i]
+                //     )),
+                //     mind
                 // );
                 return SearchMix2Portion {
                     t: t0,
