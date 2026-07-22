@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Github from '$lib/icons/Github.svelte';
-	import { ShieldCheck, EyeOff, Info, TriangleAlert, Mail } from 'lucide-svelte';
+	import { ShieldCheck, EyeOff, Info, TriangleAlert, Mail } from '@lucide/svelte';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
 </script>

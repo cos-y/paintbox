@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Checkbox, Dropdown, DropdownItem, Tooltip } from 'flowbite-svelte';
-	import { ChevronDown } from 'lucide-svelte';
+	import { ChevronDown } from '@lucide/svelte';
 
 	interface Props {
 		title: string;

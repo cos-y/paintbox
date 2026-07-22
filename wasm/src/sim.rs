@@ -676,7 +676,7 @@ impl Hull {
         let latents = [vi, va, vb, vj].map(|v| &self.points[v].latent);
         let latent_c: Latent = std::array::from_fn(|i| latents.iter().map(|l| l[i] * 0.25).sum());
         log!(
-            ":: in tetrahedron :: {} {} {} {} :: m = {}",
+            ":: in tetrahedron :: [{},{},{},{}] :: m={}",
             vi,
             va,
             vb,

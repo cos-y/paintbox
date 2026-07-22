@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus } from 'lucide-svelte';
+	import { ChevronLeft, Check, Plus } from '@lucide/svelte';
 	import { Card, Button, Badge } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';

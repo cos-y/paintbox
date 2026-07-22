@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useMode, modeRgb, modeOklch, type Oklch } from 'culori/fn';
 	import ColorSlider from './ColorSlider.svelte';
-	import { Copy } from 'lucide-svelte';
+	import { Copy } from '@lucide/svelte';
 	import { clamp } from '$lib/utils';
 	import { tick } from 'svelte';
 	import ColorCode from './ColorCode.svelte';

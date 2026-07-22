@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Dropdown, DropdownItem, Tooltip } from 'flowbite-svelte';
-	import { ChevronDown } from 'lucide-svelte';
+	import { ChevronDown } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 
 	interface Props {

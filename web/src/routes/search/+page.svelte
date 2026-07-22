@@ -3,7 +3,7 @@
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
-	import { Box, ChevronDown, Cylinder, Pipette, Funnel } from 'lucide-svelte';
+	import { Box, ChevronDown, Cylinder, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import { listPaints, getCatalog, paintId, floatRgbToCss, type SearchResult } from '$lib/paints';
 	import { searchAsync } from '$lib/searchClient';

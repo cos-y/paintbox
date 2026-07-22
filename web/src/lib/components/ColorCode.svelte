@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Copy } from 'lucide-svelte';
+	import { Copy } from '@lucide/svelte';
 	import { Input, Tooltip } from 'flowbite-svelte';
 
 	interface Props {
