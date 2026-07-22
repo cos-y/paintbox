@@ -10,7 +10,6 @@ crate-type = ["cdylib", "rlib"]
 binary_serde = "1.0.25"
 console_error_panic_hook = "0.1.7"
 csv = "1.4.0"
-delaunator = "1.1.0"
 derivative = "2.2.0"
 empfindung = "0.2.6"
 fixedbitset = "0.5.7"

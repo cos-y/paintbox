@@ -1,5 +1,6 @@
+mod hull;
 mod search;
-mod sim;
+mod tess;
 mod wasm;
 
 pub type Rgb = [f32; 3];

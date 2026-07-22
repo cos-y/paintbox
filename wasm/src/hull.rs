@@ -1,6 +1,5 @@
 use core::f32;
 use std::{
-    collections::HashMap,
     fmt::{Debug, Display},
     mem::swap,
     sync::{Arc, Mutex},
@@ -16,7 +15,7 @@ use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
 use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 
-use crate::{BoxError, Latent, Rgb, lerp_latent, log};
+use crate::{BoxError, Latent, Rgb, lerp_latent, log, tess::Tessellator};
 
 static TESSELLATOR: Lazy<Mutex<Tessellator>> = Lazy::new(|| Mutex::new(Tessellator::new()));
 
@@ -108,16 +107,6 @@ pub struct Hull {
     mesh: Option<HullMesh>,
 }
 
-#[derive(Clone)]
-struct Tessellation {
-    uvs: Arc<Vec<(f32, f32)>>,
-    triangles: Arc<Vec<usize>>,
-}
-
-struct Tessellator {
-    lookup: HashMap<[usize; 3], Tessellation>,
-}
-
 impl Debug for Point {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!(
@@ -177,74 +166,6 @@ impl Facet {
             if let Some(i) = self.fs.iter_mut().find(|x| **x == old) {
                 *i = new;
             }
-        }
-    }
-}
-
-impl Tessellator {
-    fn new() -> Self {
-        Tessellator {
-            lookup: HashMap::new(),
-        }
-    }
-
-    fn get(&mut self, key: &[usize; 3]) -> Tessellation {
-        // 把尺寸比较小的细分结果缓存起来，避免频繁做三角剖分
-        if key.iter().all(|x| *x <= 3) {
-            if let Some(result) = self.lookup.get(key) {
-                return result.clone();
-            }
-            let result = Self::compute_subdivision(key);
-            self.lookup.insert(*key, result.clone());
-            return result;
-        }
-
-        Self::compute_subdivision(key)
-    }
-
-    fn compute_subdivision(key: &[usize; 3]) -> Tessellation {
-        let mut uvs = vec![
-            delaunator::Point { x: 0.0, y: 0.0 },
-            delaunator::Point { x: 1.0, y: 0.0 },
-            delaunator::Point { x: 0.0, y: 1.0 },
-        ];
-        let [a, b, c] = *key;
-
-        for i in 1..c {
-            let t = i as f64 / c as f64;
-            uvs.push(delaunator::Point { x: t, y: 0.0 });
-        }
-
-        for i in 1..b {
-            let t = i as f64 / b as f64;
-            uvs.push(delaunator::Point { x: 0.0, y: t });
-        }
-
-        for i in 1..a {
-            let t = i as f64 / a as f64;
-            uvs.push(delaunator::Point { x: t, y: 1.0 - t });
-        }
-
-        let n_in = (a + b + c) / 3 - 1;
-        if n_in > 1 {
-            for i in 1..n_in {
-                for j in 1..=(n_in - i) {
-                    let u = i as f64 / n_in as f64;
-                    let v = j as f64 / n_in as f64;
-                    uvs.push(delaunator::Point { x: u, y: v });
-                }
-            }
-        }
-
-        // log!(":: subdivide => {:?} \n{:?}", key, uvs);
-        let dt = delaunator::triangulate(&uvs);
-        let uvs: Vec<_> = uvs.iter().map(|p| (p.x as f32, p.y as f32)).collect();
-        // log!(":: key = {:?} uvs = {}", key, uvs.len());
-        // log!(":: triangles = {:?}", dt.triangles);
-
-        Tessellation {
-            uvs: Arc::new(uvs),
-            triangles: Arc::new(dt.triangles),
         }
     }
 }
@@ -759,8 +680,8 @@ impl Hull {
 #[cfg(test)]
 mod tests {
     use crate::{
+        hull::{Facet, Hull, Tessellator},
         log,
-        sim::{Facet, Hull},
     };
 
     fn get_facets(hull: &Hull) -> Vec<[usize; 3]> {

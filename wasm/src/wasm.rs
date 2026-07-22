@@ -8,8 +8,8 @@ use web_sys::js_sys::{Float32Array, Uint32Array};
 
 use crate::{
     BoxError, hex_to_rgb,
+    hull::Hull,
     search::{FilterOptions, Searcher},
-    sim::Hull,
 };
 
 static SEARCHER: Lazy<Mutex<Option<Searcher>>> = Lazy::new(|| Mutex::new(None));
