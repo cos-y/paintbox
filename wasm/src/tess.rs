@@ -1,6 +1,10 @@
-use std::{collections::HashMap, sync::Arc};
+use std::{
+    collections::HashMap,
+    sync::{Arc, Mutex},
+};
 
 use glam::Vec2;
+use once_cell::sync::Lazy;
 
 #[derive(Clone)]
 pub struct Tessellation {
@@ -8,8 +12,15 @@ pub struct Tessellation {
     pub triangles: Arc<Vec<usize>>,
 }
 
-pub struct Tessellator {
+struct Tessellator {
     lookup: HashMap<[usize; 3], Tessellation>,
+}
+
+static TESSELLATOR: Lazy<Mutex<Tessellator>> = Lazy::new(|| Mutex::new(Tessellator::new()));
+
+pub fn get_triangle_tesselation(ks: &[usize; 3]) -> Tessellation {
+    let mut tess = TESSELLATOR.lock().unwrap();
+    tess.get(&ks)
 }
 
 impl Tessellator {

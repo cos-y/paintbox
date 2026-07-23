@@ -1,73 +1,63 @@
 <script lang="ts">
 	import { Gizmo, OrbitControls } from '@threlte/extras';
 	import { T, useThrelte } from '@threlte/core';
-	import { hull } from '../../wasm-pkg/paintbox_wasm';
+	import { get_hull, get_srgb_mesh } from '../../wasm-pkg/paintbox_wasm';
 	import * as THREE from 'three';
-	import { color } from 'three/tsl';
+	import { listPaints, rgbToHex } from '$lib/paints';
 
-	const { renderer, toneMapping } = useThrelte();
-
-	// THREE.ColorManagement.enabled = false;
-	// renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+	const { toneMapping } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
 
-	// const { renderer } = useThrelte();
-	// renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
-
-	let r = 0xff0000;
-	let g = 0x00ff00;
-	let b = 0x0000ff;
-	let c = 0x00ffff;
-	let m = 0xff00ff;
-	let y = 0xffff00;
-	let k = 0x000000;
-	let w = 0xffffff;
-	let gr = 0xaaaaaa;
-
-	// let r = 0xed1c24;
-	// let g = 0x00a650;
-	// let b = 0x005aaa;
-	// let c = 0x00aeef;
-	// let m = 0xec008c;
-	// let y = 0xfff200;
-	// let k = 0x231f20;
+	// let r = 0xff0000;
+	// let g = 0x00ff00;
+	// let b = 0x0000ff;
+	// let c = 0x00ffff;
+	// let m = 0xff00ff;
+	// let y = 0xffff00;
+	// let k = 0x000000;
 	// let w = 0xffffff;
+	// let gr = 0xaaaaaa;
 
-	// let x = 0xaaac3c;
+	let r = 0xed1c24;
+	let g = 0x00a650;
+	let b = 0x005aaa;
+	let c = 0x00aeef;
+	let m = 0xec008c;
+	let y = 0xfff200;
+	let k = 0x231f20;
+	let w = 0xffffff;
 
-	// const sim = demo(new Uint32Array([r, g, b, k]));
-	// const sim = demo(new Uint32Array([r, g, b, c, m, y, k, w]), 100);
-	// const sim = demo(new Uint32Array([r, y, c, b, k]), 100);
-	// const sim = demo(new Uint32Array([0xff00ff, 0x0000ff, 0x0000ff]), 1);
-	// const sim = hull(new Uint32Array([c, r, k, w]));
-	const sim = hull(new Uint32Array([r, g, b, c, m, y, k, w]));
+	// let li = [r, g, b, c, m, y, k, w];
+	let li = listPaints().map((x) => x.rgb);
+	console.log(li.map((x) => rgbToHex(x)));
 
-	// sim.add(0xaaaaaa);
+	const li1 = [li[1], li[0], li[4], li[2]];
+	// // li.splice(7);
+	li.splice(22);
+	// const [_1] = li.splice(3, 1);
+	// const [_2] = li.splice(7, 1);
+	// // const [_3] = li.splice(7, 1);
 
-	let positions = $state(sim.points());
-	let colors = $state(sim.colors());
-	let indices = $state(sim.indices());
+	// const hull = get_hull(new Uint32Array(li1));
+	// hull.add(li[7]);
+	const hull = get_hull(new Uint32Array(li1));
+	hull.add(li[17]);
+	hull.add(li[14]);
+	hull.add(li[16]);
+	hull.add(li[21]);
+	hull.add(li[13]);
+	hull.add(li[15]);
+	hull.add(li[11]);
 
-	// (window as any).add = (rgb: number) => {
-	// 	sim.add(rgb);
-	// 	positions = sim.points();
-	// 	colors = sim.colors();
-	// 	indices = sim.indices();
-	// };
-	// $effect(() => {
-	// 	let maxx = 0;
-	// 	for (let i = 0; i < indices.length; i += 3) {
-	// 		let a = indices[i];
-	// 		let b = indices[i + 1];
-	// 		let c = indices[i + 2];
-	// 		console.log(
-	// 			[positions[a * 3], positions[a * 3 + 1], positions[a * 3 + 2]],
-	// 			[positions[b * 3], positions[b * 3 + 1], positions[b * 3 + 2]],
-	// 			[positions[c * 3], positions[c * 3 + 1], positions[c * 3 + 2]]
-	// 		);
-	// 	}
-	// 	// console.log(indices);
-	// });
+	let mesh = $derived(hull.mesh());
+	let positions = $derived(mesh.positions());
+	let colors = $derived(mesh.colors());
+	let indices = $derived(mesh.indices());
+
+	const srgbMesh = get_srgb_mesh(8);
+	let srgbPositions = $derived(srgbMesh.positions());
+	let srgbColors = $derived(srgbMesh.colors());
+	let srgbIndices = $derived(srgbMesh.indices());
 </script>
 
 <T.PerspectiveCamera
@@ -82,6 +72,15 @@
 		<Gizmo />
 	</OrbitControls>
 </T.PerspectiveCamera>
+<!-- 
+<T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
+	<T.BufferGeometry attach="geometry">
+		<T.BufferAttribute args={[positions, 3]} attach="attributes.position" />
+		<T.BufferAttribute args={[colors, 3]} attach="attributes.color" />
+		<T.BufferAttribute args={[indices, 1]} attach="index" />
+	</T.BufferGeometry>
+	<T.MeshBasicMaterial side={1} vertexColors={true} />
+</T.Mesh> -->
 
 <T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
 	<T.BufferGeometry attach="geometry">
@@ -89,16 +88,16 @@
 		<T.BufferAttribute args={[colors, 3]} attach="attributes.color" />
 		<T.BufferAttribute args={[indices, 1]} attach="index" />
 	</T.BufferGeometry>
-	<T.MeshBasicMaterial size={0.05} vertexColors={true} side={2} wireframe={true} />
+	<T.MeshBasicMaterial side={2} vertexColors={true} wireframe={true} />
 </T.Mesh>
 
-<!-- 
-<T.Points>
+<!-- <T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
 	<T.BufferGeometry attach="geometry">
-		<T.BufferAttribute args={[positions, 3]} attach="attributes.position" />
-		<T.BufferAttribute args={[colors, 3]} attach="attributes.color" />
+		<T.BufferAttribute args={[srgbPositions, 3]} attach="attributes.position" />
+		<T.BufferAttribute args={[srgbColors, 3]} attach="attributes.color" />
+		<T.BufferAttribute args={[srgbIndices, 1]} attach="index" />
 	</T.BufferGeometry>
-	<T.PointsMaterial size={0.05} vertexColors={true} />
-</T.Points> -->
+	<T.MeshBasicMaterial side={2} vertexColors={true} wireframe={true} />
+</T.Mesh> -->
 
 <T.GridHelper args={[2, 20]} />

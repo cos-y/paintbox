@@ -1,4 +1,5 @@
 mod hull;
+mod mesh;
 mod search;
 mod tess;
 mod wasm;

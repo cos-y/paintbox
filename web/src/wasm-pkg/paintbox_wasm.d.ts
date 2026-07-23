@@ -6,17 +6,26 @@ export class HullProxy {
     free(): void;
     [Symbol.dispose](): void;
     add(rgb: number): void;
+    mesh(): MeshProxy;
+    static new(rgbs: Uint32Array): HullProxy;
+}
+
+export class MeshProxy {
+    private constructor();
+    free(): void;
+    [Symbol.dispose](): void;
     colors(): Float32Array;
     indices(): Uint32Array;
-    static new(rgbs: Uint32Array): HullProxy;
-    points(): Float32Array;
+    positions(): Float32Array;
 }
 
 export function color_diff(rgb_a: number, rgb_b: number): number;
 
 export function find_direct_equivalences(index: number): any;
 
-export function hull(li: Uint32Array): HullProxy;
+export function get_hull(li: Uint32Array): HullProxy;
+
+export function get_srgb_mesh(n: number): MeshProxy;
 
 export function init_panic_hook(): void;
 
@@ -31,17 +40,20 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_hullproxy_free: (a: number, b: number) => void;
+    readonly __wbg_meshproxy_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
     readonly find_direct_equivalences: (a: number) => [number, number, number];
-    readonly hull: (a: number, b: number) => [number, number, number];
+    readonly get_hull: (a: number, b: number) => [number, number, number];
+    readonly get_srgb_mesh: (a: number) => number;
     readonly hullproxy_add: (a: number, b: number) => void;
-    readonly hullproxy_colors: (a: number) => any;
-    readonly hullproxy_indices: (a: number) => any;
+    readonly hullproxy_mesh: (a: number) => number;
     readonly hullproxy_new: (a: number, b: number) => [number, number, number];
-    readonly hullproxy_points: (a: number) => any;
     readonly init_panic_hook: () => void;
     readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
     readonly list_paints: () => [number, number, number];
+    readonly meshproxy_colors: (a: number) => any;
+    readonly meshproxy_indices: (a: number) => any;
+    readonly meshproxy_positions: (a: number) => any;
     readonly search: (a: number, b: any) => [number, number, number];
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

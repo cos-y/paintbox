@@ -10,23 +10,10 @@ use empfindung::ToLab;
 use fixedbitset::FixedBitSet;
 use glam::Vec3;
 use lab::Lab;
-use libm::powf;
 use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
-use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 
-use crate::{BoxError, Latent, Rgb, lerp_latent, log, tess::Tessellator};
-
-static TESSELLATOR: Lazy<Mutex<Tessellator>> = Lazy::new(|| Mutex::new(Tessellator::new()));
-
-#[inline(always)]
-fn srgb_to_linear(x: f32) -> f32 {
-    if x >= 0.04045 {
-        powf((x + 0.055) / 1.055, 2.4)
-    } else {
-        x / 12.92
-    }
-}
+use crate::{BoxError, Latent, Rgb, lerp_latent, log, mesh::Mesh, tess::get_triangle_tesselation};
 
 fn latent_to_lab(latent: &Latent) -> Lab {
     let rgb = latent_to_float_rgb(&latent);
@@ -59,7 +46,7 @@ fn get_subdivision_count(a: &Lab, b: &Lab) -> usize {
     (d / 4f32).ceil() as usize
 }
 
-// #[derive(Debug)]
+#[derive(Debug)]
 struct Facet {
     // 三角曲面的三个顶点，ccw
     vs: [usize; 3],
@@ -75,13 +62,6 @@ struct Point {
     lab: Lab,
     // 原始颜色的下标
     idx: usize,
-}
-
-#[derive(Debug)]
-pub struct HullMesh {
-    pub positions: Vec<f32>,
-    pub colors: Vec<f32>,
-    pub indices: Vec<u32>,
 }
 
 #[derive(Derivative)]
@@ -103,8 +83,7 @@ pub struct Hull {
     // 重心的lab空间坐标
     center: Vec3,
 
-    #[derivative(Debug = "ignore")]
-    mesh: Option<HullMesh>,
+    pub mesh: Arc<Mutex<Mesh>>,
 }
 
 impl Debug for Point {
@@ -116,16 +95,16 @@ impl Debug for Point {
     }
 }
 
-impl Display for Facet {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!(
-            "<{},{},{}>",
-            self.vs[0], self.vs[1], self.vs[2],
-        ))
-    }
-}
+// impl Display for Facet {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         f.write_fmt(format_args!(
+//             "<{},{},{}>",
+//             self.vs[0], self.vs[1], self.vs[2],
+//         ))
+//     }
+// }
 
-impl Debug for Facet {
+impl Display for Facet {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!(
             "<{},{},{}>::[{},{},{}]",
@@ -192,7 +171,7 @@ impl Hull {
             let mut buf = [0u8; 1];
             getrandom::fill(&mut buf).unwrap();
             let idx = buf[0] as usize % raw_colors.len();
-            let lab = sample_microsphere(&points[idx].lab, 1e-5);
+            let lab = sample_microsphere(&points[idx].lab, 1e-3);
             // li.push(vertex!(coord, data));
             let rgb = lab.to_rgb_normalized();
             points.push(Point {
@@ -269,7 +248,7 @@ impl Hull {
             null_facets: vec![],
             center_latent,
             center,
-            mesh: None,
+            mesh: Arc::new(Mutex::new(Mesh::new())),
         };
 
         // log!("{}", hull.center);
@@ -301,7 +280,7 @@ impl Hull {
 
         hull.build_mesh();
 
-        log!(":: new :: {}", hull);
+        // log!(":: new :: {}", hull);
 
         Ok(hull)
     }
@@ -325,68 +304,32 @@ impl Hull {
         }
     }
 
-    pub fn mesh(&self) -> &HullMesh {
-        self.mesh.as_ref().unwrap()
-    }
-
     fn build_mesh(&mut self) {
-        let mut positions = vec![];
-        let mut colors = vec![];
-        let mut indices = vec![];
-
-        let mut i0 = 0;
+        let mut mesh = self.mesh.lock().unwrap();
+        mesh.clear();
         for facet in self.facets.iter() {
-            if let Some(facet) = facet.as_ref() {
-                let (vertices, triangles) = self.build_facet_mesh(facet.vs);
-
-                let vertices = vertices.as_slice();
-                let triangles = triangles.as_slice();
-
-                for xs in vertices.iter() {
-                    let [l, a, b] = xs.to_array();
-                    positions.push(l);
-                    positions.push(a);
-                    positions.push(b);
-                    let lab = Lab { l, a, b };
-                    let srgb = lab.to_rgb_normalized();
-                    let [r, g, b] = srgb.map(srgb_to_linear);
-                    colors.push(r);
-                    colors.push(g);
-                    colors.push(b);
-                }
-
-                for i in triangles.iter() {
-                    indices.push(i0 + *i as u32);
-                }
-
-                i0 += vertices.len() as u32;
+            if let Some(facet) = facet {
+                let (vs, is) = self.build_facet_mesh(facet.vs);
+                mesh.add(&vs, &is);
             }
         }
-
-        self.mesh = Some(HullMesh {
-            positions,
-            colors,
-            indices,
-        });
     }
 
     fn build_facet_mesh(&self, vs: [usize; 3]) -> (Vec<Vec3>, Arc<Vec<usize>>) {
         let labs = vs.map(|v| &self.points[v].lab);
         let latents = vs.map(|v| &self.points[v].latent);
 
-        let subdivisions = [
+        let ks = [
             get_subdivision_count(&labs[1], &labs[2]),
             get_subdivision_count(&labs[0], &labs[2]),
             get_subdivision_count(&labs[0], &labs[1]),
         ];
 
-        let mut subdivision = TESSELLATOR.lock().unwrap();
-        let result = subdivision.get(&subdivisions);
-
-        let vertices = result
+        let tess = get_triangle_tesselation(&ks);
+        let vertices = tess
             .uvs
             .iter()
-            .map(|(t1, t2)| {
+            .map(|(t2, t1)| {
                 let latent: Latent = std::array::from_fn(|i| {
                     t1 * latents[1][i] + t2 * latents[2][i] + (1.0 - t1 - t2) * latents[0][i]
                 });
@@ -396,41 +339,98 @@ impl Hull {
             })
             .collect();
 
-        (vertices, result.triangles.clone())
+        (vertices, tess.triangles.clone())
     }
 
     // 检测点p在ccw曲面vs的哪一侧
     fn get_facet_side(&self, p: &Latent, vs: [usize; 3]) -> f32 {
-        let t = 0.01;
+        let t0 = 1e-2;
         let [a, b, c] = vs;
 
         // 求曲面在a点处的切平面a-db-dc，以及曲线ap在a点处的切线a-dp。根据物理意义得知，ap和abc不会有除a以外的交点。
         // 因此若dp在a-db-dc的+侧，p一定在abc的+侧，反之亦然。
         let latent_a = &self.points[a].latent;
-        let latent_b = lerp_latent(&self.points[b].latent, latent_a, t);
-        let latent_c = lerp_latent(&self.points[c].latent, latent_a, t);
-        let latent_p = lerp_latent(p, latent_a, t);
+        let latent_b = &self.points[b].latent;
+        let latent_c = &self.points[c].latent;
+        // let va = lab_to_vec3(&self.points[a].lab);
 
-        let va = lab_to_vec3(&self.points[a].lab);
-        let vb = lab_to_vec3(&latent_to_lab(&latent_b));
-        let vc = lab_to_vec3(&latent_to_lab(&latent_c));
+        let latent_o: Latent =
+            std::array::from_fn(|i| (latent_b[i] + latent_c[i] + latent_a[i]) / 3f32);
+        let vo = lab_to_vec3(&latent_to_lab(&latent_o));
+
+        let latent_p = lerp_latent(p, &latent_o, t0);
         let vp = lab_to_vec3(&latent_to_lab(&latent_p));
+        let vop = vp - vo;
+        let lop = vop.length();
 
-        let vab = vb - va;
-        let vac = vc - va;
-        let vap = vp - va;
+        let len_sgn = |mut a: f32, mut b: f32| {
+            if a == b {
+                return 0;
+            }
 
-        let n = vab.cross(vac).normalize();
-        let vap = vap.normalize();
+            let mut result = 1;
+            if a < b {
+                result = -result;
+                swap(&mut a, &mut b);
+            }
 
-        // log!("  :: n={} vap={}", n, vap);
-        log!("  :: get_facet_side <{},{},{}> = {}", a, b, c, n.dot(vap));
+            if a / b > 1.25 {
+                return result;
+            }
 
-        n.dot(vap)
+            0
+        };
+
+        let get_axis = |i: usize| {
+            let latent = &self.points[i].latent;
+            let mut maxt = 10f32 * t0;
+            let mut mint = 0f32;
+            let mut t = t0;
+            loop {
+                let latent = lerp_latent(latent, &latent_o, t);
+                let vi = lab_to_vec3(&latent_to_lab(&latent));
+                let voi = vi - vo;
+
+                let l = voi.length();
+                match len_sgn(l, lop) {
+                    i32::MIN..0 => {
+                        mint = t;
+                        t = (maxt + mint) / 2.0;
+                    }
+                    1..=i32::MAX => {
+                        maxt = t;
+                        t = (mint + maxt) / 2.0;
+                    }
+                    0 => return voi,
+                }
+            }
+        };
+
+        let vob = get_axis(b);
+        let voc = get_axis(c);
+
+        let n = vob.cross(voc).normalize();
+        let vop = vop.normalize();
+
+        log!(
+            "  :: n={} vop={} m={}",
+            n,
+            vop,
+            lab_to_vec3(&latent_to_lab(&p))
+        );
+        log!("  :: get_facet_side <{},{},{}> = {}", a, b, c, n.dot(vop));
+
+        let dot = n.dot(vop);
+        if dot.abs() < 2e-2 { 0f32 } else { dot.signum() }
     }
 
     fn try_fold_facet(&mut self, i: usize) -> bool {
-        let fs = self.facets[i].as_ref().unwrap().fs;
+        let facet = self.facets[i].as_ref();
+        if facet.is_none() {
+            return false;
+        }
+
+        let fs: [usize; 3] = facet.unwrap().fs;
 
         let mut do_fold = |j: usize, x: usize| {
             let facet = self.facets[j].as_ref().unwrap();
@@ -469,6 +469,7 @@ impl Hull {
     }
 
     fn do_insert_point(&mut self, v: usize) -> bool {
+        log!("insert :: {}", &self.points[v].idx);
         // let Point { lab, .. } = &self.points[v];
         // let point = Vec3::new(lab.l, lab.a, lab.b);
         let latent = &self.points[v].latent;
@@ -487,6 +488,7 @@ impl Hull {
         if let Some(i) = facet {
             self.remesh_facet(i, v);
             log!("{}", self);
+            self.assert_watertight();
             return true;
         }
 
@@ -549,7 +551,7 @@ impl Hull {
             }
         }
 
-        log!("{}", self);
+        log!(":: {}", self);
 
         for i in [i0, i1, i2] {
             self.remesh_facet_adj_flood(i, 0, &mut visited);
@@ -557,6 +559,7 @@ impl Hull {
     }
 
     fn remesh_facet_adj_flood(&mut self, i: usize, vi_idx: usize, visited: &mut FixedBitSet) {
+        // assert_watertight(self);
         let fi = self.facets[i].as_ref();
         // 有可能前面的轮次已经把这个面fold掉了，所以这里可以early exit
         if fi.is_none() {
@@ -606,13 +609,17 @@ impl Hull {
         );
 
         // 重心在fi的外面，说明fi失效了，显然fj也失效了，需要做remesh。
-        let s1 = self.get_facet_side(&latent_c, fi.vs);
-        let s2 = self.get_facet_side(&latent_c, fj.vs);
+        let mut s = self.get_facet_side(&latent_c, fi.vs);
+        // 有些四面体可能非常扁平，在这种位置求梯度可能误差很大
+        if s.abs() < 1e-2 {
+            s = self.get_facet_side(&latent_c, fj.vs);
+            if s.abs() < 1e-2 {
+                // 误差太大，无法证明
+                return;
+            }
+        }
 
-        // 有些四面体可能非常扁平，在这种位置求梯度可能误差很大，取两个里面更可信的一个
-        let side = if s1.abs() > s2.abs() { s1 } else { s2 };
-
-        if side > 0.0 {
+        if s > 0.0 {
             let fi = self.deallocate_facet(i);
             let fj = self.deallocate_facet(j);
 
@@ -662,7 +669,7 @@ impl Hull {
                 visited.set(i1, true);
             }
 
-            log!("{}", self);
+            log!(":: {}", self);
 
             if !i0_folded {
                 self.remesh_facet_adj_flood(i0, 2, visited);
@@ -675,39 +682,13 @@ impl Hull {
             }
         }
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use crate::{
-        hull::{Facet, Hull, Tessellator},
-        log,
-    };
-
-    fn get_facets(hull: &Hull) -> Vec<[usize; 3]> {
-        let mut li: Vec<_> = hull
-            .facets
-            .iter()
-            .filter_map(|x| x.as_ref())
-            .map(|Facet { vs, .. }| {
-                if vs[0] < vs[1] && vs[0] < vs[2] {
-                    *vs
-                } else if vs[1] < vs[0] && vs[1] < vs[2] {
-                    [vs[1], vs[2], vs[0]]
-                } else {
-                    [vs[2], vs[0], vs[1]]
-                }
-            })
-            .collect();
-        li.sort();
-        li
-    }
-
-    fn assert_watertight(hull: &Hull) {
-        for (i, fi) in hull.facets.iter().enumerate() {
+    #[cfg(debug_assertions)]
+    fn assert_watertight(&self) {
+        for (i, fi) in self.facets.iter().enumerate() {
             if let Some(fi) = fi {
                 for (vi, fj) in fi.fs.iter().enumerate() {
-                    let fj = hull.facets[*fj].as_ref().unwrap();
+                    let fj = self.facets[*fj].as_ref().unwrap();
                     let (vj, _) = fj.fs.iter().enumerate().find(|(_, v)| **v == i).unwrap();
                     assert_ne!(fi.vs[vi], fj.vs[vj]);
 
@@ -736,6 +717,33 @@ mod tests {
             }
         }
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        hull::{Facet, Hull},
+        log,
+    };
+
+    fn get_facets(hull: &Hull) -> Vec<[usize; 3]> {
+        let mut li: Vec<_> = hull
+            .facets
+            .iter()
+            .filter_map(|x| x.as_ref())
+            .map(|Facet { vs, .. }| {
+                if vs[0] < vs[1] && vs[0] < vs[2] {
+                    *vs
+                } else if vs[1] < vs[0] && vs[1] < vs[2] {
+                    [vs[1], vs[2], vs[0]]
+                } else {
+                    [vs[2], vs[0], vs[1]]
+                }
+            })
+            .collect();
+        li.sort();
+        li
+    }
 
     const R: [f32; 3] = [1f32, 0f32, 0f32];
     const G: [f32; 3] = [0f32, 1f32, 0f32];
@@ -750,7 +758,7 @@ mod tests {
     #[test]
     pub fn test1() {
         let hull = Hull::new(vec![C, M, Y, K]).unwrap();
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(
             get_facets(&hull),
             vec![[0, 1, 2], [0, 2, 3], [0, 3, 1], [1, 3, 2]]
@@ -760,7 +768,7 @@ mod tests {
     #[test]
     pub fn test2() {
         let mut hull = Hull::new(vec![C, Y, R, B, GRAY_7]).unwrap();
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -775,7 +783,7 @@ mod tests {
 
         log!(":: insert");
         hull.insert(W);
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -792,7 +800,7 @@ mod tests {
     #[test]
     pub fn test3() {
         let mut hull = Hull::new(vec![C, R, K, W]).unwrap();
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(
             get_facets(&hull),
             vec![[0, 1, 2], [0, 2, 3], [0, 3, 1], [1, 3, 2]]
@@ -800,7 +808,7 @@ mod tests {
 
         log!(":: insert");
         hull.insert(B);
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -817,7 +825,7 @@ mod tests {
     #[test]
     pub fn test4() {
         let hull = Hull::new(vec![R, G, B]).unwrap();
-        assert_watertight(&hull);
+        hull.assert_watertight();
         assert_eq!(hull.raw_colors.len(), 3);
         assert_eq!(hull.points.len(), 4);
         for facet in hull.facets.iter() {
