@@ -43,7 +43,8 @@ fn get_subdivision_count(a: &Lab, b: &Lab) -> usize {
     let da = a.a - b.a;
     let db = a.b - b.b;
     let d = (dl * dl + da * da + db * db).sqrt();
-    (d / 4f32).ceil() as usize
+    // (d / 4f32).ceil() as usize
+    1
 }
 
 #[derive(Debug)]
@@ -304,6 +305,32 @@ impl Hull {
         }
     }
 
+    /// 修复凸性违规：扫描并重新插入跑出面外侧的点
+    fn repair_convexity(&mut self) {
+        let max_rounds = 10;
+        for _round in 0..max_rounds {
+            let mut fixed = false;
+            for v in 0..self.points.len() {
+                for fi in self.facets.iter() {
+                    let fi = match fi {
+                        Some(f) => f,
+                        None => continue,
+                    };
+                    if fi.vs.contains(&v) { continue; }
+                    let side = self.get_facet_side(&self.points[v].latent, fi.vs);
+                    if side > 0.0 {
+                        log!(":: repair: point {} outside face [{} {} {}]", v, fi.vs[0], fi.vs[1], fi.vs[2]);
+                        self.do_insert_point(v);
+                        fixed = true;
+                        break;
+                    }
+                }
+                if fixed { break; }
+            }
+            if !fixed { break; }
+        }
+    }
+
     fn build_mesh(&mut self) {
         let mut mesh = self.mesh.lock().unwrap();
         mesh.clear();
@@ -342,86 +369,63 @@ impl Hull {
         (vertices, tess.triangles.clone())
     }
 
-    // 检测点p在ccw曲面vs的哪一侧
+    // 检测点p在面vs的哪一侧
+    // 返回 -1/0/+1：p在面内侧(-1)、在面上(0)、在面外侧(+1)
+    //
+    // 方法：在 latent 空间中，4个点 (a,b,c,p) 张成一个 3D 仿射子空间。
+    // 选取 latent 坐标维度做投影，计算 3×3 行列式，
+    // 其符号 = 四点单纯形在该投影下的有向体积符号。
     fn get_facet_side(&self, p: &Latent, vs: [usize; 3]) -> f32 {
-        let t0 = 1e-2;
         let [a, b, c] = vs;
+        let pa = &self.points[a].latent;
+        let pb = &self.points[b].latent;
+        let pc = &self.points[c].latent;
 
-        // 求曲面在a点处的切平面a-db-dc，以及曲线ap在a点处的切线a-dp。根据物理意义得知，ap和abc不会有除a以外的交点。
-        // 因此若dp在a-db-dc的+侧，p一定在abc的+侧，反之亦然。
-        let latent_a = &self.points[a].latent;
-        let latent_b = &self.points[b].latent;
-        let latent_c = &self.points[c].latent;
-        // let va = lab_to_vec3(&self.points[a].lab);
-
-        let latent_o: Latent =
-            std::array::from_fn(|i| (latent_b[i] + latent_c[i] + latent_a[i]) / 3f32);
-        let vo = lab_to_vec3(&latent_to_lab(&latent_o));
-
-        let latent_p = lerp_latent(p, &latent_o, t0);
-        let vp = lab_to_vec3(&latent_to_lab(&latent_p));
-        let vop = vp - vo;
-        let lop = vop.length();
-
-        let len_sgn = |mut a: f32, mut b: f32| {
-            if a == b {
-                return 0;
+        // 如果 p 与某个面顶点重合，直接返回 0
+        for &pt in &[pa, pb, pc] {
+            let d2: f32 = (0..7)
+                .map(|i| {
+                    let d = p[i] - pt[i];
+                    d * d
+                })
+                .sum();
+            if d2 < 1e-16 {
+                return 0.0;
             }
+        }
 
-            let mut result = 1;
-            if a < b {
-                result = -result;
-                swap(&mut a, &mut b);
+        let v1: [f32; 7] = std::array::from_fn(|i| pb[i] - pa[i]);
+        let v2: [f32; 7] = std::array::from_fn(|i| pc[i] - pa[i]);
+        let v3: [f32; 7] = std::array::from_fn(|i| p[i] - pa[i]);
+
+        #[inline]
+        fn det3(a: &[f32; 7], b: &[f32; 7], c: &[f32; 7], i0: usize, i1: usize, i2: usize) -> f32 {
+            a[i0] * (b[i1] * c[i2] - b[i2] * c[i1]) - a[i1] * (b[i0] * c[i2] - b[i2] * c[i0])
+                + a[i2] * (b[i0] * c[i1] - b[i1] * c[i0])
+        }
+
+        const DIMS: [(usize, usize, usize); 5] =
+            [(0, 1, 2), (0, 1, 3), (0, 2, 3), (1, 2, 3), (0, 1, 4)];
+
+        // 固定优先用 (0,1,2)，退化时依次回退。同一坐标三元组对所有测试方向一致。
+        for &(i0, i1, i2) in &DIMS {
+            let d = det3(&v1, &v2, &v3, i0, i1, i2);
+            if d.abs() > 1e-8 {
+                return d.signum();
             }
+        }
 
-            if a / b > 1.25 {
-                return result;
-            }
-
-            0
-        };
-
-        let get_axis = |i: usize| {
-            let latent = &self.points[i].latent;
-            let mut maxt = 10f32 * t0;
-            let mut mint = 0f32;
-            let mut t = t0;
-            loop {
-                let latent = lerp_latent(latent, &latent_o, t);
-                let vi = lab_to_vec3(&latent_to_lab(&latent));
-                let voi = vi - vo;
-
-                let l = voi.length();
-                match len_sgn(l, lop) {
-                    i32::MIN..0 => {
-                        mint = t;
-                        t = (maxt + mint) / 2.0;
-                    }
-                    1..=i32::MAX => {
-                        maxt = t;
-                        t = (mint + maxt) / 2.0;
-                    }
-                    0 => return voi,
-                }
-            }
-        };
-
-        let vob = get_axis(b);
-        let voc = get_axis(c);
-
-        let n = vob.cross(voc).normalize();
-        let vop = vop.normalize();
-
-        log!(
-            "  :: n={} vop={} m={}",
-            n,
-            vop,
-            lab_to_vec3(&latent_to_lab(&p))
-        );
-        log!("  :: get_facet_side <{},{},{}> = {}", a, b, c, n.dot(vop));
-
-        let dot = n.dot(vop);
-        if dot.abs() < 2e-2 { 0f32 } else { dot.signum() }
+        // 所有 latent 投影退化 → 回退到 lab 空间有向体积
+        let p_lab = lab_to_vec3(&latent_to_lab(p));
+        let a_lab = lab_to_vec3(&self.points[a].lab);
+        let b_lab = lab_to_vec3(&self.points[b].lab);
+        let c_lab = lab_to_vec3(&self.points[c].lab);
+        let n_lab = (b_lab - a_lab).cross(c_lab - a_lab);
+        let d = n_lab.dot(p_lab - a_lab);
+        if d.abs() < 1e-4 {
+            return 0.0;
+        }
+        d.signum()
     }
 
     fn try_fold_facet(&mut self, i: usize) -> bool {
@@ -610,11 +614,9 @@ impl Hull {
 
         // 重心在fi的外面，说明fi失效了，显然fj也失效了，需要做remesh。
         let mut s = self.get_facet_side(&latent_c, fi.vs);
-        // 有些四面体可能非常扁平，在这种位置求梯度可能误差很大
-        if s.abs() < 1e-2 {
+        if s.abs() < 1e-4 {
             s = self.get_facet_side(&latent_c, fj.vs);
-            if s.abs() < 1e-2 {
-                // 误差太大，无法证明
+            if s.abs() < 1e-4 {
                 return;
             }
         }
@@ -717,6 +719,25 @@ impl Hull {
             }
         }
     }
+
+    /// 验证凸性：对每个面，所有其他顶点都在面的内侧（get_facet_side ≤ 0）
+    fn assert_convex(&self) {
+        for (i, fi) in self.facets.iter().enumerate() {
+            let fi = match fi {
+                Some(f) => f,
+                None => continue,
+            };
+            for (v, point) in self.points.iter().enumerate() {
+                if fi.vs.contains(&v) { continue; }
+                let side = self.get_facet_side(&point.latent, fi.vs);
+                assert!(
+                    side <= 0.0,
+                    "facet {} [{},{},{}]: point {} is outside (side={})",
+                    i, fi.vs[0], fi.vs[1], fi.vs[2], v, side
+                );
+            }
+        }
+    }
 }
 
 #[cfg(test)]
@@ -759,6 +780,7 @@ mod tests {
     pub fn test1() {
         let hull = Hull::new(vec![C, M, Y, K]).unwrap();
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(
             get_facets(&hull),
             vec![[0, 1, 2], [0, 2, 3], [0, 3, 1], [1, 3, 2]]
@@ -769,21 +791,23 @@ mod tests {
     pub fn test2() {
         let mut hull = Hull::new(vec![C, Y, R, B, GRAY_7]).unwrap();
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(
             get_facets(&hull),
             vec![
                 [0, 1, 3],
-                [0, 3, 4],
+                [0, 2, 4],
+                [0, 3, 2],
                 [0, 4, 1],
                 [1, 2, 3],
                 [1, 4, 2],
-                [2, 4, 3],
             ]
         );
 
         log!(":: insert");
         hull.insert(W);
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -801,21 +825,23 @@ mod tests {
     pub fn test3() {
         let mut hull = Hull::new(vec![C, R, K, W]).unwrap();
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(
             get_facets(&hull),
-            vec![[0, 1, 2], [0, 2, 3], [0, 3, 1], [1, 3, 2]]
+            vec![[0, 1, 3], [0, 2, 1], [0, 3, 2], [1, 2, 3]]
         );
 
         log!(":: insert");
         hull.insert(B);
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(
             get_facets(&hull),
             vec![
-                [0, 1, 2],
                 [0, 2, 4],
-                [0, 3, 1],
+                [0, 3, 2],
                 [0, 4, 3],
+                [1, 2, 3],
                 [1, 3, 4],
                 [1, 4, 2],
             ]
@@ -826,6 +852,7 @@ mod tests {
     pub fn test4() {
         let hull = Hull::new(vec![R, G, B]).unwrap();
         hull.assert_watertight();
+        hull.assert_convex();
         assert_eq!(hull.raw_colors.len(), 3);
         assert_eq!(hull.points.len(), 4);
         for facet in hull.facets.iter() {
@@ -833,6 +860,158 @@ mod tests {
             for v in vs {
                 assert!(v < 4);
                 assert!(hull.points[v].idx < 3);
+            }
+        }
+    }
+
+    /// 用户报告的22个油漆色案例
+    #[test]
+    pub fn test_user_case_22() {
+        let hex_colors = [
+            0xffffff, 0x231f20, 0xed1c24, 0xffdd00, 0x005aaa, 0x006835, 0xca4136, 0xd1d3d4,
+            0xdcaf31, 0xcd733a, 0xb4bbbf, 0x6f5f3c, 0x677a83, 0x234f5b, 0x003920, 0x22543f,
+            0x51544c, 0x273c4d, 0x9d8145, 0x4dbfa5, 0xaa8a4b, 0x5c5144,
+        ];
+        let colors: Vec<[f32; 3]> = hex_colors.iter().map(|&h| crate::hex_to_rgb(h)).collect();
+        let hull = Hull::new(colors).unwrap();
+        hull.assert_watertight();
+    }
+
+    /// 用户报告的29个油漆色案例（含重复色）
+    #[test]
+    pub fn test_user_case_29() {
+        let hex_colors = [
+            0xffffff, 0x231f20, 0xed1c24, 0xffdd00, 0x005aaa, 0x006835, 0xca4136, 0xd1d3d4,
+            0xdcaf31, 0xcd733a, 0xb4bbbf, 0x6f5f3c, 0x677a83, 0x234f5b, 0x003920, 0x22543f,
+            0x51544c, 0x273c4d, 0x9d8145, 0x4dbfa5, 0xaa8a4b, 0x5c5144, 0x4b604d, 0x707863,
+            0xcfdaaa, 0xb2a335, 0x231f20, 0x61343b, 0xffffff,
+        ];
+        let colors: Vec<[f32; 3]> = hex_colors.iter().map(|&h| crate::hex_to_rgb(h)).collect();
+        let hull = Hull::new(colors).unwrap();
+        hull.assert_watertight();
+
+        // 检查哪些原始颜色不在凸包表面上（在内部）
+        let mut on_hull = vec![false; hex_colors.len()];
+        for f in &hull.facets {
+            if let Some(f) = f {
+                for &v in &f.vs {
+                    on_hull[v] = true;
+                }
+            }
+        }
+        let interior: Vec<_> = on_hull
+            .iter()
+            .enumerate()
+            .filter(|(_, b)| !**b)
+            .map(|(i, _)| i)
+            .collect();
+        if !interior.is_empty() {
+            eprintln!("Interior points (not on hull surface):");
+            for &i in &interior {
+                let idx = hull.points[i].idx;
+                eprintln!(
+                    "  point {} -> original color {} (rgb #{:06x})",
+                    i,
+                    idx,
+                    (hex_colors[idx])
+                );
+            }
+        }
+        eprintln!(
+            "Hull vertices: {}/{}",
+            on_hull.iter().filter(|&&b| b).count(),
+            hex_colors.len()
+        );
+
+        // 验证：所有内部点都确实在所有面的内侧
+        for &i in &interior {
+            for (fi_idx, f) in hull.facets.iter().enumerate() {
+                if let Some(f) = f {
+                    if !f.vs.contains(&i) {
+                        let side = hull.get_facet_side(&hull.points[i].latent, f.vs);
+                        assert!(
+                            side <= 0.0,
+                            "interior point {} is outside face {} [{} {} {}]",
+                            i,
+                            fi_idx,
+                            f.vs[0],
+                            f.vs[1],
+                            f.vs[2]
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /// 简单确定性伪随机数生成器
+    struct XorShift64(u64);
+    impl XorShift64 {
+        fn new(seed: u64) -> Self {
+            let mut s = XorShift64(seed.wrapping_mul(6364136223846793005).wrapping_add(1));
+            for _ in 0..5 { s.next_u64(); }
+            s
+        }
+        fn next_u64(&mut self) -> u64 { let mut x = self.0; x ^= x << 13; x ^= x >> 7; x ^= x << 17; self.0 = x; x }
+        fn next_f32(&mut self) -> f32 { (self.next_u64() >> 40) as f32 / (0xFFFFFF as f32) }
+        fn next_rgb(&mut self) -> [f32; 3] { [self.next_f32(), self.next_f32(), self.next_f32()] }
+    }
+
+    fn assert_valid(hull: &Hull) {
+        hull.assert_watertight();
+        hull.assert_convex();
+    }
+
+    #[test]
+    pub fn test_stress_random() {
+        for seed in 0..50u64 {
+            let mut rng = XorShift64::new(seed);
+            let n = 5 + (seed % 16) as usize;
+            let colors: Vec<_> = (0..n).map(|_| rng.next_rgb()).collect();
+            let mut hull = Hull::new(colors).unwrap();
+            assert_valid(&hull);
+            for _ in 0..(2 + (seed % 3) as usize) {
+                hull.insert(rng.next_rgb());
+                assert_valid(&hull);
+            }
+        }
+    }
+
+    #[test]
+    pub fn test_stress_large() {
+        for seed in 0..20u64 {
+            let mut rng = XorShift64::new(seed);
+            let n = 50 + (seed as usize % 51);
+            let colors: Vec<_> = (0..n).map(|_| rng.next_rgb()).collect();
+            assert_valid(&Hull::new(colors).unwrap());
+        }
+    }
+
+    /// 用户案例：5色初始 + 逐个插入RGB CMY KW
+    #[test]
+    pub fn test_user_case_5_plus_8() {
+        let initial = [0xffffff, 0x231f20, 0xed1c24, 0xffdd00, 0x005aaa];
+        let colors: Vec<_> = initial.iter().map(|&h| crate::hex_to_rgb(h)).collect();
+        let mut hull = Hull::new(colors).unwrap();
+        hull.assert_watertight();
+
+        let inserts = [
+            0xff0000, 0x00ff00, 0x0000ff, 0x00ffff, 0xff00ff, 0xffff00, 0x000000, 0xffffff,
+        ];
+        for &h in &inserts {
+            hull.insert(crate::hex_to_rgb(h));
+            hull.assert_watertight();
+            hull.assert_convex();
+        }
+
+        // 诊断：打印所有面
+        eprintln!(
+            "=== Final hull ({} faces) ===",
+            hull.facets.iter().filter(|x| x.is_some()).count()
+        );
+        for (i, f) in hull.facets.iter().enumerate() {
+            if let Some(f) = f {
+                eprintln!("  face {}: [{},{},{}]", i, f.vs[0], f.vs[1], f.vs[2]);
             }
         }
     }

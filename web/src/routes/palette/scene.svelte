@@ -32,24 +32,40 @@
 	console.log(li.map((x) => rgbToHex(x)));
 
 	const li1 = [li[1], li[0], li[4], li[2]];
-	// // li.splice(7);
-	li.splice(22);
+	li.splice(5);
+	// li = [r, g, b, c];
+	// li.splice(50);
 	// const [_1] = li.splice(3, 1);
 	// const [_2] = li.splice(7, 1);
 	// // const [_3] = li.splice(7, 1);
 
 	// const hull = get_hull(new Uint32Array(li1));
 	// hull.add(li[7]);
-	const hull = get_hull(new Uint32Array(li1));
-	hull.add(li[17]);
-	hull.add(li[14]);
-	hull.add(li[16]);
-	hull.add(li[21]);
-	hull.add(li[13]);
-	hull.add(li[15]);
-	hull.add(li[11]);
+	const hull = get_hull(new Uint32Array(li));
+	hull.add(r);
+	hull.add(g);
+	hull.add(b);
+	hull.add(c);
+	hull.add(m);
+	hull.add(y);
+	hull.add(k);
+	hull.add(w);
 
-	let mesh = $derived(hull.mesh());
+	let isModified = $state(false);
+
+	(window as any).add = (v: number) => {
+		isModified = true;
+		hull.add(v);
+	};
+
+	$effect(() => {
+		if (isModified) {
+			isModified = false;
+			mesh = hull.mesh();
+		}
+	});
+
+	let mesh = $state(hull.mesh());
 	let positions = $derived(mesh.positions());
 	let colors = $derived(mesh.colors());
 	let indices = $derived(mesh.indices());
@@ -63,7 +79,7 @@
 <T.PerspectiveCamera
 	makeDefault
 	fov={50}
-	position={[3, 2, 2]}
+	position={[3, 2, -1]}
 	oncreate={(ref) => {
 		ref.lookAt(0, 0, 0);
 	}}

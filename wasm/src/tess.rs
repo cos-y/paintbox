@@ -131,11 +131,23 @@ impl Tessellator {
 
                 triangles.push(if xi_1 < xj_1 {
                     xi = xi_1;
-                    i = ns.next().unwrap();
+                    if let Some(next) = ns.next() {
+                        i = next;
+                    } else {
+                        // ns 已空，回退到 ms
+                        xj = xj_1;
+                        j = ms.next().unwrap();
+                    }
                     i
                 } else {
                     xj = xj_1;
-                    j = ms.next().unwrap();
+                    if let Some(next) = ms.next() {
+                        j = next;
+                    } else {
+                        // ms 已空，回退到 ns
+                        xi = xi_1;
+                        i = ns.next().unwrap();
+                    }
                     j
                 });
             }
@@ -292,7 +304,7 @@ mod tests {
     #[test]
     pub fn test_tess_1x1x1() {
         let tess = Tessellator::new().get(&[1, 1, 1]);
-        assert_eq!(*tess.triangles, vec![0, 2, 1]);
+        assert_eq!(*tess.triangles, vec![2, 1, 0]);
     }
 
     #[test]
