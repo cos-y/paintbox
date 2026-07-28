@@ -7,7 +7,6 @@ export class HullProxy {
     [Symbol.dispose](): void;
     add(rgb: number): void;
     mesh(): MeshProxy;
-    static new(rgbs: Uint32Array): HullProxy;
 }
 
 export class MeshProxy {
@@ -23,7 +22,7 @@ export function color_diff(rgb_a: number, rgb_b: number): number;
 
 export function find_direct_equivalences(index: number): any;
 
-export function get_hull(li: Uint32Array): HullProxy;
+export function get_hull(li: Uint32Array, brute: boolean): HullProxy;
 
 export function get_srgb_mesh(n: number): MeshProxy;
 
@@ -43,11 +42,10 @@ export interface InitOutput {
     readonly __wbg_meshproxy_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
     readonly find_direct_equivalences: (a: number) => [number, number, number];
-    readonly get_hull: (a: number, b: number) => [number, number, number];
+    readonly get_hull: (a: number, b: number, c: number) => [number, number, number];
     readonly get_srgb_mesh: (a: number) => number;
     readonly hullproxy_add: (a: number, b: number) => void;
     readonly hullproxy_mesh: (a: number) => number;
-    readonly hullproxy_new: (a: number, b: number) => [number, number, number];
     readonly init_panic_hook: () => void;
     readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
     readonly list_paints: () => [number, number, number];

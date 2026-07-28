@@ -8,24 +8,24 @@
 	const { toneMapping } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
 
-	// let r = 0xff0000;
-	// let g = 0x00ff00;
-	// let b = 0x0000ff;
-	// let c = 0x00ffff;
-	// let m = 0xff00ff;
-	// let y = 0xffff00;
-	// let k = 0x000000;
-	// let w = 0xffffff;
-	// let gr = 0xaaaaaa;
-
-	let r = 0xed1c24;
-	let g = 0x00a650;
-	let b = 0x005aaa;
-	let c = 0x00aeef;
-	let m = 0xec008c;
-	let y = 0xfff200;
-	let k = 0x231f20;
+	let r = 0xff0000;
+	let g = 0x00ff00;
+	let b = 0x0000ff;
+	let c = 0x00ffff;
+	let m = 0xff00ff;
+	let y = 0xffff00;
+	let k = 0x000000;
 	let w = 0xffffff;
+	let gr = 0xaaaaaa;
+
+	// let r = 0xed1c24;
+	// let g = 0x00a650;
+	// let b = 0x005aaa;
+	// let c = 0x00aeef;
+	// let m = 0xec008c;
+	// let y = 0xfff200;
+	// let k = 0x231f20;
+	// let w = 0xffffff;
 
 	// let li = [r, g, b, c, m, y, k, w];
 	let li = listPaints().map((x) => x.rgb);
@@ -41,7 +41,7 @@
 
 	// const hull = get_hull(new Uint32Array(li1));
 	// hull.add(li[7]);
-	const hull = get_hull(new Uint32Array(li));
+	const hull = get_hull(new Uint32Array(li), false);
 	hull.add(r);
 	hull.add(g);
 	hull.add(b);
@@ -49,21 +49,7 @@
 	hull.add(m);
 	hull.add(y);
 	hull.add(k);
-	hull.add(w);
-
-	let isModified = $state(false);
-
-	(window as any).add = (v: number) => {
-		isModified = true;
-		hull.add(v);
-	};
-
-	$effect(() => {
-		if (isModified) {
-			isModified = false;
-			mesh = hull.mesh();
-		}
-	});
+	// hull.add(w);
 
 	let mesh = $state(hull.mesh());
 	let positions = $derived(mesh.positions());

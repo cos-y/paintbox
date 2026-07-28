@@ -40,19 +40,6 @@ export class HullProxy {
         const ret = wasm.hullproxy_mesh(this.__wbg_ptr);
         return MeshProxy.__wrap(ret);
     }
-    /**
-     * @param {Uint32Array} rgbs
-     * @returns {HullProxy}
-     */
-    static new(rgbs) {
-        const ptr0 = passArray32ToWasm0(rgbs, wasm.__wbindgen_malloc);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.hullproxy_new(ptr0, len0);
-        if (ret[2]) {
-            throw takeFromExternrefTable0(ret[1]);
-        }
-        return HullProxy.__wrap(ret[0]);
-    }
 }
 if (Symbol.dispose) HullProxy.prototype[Symbol.dispose] = HullProxy.prototype.free;
 
@@ -133,12 +120,14 @@ export function find_direct_equivalences(index) {
 
 /**
  * @param {Uint32Array} li
+ * @param {boolean} brute
  * @returns {HullProxy}
  */
-export function get_hull(li) {
+export function get_hull(li, brute) {
     const ptr0 = passArray32ToWasm0(li, wasm.__wbindgen_malloc);
     const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.get_hull(ptr0, len0);
+    _assertBoolean(brute);
+    const ret = wasm.get_hull(ptr0, len0, brute);
     if (ret[2]) {
         throw takeFromExternrefTable0(ret[1]);
     }

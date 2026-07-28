@@ -13,7 +13,7 @@ use lab::Lab;
 use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
 use ordered_float::OrderedFloat;
 
-use crate::{BoxError, Latent, Rgb, lerp_latent, log, mesh::Mesh, tess::get_triangle_tesselation};
+use crate::{BoxError, Latent, Rgb, hull::Hull, log, mesh::Mesh, tess::get_triangle_tesselation};
 
 fn latent_to_lab(latent: &Latent) -> Lab {
     let rgb = latent_to_float_rgb(&latent);
@@ -43,8 +43,8 @@ fn get_subdivision_count(a: &Lab, b: &Lab) -> usize {
     let da = a.a - b.a;
     let db = a.b - b.b;
     let d = (dl * dl + da * da + db * db).sqrt();
-    // (d / 4f32).ceil() as usize
-    1
+    (d / 4f32).ceil() as usize
+    // 1
 }
 
 #[derive(Debug)]
@@ -67,7 +67,7 @@ struct Point {
 
 #[derive(Derivative)]
 #[derivative(Debug)]
-pub struct Hull {
+pub struct FastHull {
     // 原始颜色的srgb
     #[derivative(Debug = "ignore")]
     raw_colors: Vec<Rgb>,
@@ -114,7 +114,7 @@ impl Display for Facet {
     }
 }
 
-impl Display for Hull {
+impl Display for FastHull {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         struct FacetList<'a>(&'a [Option<Facet>]);
 
@@ -150,8 +150,8 @@ impl Facet {
     }
 }
 
-impl Hull {
-    pub fn new(raw_colors: Vec<Rgb>) -> Result<Hull, BoxError> {
+impl Hull for FastHull {
+    fn new(raw_colors: Vec<Rgb>) -> Result<Box<FastHull>, BoxError> {
         if raw_colors.is_empty() {
             todo!();
         }
@@ -242,7 +242,7 @@ impl Hull {
 
         log!(":: points :: {:?}", points);
 
-        let mut hull = Hull {
+        let mut hull = FastHull {
             raw_colors,
             points,
             facets: vec![],
@@ -283,10 +283,10 @@ impl Hull {
 
         // log!(":: new :: {}", hull);
 
-        Ok(hull)
+        Ok(Box::new(hull))
     }
 
-    pub fn insert(&mut self, color: Rgb) {
+    fn insert(&mut self, color: Rgb) {
         let idx = self.raw_colors.len();
         self.raw_colors.push(color);
 
@@ -305,6 +305,12 @@ impl Hull {
         }
     }
 
+    fn mesh(&self) -> Arc<Mutex<Mesh>> {
+        self.mesh.clone()
+    }
+}
+
+impl FastHull {
     /// 修复凸性违规：扫描并重新插入跑出面外侧的点
     fn repair_convexity(&mut self) {
         let max_rounds = 10;
@@ -316,18 +322,30 @@ impl Hull {
                         Some(f) => f,
                         None => continue,
                     };
-                    if fi.vs.contains(&v) { continue; }
+                    if fi.vs.contains(&v) {
+                        continue;
+                    }
                     let side = self.get_facet_side(&self.points[v].latent, fi.vs);
                     if side > 0.0 {
-                        log!(":: repair: point {} outside face [{} {} {}]", v, fi.vs[0], fi.vs[1], fi.vs[2]);
+                        log!(
+                            ":: repair: point {} outside face [{} {} {}]",
+                            v,
+                            fi.vs[0],
+                            fi.vs[1],
+                            fi.vs[2]
+                        );
                         self.do_insert_point(v);
                         fixed = true;
                         break;
                     }
                 }
-                if fixed { break; }
+                if fixed {
+                    break;
+                }
             }
-            if !fixed { break; }
+            if !fixed {
+                break;
+            }
         }
     }
 
@@ -492,6 +510,7 @@ impl Hull {
         if let Some(i) = facet {
             self.remesh_facet(i, v);
             log!("{}", self);
+            #[cfg(test)]
             self.assert_watertight();
             return true;
         }
@@ -684,8 +703,10 @@ impl Hull {
             }
         }
     }
+}
 
-    #[cfg(debug_assertions)]
+#[cfg(test)]
+impl FastHull {
     fn assert_watertight(&self) {
         for (i, fi) in self.facets.iter().enumerate() {
             if let Some(fi) = fi {
@@ -720,6 +741,30 @@ impl Hull {
         }
     }
 
+    fn assert_spherical_isoembryonic(&self) {
+        use std::collections::HashSet;
+
+        let mut f = 0;
+        let mut e = 0;
+        let mut s = HashSet::new();
+        for facet in self.facets.iter() {
+            if let Some(facet) = facet {
+                f += 1;
+                e += 3;
+                for v in facet.vs {
+                    s.insert(v);
+                }
+            }
+        }
+
+        let v = s.iter().count();
+        e /= 2;
+
+        assert_eq!(f + v - e, 2);
+
+        self.assert_convex();
+    }
+
     /// 验证凸性：对每个面，所有其他顶点都在面的内侧（get_facet_side ≤ 0）
     fn assert_convex(&self) {
         for (i, fi) in self.facets.iter().enumerate() {
@@ -728,12 +773,19 @@ impl Hull {
                 None => continue,
             };
             for (v, point) in self.points.iter().enumerate() {
-                if fi.vs.contains(&v) { continue; }
+                if fi.vs.contains(&v) {
+                    continue;
+                }
                 let side = self.get_facet_side(&point.latent, fi.vs);
                 assert!(
                     side <= 0.0,
                     "facet {} [{},{},{}]: point {} is outside (side={})",
-                    i, fi.vs[0], fi.vs[1], fi.vs[2], v, side
+                    i,
+                    fi.vs[0],
+                    fi.vs[1],
+                    fi.vs[2],
+                    v,
+                    side
                 );
             }
         }
@@ -743,11 +795,15 @@ impl Hull {
 #[cfg(test)]
 mod tests {
     use crate::{
-        hull::{Facet, Hull},
+        Latent,
+        hull::{
+            Hull,
+            fast::{Facet, FastHull},
+        },
         log,
     };
 
-    fn get_facets(hull: &Hull) -> Vec<[usize; 3]> {
+    fn get_facets(hull: &FastHull) -> Vec<[usize; 3]> {
         let mut li: Vec<_> = hull
             .facets
             .iter()
@@ -778,9 +834,9 @@ mod tests {
 
     #[test]
     pub fn test1() {
-        let hull = Hull::new(vec![C, M, Y, K]).unwrap();
+        let hull = FastHull::new(vec![C, M, Y, K]).unwrap();
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(
             get_facets(&hull),
             vec![[0, 1, 2], [0, 2, 3], [0, 3, 1], [1, 3, 2]]
@@ -789,9 +845,9 @@ mod tests {
 
     #[test]
     pub fn test2() {
-        let mut hull = Hull::new(vec![C, Y, R, B, GRAY_7]).unwrap();
+        let mut hull = FastHull::new(vec![C, Y, R, B, GRAY_7]).unwrap();
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -807,7 +863,7 @@ mod tests {
         log!(":: insert");
         hull.insert(W);
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -823,9 +879,9 @@ mod tests {
 
     #[test]
     pub fn test3() {
-        let mut hull = Hull::new(vec![C, R, K, W]).unwrap();
+        let mut hull = FastHull::new(vec![C, R, K, W]).unwrap();
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(
             get_facets(&hull),
             vec![[0, 1, 3], [0, 2, 1], [0, 3, 2], [1, 2, 3]]
@@ -834,7 +890,7 @@ mod tests {
         log!(":: insert");
         hull.insert(B);
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(
             get_facets(&hull),
             vec![
@@ -850,9 +906,9 @@ mod tests {
 
     #[test]
     pub fn test4() {
-        let hull = Hull::new(vec![R, G, B]).unwrap();
+        let hull = FastHull::new(vec![R, G, B]).unwrap();
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
         assert_eq!(hull.raw_colors.len(), 3);
         assert_eq!(hull.points.len(), 4);
         for facet in hull.facets.iter() {
@@ -873,7 +929,7 @@ mod tests {
             0x51544c, 0x273c4d, 0x9d8145, 0x4dbfa5, 0xaa8a4b, 0x5c5144,
         ];
         let colors: Vec<[f32; 3]> = hex_colors.iter().map(|&h| crate::hex_to_rgb(h)).collect();
-        let hull = Hull::new(colors).unwrap();
+        let hull = FastHull::new(colors).unwrap();
         hull.assert_watertight();
     }
 
@@ -887,7 +943,7 @@ mod tests {
             0xcfdaaa, 0xb2a335, 0x231f20, 0x61343b, 0xffffff,
         ];
         let colors: Vec<[f32; 3]> = hex_colors.iter().map(|&h| crate::hex_to_rgb(h)).collect();
-        let hull = Hull::new(colors).unwrap();
+        let hull = FastHull::new(colors).unwrap();
         hull.assert_watertight();
 
         // 检查哪些原始颜色不在凸包表面上（在内部）
@@ -949,17 +1005,30 @@ mod tests {
     impl XorShift64 {
         fn new(seed: u64) -> Self {
             let mut s = XorShift64(seed.wrapping_mul(6364136223846793005).wrapping_add(1));
-            for _ in 0..5 { s.next_u64(); }
+            for _ in 0..5 {
+                s.next_u64();
+            }
             s
         }
-        fn next_u64(&mut self) -> u64 { let mut x = self.0; x ^= x << 13; x ^= x >> 7; x ^= x << 17; self.0 = x; x }
-        fn next_f32(&mut self) -> f32 { (self.next_u64() >> 40) as f32 / (0xFFFFFF as f32) }
-        fn next_rgb(&mut self) -> [f32; 3] { [self.next_f32(), self.next_f32(), self.next_f32()] }
+        fn next_u64(&mut self) -> u64 {
+            let mut x = self.0;
+            x ^= x << 13;
+            x ^= x >> 7;
+            x ^= x << 17;
+            self.0 = x;
+            x
+        }
+        fn next_f32(&mut self) -> f32 {
+            (self.next_u64() >> 40) as f32 / (0xFFFFFF as f32)
+        }
+        fn next_rgb(&mut self) -> [f32; 3] {
+            [self.next_f32(), self.next_f32(), self.next_f32()]
+        }
     }
 
-    fn assert_valid(hull: &Hull) {
+    fn assert_valid(hull: &FastHull) {
         hull.assert_watertight();
-        hull.assert_convex();
+        hull.assert_spherical_isoembryonic();
     }
 
     #[test]
@@ -968,7 +1037,7 @@ mod tests {
             let mut rng = XorShift64::new(seed);
             let n = 5 + (seed % 16) as usize;
             let colors: Vec<_> = (0..n).map(|_| rng.next_rgb()).collect();
-            let mut hull = Hull::new(colors).unwrap();
+            let mut hull = FastHull::new(colors).unwrap();
             assert_valid(&hull);
             for _ in 0..(2 + (seed % 3) as usize) {
                 hull.insert(rng.next_rgb());
@@ -983,16 +1052,75 @@ mod tests {
             let mut rng = XorShift64::new(seed);
             let n = 50 + (seed as usize % 51);
             let colors: Vec<_> = (0..n).map(|_| rng.next_rgb()).collect();
-            assert_valid(&Hull::new(colors).unwrap());
+            assert_valid(&FastHull::new(colors).unwrap());
         }
     }
 
-    /// 用户案例：5色初始 + 逐个插入RGB CMY KW
+    // /// 用射线投射法验证增量算法结果（几何上严格正确）
+    // #[test]
+    // pub fn test_verify_vs_incremental() {
+    //     // 用增量算法建凸包，然后用射线投射法验证
+    //     let test_cases: Vec<Vec<[f32; 3]>> = vec![
+    //         vec![C, M, Y, K],
+    //         vec![C, Y, R, B, GRAY_7, W],
+    //         vec![C, R, K, W, B],
+    //         vec![R, G, B],
+    //     ];
+    //     for colors in &test_cases {
+    //         let hull = FastHull::new(colors.clone()).unwrap();
+    //         // 提取面和顶点
+    //         let faces: Vec<verify::Face> = hull
+    //             .facets
+    //             .iter()
+    //             .filter_map(|f| f.as_ref().map(|f| f.vs))
+    //             .collect();
+    //         let points: Vec<Latent> = hull.points.iter().map(|p| p.latent).collect();
+    //         verify::assert_valid(&points, &faces);
+    //     }
+    // }
+
+    // /// 用户案例：22色 + 射线投射交叉验证
+    // #[test]
+    // pub fn test_verify_user_22() {
+    //     let hex_colors = [
+    //         0xffffff, 0x231f20, 0xed1c24, 0xffdd00, 0x005aaa, 0x006835, 0xca4136, 0xd1d3d4,
+    //         0xdcaf31, 0xcd733a, 0xb4bbbf, 0x6f5f3c, 0x677a83, 0x234f5b, 0x003920, 0x22543f,
+    //         0x51544c, 0x273c4d, 0x9d8145, 0x4dbfa5, 0xaa8a4b, 0x5c5144,
+    //     ];
+    //     let colors: Vec<_> = hex_colors.iter().map(|&h| crate::hex_to_rgb(h)).collect();
+    //     let hull = FastHull::new(colors).unwrap();
+
+    //     // 用 get_facet_side 检查点12对所有面的位置
+    //     let p = 12;
+    //     eprintln!("Point {} (rgb #677a83):", p);
+    //     for (fi_idx, f) in hull.facets.iter().enumerate() {
+    //         if let Some(f) = f {
+    //             if !f.vs.contains(&p) {
+    //                 let side = hull.get_facet_side(&hull.points[p].latent, f.vs);
+    //                 if side > 0.0 {
+    //                     eprintln!(
+    //                         "  OUTSIDE face {} [{},{},{}] side={}",
+    //                         fi_idx, f.vs[0], f.vs[1], f.vs[2], side
+    //                     );
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     let faces: Vec<verify::Face> = hull
+    //         .facets
+    //         .iter()
+    //         .filter_map(|f| f.as_ref().map(|f| f.vs))
+    //         .collect();
+    //     let points: Vec<Latent> = hull.points.iter().map(|p| p.latent).collect();
+    //     verify::assert_valid(&points, &faces);
+    // }
+
     #[test]
     pub fn test_user_case_5_plus_8() {
         let initial = [0xffffff, 0x231f20, 0xed1c24, 0xffdd00, 0x005aaa];
         let colors: Vec<_> = initial.iter().map(|&h| crate::hex_to_rgb(h)).collect();
-        let mut hull = Hull::new(colors).unwrap();
+        let mut hull = FastHull::new(colors).unwrap();
         hull.assert_watertight();
 
         let inserts = [
@@ -1001,7 +1129,7 @@ mod tests {
         for &h in &inserts {
             hull.insert(crate::hex_to_rgb(h));
             hull.assert_watertight();
-            hull.assert_convex();
+            hull.assert_spherical_isoembryonic();
         }
 
         // 诊断：打印所有面

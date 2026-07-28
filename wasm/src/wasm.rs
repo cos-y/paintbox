@@ -9,7 +9,7 @@ use web_sys::js_sys::{Float32Array, Uint32Array};
 
 use crate::{
     BoxError, Rgb, hex_to_rgb,
-    hull::Hull,
+    hull::{BruteHull, FastHull, Hull},
     mesh::Mesh,
     search::{FilterOptions, Searcher},
     tess::get_triangle_tesselation,
@@ -99,28 +99,28 @@ impl MeshProxy {
 }
 
 #[wasm_bindgen]
-pub struct HullProxy(Hull);
+pub struct HullProxy(Box<dyn Hull>);
 
 #[wasm_bindgen]
 impl HullProxy {
-    pub fn new(rgbs: &[u32]) -> Result<Self, JsError> {
-        Hull::new(rgbs.iter().map(|x| hex_to_rgb(*x)).collect())
-            .map_err(to_jserr)
-            .map(|v| Self(v))
-    }
-
     pub fn add(&mut self, rgb: u32) {
         self.0.insert(hex_to_rgb(rgb));
     }
 
     pub fn mesh(&mut self) -> MeshProxy {
-        MeshProxy(self.0.mesh.clone())
+        MeshProxy(self.0.mesh())
     }
 }
 
 #[wasm_bindgen]
-pub fn get_hull(li: &[u32]) -> Result<HullProxy, JsError> {
-    HullProxy::new(li)
+pub fn get_hull(li: &[u32], brute: bool) -> Result<HullProxy, JsError> {
+    let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
+    let hull: Box<dyn Hull> = if brute {
+        BruteHull::new(rgbs).map_err(to_jserr)?
+    } else {
+        FastHull::new(rgbs).map_err(to_jserr)?
+    };
+    Ok(HullProxy(hull))
 }
 
 #[wasm_bindgen]
