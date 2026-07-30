@@ -1,18 +1,14 @@
-use std::sync::{Arc, Mutex};
+use std::sync::Mutex;
 
-use empfindung::{ToLab, cie00};
-use glam::Vec3;
-use lab::Lab;
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::*;
-use web_sys::js_sys::{Float32Array, Int32Array, Uint32Array};
+use web_sys::js_sys::Int32Array;
 
 use crate::{
-    BoxError, Rgb, hex_to_rgb,
+    BoxError, hex_to_rgb,
     hull::Hull,
-    mesh::Mesh,
+    oklab_dist, rgb_to_oklab,
     search::{FilterOptions, Searcher},
-    tess::get_triangle_tesselation,
 };
 
 static SEARCHER: Lazy<Mutex<Option<Searcher>>> = Lazy::new(|| Mutex::new(None));
@@ -27,10 +23,10 @@ pub fn init_panic_hook() {
 }
 
 #[wasm_bindgen]
-pub fn color_diff(rgb_a: u32, rgb_b: u32) -> f32 {
-    let lab_a = Lab::from_rgb_normalized(&hex_to_rgb(rgb_a));
-    let lab_b = Lab::from_rgb_normalized(&hex_to_rgb(rgb_b));
-    cie00::diff(&lab_a, &lab_b)
+pub fn color_diff(a: u32, b: u32) -> f32 {
+    let a = rgb_to_oklab(hex_to_rgb(a));
+    let b = rgb_to_oklab(hex_to_rgb(b));
+    oklab_dist(a, b)
 }
 
 #[wasm_bindgen]
@@ -78,27 +74,6 @@ pub fn search(rgb: u32, opts: JsValue) -> Result<JsValue, JsError> {
 }
 
 #[wasm_bindgen]
-pub struct MeshProxy(Arc<Mutex<Mesh>>);
-
-#[wasm_bindgen]
-impl MeshProxy {
-    pub fn positions(&self) -> Float32Array {
-        let mesh = self.0.lock().unwrap();
-        unsafe { Float32Array::view(&mesh.positions) }
-    }
-
-    pub fn colors(&self) -> Float32Array {
-        let mesh = self.0.lock().unwrap();
-        unsafe { Float32Array::view(&mesh.colors) }
-    }
-
-    pub fn indices(&self) -> Uint32Array {
-        let mesh = self.0.lock().unwrap();
-        unsafe { Uint32Array::view(&mesh.indices) }
-    }
-}
-
-#[wasm_bindgen]
 pub struct HullProxy(Hull);
 
 #[wasm_bindgen]
@@ -121,52 +96,4 @@ pub fn get_hull(li: &[u32], grid_size: f32) -> Result<HullProxy, JsError> {
     let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
     let hull = Hull::new(grid_size, rgbs).map_err(to_jserr)?;
     Ok(HullProxy(hull))
-}
-
-#[wasm_bindgen]
-pub fn get_srgb_mesh(n: usize) -> MeshProxy {
-    let tess = get_triangle_tesselation(&[n, n, n]);
-
-    let r = [1f32, 0f32, 0f32];
-    let g = [0f32, 1f32, 0f32];
-    let b = [0f32, 0f32, 1f32];
-    let c = [0f32, 1f32, 1f32];
-    let m = [1f32, 0f32, 1f32];
-    let y = [1f32, 1f32, 0f32];
-    let k = [0f32, 0f32, 0f32];
-    let w = [1f32, 1f32, 1f32];
-
-    let li = [k, g, y, r, b, c, w, m];
-    // .map(|x| Lab::from_rgb_normalized(&x));
-    let fs = [
-        (0, 1, 2),
-        (2, 3, 0),
-        (4, 5, 6),
-        (6, 7, 4),
-        (1, 5, 6),
-        (1, 2, 6),
-        (2, 6, 7),
-        (2, 3, 7),
-        (0, 3, 7),
-        (0, 7, 4),
-        (0, 1, 4),
-        (1, 4, 5),
-    ];
-
-    let mut mesh = Mesh::new();
-    for (a, b, c) in fs {
-        let vertices: Vec<_> = tess
-            .uvs
-            .iter()
-            .map(|(u, v)| {
-                let rgb: Rgb =
-                    std::array::from_fn(|i| u * li[a][i] + v * li[b][i] + (1.0 - u - v) * li[c][i]);
-                let (l, a, b) = Lab::from_rgb_normalized(&rgb).to_lab();
-                Vec3::new(l, a, b)
-            })
-            .collect();
-        mesh.add(&vertices, &tess.triangles);
-    }
-
-    MeshProxy(Arc::new(Mutex::new(mesh)))
 }

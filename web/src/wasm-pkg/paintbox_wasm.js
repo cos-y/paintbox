@@ -40,54 +40,13 @@ export class HullProxy {
 }
 if (Symbol.dispose) HullProxy.prototype[Symbol.dispose] = HullProxy.prototype.free;
 
-export class MeshProxy {
-    static __wrap(ptr) {
-        const obj = Object.create(MeshProxy.prototype);
-        obj.__wbg_ptr = ptr;
-        MeshProxyFinalization.register(obj, obj.__wbg_ptr, obj);
-        return obj;
-    }
-    __destroy_into_raw() {
-        const ptr = this.__wbg_ptr;
-        this.__wbg_ptr = 0;
-        MeshProxyFinalization.unregister(this);
-        return ptr;
-    }
-    free() {
-        const ptr = this.__destroy_into_raw();
-        wasm.__wbg_meshproxy_free(ptr, 0);
-    }
-    /**
-     * @returns {Float32Array}
-     */
-    colors() {
-        const ret = wasm.meshproxy_colors(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-     * @returns {Uint32Array}
-     */
-    indices() {
-        const ret = wasm.meshproxy_indices(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-     * @returns {Float32Array}
-     */
-    positions() {
-        const ret = wasm.meshproxy_positions(this.__wbg_ptr);
-        return ret;
-    }
-}
-if (Symbol.dispose) MeshProxy.prototype[Symbol.dispose] = MeshProxy.prototype.free;
-
 /**
- * @param {number} rgb_a
- * @param {number} rgb_b
+ * @param {number} a
+ * @param {number} b
  * @returns {number}
  */
-export function color_diff(rgb_a, rgb_b) {
-    const ret = wasm.color_diff(rgb_a, rgb_b);
+export function color_diff(a, b) {
+    const ret = wasm.color_diff(a, b);
     return ret;
 }
 
@@ -116,15 +75,6 @@ export function get_hull(li, grid_size) {
         throw takeFromExternrefTable0(ret[1]);
     }
     return HullProxy.__wrap(ret[0]);
-}
-
-/**
- * @param {number} n
- * @returns {MeshProxy}
- */
-export function get_srgb_mesh(n) {
-    const ret = wasm.get_srgb_mesh(n);
-    return MeshProxy.__wrap(ret);
 }
 
 export function init_panic_hook() {
@@ -387,26 +337,16 @@ function __wbg_get_imports() {
             return ret;
         },
         __wbindgen_cast_0000000000000002: function(arg0, arg1) {
-            // Cast intrinsic for `Ref(Slice(F32)) -> NamedExternref("Float32Array")`.
-            const ret = getArrayF32FromWasm0(arg0, arg1);
-            return ret;
-        },
-        __wbindgen_cast_0000000000000003: function(arg0, arg1) {
             // Cast intrinsic for `Ref(Slice(I32)) -> NamedExternref("Int32Array")`.
             const ret = getArrayI32FromWasm0(arg0, arg1);
             return ret;
         },
-        __wbindgen_cast_0000000000000004: function(arg0, arg1) {
-            // Cast intrinsic for `Ref(Slice(U32)) -> NamedExternref("Uint32Array")`.
-            const ret = getArrayU32FromWasm0(arg0, arg1);
-            return ret;
-        },
-        __wbindgen_cast_0000000000000005: function(arg0, arg1) {
+        __wbindgen_cast_0000000000000003: function(arg0, arg1) {
             // Cast intrinsic for `Ref(String) -> Externref`.
             const ret = getStringFromWasm0(arg0, arg1);
             return ret;
         },
-        __wbindgen_cast_0000000000000006: function(arg0) {
+        __wbindgen_cast_0000000000000004: function(arg0) {
             // Cast intrinsic for `U64 -> Externref`.
             const ret = BigInt.asUintN(64, arg0);
             return ret;
@@ -430,9 +370,6 @@ function __wbg_get_imports() {
 const HullProxyFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_hullproxy_free(ptr, 1));
-const MeshProxyFinalization = (typeof FinalizationRegistry === 'undefined')
-    ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_meshproxy_free(ptr, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
@@ -505,19 +442,9 @@ function debugString(val) {
     return className;
 }
 
-function getArrayF32FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getFloat32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
-
 function getArrayI32FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getInt32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
-
-function getArrayU32FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
 }
 
 function getArrayU8FromWasm0(ptr, len) {
@@ -531,14 +458,6 @@ function getDataViewMemory0() {
         cachedDataViewMemory0 = new DataView(wasm.memory.buffer);
     }
     return cachedDataViewMemory0;
-}
-
-let cachedFloat32ArrayMemory0 = null;
-function getFloat32ArrayMemory0() {
-    if (cachedFloat32ArrayMemory0 === null || cachedFloat32ArrayMemory0.byteLength === 0) {
-        cachedFloat32ArrayMemory0 = new Float32Array(wasm.memory.buffer);
-    }
-    return cachedFloat32ArrayMemory0;
 }
 
 let cachedInt32ArrayMemory0 = null;
@@ -674,7 +593,6 @@ function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
-    cachedFloat32ArrayMemory0 = null;
     cachedInt32ArrayMemory0 = null;
     cachedUint32ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;

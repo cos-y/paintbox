@@ -26,9 +26,10 @@
 
 	let li = listPaints().map((x) => x.rgb);
 	li.splice(100);
+	console.log(li);
 
 	console.time();
-	const ndiv = 10;
+	const ndiv = 16;
 	const hull = get_hull(new Uint32Array(li), 100 / ndiv);
 	console.timeEnd();
 
@@ -36,10 +37,10 @@
 	hull.add(r);
 	hull.add(g);
 	hull.add(b);
-	hull.add(c);
-	hull.add(m);
-	hull.add(y);
-	hull.add(k);
+	// hull.add(c);
+	// hull.add(m);
+	// hull.add(y);
+	// hull.add(k);
 	console.timeEnd();
 
 	let mesh: THREE.InstancedMesh | undefined = $state();

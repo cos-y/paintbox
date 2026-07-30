@@ -1,9 +1,10 @@
 use fixedbitset::FixedBitSet;
+use genawaiter::{rc::r#gen, *};
 use glam::Vec3;
-use lab::Lab;
-use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
 
-use crate::{BoxError, Latent, Rgb};
+use crate::{
+    BoxError, Latent, Oklab, Rgb, latent_to_rgb, log, oklab_to_rgb, rgb_to_latent, rgb_to_oklab,
+};
 
 // ── 参数 ─────────────────────────────────────────────────────────────────────
 
@@ -279,10 +280,16 @@ impl VoxelGrid {
 
 // ── 采样 ─────────────────────────────────────────────────────────────────────
 
+#[inline]
 fn latent_to_lab_vec(latent: &Latent) -> Vec3 {
-    let rgb = latent_to_float_rgb(latent);
-    let lab = Lab::from_rgb_normalized(&rgb);
-    Vec3::new(lab.l, lab.a, lab.b)
+    let rgb = latent_to_rgb(latent);
+    rgb_to_lab_vec(rgb)
+}
+
+#[inline]
+fn rgb_to_lab_vec(rgb: Rgb<f32>) -> Vec3 {
+    let lab = rgb_to_oklab(rgb);
+    Vec3::new(lab.l * 100.0, lab.a * 300.0, lab.b * 300.0)
 }
 
 fn sample_pair(a: &Latent, b: &Latent, spacing: f32, out: &mut Vec<Vec3>) {
@@ -350,6 +357,8 @@ pub struct Hull {
     grid: Option<VoxelGrid>,
     /// 随机数生成器
     rng: Rng,
+    /// 当前占据的近似内部区域（用于剪枝：落在此区域内的样本点跳过）
+    interior: Option<FixedBitSet>,
 
     /// 输出：体素网格坐标 [x,y,z, x,y,z, ...]
     pub indices: Vec<i32>,
@@ -358,7 +367,7 @@ pub struct Hull {
 }
 
 impl Hull {
-    pub fn new(grid_size: f32, colors: Vec<Rgb>) -> Result<Self, BoxError> {
+    pub fn new(grid_size: f32, colors: Vec<Rgb<f32>>) -> Result<Self, BoxError> {
         // 固定全色域栅格，原点锚定（坐标跨 insert 稳定）
         // Lab 范围：L 0..100, a/b -128..128，各方向留 padding
         let grid = VoxelGrid::new(
@@ -372,6 +381,7 @@ impl Hull {
             labs: Vec::new(),
             grid: Some(grid),
             rng: Rng::new(),
+            interior: None,
             indices: Vec::new(),
             colors: Vec::new(),
         };
@@ -382,41 +392,63 @@ impl Hull {
         Ok(hull)
     }
 
-    /// 增量插入：只采样“含新颜色”的 pair/triple，打点累积进栅格。
+    /// 增量插入：采样含新颜色的 pair/triple/random，剪枝掉落在当前凸包内部的点。
     /// 不做 close/solidify/extract（惰性，留到 finalize）。
-    pub fn insert(&mut self, color: Rgb) {
-        let latent = float_rgb_to_latent(&color);
-        let lab = latent_to_lab_vec(&latent);
+    pub fn insert(&mut self, color: Rgb<f32>) {
+        let lab = rgb_to_lab_vec(color);
+
+        // **提前退出优化**：检查新颜色是否已经在凸包内部（26 邻居全满）
+        // 如果是，跳过所有采样（该颜色与已有颜色的任何混合都在内部）
+        if self.is_interior(lab) {
+            if cfg!(test) {
+                eprintln!(
+                    "insert #{}: SKIPPED (color already interior)",
+                    self.latents.len()
+                );
+            }
+            return;
+        }
+
         let new_idx = self.latents.len();
-        self.latents.push(latent);
+        let spacing = self.grid_size * 1.0; //0.45;
+        self.latents.push(rgb_to_latent(color));
         self.labs.push(lab);
 
-        let spacing = self.grid_size * 0.45;
-        let grid = self.grid.as_mut().unwrap();
+        let mut stamped = 0;
 
         // 新颜色自身
+        let grid = self.grid.as_mut().unwrap();
         grid.stamp(lab);
+        stamped += 1;
 
         // 含新颜色的 pair：(new, j)
         let mut buf: Vec<Vec3> = Vec::new();
         for j in 0..new_idx {
             sample_pair(&self.latents[new_idx], &self.latents[j], spacing, &mut buf);
         }
-        // O(n³) triple 采样移除，用 random 高阶混合填充内部体积
-        // for j in 0..new_idx {
-        //     for k in j + 1..new_idx {
-        //         sample_triple(
-        //             &self.latents[new_idx],
-        //             &self.latents[j],
-        //             &self.latents[k],
-        //             spacing,
-        //             &mut buf,
-        //         );
-        //     }
-        // }
         for &p in &buf {
             grid.stamp(p);
+            stamped += 1;
         }
+        buf.clear();
+
+        // 含新颜色的 triple：(new, j, k) 恢复，带剪枝
+        for j in 0..new_idx {
+            for k in j + 1..new_idx {
+                sample_triple(
+                    &self.latents[new_idx],
+                    &self.latents[j],
+                    &self.latents[k],
+                    spacing,
+                    &mut buf,
+                );
+            }
+        }
+        for &p in &buf {
+            grid.stamp(p);
+            stamped += 1;
+        }
+        buf.clear();
 
         // 含新颜色的随机高阶混合（约束到必含 new_idx）
         if self.latents.len() >= 4 {
@@ -441,8 +473,29 @@ impl Hull {
                 let l: Latent = std::array::from_fn(|d| {
                     (0..k).map(|s| self.latents[idx[s]][d] * w[s] / sum).sum()
                 });
-                grid.stamp(latent_to_lab_vec(&l));
+                let p = latent_to_lab_vec(&l);
+                grid.stamp(p);
+                stamped += 1;
             }
+        }
+
+        // 更新内部区域：每次 insert 后 solidify，用实心区域做下一次剪枝
+        // solidify 虽然理论 O(全栅格)，但泛洪只访问边界，内部体素不重复搜索，实际很快
+        if self.latents.len() >= 4 {
+            let saved = grid.bits.clone();
+            grid.close();
+            grid.solidify();
+            self.interior = Some(grid.bits.clone());
+            grid.bits = saved; // 恢复原始 occupancy（solidify 是辅助，不影响累积栅格）
+        }
+
+        if cfg!(test) && self.latents.len() % 5 == 0 {
+            eprintln!(
+                "insert #{}: stamped={}, occupancy={}",
+                self.latents.len(),
+                stamped,
+                grid.bits.count_ones(..)
+            );
         }
 
         self.finalize();
@@ -474,16 +527,105 @@ impl Hull {
             self.indices.push(gz);
 
             // 体素中心 Lab 直接转 sRGB（O(1)，不再扫所有颜色）
-            let l = (gx as f32 + 0.5) * self.grid_size;
-            let a = (gy as f32 + 0.5) * self.grid_size;
-            let b = (gz as f32 + 0.5) * self.grid_size;
-            let [r, g, b] = Lab { l, a, b }.to_rgb_normalized();
-            let r = ((255.0 * r).round() as i32).clamp(0, 255);
-            let g = ((255.0 * g).round() as i32).clamp(0, 255);
-            let b = ((255.0 * b).round() as i32).clamp(0, 255);
+            let [l, a, b] = [gx, gy, gz].map(|x| (x as f32 + 0.5) * self.grid_size);
+            let rgb = oklab_to_rgb(Oklab {
+                l: l / 100.0,
+                a: a / 300.0,
+                b: b / 300.0,
+            });
+            let [r, g, b] =
+                [rgb.r, rgb.g, rgb.b].map(|x| ((255.0 * x).round() as i32).clamp(0, 255));
             self.colors.push((r << 16) | (g << 8) | b);
         }
+
+        let rem_idxs: Vec<_> = self
+            .labs
+            .iter()
+            .enumerate()
+            .rev()
+            .filter_map(|(i, lab)| {
+                if self.is_interior(*lab) {
+                    Some(i)
+                } else {
+                    None
+                }
+            })
+            .collect();
+
+        for i in rem_idxs {
+            self.latents.swap_remove(i);
+            self.labs.swap_remove(i);
+        }
     }
+
+    fn is_interior(&self, lab: Vec3) -> bool {
+        if self.latents.len() < 5 {
+            return false;
+        }
+        if let Some(ref interior) = self.interior {
+            let grid = self.grid.as_ref().unwrap();
+            let gp = grid.world_to_grid(lab);
+            for (dx, dy, dz) in iter_6_neighbours() {
+                if let Some(idx) = grid.grid_to_index(gp[0] + dx, gp[1] + dy, gp[2] + dz) {
+                    if !interior.contains(idx) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+            true
+        } else {
+            false
+        }
+    }
+}
+
+fn iter_26_neighbours() -> impl Iterator<Item = (i32, i32, i32)> {
+    r#gen!({
+        for dx in -1..=1 {
+            for dy in -1..=1 {
+                for dz in -1..=1 {
+                    if dx == 0 && dy == 0 && dz == 0 {
+                        continue;
+                    }
+                    yield_!((dx, dy, dz));
+                }
+            }
+        }
+    })
+    .into_iter()
+}
+
+fn iter_18_neighbours() -> impl Iterator<Item = (i32, i32, i32)> {
+    r#gen!({
+        for dx in -1_i32..=1 {
+            for dy in -1_i32..=1 {
+                for dz in -1_i32..=1 {
+                    if dx == 0 && dy == 0 && dz == 0 {
+                        continue;
+                    }
+                    if dx.abs() + dy.abs() + dz.abs() == 3 {
+                        continue;
+                    }
+                    yield_!((dx, dy, dz));
+                }
+            }
+        }
+    })
+    .into_iter()
+}
+
+fn iter_6_neighbours() -> impl Iterator<Item = (i32, i32, i32)> {
+    [
+        (1, 0, 0),
+        (-1, 0, 0),
+        (0, 1, 0),
+        (0, -1, 0),
+        (0, 0, 1),
+        (0, 0, -1),
+    ]
+    .into_iter()
 }
 
 #[cfg(test)]
@@ -539,107 +681,133 @@ mod bench {
 
     #[test]
     fn bench_24colors() {
-        let colors = (0..24).map(|i| {
-            let h = i as f32 / 24.0;
-            let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
-            let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
-            let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
-            [r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0]
-        }).collect::<Vec<_>>();
+        let colors = (0..24)
+            .map(|i| {
+                let h = i as f32 / 24.0;
+                let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
+                let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
+                let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
+                Rgb::new(r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0)
+            })
+            .collect::<Vec<_>>();
 
         // 统计采样点数
-        let latents: Vec<_> = colors.iter().map(|c| mixbox::float_rgb_to_latent(c)).collect();
+        let latents: Vec<_> = colors.iter().map(|c| rgb_to_latent(*c)).collect();
         let spacing = 10.0 * 0.45;
         let mut pair_count = 0;
         let mut triple_count = 0;
-        
+
         for i in 0..24 {
-            for j in i+1..24 {
+            for j in i + 1..24 {
                 let la = latent_to_lab_vec(&latents[i]);
                 let lb = latent_to_lab_vec(&latents[j]);
                 let n = ((la.distance(lb) / spacing).ceil() as usize).max(2);
                 pair_count += n + 1;
             }
         }
-        
+
         for i in 0..24 {
-            for j in i+1..24 {
-                for k in j+1..24 {
+            for j in i + 1..24 {
+                for k in j + 1..24 {
                     let la = latent_to_lab_vec(&latents[i]);
                     let lb = latent_to_lab_vec(&latents[j]);
                     let lc = latent_to_lab_vec(&latents[k]);
                     let ext = la.distance(lb).max(lb.distance(lc)).max(la.distance(lc));
                     let n = ((ext / spacing).ceil() as usize).max(2);
-                    let pts = (n+1)*(n+2)/2;
+                    let pts = (n + 1) * (n + 2) / 2;
                     triple_count += pts;
                 }
             }
         }
-        
-        eprintln!("samples: pairs={}, triples={}, random={}, total={}", 
-            pair_count, triple_count, RANDOM_SAMPLES, pair_count + triple_count + RANDOM_SAMPLES);
+
+        eprintln!(
+            "samples: pairs={}, triples={}, random={}, total={}",
+            pair_count,
+            triple_count,
+            RANDOM_SAMPLES,
+            pair_count + triple_count + RANDOM_SAMPLES
+        );
 
         let t0 = Instant::now();
         let hull = Hull::new(10.0, colors).unwrap();
         let t_new = t0.elapsed();
-        eprintln!("24 colors, gs=10: total={:?}, voxels={}", t_new, hull.indices.len()/3);
+        eprintln!(
+            "24 colors, gs=10: total={:?}, voxels={}",
+            t_new,
+            hull.indices.len() / 3
+        );
     }
 }
 
 #[test]
 fn bench_24colors() {
-    let colors = (0..24).map(|i| {
-        let h = i as f32 / 24.0;
-        let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
-        let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
-        let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
-        [r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0]
-    }).collect::<Vec<_>>();
+    let colors = (0..24)
+        .map(|i| {
+            let h = i as f32 / 24.0;
+            let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
+            let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
+            let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
+            Rgb::new(r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0)
+        })
+        .collect::<Vec<_>>();
 
     let t0 = std::time::Instant::now();
     let hull = Hull::new(10.0, colors).unwrap();
     let t_new = t0.elapsed();
-    eprintln!("new: {:?}, voxels: {}", t_new, hull.indices.len()/3);
+    eprintln!("new: {:?}, voxels: {}", t_new, hull.indices.len() / 3);
 }
 
-    #[test]
-    fn count_samples() {
-        let colors = (0..24).map(|i| {
+#[test]
+fn test_100colors() {}
+
+#[test]
+fn count_samples() {
+    let colors = (0..24)
+        .map(|i| {
             let h = i as f32 / 24.0;
             let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
             let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
             let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
             [r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0]
-        }).collect::<Vec<_>>();
+        })
+        .collect::<Vec<_>>();
 
-        let latents: Vec<_> = colors.iter().map(|c| mixbox::float_rgb_to_latent(c)).collect();
-        let spacing = 10.0 * 0.45;
-        let mut pair_count = 0;
-        let mut triple_count = 0;
-        
-        for i in 0..24 {
-            for j in i+1..24 {
+    let latents: Vec<_> = colors
+        .iter()
+        .map(|c| mixbox::float_rgb_to_latent(c))
+        .collect();
+    let spacing = 10.0 * 0.45;
+    let mut pair_count = 0;
+    let mut triple_count = 0;
+
+    for i in 0..24 {
+        for j in i + 1..24 {
+            let la = latent_to_lab_vec(&latents[i]);
+            let lb = latent_to_lab_vec(&latents[j]);
+            let n = ((la.distance(lb) / spacing).ceil() as usize).max(2);
+            pair_count += n + 1;
+        }
+    }
+
+    for i in 0..24 {
+        for j in i + 1..24 {
+            for k in j + 1..24 {
                 let la = latent_to_lab_vec(&latents[i]);
                 let lb = latent_to_lab_vec(&latents[j]);
-                let n = ((la.distance(lb) / spacing).ceil() as usize).max(2);
-                pair_count += n + 1;
+                let lc = latent_to_lab_vec(&latents[k]);
+                let ext = la.distance(lb).max(lb.distance(lc)).max(la.distance(lc));
+                let n = ((ext / spacing).ceil() as usize).max(2);
+                let pts = (n + 1) * (n + 2) / 2;
+                triple_count += pts;
             }
         }
-        
-        for i in 0..24 {
-            for j in i+1..24 {
-                for k in j+1..24 {
-                    let la = latent_to_lab_vec(&latents[i]);
-                    let lb = latent_to_lab_vec(&latents[j]);
-                    let lc = latent_to_lab_vec(&latents[k]);
-                    let ext = la.distance(lb).max(lb.distance(lc)).max(la.distance(lc));
-                    let n = ((ext / spacing).ceil() as usize).max(2);
-                    let pts = (n+1)*(n+2)/2;
-                    triple_count += pts;
-                }
-            }
-        }
-        
-        eprintln!("pairs: {}, triples: {}, random: {}, total: {}", 
-            pair_count, triple_count, 50_000, pair_count + triple_count + 50_000);
     }
+
+    eprintln!(
+        "pairs: {}, triples: {}, random: {}, total: {}",
+        pair_count,
+        triple_count,
+        50_000,
+        pair_count + triple_count + 50_000
+    );
+}
