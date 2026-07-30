@@ -1,46 +1,21 @@
 import type { FilterOptions, SearchResult } from './paints';
+import { callWasm, WorkerCancelled } from './wasmClient';
 
-let worker: Worker | null = null;
-let nextId = 0;
-const pending = new Map<number, (results: SearchResult[]) => void>();
-
-const spawnWorker = (): Worker => {
-	const w = new Worker(new URL('./search.worker.ts', import.meta.url), { type: 'module' });
-	w.onmessage = (e: MessageEvent<{ id: number; results: SearchResult[] }>) => {
-		const { id, results } = e.data;
-		const resolve = pending.get(id);
-		if (resolve) {
-			pending.delete(id);
-			resolve(results);
+// search 的薄封装，保持原有接口。底层走通用 wasm RPC 客户端：
+// 新请求会取消（terminate）仍在执行的旧请求。被取消的请求这里静默返回空数组，
+// 维持旧行为（旧实现里被取消的 Promise 直接丢弃、不 resolve）。
+export const searchAsync = async (
+	rgb: number,
+	opts: FilterOptions
+): Promise<SearchResult[]> => {
+	try {
+		const results = await callWasm<SearchResult[] | null>('search', [rgb, opts]);
+		return results ?? [];
+	} catch (err) {
+		if (err instanceof WorkerCancelled) {
+			// 被更新的请求抢占，返回空，让调用方忽略这次结果
+			return [];
 		}
-	};
-	return w;
-};
-
-// wasm的search是同步阻塞的，一旦跑起来就没法从内部叫停；如果上一次请求还没返回
-// 新请求就来了，说明worker正卡在耗时的旧搜索里（比如混色数调太大），直接把整个
-// worker终止掉重开一个，比等它跑完再换参数快得多
-const cancelInFlight = () => {
-	if (worker && pending.size > 0) {
-		worker.terminate();
-		worker = null;
-		pending.clear();
+		throw err;
 	}
-};
-
-const getWorker = (): Worker => {
-	if (!worker) {
-		worker = spawnWorker();
-	}
-	return worker;
-};
-
-export const searchAsync = (rgb: number, opts: FilterOptions): Promise<SearchResult[]> => {
-	cancelInFlight();
-	const w = getWorker();
-	const id = nextId++;
-	return new Promise((resolve) => {
-		pending.set(id, resolve);
-		w.postMessage({ id, rgb, opts });
-	});
 };

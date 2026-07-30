@@ -5,11 +5,11 @@ use glam::Vec3;
 use lab::Lab;
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::*;
-use web_sys::js_sys::{Float32Array, Uint32Array};
+use web_sys::js_sys::{Float32Array, Int32Array, Uint32Array};
 
 use crate::{
     BoxError, Rgb, hex_to_rgb,
-    hull::{BruteHull, FastHull, Hull},
+    hull::Hull,
     mesh::Mesh,
     search::{FilterOptions, Searcher},
     tess::get_triangle_tesselation,
@@ -99,7 +99,7 @@ impl MeshProxy {
 }
 
 #[wasm_bindgen]
-pub struct HullProxy(Box<dyn Hull>);
+pub struct HullProxy(Hull);
 
 #[wasm_bindgen]
 impl HullProxy {
@@ -107,19 +107,19 @@ impl HullProxy {
         self.0.insert(hex_to_rgb(rgb));
     }
 
-    pub fn mesh(&mut self) -> MeshProxy {
-        MeshProxy(self.0.mesh())
+    pub fn indices(&self) -> Int32Array {
+        unsafe { Int32Array::view(&self.0.indices) }
+    }
+
+    pub fn colors(&self) -> Int32Array {
+        unsafe { Int32Array::view(&self.0.colors) }
     }
 }
 
 #[wasm_bindgen]
-pub fn get_hull(li: &[u32], brute: bool) -> Result<HullProxy, JsError> {
+pub fn get_hull(li: &[u32], grid_size: f32) -> Result<HullProxy, JsError> {
     let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
-    let hull: Box<dyn Hull> = if brute {
-        BruteHull::new(rgbs).map_err(to_jserr)?
-    } else {
-        FastHull::new(rgbs).map_err(to_jserr)?
-    };
+    let hull = Hull::new(grid_size, rgbs).map_err(to_jserr)?;
     Ok(HullProxy(hull))
 }
 

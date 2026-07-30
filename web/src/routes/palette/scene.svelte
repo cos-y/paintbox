@@ -1,12 +1,19 @@
 <script lang="ts">
-	import { Gizmo, OrbitControls } from '@threlte/extras';
+	import { Gizmo, OrbitControls, interactivity } from '@threlte/extras';
 	import { T, useThrelte } from '@threlte/core';
-	import { get_hull, get_srgb_mesh } from '../../wasm-pkg/paintbox_wasm';
+	import { get_hull } from '../../wasm-pkg/paintbox_wasm';
 	import * as THREE from 'three';
 	import { listPaints, rgbToHex } from '$lib/paints';
 
-	const { toneMapping } = useThrelte();
+	const { toneMapping, invalidate } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
+
+	// 启用指针事件（射线拾取），只取最近的一个命中
+	interactivity({
+		filter(items) {
+			return items.slice(0, 1);
+		}
+	});
 
 	let r = 0xff0000;
 	let g = 0x00ff00;
@@ -16,32 +23,16 @@
 	let y = 0xffff00;
 	let k = 0x000000;
 	let w = 0xffffff;
-	let gr = 0xaaaaaa;
 
-	// let r = 0xed1c24;
-	// let g = 0x00a650;
-	// let b = 0x005aaa;
-	// let c = 0x00aeef;
-	// let m = 0xec008c;
-	// let y = 0xfff200;
-	// let k = 0x231f20;
-	// let w = 0xffffff;
-
-	// let li = [r, g, b, c, m, y, k, w];
 	let li = listPaints().map((x) => x.rgb);
-	console.log(li.map((x) => rgbToHex(x)));
+	li.splice(100);
 
-	const li1 = [li[1], li[0], li[4], li[2]];
-	li.splice(5);
-	// li = [r, g, b, c];
-	// li.splice(50);
-	// const [_1] = li.splice(3, 1);
-	// const [_2] = li.splice(7, 1);
-	// // const [_3] = li.splice(7, 1);
+	console.time();
+	const ndiv = 10;
+	const hull = get_hull(new Uint32Array(li), 100 / ndiv);
+	console.timeEnd();
 
-	// const hull = get_hull(new Uint32Array(li1));
-	// hull.add(li[7]);
-	const hull = get_hull(new Uint32Array(li), false);
+	console.time();
 	hull.add(r);
 	hull.add(g);
 	hull.add(b);
@@ -49,17 +40,53 @@
 	hull.add(m);
 	hull.add(y);
 	hull.add(k);
-	// hull.add(w);
+	console.timeEnd();
 
-	let mesh = $state(hull.mesh());
-	let positions = $derived(mesh.positions());
-	let colors = $derived(mesh.colors());
-	let indices = $derived(mesh.indices());
+	let mesh: THREE.InstancedMesh | undefined = $state();
 
-	const srgbMesh = get_srgb_mesh(8);
-	let srgbPositions = $derived(srgbMesh.positions());
-	let srgbColors = $derived(srgbMesh.colors());
-	let srgbIndices = $derived(srgbMesh.indices());
+	// 一次取数据、算好实例数（count 是构造时固定的）
+	const indices = hull.indices();
+	const colors = hull.colors();
+	const nvoxels = colors.length;
+	console.log('nvoxels =', nvoxels);
+
+	let hoveredId = -1;
+	const dummy = new THREE.Object3D();
+
+	// 写入第 i 个实例的变换（s = 缩放倍率）
+	const writeMatrix = (i: number, s: number) => {
+		if (!mesh) return;
+		dummy.position.set(indices[i * 3 + 0], indices[i * 3 + 1], indices[i * 3 + 2]);
+		dummy.scale.setScalar(s);
+		dummy.updateMatrix();
+		mesh.setMatrixAt(i, dummy.matrix);
+	};
+
+	const fill = () => {
+		if (!mesh) return;
+		for (let i = 0; i < nvoxels; ++i) {
+			writeMatrix(i, 1);
+			mesh.setColorAt(i, new THREE.Color(colors[i]));
+		}
+		mesh.instanceMatrix.needsUpdate = true;
+		if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+		invalidate();
+	};
+
+	// mesh 挂载后填充实例数据
+	$effect(() => {
+		fill();
+	});
+
+	// 悬停高亮：只重写变化的两个实例，不遍历全部
+	const setHovered = (id: number) => {
+		if (id === hoveredId || !mesh) return;
+		if (hoveredId >= 0) writeMatrix(hoveredId, 1);
+		if (id >= 0) writeMatrix(id, 1.3);
+		hoveredId = id;
+		mesh.instanceMatrix.needsUpdate = true;
+		invalidate();
+	};
 </script>
 
 <T.PerspectiveCamera
@@ -74,32 +101,21 @@
 		<Gizmo />
 	</OrbitControls>
 </T.PerspectiveCamera>
-<!-- 
-<T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
-	<T.BufferGeometry attach="geometry">
-		<T.BufferAttribute args={[positions, 3]} attach="attributes.position" />
-		<T.BufferAttribute args={[colors, 3]} attach="attributes.color" />
-		<T.BufferAttribute args={[indices, 1]} attach="index" />
-	</T.BufferGeometry>
-	<T.MeshBasicMaterial side={1} vertexColors={true} />
-</T.Mesh> -->
 
-<T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
-	<T.BufferGeometry attach="geometry">
-		<T.BufferAttribute args={[positions, 3]} attach="attributes.position" />
-		<T.BufferAttribute args={[colors, 3]} attach="attributes.color" />
-		<T.BufferAttribute args={[indices, 1]} attach="index" />
-	</T.BufferGeometry>
-	<T.MeshBasicMaterial side={2} vertexColors={true} wireframe={true} />
-</T.Mesh>
-
-<!-- <T.Mesh scale={0.01} position={[-0.5, 0, 0]}>
-	<T.BufferGeometry attach="geometry">
-		<T.BufferAttribute args={[srgbPositions, 3]} attach="attributes.position" />
-		<T.BufferAttribute args={[srgbColors, 3]} attach="attributes.color" />
-		<T.BufferAttribute args={[srgbIndices, 1]} attach="index" />
-	</T.BufferGeometry>
-	<T.MeshBasicMaterial side={2} vertexColors={true} wireframe={true} />
-</T.Mesh> -->
+<T.InstancedMesh
+	scale={1 / ndiv}
+	position={[-0.5, 0, 0]}
+	bind:ref={mesh}
+	args={[undefined, undefined, nvoxels]}
+	onpointermove={(e: any) => setHovered(e.instanceId ?? -1)}
+	onpointerleave={() => setHovered(-1)}
+	onclick={(e: any) => {
+		const id = e.instanceId ?? -1;
+		if (id >= 0) console.log('clicked voxel', id, '#' + colors[id].toString(16).padStart(6, '0'));
+	}}
+>
+	<T.BoxGeometry args={[1, 1, 1]} />
+	<T.MeshBasicMaterial />
+</T.InstancedMesh>
 
 <T.GridHelper args={[2, 20]} />
