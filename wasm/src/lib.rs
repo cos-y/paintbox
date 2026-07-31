@@ -3,7 +3,7 @@ use oklab::*;
 
 pub use oklab::{Oklab, Rgb};
 
-pub mod hull;
+pub mod gamut;
 pub mod search;
 pub mod tess;
 

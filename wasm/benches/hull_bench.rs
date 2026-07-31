@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use criterion::{Criterion, criterion_group, criterion_main};
-use paintbox_wasm::{hex_to_rgb, hull::Hull};
+use paintbox_wasm::{gamut::Gamut, hex_to_rgb};
 
 fn bench_hull(c: &mut Criterion) {
     let colors = [
@@ -113,7 +113,7 @@ fn bench_hull(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(20));
     group.bench_function("hull_new_100_colors_catalog", |b| {
         b.iter(|| {
-            Hull::new(10.0, colors.clone()).unwrap();
+            Gamut::new(10, colors.clone()).unwrap();
         });
     });
 }

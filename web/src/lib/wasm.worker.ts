@@ -36,9 +36,32 @@ const ensureReady = (): Promise<void> => {
 	return ready;
 };
 
+const OBJECTS = new Map<string, any>();
+const allocObject = (obj: any) => {
+	const uuid = self.crypto.randomUUID();
+	OBJECTS.set(uuid, obj);
+	return uuid;
+};
+
+const freeObject = (uuid: string) => {
+	const obj = OBJECTS.get(uuid);
+	obj?.free();
+	OBJECTS.delete(uuid);
+};
+
+function getObject<T>(uuid: string) {
+	return OBJECTS.get(uuid) as T;
+}
+
 // 可被 client 调用的 wasm 方法白名单。新增方法在这里登记即可。
 const METHODS: Record<string, (...args: never[]) => unknown> = {
-	search: wasm.search
+	free: (uuid: string) => freeObject(uuid),
+	search: wasm.search,
+	new_gamut: (ndiv: number, li: Uint32Array) => allocObject(wasm.new_gamut(ndiv, li)),
+	gamut_insert_many: (gamut: string, rgbs: Uint32Array) =>
+		getObject<wasm.HullProxy>(gamut).insert_many(rgbs),
+	gamut_matrices: (gamut: string) => getObject<wasm.HullProxy>(gamut).matrices(),
+	gamut_colors: (gamut: string) => getObject<wasm.HullProxy>(gamut).colors()
 	// 在此登记更多 wasm 导出方法
 };
 

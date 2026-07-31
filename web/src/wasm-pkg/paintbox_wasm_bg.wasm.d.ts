@@ -1,16 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export const __wbg_hullproxy_free: (a: number, b: number) => void;
+export const __wbg_gamutproxy_free: (a: number, b: number) => void;
 export const color_diff: (a: number, b: number) => number;
 export const find_direct_equivalences: (a: number) => [number, number, number];
-export const get_hull: (a: number, b: number, c: number) => [number, number, number];
-export const hullproxy_add: (a: number, b: number) => void;
-export const hullproxy_colors: (a: number) => any;
-export const hullproxy_indices: (a: number) => any;
+export const gamutproxy_colors: (a: number) => any;
+export const gamutproxy_insert: (a: number, b: number) => number;
+export const gamutproxy_insert_many: (a: number, b: number, c: number) => number;
+export const gamutproxy_matrices: (a: number) => any;
 export const init_panic_hook: () => void;
 export const init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
 export const list_paints: () => [number, number, number];
+export const new_gamut: (a: number, b: number, c: number) => [number, number, number];
 export const search: (a: number, b: any) => [number, number, number];
 export const __wbindgen_malloc: (a: number, b: number) => number;
 export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

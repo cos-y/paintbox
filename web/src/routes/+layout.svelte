@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { Boxes, Search, Palette, Info } from '@lucide/svelte';
+	import { Boxes, Search, Palette, Info, Eclipse } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 
 	let { children } = $props();
@@ -18,9 +18,9 @@
 			svg: Search
 		},
 		{
-			title: 'palette',
-			route: '/palette',
-			svg: Palette
+			title: 'gamut',
+			route: '/gamut',
+			svg: Eclipse
 		}
 	];
 </script>

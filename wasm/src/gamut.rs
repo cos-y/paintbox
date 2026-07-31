@@ -1,6 +1,7 @@
 use fixedbitset::FixedBitSet;
 use genawaiter::{rc::r#gen, *};
 use glam::Vec3;
+use oklab::oklab_to_linear_srgb;
 
 use crate::{
     BoxError, Latent, Oklab, Rgb, latent_to_rgb, log, oklab_to_rgb, rgb_to_latent, rgb_to_oklab,
@@ -93,9 +94,9 @@ impl VoxelGrid {
     #[inline]
     fn world_to_grid(&self, p: Vec3) -> [i32; 3] {
         [
-            (p.x / self.size).floor() as i32,
-            (p.y / self.size).floor() as i32,
-            (p.z / self.size).floor() as i32,
+            (p.x / self.size).round() as i32,
+            (p.y / self.size).round() as i32,
+            (p.z / self.size).round() as i32,
         ]
     }
 
@@ -344,10 +345,10 @@ fn sample_random(latents: &[Latent], count: usize, rng: &mut Rng, out: &mut Vec<
     }
 }
 
-// ── Hull ──────────────────────────────────────────────────────────────────────
+// ── Gamut ──────────────────────────────────────────────────────────────────────
 
 #[derive(Debug)]
-pub struct Hull {
+pub struct Gamut {
     grid_size: f32,
     /// 输入颜色的 latent
     latents: Vec<Latent>,
@@ -361,13 +362,14 @@ pub struct Hull {
     interior: Option<FixedBitSet>,
 
     /// 输出：体素网格坐标 [x,y,z, x,y,z, ...]
-    pub indices: Vec<i32>,
-    /// 输出：体素颜色 [r,g,b, r,g,b, ...] (0-1 归一化 sRGB)
-    pub colors: Vec<i32>,
+    pub matrices: Vec<f32>,
+    /// 输出：体素颜色 [r,g,b, r,g,b, ...] (0-1 线性 sRGB)
+    pub colors: Vec<f32>,
 }
 
-impl Hull {
-    pub fn new(grid_size: f32, colors: Vec<Rgb<f32>>) -> Result<Self, BoxError> {
+impl Gamut {
+    pub fn new(ndiv: usize, colors: Vec<Rgb<f32>>) -> Result<Self, BoxError> {
+        let grid_size = 100f32 / ndiv as f32;
         // 固定全色域栅格，原点锚定（坐标跨 insert 稳定）
         // Lab 范围：L 0..100, a/b -128..128，各方向留 padding
         let grid = VoxelGrid::new(
@@ -375,26 +377,34 @@ impl Hull {
             Vec3::new(104.0, 132.0, 132.0),
             grid_size,
         );
-        let mut hull = Hull {
+        let mut gamut = Gamut {
             grid_size,
             latents: Vec::new(),
             labs: Vec::new(),
             grid: Some(grid),
             rng: Rng::new(),
             interior: None,
-            indices: Vec::new(),
+            matrices: Vec::new(),
             colors: Vec::new(),
         };
         for c in colors {
-            hull.insert(c);
+            gamut.insert(c);
         }
-        hull.finalize();
-        Ok(hull)
+        gamut.finalize();
+        Ok(gamut)
+    }
+
+    pub fn insert_many(&mut self, colors: Vec<Rgb<f32>>) -> bool {
+        let mut modified = false;
+        for color in colors {
+            modified |= self.insert(color);
+        }
+        modified
     }
 
     /// 增量插入：采样含新颜色的 pair/triple/random，剪枝掉落在当前凸包内部的点。
     /// 不做 close/solidify/extract（惰性，留到 finalize）。
-    pub fn insert(&mut self, color: Rgb<f32>) {
+    pub fn insert(&mut self, color: Rgb<f32>) -> bool {
         let lab = rgb_to_lab_vec(color);
 
         // **提前退出优化**：检查新颜色是否已经在凸包内部（26 邻居全满）
@@ -406,11 +416,11 @@ impl Hull {
                     self.latents.len()
                 );
             }
-            return;
+            return false;
         }
 
         let new_idx = self.latents.len();
-        let spacing = self.grid_size * 1.0; //0.45;
+        let spacing = self.grid_size * 0.3;
         self.latents.push(rgb_to_latent(color));
         self.labs.push(lab);
 
@@ -489,7 +499,7 @@ impl Hull {
             grid.bits = saved; // 恢复原始 occupancy（solidify 是辅助，不影响累积栅格）
         }
 
-        if cfg!(test) && self.latents.len() % 5 == 0 {
+        if cfg!(test) {
             eprintln!(
                 "insert #{}: stamped={}, occupancy={}",
                 self.latents.len(),
@@ -499,13 +509,15 @@ impl Hull {
         }
 
         self.finalize();
+
+        true
     }
 
     /// 在累积栅格副本上跑 close/solidify/extract，生成体素输出。
     fn finalize(&mut self) {
         let raw = self.grid.as_ref().unwrap();
         if self.latents.is_empty() {
-            self.indices.clear();
+            self.matrices.clear();
             self.colors.clear();
             return;
         }
@@ -516,26 +528,40 @@ impl Hull {
         work.solidify();
 
         let voxels = work.extract_voxels();
-        self.indices.clear();
+        self.matrices.clear();
         self.colors.clear();
-        self.indices.reserve(voxels.len() * 3);
+        self.matrices.reserve(voxels.len() * 3);
         self.colors.reserve(voxels.len() * 3);
 
         for &[gx, gy, gz] in &voxels {
-            self.indices.push(gx);
-            self.indices.push(gy);
-            self.indices.push(gz);
+            self.matrices.push(1.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(1.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(0.0);
+            self.matrices.push(1.0);
+            self.matrices.push(0.0);
+            self.matrices.push(gx as f32);
+            self.matrices.push(gy as f32);
+            self.matrices.push(gz as f32);
+            self.matrices.push(1.0);
 
             // 体素中心 Lab 直接转 sRGB（O(1)，不再扫所有颜色）
             let [l, a, b] = [gx, gy, gz].map(|x| (x as f32 + 0.5) * self.grid_size);
-            let rgb = oklab_to_rgb(Oklab {
+            let rgb = oklab_to_linear_srgb(Oklab {
                 l: l / 100.0,
                 a: a / 300.0,
                 b: b / 300.0,
             });
-            let [r, g, b] =
-                [rgb.r, rgb.g, rgb.b].map(|x| ((255.0 * x).round() as i32).clamp(0, 255));
-            self.colors.push((r << 16) | (g << 8) | b);
+            let [r, g, b] = [rgb.r, rgb.g, rgb.b].map(|x| x.clamp(0.0, 1.0));
+            self.colors.push(r);
+            self.colors.push(g);
+            self.colors.push(b);
         }
 
         let rem_idxs: Vec<_> = self
@@ -555,6 +581,10 @@ impl Hull {
         for i in rem_idxs {
             self.latents.swap_remove(i);
             self.labs.swap_remove(i);
+        }
+
+        if cfg!(test) {
+            eprintln!("colors={}", self.labs.len(),);
         }
     }
 
@@ -639,103 +669,9 @@ mod tests {
             crate::hex_to_rgb(0x000000),
             crate::hex_to_rgb(0xff0000),
         ];
-        let hull = Hull::new(2.0, colors).unwrap();
-        assert!(!hull.indices.is_empty());
-        assert_eq!(hull.indices.len() / 3, hull.colors.len() / 3);
-    }
-}
-
-#[cfg(test)]
-mod bench {
-    use super::*;
-    use std::time::Instant;
-
-    #[test]
-    fn bench_incremental() {
-        let seq = [
-            0xff0000u32,
-            0x00ff00,
-            0x0000ff,
-            0x00ffff,
-            0xff00ff,
-            0xffff00,
-            0x000000,
-            0xffffff,
-        ];
-        for &gs in &[3.0f32, 2.0] {
-            let t0 = Instant::now();
-            let mut hull = Hull::new(gs, vec![]).unwrap();
-            for &h in &seq {
-                hull.insert(crate::hex_to_rgb(h));
-            }
-            let t_add = t0.elapsed();
-            let t1 = Instant::now();
-            let nv = hull.indices.len() / 3;
-            let t_fin = t1.elapsed();
-            eprintln!(
-                "gs={} add={:?} finalize={:?} voxels={}",
-                gs, t_add, t_fin, nv
-            );
-        }
-    }
-
-    #[test]
-    fn bench_24colors() {
-        let colors = (0..24)
-            .map(|i| {
-                let h = i as f32 / 24.0;
-                let r = ((h * 6.0).sin() * 127.0 + 128.0) as u8;
-                let g = ((h * 6.0 + 2.0).sin() * 127.0 + 128.0) as u8;
-                let b = ((h * 6.0 + 4.0).sin() * 127.0 + 128.0) as u8;
-                Rgb::new(r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0)
-            })
-            .collect::<Vec<_>>();
-
-        // 统计采样点数
-        let latents: Vec<_> = colors.iter().map(|c| rgb_to_latent(*c)).collect();
-        let spacing = 10.0 * 0.45;
-        let mut pair_count = 0;
-        let mut triple_count = 0;
-
-        for i in 0..24 {
-            for j in i + 1..24 {
-                let la = latent_to_lab_vec(&latents[i]);
-                let lb = latent_to_lab_vec(&latents[j]);
-                let n = ((la.distance(lb) / spacing).ceil() as usize).max(2);
-                pair_count += n + 1;
-            }
-        }
-
-        for i in 0..24 {
-            for j in i + 1..24 {
-                for k in j + 1..24 {
-                    let la = latent_to_lab_vec(&latents[i]);
-                    let lb = latent_to_lab_vec(&latents[j]);
-                    let lc = latent_to_lab_vec(&latents[k]);
-                    let ext = la.distance(lb).max(lb.distance(lc)).max(la.distance(lc));
-                    let n = ((ext / spacing).ceil() as usize).max(2);
-                    let pts = (n + 1) * (n + 2) / 2;
-                    triple_count += pts;
-                }
-            }
-        }
-
-        eprintln!(
-            "samples: pairs={}, triples={}, random={}, total={}",
-            pair_count,
-            triple_count,
-            RANDOM_SAMPLES,
-            pair_count + triple_count + RANDOM_SAMPLES
-        );
-
-        let t0 = Instant::now();
-        let hull = Hull::new(10.0, colors).unwrap();
-        let t_new = t0.elapsed();
-        eprintln!(
-            "24 colors, gs=10: total={:?}, voxels={}",
-            t_new,
-            hull.indices.len() / 3
-        );
+        let gamut = Gamut::new(30, colors).unwrap();
+        assert!(!gamut.matrices.is_empty());
+        assert_eq!(gamut.matrices.len() / 3, gamut.colors.len() / 3);
     }
 }
 
@@ -752,13 +688,38 @@ fn bench_24colors() {
         .collect::<Vec<_>>();
 
     let t0 = std::time::Instant::now();
-    let hull = Hull::new(10.0, colors).unwrap();
+    let gamut = Gamut::new(10, colors).unwrap();
     let t_new = t0.elapsed();
-    eprintln!("new: {:?}, voxels: {}", t_new, hull.indices.len() / 3);
+    eprintln!("new: {:?}, voxels: {}", t_new, gamut.matrices.len() / 3);
 }
 
 #[test]
-fn test_100colors() {}
+fn test_empty() {
+    let gamut = Gamut::new(10, vec![]).unwrap();
+    assert_eq!(gamut.matrices.len(), 0);
+}
+
+#[test]
+fn test_case1() {
+    let mut gamut = Gamut::new(16, vec![]).unwrap();
+    gamut.insert(Rgb::new(0.0, 0.0, 1.0));
+    log!("{}", gamut.colors.len());
+    gamut.insert(Rgb::new(1.0, 0.0, 0.0));
+    log!("{}", gamut.colors.len());
+    gamut.insert(Rgb::new(0.0, 1.0, 0.0));
+    log!("{}", gamut.colors.len());
+    gamut.insert(Rgb::new(1.0, 1.0, 1.0));
+    for i in 0..gamut.colors.len() {
+        log!(
+            "{} {} {}",
+            gamut.matrices[3 * i + 0],
+            gamut.matrices[3 * i + 1],
+            gamut.matrices[3 * i + 2]
+        );
+    }
+    log!("{}", gamut.colors.len());
+    // assert_eq!(gamut.indices.len(), 0);
+}
 
 #[test]
 fn count_samples() {

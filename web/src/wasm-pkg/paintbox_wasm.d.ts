@@ -1,20 +1,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class HullProxy {
+export class GamutProxy {
     private constructor();
     free(): void;
     [Symbol.dispose](): void;
-    add(rgb: number): void;
-    colors(): Int32Array;
-    indices(): Int32Array;
+    colors(): Float32Array;
+    insert(rgb: number): boolean;
+    insert_many(rgbs: Uint32Array): boolean;
+    matrices(): Float32Array;
 }
 
 export function color_diff(a: number, b: number): number;
 
 export function find_direct_equivalences(index: number): any;
-
-export function get_hull(li: Uint32Array, grid_size: number): HullProxy;
 
 export function init_panic_hook(): void;
 
@@ -22,22 +21,25 @@ export function init_searcher(blob: Uint8Array, equiv_blob: Uint8Array): void;
 
 export function list_paints(): any;
 
+export function new_gamut(ndiv: number, li: Uint32Array): GamutProxy;
+
 export function search(rgb: number, opts: any): any;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly __wbg_hullproxy_free: (a: number, b: number) => void;
+    readonly __wbg_gamutproxy_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
     readonly find_direct_equivalences: (a: number) => [number, number, number];
-    readonly get_hull: (a: number, b: number, c: number) => [number, number, number];
-    readonly hullproxy_add: (a: number, b: number) => void;
-    readonly hullproxy_colors: (a: number) => any;
-    readonly hullproxy_indices: (a: number) => any;
+    readonly gamutproxy_colors: (a: number) => any;
+    readonly gamutproxy_insert: (a: number, b: number) => number;
+    readonly gamutproxy_insert_many: (a: number, b: number, c: number) => number;
+    readonly gamutproxy_matrices: (a: number) => any;
     readonly init_panic_hook: () => void;
     readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
     readonly list_paints: () => [number, number, number];
+    readonly new_gamut: (a: number, b: number, c: number) => [number, number, number];
     readonly search: (a: number, b: any) => [number, number, number];
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

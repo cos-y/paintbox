@@ -1,44 +1,56 @@
 /* @ts-self-types="./paintbox_wasm.d.ts" */
 
-export class HullProxy {
+export class GamutProxy {
     static __wrap(ptr) {
-        const obj = Object.create(HullProxy.prototype);
+        const obj = Object.create(GamutProxy.prototype);
         obj.__wbg_ptr = ptr;
-        HullProxyFinalization.register(obj, obj.__wbg_ptr, obj);
+        GamutProxyFinalization.register(obj, obj.__wbg_ptr, obj);
         return obj;
     }
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        HullProxyFinalization.unregister(this);
+        GamutProxyFinalization.unregister(this);
         return ptr;
     }
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_hullproxy_free(ptr, 0);
+        wasm.__wbg_gamutproxy_free(ptr, 0);
+    }
+    /**
+     * @returns {Float32Array}
+     */
+    colors() {
+        const ret = wasm.gamutproxy_colors(this.__wbg_ptr);
+        return ret;
     }
     /**
      * @param {number} rgb
+     * @returns {boolean}
      */
-    add(rgb) {
-        wasm.hullproxy_add(this.__wbg_ptr, rgb);
+    insert(rgb) {
+        const ret = wasm.gamutproxy_insert(this.__wbg_ptr, rgb);
+        return ret !== 0;
     }
     /**
-     * @returns {Int32Array}
+     * @param {Uint32Array} rgbs
+     * @returns {boolean}
      */
-    colors() {
-        const ret = wasm.hullproxy_colors(this.__wbg_ptr);
-        return ret;
+    insert_many(rgbs) {
+        const ptr0 = passArray32ToWasm0(rgbs, wasm.__wbindgen_malloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.gamutproxy_insert_many(this.__wbg_ptr, ptr0, len0);
+        return ret !== 0;
     }
     /**
-     * @returns {Int32Array}
+     * @returns {Float32Array}
      */
-    indices() {
-        const ret = wasm.hullproxy_indices(this.__wbg_ptr);
+    matrices() {
+        const ret = wasm.gamutproxy_matrices(this.__wbg_ptr);
         return ret;
     }
 }
-if (Symbol.dispose) HullProxy.prototype[Symbol.dispose] = HullProxy.prototype.free;
+if (Symbol.dispose) GamutProxy.prototype[Symbol.dispose] = GamutProxy.prototype.free;
 
 /**
  * @param {number} a
@@ -60,21 +72,6 @@ export function find_direct_equivalences(index) {
         throw takeFromExternrefTable0(ret[1]);
     }
     return takeFromExternrefTable0(ret[0]);
-}
-
-/**
- * @param {Uint32Array} li
- * @param {number} grid_size
- * @returns {HullProxy}
- */
-export function get_hull(li, grid_size) {
-    const ptr0 = passArray32ToWasm0(li, wasm.__wbindgen_malloc);
-    const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.get_hull(ptr0, len0, grid_size);
-    if (ret[2]) {
-        throw takeFromExternrefTable0(ret[1]);
-    }
-    return HullProxy.__wrap(ret[0]);
 }
 
 export function init_panic_hook() {
@@ -105,6 +102,21 @@ export function list_paints() {
         throw takeFromExternrefTable0(ret[1]);
     }
     return takeFromExternrefTable0(ret[0]);
+}
+
+/**
+ * @param {number} ndiv
+ * @param {Uint32Array} li
+ * @returns {GamutProxy}
+ */
+export function new_gamut(ndiv, li) {
+    const ptr0 = passArray32ToWasm0(li, wasm.__wbindgen_malloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.new_gamut(ndiv, ptr0, len0);
+    if (ret[2]) {
+        throw takeFromExternrefTable0(ret[1]);
+    }
+    return GamutProxy.__wrap(ret[0]);
 }
 
 /**
@@ -287,6 +299,9 @@ function __wbg_get_imports() {
             const ret = arg0.length;
             return ret;
         },
+        __wbg_log_d267660666346fb3: function(arg0) {
+            console.log(arg0);
+        },
         __wbg_new_227d7c05414eb861: function() {
             const ret = new Error();
             return ret;
@@ -311,6 +326,14 @@ function __wbg_get_imports() {
             const ret = arg0.next();
             return ret;
         }, arguments); },
+        __wbg_now_e7c6795a7f81e10f: function(arg0) {
+            const ret = arg0.now();
+            return ret;
+        },
+        __wbg_performance_3fcf6e32a7e1ed0a: function(arg0) {
+            const ret = arg0.performance;
+            return ret;
+        },
         __wbg_prototypesetcall_4770620bbe4688a0: function(arg0, arg1, arg2) {
             Uint8Array.prototype.set.call(getArrayU8FromWasm0(arg0, arg1), arg2);
         },
@@ -327,6 +350,22 @@ function __wbg_get_imports() {
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         },
+        __wbg_static_accessor_GLOBAL_4ef717fb391d88b7: function() {
+            const ret = typeof global === 'undefined' ? null : global;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_GLOBAL_THIS_8d1badc68b5a74f4: function() {
+            const ret = typeof globalThis === 'undefined' ? null : globalThis;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_SELF_146583524fe1469b: function() {
+            const ret = typeof self === 'undefined' ? null : self;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
+        __wbg_static_accessor_WINDOW_f2829a2234d7819e: function() {
+            const ret = typeof window === 'undefined' ? null : window;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        },
         __wbg_value_a5d5488a9589444a: function(arg0) {
             const ret = arg0.value;
             return ret;
@@ -337,8 +376,8 @@ function __wbg_get_imports() {
             return ret;
         },
         __wbindgen_cast_0000000000000002: function(arg0, arg1) {
-            // Cast intrinsic for `Ref(Slice(I32)) -> NamedExternref("Int32Array")`.
-            const ret = getArrayI32FromWasm0(arg0, arg1);
+            // Cast intrinsic for `Ref(Slice(F32)) -> NamedExternref("Float32Array")`.
+            const ret = getArrayF32FromWasm0(arg0, arg1);
             return ret;
         },
         __wbindgen_cast_0000000000000003: function(arg0, arg1) {
@@ -367,9 +406,9 @@ function __wbg_get_imports() {
     };
 }
 
-const HullProxyFinalization = (typeof FinalizationRegistry === 'undefined')
+const GamutProxyFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_hullproxy_free(ptr, 1));
+    : new FinalizationRegistry(ptr => wasm.__wbg_gamutproxy_free(ptr, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
@@ -442,9 +481,9 @@ function debugString(val) {
     return className;
 }
 
-function getArrayI32FromWasm0(ptr, len) {
+function getArrayF32FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
-    return getInt32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
+    return getFloat32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
 }
 
 function getArrayU8FromWasm0(ptr, len) {
@@ -460,12 +499,12 @@ function getDataViewMemory0() {
     return cachedDataViewMemory0;
 }
 
-let cachedInt32ArrayMemory0 = null;
-function getInt32ArrayMemory0() {
-    if (cachedInt32ArrayMemory0 === null || cachedInt32ArrayMemory0.byteLength === 0) {
-        cachedInt32ArrayMemory0 = new Int32Array(wasm.memory.buffer);
+let cachedFloat32ArrayMemory0 = null;
+function getFloat32ArrayMemory0() {
+    if (cachedFloat32ArrayMemory0 === null || cachedFloat32ArrayMemory0.byteLength === 0) {
+        cachedFloat32ArrayMemory0 = new Float32Array(wasm.memory.buffer);
     }
-    return cachedInt32ArrayMemory0;
+    return cachedFloat32ArrayMemory0;
 }
 
 function getStringFromWasm0(ptr, len) {
@@ -593,7 +632,7 @@ function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
-    cachedInt32ArrayMemory0 = null;
+    cachedFloat32ArrayMemory0 = null;
     cachedUint32ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;
     wasm.__wbindgen_start();

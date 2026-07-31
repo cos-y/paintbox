@@ -2,12 +2,13 @@ use std::sync::Mutex;
 
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::*;
-use web_sys::js_sys::Int32Array;
+use web_sys::js_sys::Float32Array;
+use web_time::Instant;
 
 use crate::{
-    BoxError, hex_to_rgb,
-    hull::Hull,
-    oklab_dist, rgb_to_oklab,
+    BoxError,
+    gamut::Gamut,
+    hex_to_rgb, log, oklab_dist, rgb_to_oklab,
     search::{FilterOptions, Searcher},
 };
 
@@ -74,26 +75,43 @@ pub fn search(rgb: u32, opts: JsValue) -> Result<JsValue, JsError> {
 }
 
 #[wasm_bindgen]
-pub struct HullProxy(Hull);
+pub struct GamutProxy(Gamut);
 
 #[wasm_bindgen]
-impl HullProxy {
-    pub fn add(&mut self, rgb: u32) {
-        self.0.insert(hex_to_rgb(rgb));
+impl GamutProxy {
+    pub fn insert(&mut self, rgb: u32) -> bool {
+        self.0.insert(hex_to_rgb(rgb))
     }
 
-    pub fn indices(&self) -> Int32Array {
-        unsafe { Int32Array::view(&self.0.indices) }
+    pub fn insert_many(&mut self, rgbs: &[u32]) -> bool {
+        timed(&format!(":: Gamut :: insert_many ({:?})", rgbs), || {
+            self.0
+                .insert_many(rgbs.iter().map(|x| hex_to_rgb(*x)).collect())
+        })
     }
 
-    pub fn colors(&self) -> Int32Array {
-        unsafe { Int32Array::view(&self.0.colors) }
+    pub fn matrices(&self) -> Float32Array {
+        unsafe { Float32Array::view(&self.0.matrices) }
+    }
+
+    pub fn colors(&self) -> Float32Array {
+        unsafe { Float32Array::view(&self.0.colors) }
     }
 }
 
 #[wasm_bindgen]
-pub fn get_hull(li: &[u32], grid_size: f32) -> Result<HullProxy, JsError> {
-    let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
-    let hull = Hull::new(grid_size, rgbs).map_err(to_jserr)?;
-    Ok(HullProxy(hull))
+pub fn new_gamut(ndiv: usize, li: &[u32]) -> Result<GamutProxy, JsError> {
+    timed(&format!(":: Gamut :: new ({}, {:?})", ndiv, li), || {
+        let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
+        let gamut = Gamut::new(ndiv, rgbs).map_err(to_jserr)?;
+        Ok(GamutProxy(gamut))
+    })
+}
+
+fn timed<T>(label: &str, f: impl FnOnce() -> T) -> T {
+    let time = Instant::now();
+    let result = f();
+    let duration = time.elapsed();
+    log!("{} => {} ms", label, duration.as_millis());
+    result
 }

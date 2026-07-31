@@ -46,6 +46,9 @@ const spawnWorker = (): Worker => {
 			p.reject(new Error(error ?? 'wasm call failed'));
 		}
 	};
+	w.onerror = (event) => {
+		console.error(event);
+	};
 	return w;
 };
 
@@ -78,12 +81,13 @@ export const callWasm = <T = unknown>(
 	args: unknown[] = [],
 	opts: CallOptions = {}
 ): Promise<T> => {
-	const { cancelInFlight = true } = opts;
+	const { cancelInFlight = false } = opts;
 	if (cancelInFlight && pending.size > 0) {
 		terminateWorker();
 	}
 	const w = getWorker();
 	const id = nextId++;
+	// console.log(method, args);
 	return new Promise<T>((resolve, reject) => {
 		pending.set(id, { resolve: resolve as (v: unknown) => void, reject });
 		w.postMessage({ id, method, args });
