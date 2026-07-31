@@ -318,14 +318,11 @@
 	<div
 		class="color-picker-root grid gap-3 sm:grid-flow-col sm:auto-cols-[125px_1fr]"
 		style="
-    --picker-oklchLightness: {oklch.l};
-    --picker-oklchChroma: {oklch.c};
-    --picker-oklchHue: {oklch.h ?? 0};
-    --picker-hue: {hwb.h ?? 0};
-    --picker-whiteness: {hwb.w};
-    --picker-blackness: {hwb.b};
-    --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});
-    --picker-oklch: oklch({oklch.l} {oklch.c} {oklch.h})"
+    --slider-thumb-l: {oklch.l};
+    --slider-thumb-c: {oklch.c};
+    --slider-thumb-h: {oklch.h ?? 0};
+    --slider-thumb-hue: {hwb.h ?? 0};
+    --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});"
 	>
 		{@render colorPicker()}
 	</div>

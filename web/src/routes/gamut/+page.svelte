@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { listPaints, paintId, type PaintInfo } from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
-	import { Plus, X, Search, Package } from '@lucide/svelte';
+	import { Plus, X, Search, Package, ChevronDown } from '@lucide/svelte';
 	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
+	import RangeSlider from '$lib/components/RangeSlider.svelte';
 	import { onMount, tick } from 'svelte';
 	import { callWasm } from '$lib/wasmClient';
 	import { Canvas } from '@threlte/core';
 	import Scene from './scene.svelte';
+	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
+	import DropdownButton from '$lib/components/DropdownButton.svelte';
 
 	// ── paint catalog (cached once) ──
 	const allPaints = listPaints();
@@ -42,12 +45,6 @@
 	let task: Promise<any>;
 
 	const ndiv = 16;
-
-	class SceneProps {
-		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
-		colors = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
-	}
-	const scene = new SceneProps();
 
 	// ── derived: all rgb values fed into gamut ──
 	let localColors = $state(new Set<number>());
@@ -204,6 +201,30 @@
 	// ── add dropdown ──
 	let addOpen = $state(false);
 
+	// ── clip planes ──
+	const rangeL: [number, number] = $derived([0, ndiv]);
+	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), ndiv]);
+	const rangeB: [number, number] = $derived([-ndiv, Math.ceil(0.7 * ndiv)]);
+
+	let clipL = $state(rangeL);
+	let clipA = $state(rangeA);
+	let clipB = $state(rangeB);
+
+	$effect(() => {
+		clipL = rangeL;
+		clipA = rangeA;
+		clipB = rangeB;
+	});
+
+	class SceneProps {
+		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
+		colors = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
+		clipL = $derived(rangeL.map((x, i) => (x == clipL[i] ? undefined : clipL[i])));
+		clipA = $derived(rangeA.map((x, i) => (x == clipA[i] ? undefined : clipA[i])));
+		clipB = $derived(rangeB.map((x, i) => (x == clipB[i] ? undefined : clipB[i])));
+	}
+	const scene = new SceneProps();
+
 	// ── tab: redirect last input → add button ──
 	function handleInputTab(e: KeyboardEvent, src: Source) {
 		if (e.key === 'Tab' && !e.shiftKey && src.id === sources.at(-1)?.id) {
@@ -218,12 +239,200 @@
 	});
 </script>
 
+{#snippet colorCard(src: any)}
+	<div class="flex items-center gap-2">
+		<div
+			class="h-7 w-7 shrink-0 rounded-md border border-black/10"
+			class:opacity-50={!src.valid}
+			style="background-color: {src.valid
+				? '#' + src.rgb.toString(16).padStart(6, '0')
+				: '#e5e5e5'}"
+		></div>
+		<div class="min-w-0 flex-1">
+			<input
+				type="text"
+				class="w-full rounded-md border border-gray-300 bg-white py-1 px-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
+				placeholder="#ff0000"
+				maxlength="9"
+				spellcheck="false"
+				value={src.text}
+				oninput={(e) => updateColorHex(src, (e.target as HTMLInputElement).value)}
+				onkeydown={(e) => handleInputTab(e, src)}
+			/>
+		</div>
+	</div>
+{/snippet}
+
+{#snippet paintCard(src: any)}
+	{#if src.paint}
+		<div class="flex items-center gap-2">
+			<div
+				class="h-7 w-7 shrink-0 rounded-md border border-black/10"
+				style="background-color: #{src.paint.rgb.toString(16).padStart(6, '0')}"
+			></div>
+			<div class="min-w-0 flex-1 text-xs">
+				<div class="font-semibold uppercase">
+					{src.paint.brand}/{src.paint.code}
+				</div>
+				<div class="truncate text-gray-500 dark:text-gray-400">
+					{src.paint.desc}
+				</div>
+			</div>
+			<button
+				type="button"
+				class="cursor-pointer text-[10px] text-gray-400 hover:text-primary-500"
+				tabindex="-1"
+				onclick={() => clearPaint(src)}
+			>
+				change
+			</button>
+		</div>
+	{:else}
+		<div class="min-w-0">
+			<div class="relative">
+				<Search
+					class="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-gray-400"
+				/>
+				<input
+					type="text"
+					class="w-full rounded-md border border-gray-300 bg-white py-1 pl-7 pr-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
+					placeholder="search brand / code / name..."
+					value={src.searchText}
+					oninput={(e) => updatePaintSearch(src, (e.target as HTMLInputElement).value)}
+					onblur={() => {
+						setTimeout(() => {
+							paintResults[src.id] = [];
+							highlightedIdx[src.id] = -1;
+						}, 150);
+					}}
+					onkeydown={(e) => {
+						if (e.key === 'Tab') {
+							handleInputTab(e, src);
+							return;
+						}
+						const items = paintResults[src.id];
+						if (!items?.length) return;
+						let idx = highlightedIdx[src.id] ?? -1;
+						if (e.key === 'ArrowDown') {
+							e.preventDefault();
+							idx = idx + 1 >= items.length ? 0 : idx + 1;
+							highlightedIdx[src.id] = idx;
+							requestAnimationFrame(() => {
+								(e.target as HTMLElement)
+									.closest('[data-card-id]')
+									?.querySelector('[data-hl]')
+									?.scrollIntoView({ block: 'nearest' });
+							});
+						} else if (e.key === 'ArrowUp') {
+							e.preventDefault();
+							idx = idx <= 0 ? items.length - 1 : idx - 1;
+							highlightedIdx[src.id] = idx;
+							requestAnimationFrame(() => {
+								(e.target as HTMLElement)
+									.closest('[data-card-id]')
+									?.querySelector('[data-hl]')
+									?.scrollIntoView({ block: 'nearest' });
+							});
+						} else if (e.key === 'Enter') {
+							e.preventDefault();
+							if (idx >= 0 && idx < items.length) selectPaint(src, items[idx]);
+						} else if (e.key === 'Escape') {
+							paintResults[src.id] = [];
+							highlightedIdx[src.id] = -1;
+						}
+					}}
+				/>
+			</div>
+			{#if paintResults[src.id]?.length}
+				<div
+					class="absolute z-20 mt-1 max-h-48 w-[calc(100%-2rem)] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"
+				>
+					{#each paintResults[src.id] as p, i}
+						{@const hl = (highlightedIdx[src.id] ?? -1) === i}
+						<button
+							type="button"
+							data-hl={hl ? '' : undefined}
+							class="flex w-full cursor-pointer items-center gap-2 px-2.5 py-1.5 text-left text-xs {hl
+								? 'bg-gray-100 dark:bg-gray-600'
+								: 'hover:bg-gray-100 dark:hover:bg-gray-600'}"
+							onclick={() => selectPaint(src, p)}
+						>
+							<span
+								class="h-4 w-4 shrink-0 rounded-sm border border-black/10"
+								style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
+							></span>
+							<span class="font-semibold uppercase">{p.brand}/{p.code}</span>
+							<span class="truncate text-gray-500 dark:text-gray-400">{p.desc}</span>
+						</button>
+					{/each}
+				</div>
+			{/if}
+		</div>
+	{/if}
+{/snippet}
+
+{#snippet stockCard(src: any)}
+	<div class="flex items-center gap-2">
+		<div
+			class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300"
+		>
+			<Package class="h-4 w-4" />
+		</div>
+		<div class="min-w-0 flex-1 text-xs">
+			<div class="font-semibold text-gray-700 dark:text-gray-200">My Stock</div>
+			<div class="text-gray-500 dark:text-gray-400">
+				{stockCount} paint{stockCount !== 1 ? 's' : ''}
+			</div>
+		</div>
+	</div>
+{/snippet}
+
+{#snippet addSourceBtn()}
+	{#snippet color()}
+		<span
+			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-gradient-to-br from-red-400 via-green-400 to-blue-500"
+		></span>
+		Color
+	{/snippet}
+
+	{#snippet paint()}
+		<Search class="h-3.5 w-3.5" />
+		Paint
+	{/snippet}
+
+	{#snippet stock()}
+		<Package class="h-3.5 w-3.5" />
+		My Stock
+	{/snippet}
+
+	{@const options = [
+		{
+			onclick: addColor,
+			children: color
+		},
+		{
+			onclick: addPaint,
+			children: paint
+		},
+		{
+			onclick: addStock,
+			children: stock,
+			disabled: hasStock
+		}
+	]}
+
+	<DropdownButton {options} placement="bottom-end">
+		<Plus class="h-3.5 w-3.5" />
+		Add
+	</DropdownButton>
+{/snippet}
+
 <div class="flex h-full">
 	<!-- ═══════ LEFT: 3D Canvas (placeholder) ═══════ -->
 	<div class="flex-1 relative min-w-0 bg-gray-950">
 		<Canvas>
-			{@const { matrices, colors } = scene}
-			<Scene {ndiv} {matrices} {colors} />
+			{@const { matrices, colors, clipL, clipA, clipB } = scene}
+			<Scene {ndiv} {matrices} {colors} {clipL} {clipA} {clipB} />
 		</Canvas>
 	</div>
 
@@ -231,220 +440,42 @@
 	<div
 		class="w-86 shrink-0 flex flex-col border-l border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
 	>
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div
-			data-add-btn
-			class="flex items-center justify-between border-b border-gray-200 px-3 py-2 dark:border-gray-700"
-		>
-			<span class="text-sm font-semibold text-gray-700 dark:text-gray-200">Source Colors</span>
+		<!-- ═══════ Clipping ═══════ -->
+		<CollapseGroup title="Clipping" class="range-sliders-root grid grid-flow-row gap-3 px-6 py-4">
+			<RangeSlider
+				gradient={['#000', '#fff']}
+				min={rangeL[0]}
+				max={rangeL[1]}
+				step={1}
+				bind:value={clipL}
+			/>
+			<RangeSlider
+				// gradient={['#00a86b', '#ff3b3b']}
+				gradient={['#67ff00', '#ff0000']}
+				min={rangeA[0]}
+				max={rangeA[1]}
+				step={1}
+				bind:value={clipA}
+			/>
+			<RangeSlider
+				// gradient={['#0055ff', '#ffd000']}
+				gradient={['#0021ff', '#fff504']}
+				min={rangeB[0]}
+				max={rangeB[1]}
+				step={1}
+				bind:value={clipB}
+			/>
+		</CollapseGroup>
 
-			<Button
-				size="xs"
-				color="alternative"
-				class="cursor-pointer"
-				onkeydown={(e: any) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						e.preventDefault();
-						addOpen = !addOpen;
-					}
-				}}
-			>
-				<Plus class="h-3.5 w-3.5" />
-				Add
-			</Button>
-			<Dropdown placement="bottom-end" class="list-none overflow-hidden!" bind:isOpen={addOpen}>
-				<DropdownItem
-					class="cursor-pointer text-xs text-gray-700 dark:text-gray-200"
-					onclick={() => {
-						addColor();
-						addOpen = false;
-					}}
-				>
-					<span class="inline-flex items-center gap-2">
-						<span
-							class="h-3.5 w-3.5 rounded-full border border-black/15 bg-gradient-to-br from-red-400 via-green-400 to-blue-500"
-						></span>
-						Color
-					</span>
-				</DropdownItem>
-				<DropdownItem
-					class="cursor-pointer text-xs text-gray-700 dark:text-gray-200"
-					onclick={() => {
-						addPaint();
-						addOpen = false;
-					}}
-				>
-					<span class="inline-flex items-center gap-2">
-						<Search class="h-3.5 w-3.5" />
-						Paint
-					</span>
-				</DropdownItem>
-				<DropdownItem
-					class="cursor-pointer text-xs text-gray-700 dark:text-gray-200"
-					onclick={() => {
-						addStock();
-						addOpen = false;
-					}}
-					disabled={hasStock}
-				>
-					<span class="inline-flex items-center gap-2">
-						<Package class="h-3.5 w-3.5" />
-						My Stock
-					</span>
-				</DropdownItem>
-			</Dropdown>
-		</div>
-
-		{#snippet colorCard(src: any)}
-			<div class="flex items-center gap-2">
-				<div
-					class="h-7 w-7 shrink-0 rounded-md border border-black/10"
-					class:opacity-50={!src.valid}
-					style="background-color: {src.valid
-						? '#' + src.rgb.toString(16).padStart(6, '0')
-						: '#e5e5e5'}"
-				></div>
-				<div class="min-w-0 flex-1">
-					<input
-						type="text"
-						class="w-full rounded-md border border-gray-300 bg-white py-1 px-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
-						placeholder="#ff0000"
-						maxlength="9"
-						spellcheck="false"
-						value={src.text}
-						oninput={(e) => updateColorHex(src, (e.target as HTMLInputElement).value)}
-						onkeydown={(e) => handleInputTab(e, src)}
-					/>
-				</div>
+		<!-- ═══════ Sources ═══════ -->
+		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-4 py-3">
+			<!-- card list -->
+			<div data-add-btn class="flex items-center justify-between">
+				<span class="text-xs text-gray-500 dark:text-gray-400">
+					{colors.size} color{colors.size !== 1 ? 's' : ''} in gamut
+				</span>
+				{@render addSourceBtn()}
 			</div>
-		{/snippet}
-
-		{#snippet paintCard(src: any)}
-			{#if src.paint}
-				<div class="flex items-center gap-2">
-					<div
-						class="h-7 w-7 shrink-0 rounded-md border border-black/10"
-						style="background-color: #{src.paint.rgb.toString(16).padStart(6, '0')}"
-					></div>
-					<div class="min-w-0 flex-1 text-xs">
-						<div class="font-semibold uppercase">
-							{src.paint.brand}/{src.paint.code}
-						</div>
-						<div class="truncate text-gray-500 dark:text-gray-400">
-							{src.paint.desc}
-						</div>
-					</div>
-					<button
-						type="button"
-						class="cursor-pointer text-[10px] text-gray-400 hover:text-primary-500"
-						tabindex="-1"
-						onclick={() => clearPaint(src)}
-					>
-						change
-					</button>
-				</div>
-			{:else}
-				<div class="min-w-0">
-					<div class="relative">
-						<Search
-							class="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-gray-400"
-						/>
-						<input
-							type="text"
-							class="w-full rounded-md border border-gray-300 bg-white py-1 pl-7 pr-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
-							placeholder="search brand / code / name..."
-							value={src.searchText}
-							oninput={(e) => updatePaintSearch(src, (e.target as HTMLInputElement).value)}
-							onblur={() => {
-								setTimeout(() => {
-									paintResults[src.id] = [];
-									highlightedIdx[src.id] = -1;
-								}, 150);
-							}}
-							onkeydown={(e) => {
-								if (e.key === 'Tab') {
-									handleInputTab(e, src);
-									return;
-								}
-								const items = paintResults[src.id];
-								if (!items?.length) return;
-								let idx = highlightedIdx[src.id] ?? -1;
-								if (e.key === 'ArrowDown') {
-									e.preventDefault();
-									idx = idx + 1 >= items.length ? 0 : idx + 1;
-									highlightedIdx[src.id] = idx;
-									requestAnimationFrame(() => {
-										(e.target as HTMLElement)
-											.closest('[data-card-id]')
-											?.querySelector('[data-hl]')
-											?.scrollIntoView({ block: 'nearest' });
-									});
-								} else if (e.key === 'ArrowUp') {
-									e.preventDefault();
-									idx = idx <= 0 ? items.length - 1 : idx - 1;
-									highlightedIdx[src.id] = idx;
-									requestAnimationFrame(() => {
-										(e.target as HTMLElement)
-											.closest('[data-card-id]')
-											?.querySelector('[data-hl]')
-											?.scrollIntoView({ block: 'nearest' });
-									});
-								} else if (e.key === 'Enter') {
-									e.preventDefault();
-									if (idx >= 0 && idx < items.length) selectPaint(src, items[idx]);
-								} else if (e.key === 'Escape') {
-									paintResults[src.id] = [];
-									highlightedIdx[src.id] = -1;
-								}
-							}}
-						/>
-					</div>
-					{#if paintResults[src.id]?.length}
-						<div
-							class="absolute z-20 mt-1 max-h-48 w-[calc(100%-2rem)] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"
-						>
-							{#each paintResults[src.id] as p, i}
-								{@const hl = (highlightedIdx[src.id] ?? -1) === i}
-								<button
-									type="button"
-									data-hl={hl ? '' : undefined}
-									class="flex w-full cursor-pointer items-center gap-2 px-2.5 py-1.5 text-left text-xs {hl
-										? 'bg-gray-100 dark:bg-gray-600'
-										: 'hover:bg-gray-100 dark:hover:bg-gray-600'}"
-									onclick={() => selectPaint(src, p)}
-								>
-									<span
-										class="h-4 w-4 shrink-0 rounded-sm border border-black/10"
-										style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
-									></span>
-									<span class="font-semibold uppercase">{p.brand}/{p.code}</span>
-									<span class="truncate text-gray-500 dark:text-gray-400">{p.desc}</span>
-								</button>
-							{/each}
-						</div>
-					{/if}
-				</div>
-			{/if}
-		{/snippet}
-
-		{#snippet stockCard(src: any)}
-			<div class="flex items-center gap-2">
-				<div
-					class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300"
-				>
-					<Package class="h-4 w-4" />
-				</div>
-				<div class="min-w-0 flex-1 text-xs">
-					<div class="font-semibold text-gray-700 dark:text-gray-200">My Stock</div>
-					<div class="text-gray-500 dark:text-gray-400">
-						{stockCount} paint{stockCount !== 1 ? 's' : ''}
-					</div>
-				</div>
-			</div>
-		{/snippet}
-
-		<!-- card list -->
-		<div class="flex-1 space-y-2 overflow-y-auto p-2">
 			{#each sources as src (src.id)}
 				{@const valid =
 					src.type === 'stock' ? true : src.type === 'color' ? src.valid : src.paint !== null}
@@ -477,12 +508,6 @@
 					<div class="text-xs">Click <span class="font-medium">Add</span> to start</div>
 				</div>
 			{/each}
-		</div>
-
-		<div
-			class="border-t border-gray-200 px-3 py-1.5 text-[11px] text-gray-400 dark:border-gray-700"
-		>
-			{colors.size} color{colors.size !== 1 ? 's' : ''} in gamut
-		</div>
+		</CollapseGroup>
 	</div>
 </div>

@@ -51,7 +51,7 @@
 			{style}
 			oninput={handleInput}
 		/>
-		<div class="color-slider-handle" style="left: {left}%"></div>
+		<div class="slider-thumb" style="left: {left}%"></div>
 	</div>
 	<div class="not-sm:flex-1 sm:w-16 h-full">
 		<Input

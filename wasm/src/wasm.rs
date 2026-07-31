@@ -99,6 +99,7 @@ impl Gamut {
 
 #[wasm_bindgen]
 pub fn new_gamut(ndiv: usize, li: &[u32]) -> Result<Gamut, JsError> {
+    let ndiv = ndiv - 1;
     timed(&format!(":: Gamut :: new ({}, {:?})", ndiv, li), || {
         let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
         let gamut = crate::gamut::Gamut::new(ndiv, rgbs).map_err(to_jserr)?;

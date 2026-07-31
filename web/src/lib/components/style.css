@@ -11,11 +11,20 @@
   --picker-input-copied-bg: color-mix(in oklab, var(--color-green-900) 40%, var(--picker-input-bg));
   --picker-input-copied-border: var(--color-green-500);
   --picker-input-copied-color: var(--color-green-300);
-  --picker-thumb-box-shadow: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .3) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / .3);
-  --picker-thumb-box-shadow-hover: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5);
-  --picker-thumb-box-shadow-focus: 0 0 0 3px oklch(var(--picker-oklchLightness) var(--picker-oklchChroma) var(--picker-oklchHue) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / 1), 0 0 0 4px hwb(var(--picker-hue) 25% 0%), 0 0 0 5px rgb(0 0 0 / .3);
   --picker-input-focus-ring: var(--color-primary-500);
   --picker-text-shadow: none;
+}
+
+.color-picker-root {
+  --slider-thumb-box-shadow: 0 0 0 3px oklch(var(--slider-thumb-l) var(--slider-thumb-c) var(--slider-thumb-h) / .3) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / .3);
+  --slider-thumb-box-shadow-hover: 0 0 0 3px oklch(var(--slider-thumb-l) var(--slider-thumb-c) var(--slider-thumb-h) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5);
+  --slider-thumb-box-shadow-focus: 0 0 0 3px oklch(var(--slider-thumb-l) var(--slider-thumb-c) var(--slider-thumb-h) / .1) inset, 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / 1), 0 0 0 4px hwb(var(--slider-thumb-hue) 25% 0%), 0 0 0 5px rgb(0 0 0 / .3);
+}
+
+.range-sliders-root {
+  --slider-thumb-box-shadow: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / .3);
+  --slider-thumb-box-shadow-hover: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5);
+  --slider-thumb-box-shadow-focus: 0 0 0 3px rgba(255, 255, 255, 1) inset, 0 0 0 4px rgb(0 0 0 / .5) inset, 0 0 0 1px rgb(0 0 0 / .5), 0 0 0 1px rgb(0 0 0 / 1), 0 0 0 4px oklch(0.5 0.1 240), 0 0 0 5px rgb(0 0 0 / .3);
 }
 
 .color-picker {
@@ -25,7 +34,7 @@
 /* #endregion */
 
 /* #region slider handle */
-.color-slider-handle {
+.slider-thumb {
   position: absolute;
   top: 50%;
   width: 0;
@@ -36,7 +45,7 @@
   transition: transform .2s
 }
 
-.color-slider-handle:after {
+.slider-thumb:after {
   content: "";
   position: absolute;
   height: 32px;
@@ -46,24 +55,24 @@
   border-radius: 4px;
   scale: 1.3;
   transition: scale .2s, box-shadow .2s, border-radius .2s;
-  box-shadow: var(--picker-thumb-box-shadow);
+  box-shadow: var(--slider-thumb-box-shadow);
 }
 
-input:hover+.color-slider-handle:after,
-input:focus+.color-slider-handle:after,
-input:active+.color-slider-handle:after {
+input:hover+.slider-thumb:after,
+input:focus+.slider-thumb:after,
+input:active+.slider-thumb:after {
   width: 32px;
   left: -16px;
   rotate: 45deg;
   scale: 1.1
 }
 
-input:hover+.color-slider-handle:after {
-  box-shadow: var(--picker-thumb-box-shadow-hover)
+input:hover+.slider-thumb:after {
+  box-shadow: var(--slider-thumb-box-shadow-hover)
 }
 
-input:focus+.color-slider-handle:after {
-  box-shadow: var(--picker-thumb-box-shadow-focus);
+input:focus+.slider-thumb:after {
+  box-shadow: var(--slider-thumb-box-shadow-focus);
   transition-duration: 0s
 }
 
@@ -71,19 +80,34 @@ input:focus+.color-slider-handle:after {
 
 @media screen and (width >=theme(--breakpoint-sm)) {
 
-  .color-slider-handle:after {
+  .slider-thumb:after {
     height: 20px;
     top: -10px;
     width: 8px;
     left: -4px
   }
 
-  input:hover+.color-slider-handle:after,
-  input:focus+.color-slider-handle:after,
-  input:active+.color-slider-handle:after {
+  input:hover+.slider-thumb:after,
+  input:focus+.slider-thumb:after,
+  input:active+.slider-thumb:after {
     width: 20px;
     left: -10px;
     rotate: 45deg;
     scale: 1.1
   }
 }
+
+/* #region range-slider */
+.range-slider-track {
+  border: 1px solid var(--color-gray-600);
+  box-shadow: var(--picker-track-box-shadow);
+  background: linear-gradient(to right,
+      transparent 0%,
+      transparent var(--a),
+      color-mix(in oklab, var(--color-b) var(--a), var(--color-a)) var(--a),
+      color-mix(in oklab, var(--color-b) var(--b), var(--color-a)) var(--b),
+      transparent var(--b),
+      transparent 100%);
+}
+
+/* #endregion */
