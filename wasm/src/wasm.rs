@@ -6,9 +6,7 @@ use web_sys::js_sys::Float32Array;
 use web_time::Instant;
 
 use crate::{
-    BoxError,
-    gamut::Gamut,
-    hex_to_rgb, log, oklab_dist, rgb_to_oklab,
+    BoxError, hex_to_rgb, log, oklab_dist, rgb_to_oklab,
     search::{FilterOptions, Searcher},
 };
 
@@ -75,10 +73,10 @@ pub fn search(rgb: u32, opts: JsValue) -> Result<JsValue, JsError> {
 }
 
 #[wasm_bindgen]
-pub struct GamutProxy(Gamut);
+pub struct Gamut(crate::gamut::Gamut);
 
 #[wasm_bindgen]
-impl GamutProxy {
+impl Gamut {
     pub fn insert(&mut self, rgb: u32) -> bool {
         self.0.insert(hex_to_rgb(rgb))
     }
@@ -100,11 +98,11 @@ impl GamutProxy {
 }
 
 #[wasm_bindgen]
-pub fn new_gamut(ndiv: usize, li: &[u32]) -> Result<GamutProxy, JsError> {
+pub fn new_gamut(ndiv: usize, li: &[u32]) -> Result<Gamut, JsError> {
     timed(&format!(":: Gamut :: new ({}, {:?})", ndiv, li), || {
         let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
-        let gamut = Gamut::new(ndiv, rgbs).map_err(to_jserr)?;
-        Ok(GamutProxy(gamut))
+        let gamut = crate::gamut::Gamut::new(ndiv, rgbs).map_err(to_jserr)?;
+        Ok(Gamut(gamut))
     })
 }
 

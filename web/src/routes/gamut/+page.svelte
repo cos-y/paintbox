@@ -3,7 +3,7 @@
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Package } from '@lucide/svelte';
 	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { callWasm } from '$lib/wasmClient';
 	import { Canvas } from '@threlte/core';
 	import Scene from './scene.svelte';
@@ -212,6 +212,10 @@
 			el.focus();
 		}
 	}
+
+	onMount(() => {
+		addStock();
+	});
 </script>
 
 <div class="flex h-full">
@@ -285,7 +289,7 @@
 				>
 					<span class="inline-flex items-center gap-2">
 						<Package class="h-3.5 w-3.5" />
-						All Stock
+						My Stock
 					</span>
 				</DropdownItem>
 			</Dropdown>
@@ -431,9 +435,9 @@
 					<Package class="h-4 w-4" />
 				</div>
 				<div class="min-w-0 flex-1 text-xs">
-					<div class="font-semibold text-gray-700 dark:text-gray-200">All Stock Paints</div>
+					<div class="font-semibold text-gray-700 dark:text-gray-200">My Stock</div>
 					<div class="text-gray-500 dark:text-gray-400">
-						{stockCount} paint{stockCount !== 1 ? 's' : ''} in inventory
+						{stockCount} paint{stockCount !== 1 ? 's' : ''}
 					</div>
 				</div>
 			</div>

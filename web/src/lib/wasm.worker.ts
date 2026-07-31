@@ -59,9 +59,9 @@ const METHODS: Record<string, (...args: never[]) => unknown> = {
 	search: wasm.search,
 	new_gamut: (ndiv: number, li: Uint32Array) => allocObject(wasm.new_gamut(ndiv, li)),
 	gamut_insert_many: (gamut: string, rgbs: Uint32Array) =>
-		getObject<wasm.HullProxy>(gamut).insert_many(rgbs),
-	gamut_matrices: (gamut: string) => getObject<wasm.HullProxy>(gamut).matrices(),
-	gamut_colors: (gamut: string) => getObject<wasm.HullProxy>(gamut).colors()
+		getObject<wasm.Gamut>(gamut).insert_many(rgbs),
+	gamut_matrices: (gamut: string) => getObject<wasm.Gamut>(gamut).matrices(),
+	gamut_colors: (gamut: string) => getObject<wasm.Gamut>(gamut).colors()
 	// 在此登记更多 wasm 导出方法
 };
 

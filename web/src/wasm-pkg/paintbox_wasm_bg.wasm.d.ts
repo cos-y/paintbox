@@ -1,13 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export const __wbg_gamutproxy_free: (a: number, b: number) => void;
+export const __wbg_gamut_free: (a: number, b: number) => void;
 export const color_diff: (a: number, b: number) => number;
 export const find_direct_equivalences: (a: number) => [number, number, number];
-export const gamutproxy_colors: (a: number) => any;
-export const gamutproxy_insert: (a: number, b: number) => number;
-export const gamutproxy_insert_many: (a: number, b: number, c: number) => number;
-export const gamutproxy_matrices: (a: number) => any;
+export const gamut_colors: (a: number) => any;
+export const gamut_insert: (a: number, b: number) => number;
+export const gamut_insert_many: (a: number, b: number, c: number) => number;
+export const gamut_matrices: (a: number) => any;
 export const init_panic_hook: () => void;
 export const init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
 export const list_paints: () => [number, number, number];

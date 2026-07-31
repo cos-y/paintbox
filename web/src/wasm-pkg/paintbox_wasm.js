@@ -1,27 +1,27 @@
 /* @ts-self-types="./paintbox_wasm.d.ts" */
 
-export class GamutProxy {
+export class Gamut {
     static __wrap(ptr) {
-        const obj = Object.create(GamutProxy.prototype);
+        const obj = Object.create(Gamut.prototype);
         obj.__wbg_ptr = ptr;
-        GamutProxyFinalization.register(obj, obj.__wbg_ptr, obj);
+        GamutFinalization.register(obj, obj.__wbg_ptr, obj);
         return obj;
     }
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        GamutProxyFinalization.unregister(this);
+        GamutFinalization.unregister(this);
         return ptr;
     }
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_gamutproxy_free(ptr, 0);
+        wasm.__wbg_gamut_free(ptr, 0);
     }
     /**
      * @returns {Float32Array}
      */
     colors() {
-        const ret = wasm.gamutproxy_colors(this.__wbg_ptr);
+        const ret = wasm.gamut_colors(this.__wbg_ptr);
         return ret;
     }
     /**
@@ -29,7 +29,7 @@ export class GamutProxy {
      * @returns {boolean}
      */
     insert(rgb) {
-        const ret = wasm.gamutproxy_insert(this.__wbg_ptr, rgb);
+        const ret = wasm.gamut_insert(this.__wbg_ptr, rgb);
         return ret !== 0;
     }
     /**
@@ -39,18 +39,18 @@ export class GamutProxy {
     insert_many(rgbs) {
         const ptr0 = passArray32ToWasm0(rgbs, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.gamutproxy_insert_many(this.__wbg_ptr, ptr0, len0);
+        const ret = wasm.gamut_insert_many(this.__wbg_ptr, ptr0, len0);
         return ret !== 0;
     }
     /**
      * @returns {Float32Array}
      */
     matrices() {
-        const ret = wasm.gamutproxy_matrices(this.__wbg_ptr);
+        const ret = wasm.gamut_matrices(this.__wbg_ptr);
         return ret;
     }
 }
-if (Symbol.dispose) GamutProxy.prototype[Symbol.dispose] = GamutProxy.prototype.free;
+if (Symbol.dispose) Gamut.prototype[Symbol.dispose] = Gamut.prototype.free;
 
 /**
  * @param {number} a
@@ -107,7 +107,7 @@ export function list_paints() {
 /**
  * @param {number} ndiv
  * @param {Uint32Array} li
- * @returns {GamutProxy}
+ * @returns {Gamut}
  */
 export function new_gamut(ndiv, li) {
     const ptr0 = passArray32ToWasm0(li, wasm.__wbindgen_malloc);
@@ -116,7 +116,7 @@ export function new_gamut(ndiv, li) {
     if (ret[2]) {
         throw takeFromExternrefTable0(ret[1]);
     }
-    return GamutProxy.__wrap(ret[0]);
+    return Gamut.__wrap(ret[0]);
 }
 
 /**
@@ -406,9 +406,9 @@ function __wbg_get_imports() {
     };
 }
 
-const GamutProxyFinalization = (typeof FinalizationRegistry === 'undefined')
+const GamutFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_gamutproxy_free(ptr, 1));
+    : new FinalizationRegistry(ptr => wasm.__wbg_gamut_free(ptr, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();

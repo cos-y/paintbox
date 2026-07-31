@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class GamutProxy {
+export class Gamut {
     private constructor();
     free(): void;
     [Symbol.dispose](): void;
@@ -21,7 +21,7 @@ export function init_searcher(blob: Uint8Array, equiv_blob: Uint8Array): void;
 
 export function list_paints(): any;
 
-export function new_gamut(ndiv: number, li: Uint32Array): GamutProxy;
+export function new_gamut(ndiv: number, li: Uint32Array): Gamut;
 
 export function search(rgb: number, opts: any): any;
 
@@ -29,13 +29,13 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly __wbg_gamutproxy_free: (a: number, b: number) => void;
+    readonly __wbg_gamut_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
     readonly find_direct_equivalences: (a: number) => [number, number, number];
-    readonly gamutproxy_colors: (a: number) => any;
-    readonly gamutproxy_insert: (a: number, b: number) => number;
-    readonly gamutproxy_insert_many: (a: number, b: number, c: number) => number;
-    readonly gamutproxy_matrices: (a: number) => any;
+    readonly gamut_colors: (a: number) => any;
+    readonly gamut_insert: (a: number, b: number) => number;
+    readonly gamut_insert_many: (a: number, b: number, c: number) => number;
+    readonly gamut_matrices: (a: number) => any;
     readonly init_panic_hook: () => void;
     readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
     readonly list_paints: () => [number, number, number];
