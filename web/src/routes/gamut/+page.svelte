@@ -10,6 +10,7 @@
 	import Scene from './scene.svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
+	import * as THREE from 'three';
 
 	// ── paint catalog (cached once) ──
 	const allPaints = listPaints();
@@ -203,8 +204,8 @@
 
 	// ── clip planes ──
 	const rangeL: [number, number] = $derived([0, ndiv]);
-	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), ndiv]);
-	const rangeB: [number, number] = $derived([-ndiv, Math.ceil(0.7 * ndiv)]);
+	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), Math.ceil(0.85 * ndiv)]);
+	const rangeB: [number, number] = $derived([-Math.ceil(0.9 * ndiv), Math.ceil(0.7 * ndiv)]);
 
 	let clipL = $state(rangeL);
 	let clipA = $state(rangeA);
@@ -219,9 +220,15 @@
 	class SceneProps {
 		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
 		colors = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
-		clipL = $derived(rangeL.map((x, i) => (x == clipL[i] ? undefined : clipL[i])));
-		clipA = $derived(rangeA.map((x, i) => (x == clipA[i] ? undefined : clipA[i])));
-		clipB = $derived(rangeB.map((x, i) => (x == clipB[i] ? undefined : clipB[i])));
+		clip = $derived([
+			new THREE.Vector3(clipL[0], clipA[0], clipB[0]),
+			new THREE.Vector3(clipL[1], clipA[1], clipB[1])
+		]);
+		range = $derived([
+			new THREE.Vector3(rangeL[0], rangeA[0], rangeB[0]),
+			new THREE.Vector3(rangeL[1], rangeA[1], rangeB[1])
+		]);
+		defaultZoom = $derived(isSm ? 1 : 1.5);
 	}
 	const scene = new SceneProps();
 
@@ -236,6 +243,16 @@
 
 	onMount(() => {
 		addStock();
+	});
+
+	let isSm = $state(false);
+
+	$effect(() => {
+		const mq = window.matchMedia('(min-width: 640px)');
+		isSm = mq.matches;
+		const handler = (e: MediaQueryListEvent) => (isSm = e.matches);
+		mq.addEventListener('change', handler);
+		return () => mq.removeEventListener('change', handler);
 	});
 </script>
 
@@ -427,21 +444,24 @@
 	</DropdownButton>
 {/snippet}
 
-<div class="flex h-full">
+<div class="flex flex-col sm:flex-row h-full">
 	<!-- ═══════ LEFT: 3D Canvas (placeholder) ═══════ -->
-	<div class="flex-1 relative min-w-0 bg-gray-950">
+	<div class="h-80 sm:h-auto sm:flex-1 relative min-w-0 bg-gray-950">
 		<Canvas>
-			{@const { matrices, colors, clipL, clipA, clipB } = scene}
-			<Scene {ndiv} {matrices} {colors} {clipL} {clipA} {clipB} />
+			<Scene {ndiv} {...scene} />
 		</Canvas>
 	</div>
 
 	<!-- ═══════ RIGHT: Card Panel ═══════ -->
 	<div
-		class="w-86 shrink-0 flex flex-col border-l border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+		class="w-full sm:w-[40%] sm:max-w-86 shrink-0 flex flex-col border-t border-gray-200 bg-white sm:border-t-0 sm:border-l dark:border-gray-700 dark:bg-gray-900"
 	>
 		<!-- ═══════ Clipping ═══════ -->
-		<CollapseGroup title="Clipping" class="range-sliders-root grid grid-flow-row gap-3 px-6 py-4">
+		<CollapseGroup
+			title="Clipping"
+			isOpen={isSm}
+			class="range-sliders-root grid grid-flow-row gap-3 px-6 py-4 overflow-hidden"
+		>
 			<RangeSlider
 				gradient={['#000', '#fff']}
 				min={rangeL[0]}

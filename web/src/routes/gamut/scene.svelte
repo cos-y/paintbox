@@ -3,21 +3,22 @@
 	import { T, useThrelte } from '@threlte/core';
 	import * as THREE from 'three';
 
-	const { toneMapping, invalidate } = useThrelte();
+	const { toneMapping, invalidate, renderer } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
-
-	type MaybeNumber = number | undefined;
+	renderer.localClippingEnabled = true;
 
 	interface Props {
 		ndiv: number;
 		matrices: Float32Array;
 		colors: Float32Array;
-		clipL: MaybeNumber[];
-		clipA: MaybeNumber[];
-		clipB: MaybeNumber[];
+		clip: THREE.Vector3[];
+		range: THREE.Vector3[];
+		defaultZoom?: number;
 	}
 
-	const { matrices, colors, ndiv, clipL, clipA, clipB }: Props = $props();
+	const { matrices, colors, ndiv, clip, range, defaultZoom = 1 }: Props = $props();
+
+	const zoom = $state(defaultZoom);
 
 	interactivity({
 		filter(items) {
@@ -25,9 +26,9 @@
 				if (item.instanceId !== undefined) {
 					const i = item.instanceId * 16;
 					const [x, y, z] = [matrices[i + 12], matrices[i + 13], matrices[i + 14]];
-					if (clipLow.x < x && x < clipHigh.x) {
-						if (clipLow.y < y && y < clipHigh.y) {
-							if (clipLow.z < z && z < clipHigh.z) {
+					if (clip[0].x < x && x < clip[1].x) {
+						if (clip[0].y < y && y < clip[1].y) {
+							if (clip[0].z < z && z < clip[1].z) {
 								return [item];
 							}
 						}
@@ -44,18 +45,30 @@
 	const nvoxels = $derived(colors.length / 3);
 	const scale = $derived(1 / (ndiv - 1));
 
-	const clipLow = $derived.by(() => {
-		const l = clipL[0] ?? -Infinity;
-		const a = clipA[0] ?? -Infinity;
-		const b = clipB[0] ?? -Infinity;
-		return new THREE.Vector3(l, a, b).addScalar(-0.5);
+	const gridLineMaterial = new THREE.LineBasicMaterial({
+		color: 0x888888,
+		clippingPlanes: [
+			new THREE.Plane(new THREE.Vector3(1, 0, 0), 0.5)
+			// new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)
+		]
 	});
 
-	const clipHigh = $derived.by(() => {
-		const l = clipL[1] ?? Infinity;
-		const a = clipA[1] ?? Infinity;
-		const b = clipB[1] ?? Infinity;
-		return new THREE.Vector3(l, a, b).addScalar(-0.5);
+	const clipLow = $derived(clip[0].clone().addScalar(-0.5));
+	const clipHigh = $derived(clip[1].clone().addScalar(-0.5));
+
+	$effect(() => {
+		const eps = 1e-3;
+		gridLineMaterial.clippingPlanes = [
+			new THREE.Plane(new THREE.Vector3(1, 0, 0), -1 * (clipLow.x * scale - 0.5) + eps),
+			new THREE.Plane(new THREE.Vector3(0, 1, 0), -1 * (clipLow.y * scale) + eps),
+			new THREE.Plane(new THREE.Vector3(0, 0, 1), -1 * (clipLow.z * scale) + eps),
+
+			new THREE.Plane(new THREE.Vector3(-1, 0, 0), 1 * (clipHigh.x * scale - 0.5) + eps),
+			new THREE.Plane(new THREE.Vector3(0, -1, 0), 1 * (clipHigh.y * scale) + eps),
+			new THREE.Plane(new THREE.Vector3(0, 0, -1), 1 * (clipHigh.z * scale) + eps)
+		];
+		gridLineMaterial.needsUpdate = true;
+		invalidate();
 	});
 
 	$effect(() => {
@@ -90,10 +103,11 @@
 <T.PerspectiveCamera
 	makeDefault
 	fov={50}
-	position={[3, 2, -1]}
+	position={[3, 0.5, 1]}
 	oncreate={(ref) => {
 		ref.lookAt(0, 0, 0);
 	}}
+	{zoom}
 >
 	<OrbitControls enableDamping={true} enableZoom={true}>
 		<Gizmo x={{ label: 'L' }} y={{ label: 'a' }} z={{ label: 'b' }} />
@@ -182,33 +196,36 @@
 	<T.ArrowHelper args={[new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, 0), 1, 0x8adb00, 0]} />
 	<T.ArrowHelper args={[new THREE.Vector3(0, 0, -1), new THREE.Vector3(0, 0, 0), 1, 0x2c8fff, 0]} />
 
-	{@const ngrid = ndiv + 1}
-	{#each clipL as v}
-		{#if v !== undefined}
+	{@const ngrid = 2 * ndiv + 1}
+	{#each [clip[0].x, clip[1].x] as v, i}
+		{#if v != range[i].x}
 			<T.GridHelper
 				position={[(v - 0.5) * scale, 0, 0]}
 				rotation={[0, 0, Math.PI / 2]}
 				args={[1 * ngrid * scale, ngrid]}
+				material={gridLineMaterial}
 			/>
 		{/if}
 	{/each}
 
-	{#each clipA as v}
-		{#if v !== undefined}
+	{#each [clip[0].y, clip[1].y] as v, i}
+		{#if v != range[i].y}
 			<T.GridHelper
 				position={[0.5 + 0.5 * scale, (v - 0.5) * scale, 0]}
 				rotation={[0, Math.PI / 2, 0]}
 				args={[1 * ngrid * scale, ngrid]}
+				material={gridLineMaterial}
 			/>
 		{/if}
 	{/each}
 
-	{#each clipB as v}
-		{#if v !== undefined}
+	{#each [clip[0].z, clip[1].z] as v, i}
+		{#if v != range[i].z}
 			<T.GridHelper
 				position={[0.5 + 0.5 * scale, 0, (v - 0.5) * scale]}
 				rotation={[Math.PI / 2, 0, 0]}
 				args={[1 * ngrid * scale, ngrid]}
+				material={gridLineMaterial}
 			/>
 		{/if}
 	{/each}
