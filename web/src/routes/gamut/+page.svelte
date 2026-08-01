@@ -10,6 +10,7 @@
 	import Scene from './scene.svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
+	import { loadGamut, saveGamut, type SerializedSource } from '$lib/gamutSettings.svelte';
 	import * as THREE from 'three';
 
 	// ── paint catalog (cached once) ──
@@ -38,8 +39,38 @@
 
 	type Source = ColorSource | PaintSource | StockSource;
 
-	let sources: Source[] = $state([]);
-	let nextId = 0;
+	// ── hydrate sources from persisted store ──
+	function hydrateSources(serialized: SerializedSource[]): Source[] {
+		return serialized.map((s) => {
+			if (s.type === 'color') {
+				const rgb = s.rgb ?? 0;
+				const hex = rgb ? '#' + rgb.toString(16).padStart(6, '0') : '';
+				return { id: s.id, type: 'color', text: hex, rgb, valid: rgb !== 0 };
+			} else if (s.type === 'paint') {
+				const paint = s.paintId ? allPaints.find((p) => paintId(p) === s.paintId) ?? null : null;
+				return { id: s.id, type: 'paint', paint, searchText: '' };
+			} else {
+				return { id: s.id, type: 'stock' };
+			}
+		});
+	}
+
+	function serializeSources(sources: Source[]): SerializedSource[] {
+		return sources.map((s) => {
+			if (s.type === 'color') {
+				return { id: s.id, type: 'color', rgb: s.valid ? s.rgb : undefined };
+			} else if (s.type === 'paint') {
+				return { id: s.id, type: 'paint', paintId: s.paint ? paintId(s.paint) : undefined };
+			} else {
+				return { id: s.id, type: 'stock' };
+			}
+		});
+	}
+
+	const persisted = loadGamut();
+
+	let sources: Source[] = $state(hydrateSources(persisted.sources));
+	let nextId = persisted.nextId;
 	let lastAddedId: string | null = $state(null);
 
 	let gamut: string | undefined;
@@ -207,15 +238,9 @@
 	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), Math.ceil(0.85 * ndiv)]);
 	const rangeB: [number, number] = $derived([-Math.ceil(0.9 * ndiv), Math.ceil(0.7 * ndiv)]);
 
-	let clipL = $state(rangeL);
-	let clipA = $state(rangeA);
-	let clipB = $state(rangeB);
-
-	$effect(() => {
-		clipL = rangeL;
-		clipA = rangeA;
-		clipB = rangeB;
-	});
+	let clipL = $state(persisted.clipL);
+	let clipA = $state(persisted.clipA);
+	let clipB = $state(persisted.clipB);
 
 	class SceneProps {
 		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
@@ -253,6 +278,9 @@
 		const handler = (e: MediaQueryListEvent) => (isSm = e.matches);
 		mq.addEventListener('change', handler);
 		return () => mq.removeEventListener('change', handler);
+	});
+	$effect(() => {
+		saveGamut({ sources: serializeSources(sources), clipL, clipA, clipB, nextId });
 	});
 </script>
 

@@ -14,6 +14,7 @@
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
+	import { searchFilters } from '$lib/searchFilters.svelte';
 
 	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
@@ -35,8 +36,6 @@
 		const b = (hex & 0xff) / 255;
 		oklch = toOklch({ mode: 'rgb', r, g, b });
 	}
-
-	let model = $state(0);
 
 	const eyedrop = () => {
 		if ('EyeDropper' in window) {
@@ -70,12 +69,6 @@
 		return `/stock?${params.toString()}`;
 	};
 
-	// filter params
-	let surfaceTypes = $state([]);
-	let baseTypes = $state([]);
-	let searchScope = $state(0);
-	let mixingLimit = $state(0);
-
 	$effect(() => {
 		const hex = rgbInt.toString(16).padStart(6, '0');
 		const handle = setTimeout(() => {
@@ -91,48 +84,43 @@
 
 	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
 
-	let selectedSeries: Set<string> = $state(new Set());
 	let activeFilterBrand: string | null = $state(null);
 
 	const toggleSerie = (brand: string, serie: string) => {
 		const key = serieKey(brand, serie);
-		const next = new Set(selectedSeries);
+		const next = new Set(searchFilters.selectedSeries);
 		if (next.has(key)) next.delete(key);
 		else next.add(key);
-		selectedSeries = next;
+		searchFilters.selectedSeries = next;
 	};
 
 	const isBrandFullySelected = (brand: string) =>
-		Object.keys(catalog[brand]).every((s) => selectedSeries.has(serieKey(brand, s)));
+		Object.keys(catalog[brand]).every((s) => searchFilters.selectedSeries.has(serieKey(brand, s)));
 
 	const selectedCountInBrand = (brand: string) =>
-		Object.keys(catalog[brand]).filter((s) => selectedSeries.has(serieKey(brand, s))).length;
+		Object.keys(catalog[brand]).filter((s) => searchFilters.selectedSeries.has(serieKey(brand, s))).length;
 
 	const toggleBrandAll = (brand: string) => {
 		const on = !isBrandFullySelected(brand);
-		const next = new Set(selectedSeries);
+		const next = new Set(searchFilters.selectedSeries);
 		for (const s of Object.keys(catalog[brand])) {
 			const key = serieKey(brand, s);
 			if (on) next.add(key);
 			else next.delete(key);
 		}
-		selectedSeries = next;
+		searchFilters.selectedSeries = next;
 	};
 
 	const isDefaultFilter = $derived(
-		selectedSeries.size == 0 &&
-			surfaceTypes.length == 0 &&
-			baseTypes.length == 0 &&
-			!searchScope &&
-			mixingLimit == 0
+		searchFilters.selectedSeries.size == 0 &&
+			searchFilters.surfaceTypes.length == 0 &&
+			searchFilters.baseTypes.length == 0 &&
+			!searchFilters.searchScope &&
+			searchFilters.mixingLimit == 0
 	);
 
 	const resetFilter = () => {
-		selectedSeries = new Set();
-		surfaceTypes = [];
-		baseTypes = [];
-		searchScope = 0;
-		mixingLimit = 0;
+		searchFilters.reset();
 	};
 
 	let results: SearchResult[] = $state([]);
@@ -144,21 +132,21 @@
 		const seq = ++searchSeq;
 		searching = true;
 
-		const series = [...selectedSeries].map((key) => {
+		const series = [...searchFilters.selectedSeries].map((key) => {
 			const [brand, serie] = key.split('::');
 			return [brand, serie];
 		});
 		const all =
 			// FIXME: optimize performance
-			searchScope == 0
+			searchFilters.searchScope == 0
 				? undefined
 				: allPaints.filter((p) => stock.has(paintId(p))).map((p) => p.index);
 		const opts = {
 			series,
 			all,
-			surfaces: [...surfaceTypes] as string[],
-			bases: baseTypes.map((x) => +x),
-			mix: mixingLimit,
+			surfaces: [...searchFilters.surfaceTypes] as string[],
+			bases: searchFilters.baseTypes.map((x) => +x),
+			mix: searchFilters.mixingLimit,
 			limit: 12
 		};
 
@@ -171,10 +159,21 @@
 		}, 200);
 		return () => clearTimeout(handle);
 	});
+
+	$effect(() => {
+		// track all filter state for persistence
+		searchFilters.selectedSeries;
+		searchFilters.surfaceTypes;
+		searchFilters.baseTypes;
+		searchFilters.searchScope;
+		searchFilters.mixingLimit;
+		searchFilters.model;
+		searchFilters.persist();
+	});
 </script>
 
 {#snippet colorPicker()}
-	{@const Picker = [Hsl, Rgb][model]}
+	{@const Picker = [Hsl, Rgb][searchFilters.model]}
 
 	<div>
 		<div
@@ -197,7 +196,7 @@
 			<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
 		{/snippet}
 
-		<Select class="w-full" options={[hsl, rgb]} bind:value={model} />
+		<Select class="w-full" options={[hsl, rgb]} bind:value={searchFilters.model} />
 	</div>
 
 	<div class="min-w-45 sm:max-w-135">
@@ -208,11 +207,11 @@
 {#snippet selectSeries()}
 	<Button size="xs" color="alternative" class="cursor-pointer relative gap-1 justify-start w-32">
 		Series:
-		{#if selectedSeries.size > 0}
+		{#if searchFilters.selectedSeries.size > 0}
 			<Badge
 				class="absolute pl-1.5 pr-1.5 text-xs top-1.5 right-7 rounded-full bg-primary-500 dark:bg-primary-500 dark:text-white"
 			>
-				{selectedSeries.size}
+				{searchFilters.selectedSeries.size}
 			</Badge>
 		{:else}
 			Any
@@ -269,7 +268,7 @@
 						<div class="grid grid-cols-4 gap-2.5">
 							{#each Object.entries(series) as [serie, paints]}
 								{@const serieMeta = getSerieMeta(brand, serie)}
-								{@const selected = selectedSeries.has(serieKey(brand, serie))}
+								{@const selected = searchFilters.selectedSeries.has(serieKey(brand, serie))}
 								<div
 									role="button"
 									tabindex="0"
@@ -352,7 +351,7 @@
 				W: 'Weathering'
 			}}
 			title="Surface"
-			bind:value={surfaceTypes}
+			bind:value={searchFilters.surfaceTypes}
 		/>
 
 		<MultiSelect
@@ -365,22 +364,22 @@
 				3: 'Water'
 			}}
 			title="Base"
-			bind:value={baseTypes}
+			bind:value={searchFilters.baseTypes}
 		/>
 
 		<Select
 			tooltip="search scope"
 			class="w-28 text-xs"
 			options={['Market', 'My Stock']}
-			bind:value={searchScope}
+			bind:value={searchFilters.searchScope}
 		/>
 
 		<Select
 			tooltip="mixing"
 			class="w-28 text-xs"
 			options={['Mix Off', 'Mix-1', 'Mix-2']}
-			bind:value={mixingLimit}
-			disabled={searchScope != 1}
+			bind:value={searchFilters.mixingLimit}
+			disabled={searchFilters.searchScope != 1}
 			disabledValue={0}
 			disabledTooltip={'mixing requires search scope: my stock'}
 		/>
