@@ -7,6 +7,8 @@
 		text: string;
 		oninput?: (...vs: string[]) => void;
 		onfocus?: (e: FocusEvent) => void;
+		/** extra legality check on the parsed params (e.g. range bounds); false -> red ring, no oninput */
+		validate?: (params: string[]) => boolean;
 		class?: string;
 		readonly?: boolean;
 		textAlign?: 'left' | 'center' | 'right';
@@ -17,36 +19,45 @@
 		text,
 		oninput,
 		onfocus,
+		validate,
 		class: clz,
 		readonly,
 		textAlign = 'center'
 	}: Props = $props();
 	const regexp = $derived(new RegExp(re));
 
+	// Text shown in the box. While focused (editing) it keeps the user's input;
+	// on blur it is re-synced to the canonical `text`.
 	let localText = $state(text);
-	let localParams: string[] = $state([]);
-
-	const params = $derived.by(() => {
-		const match = text.match(regexp);
-		return match ? match.slice(1) : [];
-	});
+	let focused = $state(false);
+	let error = $state(false);
 
 	const handleInput = (e: Event) => {
-		if (oninput !== undefined) {
-			const el = e.currentTarget! as HTMLInputElement;
-			const match = el.value.match(regexp);
-			if (match) {
-				localParams = match.slice(1);
-				oninput(...localParams);
-			}
+		const el = e.currentTarget! as HTMLInputElement;
+		const match = el.value.match(regexp);
+		if (match && (validate === undefined || validate(match.slice(1)))) {
+			error = false;
+			oninput?.(...match.slice(1));
+		} else {
+			error = true;
 		}
 	};
 
-	$effect(() => {
-		if (params.length == localParams.length && params.every((x, i) => x == localParams[i])) {
-			return;
-		}
+	const handleFocus = (e: FocusEvent) => {
+		focused = true;
+		onfocus?.(e);
+	};
+
+	const handleBlur = () => {
+		focused = false;
+		error = false;
 		localText = text;
+	};
+
+	$effect(() => {
+		if (!focused && !error) {
+			localText = text;
+		}
 	});
 
 	let isCopied = $state(false);
@@ -63,7 +74,9 @@
 
 <div class="relative {clz}">
 	<Input
-		class={`text-xs! font-mono p-2 text-${textAlign} w-full`}
+		class={`text-xs! font-mono p-2 text-${textAlign} w-full${
+			error ? ' ring-2! ring-red-500! border-red-500!' : ''
+		}`}
 		type="text"
 		name="rgb"
 		pattern={re}
@@ -73,7 +86,8 @@
 		spellcheck="false"
 		bind:value={localText}
 		oninput={handleInput}
-		{onfocus}
+		onfocus={handleFocus}
+		onblur={handleBlur}
 		{readonly}
 	/>
 	<div class="absolute right-0 top-1/2 -translate-y-1/2 flex font-mono">

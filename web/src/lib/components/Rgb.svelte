@@ -94,6 +94,9 @@
 		<ColorCode
 			re="^rgb\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)\s*(?:,|\s)\s*([\d.]+)\)$"
 			text={toText(r, g, b)}
+			validate={([r, g, b]) =>
+				+r >= 0 && +r <= 255 && +g >= 0 && +g <= 255 && +b >= 0 && +b <= 255
+			}
 			oninput={(r, g, b) => update(+r / 255, +g / 255, +b / 255)}
 			class="flex-3"
 		/>

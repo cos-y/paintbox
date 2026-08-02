@@ -129,6 +129,9 @@
 		<ColorCode
 			re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)%\s*(?:,|\s)\s*([\d.]+)%\)$"
 			text={toText(localHue, localSaturation, localLuminosity)}
+			validate={([h, s, l]) =>
+				+h >= 0 && +h <= 360 && +s >= 0 && +s <= 100 && +l >= 0 && +l <= 100
+			}
 			oninput={(h, s, l) => update(+h, +s / 100, +l / 100)}
 			class="flex-3"
 		/>

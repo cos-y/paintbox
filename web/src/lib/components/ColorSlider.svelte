@@ -20,19 +20,45 @@
 		return clamp(value / (max - min), 0, 1) * 100;
 	});
 
-	const validate = (v: number) => {
-		v = clamp(v, min, max);
-		v = +v.toFixed(precision);
-		if (isNaN(v)) {
-			v = 0;
-		}
-		return v;
-	};
+	// ---- number text box ----
+	// While the box is focused (editing) its text is never overwritten by prop
+	// changes: `localText` mirrors the DOM value on every keystroke, so the prop
+	// always equals what the user typed. On blur it is re-synced to the canonical
+	// `value` (reverts illegal input, normalizes valid input).
+	const format = (v: number) => String(+v.toFixed(precision));
 
-	const handleInput = (e: Event) => {
+	let localText = $state(format(value));
+	let focused = $state(false);
+	let error = $state(false);
+
+	const handleSliderInput = (e: Event) => {
 		const el = e.currentTarget! as HTMLInputElement;
 		oninput(+el.value);
 	};
+
+	const handleNumberInput = (e: Event) => {
+		const el = e.currentTarget! as HTMLInputElement;
+		localText = el.value;
+		const raw = el.value.trim();
+		if (raw === '' || !isFinite(+raw) || +raw < min || +raw > max) {
+			error = true;
+			return;
+		}
+		error = false;
+		oninput(+raw);
+	};
+
+	const handleBlur = () => {
+		focused = false;
+		error = false;
+		localText = format(value);
+	};
+
+	$effect(() => {
+		if (!focused && !error) {
+			localText = format(value);
+		}
+	});
 </script>
 
 <div class="flex items-center gap-2 h-9 sm:h-6">
@@ -49,19 +75,23 @@
 			{step}
 			{value}
 			{style}
-			oninput={handleInput}
+			oninput={handleSliderInput}
 		/>
 		<div class="slider-thumb" style="left: {left}%"></div>
 	</div>
 	<div class="not-sm:flex-1 sm:w-24 h-full">
 		<Input
-			class="text-xs! font-mono p-1 text-right h-full"
+			class={`text-xs! font-mono p-1 text-right h-full${
+				error ? ' ring-2! ring-red-500! border-red-500!' : ''
+			}`}
 			type="number"
 			{min}
 			{max}
 			{step}
-			value={validate(value)}
-			oninput={handleInput}
+			value={localText}
+			oninput={handleNumberInput}
+			onfocus={() => (focused = true)}
+			onblur={handleBlur}
 		/>
 	</div>
 </div>
