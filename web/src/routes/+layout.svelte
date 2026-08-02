@@ -4,7 +4,6 @@
 	import { Package, Search, Palette, Info, Eclipse } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
-	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
@@ -16,17 +15,10 @@
 	];
 
 	const isActive = (route: string) => page.url.pathname.startsWith(route);
-
-	onMount(() => {
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js');
-		}
-	});
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<link rel="manifest" href="/manifest.json" />
 	<meta name="theme-color" content="#3b82f6" />
 </svelte:head>
 <!-- {#if navigating.to}
