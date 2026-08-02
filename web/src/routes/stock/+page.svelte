@@ -195,7 +195,7 @@
 							onclick={() => selectBrand(brand)}
 							role="button"
 							tabindex={0}
-							size="sm"
+							size="md"
 							class="relative cursor-pointer p-3 hover:bg-gray-50 dark:hover:bg-gray-700"
 						>
 							{@const ownCount = ownedCountInBrand(series)}

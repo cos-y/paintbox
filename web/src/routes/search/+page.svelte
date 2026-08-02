@@ -98,7 +98,8 @@
 		Object.keys(catalog[brand]).every((s) => searchFilters.selectedSeries.has(serieKey(brand, s)));
 
 	const selectedCountInBrand = (brand: string) =>
-		Object.keys(catalog[brand]).filter((s) => searchFilters.selectedSeries.has(serieKey(brand, s))).length;
+		Object.keys(catalog[brand]).filter((s) => searchFilters.selectedSeries.has(serieKey(brand, s)))
+			.length;
 
 	const toggleBrandAll = (brand: string) => {
 		const on = !isBrandFullySelected(brand);
@@ -326,75 +327,75 @@
 		{@render colorPicker()}
 	</div>
 
-	<div
-		class="mt-4 flex flex-wrap items-center gap-2 border-y border-gray-200 py-2 dark:border-gray-700"
-	>
+	<div class="mt-4 flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
 		<span
 			class="flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
 		>
 			<Funnel class="h-4 w-4" />
 		</span>
 
-		{@render selectSeries()}
+		<div class="flex flex-auto flex-wrap items-center gap-2">
+			{@render selectSeries()}
 
-		<MultiSelect
-			tooltip="surface type"
-			class="w-36 text-xs"
-			options={{
-				G: 'Gloss',
-				SG: 'Semi-Gloss',
-				M: 'Flat',
-				ME: 'Metallic',
-				C: 'Clear',
-				PA: 'Mica',
-				FL: 'Fluorescence',
-				W: 'Weathering'
-			}}
-			title="Surface"
-			bind:value={searchFilters.surfaceTypes}
-		/>
-
-		<MultiSelect
-			tooltip="solvent base type"
-			class="w-28 text-xs"
-			options={{
-				0: 'Lacquer',
-				1: 'Alcohol',
-				2: 'Enamel',
-				3: 'Water'
-			}}
-			title="Base"
-			bind:value={searchFilters.baseTypes}
-		/>
-
-		<Select
-			tooltip="search scope"
-			class="w-28 text-xs"
-			options={['Market', 'My Stock']}
-			bind:value={searchFilters.searchScope}
-		/>
-
-		<Select
-			tooltip="mixing"
-			class="w-28 text-xs"
-			options={['Mix Off', 'Mix-1', 'Mix-2']}
-			bind:value={searchFilters.mixingLimit}
-			disabled={searchFilters.searchScope != 1}
-			disabledValue={0}
-			disabledTooltip={'mixing requires search scope: my stock'}
-		/>
-
-		{#if !isDefaultFilter}
-			<button
-				type="button"
-				class="text-primary-500 dark:text-primary-400 text-xs whitespace-nowrap hover:underline"
-				onclick={() => {
-					resetFilter();
+			<MultiSelect
+				tooltip="surface type"
+				class="w-36 text-xs"
+				options={{
+					G: 'Gloss',
+					SG: 'Semi-Gloss',
+					M: 'Flat',
+					ME: 'Metallic',
+					C: 'Clear',
+					PA: 'Mica',
+					FL: 'Fluorescence',
+					W: 'Weathering'
 				}}
-			>
-				Reset Filter
-			</button>
-		{/if}
+				title="Surface"
+				bind:value={searchFilters.surfaceTypes}
+			/>
+
+			<MultiSelect
+				tooltip="solvent base type"
+				class="w-28 text-xs"
+				options={{
+					0: 'Lacquer',
+					1: 'Alcohol',
+					2: 'Enamel',
+					3: 'Water'
+				}}
+				title="Base"
+				bind:value={searchFilters.baseTypes}
+			/>
+
+			<Select
+				tooltip="search scope"
+				class="w-28 text-xs"
+				options={['Market', 'My Stock']}
+				bind:value={searchFilters.searchScope}
+			/>
+
+			<Select
+				tooltip="mixing"
+				class="w-28 text-xs"
+				options={['Mix Off', 'Mix-1', 'Mix-2']}
+				bind:value={searchFilters.mixingLimit}
+				disabled={searchFilters.searchScope != 1}
+				disabledValue={0}
+				disabledTooltip={'mixing requires search scope: my stock'}
+			/>
+
+			{#if !isDefaultFilter}
+				<button
+					type="button"
+					class="text-primary-500 dark:text-primary-400 text-xs whitespace-nowrap hover:underline"
+					onclick={() => {
+						resetFilter();
+					}}
+				>
+					Reset Filter
+				</button>
+			{/if}
+		</div>
 	</div>
 
 	<div class="mt-4 pb-4">

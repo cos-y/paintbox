@@ -9,7 +9,7 @@
 	<!-- 头部标题 -->
 	<div class="border-b border-gray-800 pb-4">
 		<h1 class="text-2xl font-bold tracking-wide text-white">About</h1>
-		<p class="text-xs text-gray-400 mt-1 font-mono">Version 1.0.0 (WASM Build)</p>
+		<p class="text-xs text-gray-400 mt-1 font-mono">Version {__APP_VERSION__}</p>
 	</div>
 
 	<!-- 1. 隐私与离线声明 -->

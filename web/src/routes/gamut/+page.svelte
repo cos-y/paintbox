@@ -47,7 +47,7 @@
 				const hex = rgb ? '#' + rgb.toString(16).padStart(6, '0') : '';
 				return { id: s.id, type: 'color', text: hex, rgb, valid: rgb !== 0 };
 			} else if (s.type === 'paint') {
-				const paint = s.paintId ? allPaints.find((p) => paintId(p) === s.paintId) ?? null : null;
+				const paint = s.paintId ? (allPaints.find((p) => paintId(p) === s.paintId) ?? null) : null;
 				return { id: s.id, type: 'paint', paint, searchText: '' };
 			} else {
 				return { id: s.id, type: 'stock' };
@@ -482,7 +482,7 @@
 
 	<!-- ═══════ RIGHT: Card Panel ═══════ -->
 	<div
-		class="w-full sm:w-[40%] sm:max-w-86 shrink-0 flex flex-col border-t border-gray-200 bg-white sm:border-t-0 sm:border-l dark:border-gray-700 dark:bg-gray-900"
+		class="flex-1 sm:flex-none sm:w-[40%] sm:max-w-86 sm:shrink-0 flex flex-col overflow-hidden bg-white dark:bg-gray-900"
 	>
 		<!-- ═══════ Clipping ═══════ -->
 		<CollapseGroup
