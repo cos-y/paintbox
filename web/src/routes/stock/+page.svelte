@@ -219,7 +219,7 @@
 										<div class="truncate text-xs text-gray-500 dark:text-gray-400">{meta.desc}</div>
 									{/if}
 									<div class="text-[11px] text-gray-400">
-										{Object.keys(series).length} series · {totalModels(series)} models
+										{Object.keys(series).length} series · {totalModels(series)} paints
 									</div>
 								</div>
 							</div>

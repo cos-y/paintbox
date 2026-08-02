@@ -37,18 +37,18 @@
 		oklch = toOklch({ mode: 'rgb', r, g, b });
 	}
 
+	const hasEyeDropper = $derived('EyeDropper' in window);
+
 	const eyedrop = () => {
-		if ('EyeDropper' in window) {
-			let EyeDropper = (window as any).EyeDropper;
-			const eyeDropper = new EyeDropper();
-			eyeDropper.open().then((result: any) => {
-				const hex = parseInt(result.sRGBHex.slice(1), 16);
-				const b = (hex & 0xff) / 255;
-				const g = ((hex >> 8) & 0xff) / 255;
-				const r = ((hex >> 16) & 0xff) / 255;
-				oklch = toOklch({ mode: 'rgb', r, g, b });
-			});
-		}
+		let EyeDropper = (window as any).EyeDropper;
+		const eyeDropper = new EyeDropper();
+		eyeDropper.open().then((result: any) => {
+			const hex = parseInt(result.sRGBHex.slice(1), 16);
+			const b = (hex & 0xff) / 255;
+			const g = ((hex >> 8) & 0xff) / 255;
+			const r = ((hex >> 16) & 0xff) / 255;
+			oklch = toOklch({ mode: 'rgb', r, g, b });
+		});
 	};
 
 	const rgbInt = $derived.by(() => {
@@ -180,13 +180,15 @@
 		<div
 			class="relative overflow-hidden h-24 mb-3 rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
 		>
-			<button
-				type="button"
-				class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
-				onclick={eyedrop}
-			>
-				<Pipette size="1rem" />
-			</button>
+			{#if hasEyeDropper}
+				<button
+					type="button"
+					class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+					onclick={eyedrop}
+				>
+					<Pipette size="1rem" />
+				</button>
+			{/if}
 		</div>
 
 		{#snippet hsl()}
@@ -297,7 +299,7 @@
 											{serieMeta?.name ?? serie}
 										</div>
 										<div class="truncate text-[9px] leading-tight text-white/75">
-											{paints.length} models
+											{paints.length} paints
 										</div>
 									</div>
 								</div>
