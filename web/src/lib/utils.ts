@@ -1,5 +1,9 @@
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
+/** sRGB transfer function: linear [0,1] -> sRGB [0,1] */
+export const linearToSrgb = (c: number) =>
+	c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+
 export const similarity = (deltaE: number) => clamp(1 - deltaE, 0, 1) * 100;
 
 export const hexToRgb = (hex: string): number[] => {

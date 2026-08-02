@@ -2,6 +2,7 @@
 	import { Gizmo, OrbitControls, interactivity } from '@threlte/extras';
 	import { T, useThrelte } from '@threlte/core';
 	import * as THREE from 'three';
+	import { clamp, linearToSrgb } from '$lib/utils';
 
 	const { toneMapping, invalidate, renderer } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
@@ -126,12 +127,14 @@
 			onclick={(e: any) => {
 				const id = e.instanceId ?? -1;
 				if (id >= 0) {
-					const r = (colors[id * 3] * 255) | 0;
-					const g = (colors[id * 3 + 1] * 255) | 0;
-					const b = (colors[id * 3 + 2] * 255) | 0;
+					// colors 是 linear sRGB，需先经 sRGB 传递函数转成 8-bit 显示值
+					const toByte = (c: number) => clamp(Math.round(linearToSrgb(c) * 255), 0, 255);
+					const r = toByte(colors[id * 3]);
+					const g = toByte(colors[id * 3 + 1]);
+					const b = toByte(colors[id * 3 + 2]);
 					const hex = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
-				console.log('clicked voxel', id, hex);
-				onselect?.([r, g, b], hex);
+					console.log('clicked voxel', id, hex);
+					onselect?.([r, g, b], hex);
 				}
 			}}
 		>
