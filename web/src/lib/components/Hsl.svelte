@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { useMode, modeHsl, modeOklch, type Oklch } from 'culori/fn';
+	import { useMode, modeHsl, modeRgb, modeOklch, type Oklch } from 'culori/fn';
 	import SliderTrack from './ColorSlider.svelte';
 	import ColorCode from './ColorCode.svelte';
-	import { clamp } from '$lib/utils';
+	import { clamp, hexToRgb } from '$lib/utils';
 
 	interface Props {
 		oklch: Oklch;
@@ -14,6 +14,7 @@
 
 	const toHsl = useMode(modeHsl);
 	const toOklch = useMode(modeOklch);
+	const toRgb = useMode(modeRgb);
 
 	const { h, s, l } = toHsl(oklch);
 	// [0, 360)
@@ -84,8 +85,13 @@
 		return `hsl(${h.toFixed(0)} ${(s * 100).toFixed(1)}% ${(l * 100).toFixed(1)}%)`;
 	};
 
-	const handleInput = (h: number, s: number, l: number) => {
-		update(h, s / 100, l / 100);
+	const toHex = (h: number, s: number, l: number) => {
+		h = clamp(h, 0, 360);
+		s = clamp(s, 0, 1);
+		l = clamp(l, 0, 1);
+		const rgb = toRgb({ mode: 'hsl', h, s, l });
+		const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((x) => clamp(Math.round(x * 255), 0, 255));
+		return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 	};
 </script>
 
@@ -119,9 +125,28 @@
 		style={luminosityStyle}
 	/>
 
-	<ColorCode
-		re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)%\s*(?:,|\s)\s*([\d.]+)%\)$"
-		text={toText(localHue, localSaturation, localLuminosity)}
-		oninput={handleInput}
-	/>
+	<div class="flex items-center gap-2 h-9">
+		<ColorCode
+			re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)%\s*(?:,|\s)\s*([\d.]+)%\)$"
+			text={toText(localHue, localSaturation, localLuminosity)}
+			oninput={(h, s, l) => update(+h, +s / 100, +l / 100)}
+			class="flex-3"
+		/>
+
+		<ColorCode
+			re={`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`}
+			text={toHex(localHue, localSaturation, localLuminosity)}
+			class="not-sm:flex-1 sm:w-24 h-full"
+			textAlign="left"
+			oninput={(hex) => {
+				const rgb = hexToRgb(hex);
+				if (rgb) {
+					const [r, g, b] = rgb;
+					const hsl = toHsl({ mode: 'rgb', r, g, b });
+					update(hsl.h ?? 0, hsl.s, hsl.l);
+					console.log('hex input', hex, rgb, hsl);
+				}
+			}}
+		/>
+	</div>
 </div>

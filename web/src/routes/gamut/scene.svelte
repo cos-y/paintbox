@@ -14,9 +14,10 @@
 		clip: THREE.Vector3[];
 		range: THREE.Vector3[];
 		defaultZoom?: number;
+		onselect?: (rgb: [number, number, number], hex: string) => void;
 	}
 
-	const { matrices, colors, ndiv, clip, range, defaultZoom = 1 }: Props = $props();
+	const { matrices, colors, ndiv, clip, range, defaultZoom = 1, onselect }: Props = $props();
 
 	const zoom = $state(defaultZoom);
 
@@ -128,11 +129,9 @@
 					const r = (colors[id * 3] * 255) | 0;
 					const g = (colors[id * 3 + 1] * 255) | 0;
 					const b = (colors[id * 3 + 2] * 255) | 0;
-					console.log(
-						'clicked voxel',
-						id,
-						`#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`
-					);
+					const hex = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+				console.log('clicked voxel', id, hex);
+				onselect?.([r, g, b], hex);
 				}
 			}}
 		>

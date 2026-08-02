@@ -36,7 +36,7 @@
 </script>
 
 <div class="flex items-center gap-2 h-9 sm:h-6">
-	<div class="relative w-full h-full flex-4">
+	<div class="relative w-full h-full flex-3">
 		<input
 			class="no-handle m-0 w-full h-full
 				outline-0 rounded-lg border border-gray-600
@@ -53,7 +53,7 @@
 		/>
 		<div class="slider-thumb" style="left: {left}%"></div>
 	</div>
-	<div class="not-sm:flex-1 sm:w-16 h-full">
+	<div class="not-sm:flex-1 sm:w-24 h-full">
 		<Input
 			class="text-xs! font-mono p-1 text-right h-full"
 			type="number"

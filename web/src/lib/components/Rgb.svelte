@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { useMode, modeRgb, modeOklch, type Oklch } from 'culori/fn';
 	import ColorSlider from './ColorSlider.svelte';
-	import { Copy } from '@lucide/svelte';
-	import { clamp } from '$lib/utils';
-	import { tick } from 'svelte';
+	import { clamp, hexToRgb } from '$lib/utils';
 	import ColorCode from './ColorCode.svelte';
 
 	interface Props {
@@ -55,8 +53,12 @@
 		return `rgb(${(r * 255).toFixed(0)} ${(g * 255).toFixed(0)} ${(b * 255).toFixed(0)})`;
 	};
 
-	const handleInput = (r: number, g: number, b: number) => {
-		update(r / 255, g / 255, b / 255);
+	const toHex = (r: number, g: number, b: number) => {
+		r = clamp(r, 0, 1);
+		g = clamp(g, 0, 1);
+		b = clamp(b, 0, 1);
+		const [R, G, B] = [r, g, b].map((x) => clamp(Math.round(x * 255), 0, 255));
+		return `#${R.toString(16).padStart(2, '0')}${G.toString(16).padStart(2, '0')}${B.toString(16).padStart(2, '0')}`;
 	};
 </script>
 
@@ -88,9 +90,25 @@
 		style={blueStyle}
 	/>
 
-	<ColorCode
-		re="^rgb\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)\s*(?:,|\s)\s*([\d.]+)\)$"
-		text={toText(r, g, b)}
-		oninput={handleInput}
-	/>
+	<div class="flex items-center gap-2 h-9">
+		<ColorCode
+			re="^rgb\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)\s*(?:,|\s)\s*([\d.]+)\)$"
+			text={toText(r, g, b)}
+			oninput={(r, g, b) => update(+r / 255, +g / 255, +b / 255)}
+			class="flex-3"
+		/>
+
+		<ColorCode
+			re={`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`}
+			text={toHex(r, g, b)}
+			class="not-sm:flex-1 sm:w-24 h-full"
+			textAlign="left"
+			oninput={(hex) => {
+				const rgb = hexToRgb(hex);
+				if (rgb) {
+					update(rgb[0], rgb[1], rgb[2]);
+				}
+			}}
+		/>
+	</div>
 </div>

@@ -5,26 +5,40 @@
 	interface Props {
 		re: string;
 		text: string;
-		oninput: (...vs: number[]) => void;
+		oninput?: (...vs: string[]) => void;
+		onfocus?: (e: FocusEvent) => void;
+		class?: string;
+		readonly?: boolean;
+		textAlign?: 'left' | 'center' | 'right';
 	}
 
-	const { re, text, oninput }: Props = $props();
+	const {
+		re,
+		text,
+		oninput,
+		onfocus,
+		class: clz,
+		readonly,
+		textAlign = 'center'
+	}: Props = $props();
 	const regexp = $derived(new RegExp(re));
 
 	let localText = $state(text);
-	let localParams: number[] = $state([]);
+	let localParams: string[] = $state([]);
 
 	const params = $derived.by(() => {
 		const match = text.match(regexp);
-		return match ? match.slice(1).map((x) => +x) : [];
+		return match ? match.slice(1) : [];
 	});
 
 	const handleInput = (e: Event) => {
-		const el = e.currentTarget! as HTMLInputElement;
-		const match = el.value.match(regexp);
-		if (match) {
-			localParams = match.slice(1).map((x) => +x);
-			oninput(...localParams);
+		if (oninput !== undefined) {
+			const el = e.currentTarget! as HTMLInputElement;
+			const match = el.value.match(regexp);
+			if (match) {
+				localParams = match.slice(1);
+				oninput(...localParams);
+			}
 		}
 	};
 
@@ -47,9 +61,9 @@
 	};
 </script>
 
-<div class="relative">
+<div class="relative {clz}">
 	<Input
-		class="text-xs! font-mono p-2 text-center w-full"
+		class={`text-xs! font-mono p-2 text-${textAlign} w-full`}
 		type="text"
 		name="rgb"
 		pattern={re}
@@ -59,10 +73,12 @@
 		spellcheck="false"
 		bind:value={localText}
 		oninput={handleInput}
+		{onfocus}
+		{readonly}
 	/>
-	<div class="absolute -right-px top-0 bottom-0 flex font-mono">
+	<div class="absolute right-0 top-1/2 -translate-y-1/2 flex font-mono">
 		<button
-			class="flex-1 px-[10px] cursor-pointer text-gray-400 hover:text-gray-200
+			class="px-2 py-2 cursor-pointer text-gray-400 hover:text-gray-200
 				outline-offset-0 focus:rounded-lg focus:outline-2 focus:outline-primary-500"
 			onclick={handleCopy}
 			onmouseenter={handleMouseEnter}

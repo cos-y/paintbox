@@ -1,3 +1,17 @@
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
 export const similarity = (deltaE: number) => clamp(1 - deltaE, 0, 1) * 100;
+
+export const hexToRgb = (hex: string): number[] => {
+	const raw = hex.replace(/^#/, '');
+	let rgb;
+	if (/^[0-9a-fA-F]{3}$/.test(raw)) {
+		const [r, g, b] = raw;
+		rgb = [r + r, g + g, b + b];
+	} else {
+		const m = raw.match(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/);
+		if (!m) return [];
+		rgb = [m[1], m[2], m[3]];
+	}
+	return rgb.map((c) => clamp(parseInt(c, 16) / 255, 0, 1));
+};
