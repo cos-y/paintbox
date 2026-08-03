@@ -187,7 +187,7 @@
 		{#if level === 0}
 			{#key level}
 				<div
-					class="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 overflow-y-auto p-4"
+					class="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 overflow-y-auto px-6 py-4"
 					in:fly={{ x: -24, duration: 150 }}
 				>
 					{#each Object.entries(catalog) as [brand, series]}

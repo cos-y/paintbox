@@ -3,8 +3,10 @@
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
-	import { Box, ChevronDown, Cylinder, Pipette, Funnel } from '@lucide/svelte';
+	import { Box, Camera, ChevronDown, Cylinder, Palette, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
+	import DropdownButton from '$lib/components/DropdownButton.svelte';
+	import CameraPicker from '$lib/components/CameraPicker.svelte';
 	import { listPaints, getCatalog, paintId, floatRgbToCss, type SearchResult } from '$lib/paints';
 	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
@@ -38,6 +40,13 @@
 	}
 
 	const hasEyeDropper = $derived('EyeDropper' in window);
+
+	// 取色源：调色板 / 摄像机（仅 Tauri 应用内可用）
+	let source: 'palette' | 'camera' = $state('palette');
+	const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+	const canCamera = $derived(
+		isTauri && typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
+	);
 
 	const eyedrop = () => {
 		let EyeDropper = (window as any).EyeDropper;
@@ -173,22 +182,65 @@
 	});
 </script>
 
+{#snippet srcPalette()}
+	<Palette class="size-4" />
+	Palette
+{/snippet}
+
+{#snippet srcCamera()}
+	<Camera class="size-4" />
+	Camera
+{/snippet}
+
+{#snippet srcBtn()}
+	{#if source === 'camera'}
+		<Camera class="size-4" />
+	{:else}
+		<Palette class="size-4" />
+	{/if}
+{/snippet}
+
+{#snippet sourceSwitcher()}
+	{#if isTauri}
+		<div class="absolute top-1.5 right-1.5 z-10">
+			<DropdownButton
+				buttonClass="cursor-pointer rounded-md !border-transparent !bg-black/40 !p-1.5 !text-white backdrop-blur-sm transition-colors hover:!bg-black/60"
+				placement="bottom-end"
+				options={[
+					{ children: srcPalette, onclick: () => (source = 'palette') },
+					{
+						children: srcCamera,
+						onclick: () => (source = 'camera'),
+						disabled: !canCamera
+					}
+				]}
+			>
+				{@render srcBtn()}
+			</DropdownButton>
+		</div>
+	{/if}
+{/snippet}
+
 {#snippet colorPicker()}
 	{@const Picker = [Hsl, Rgb][searchFilters.model]}
 
 	<div>
-		<div
-			class="relative overflow-hidden h-24 mb-3 rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
-		>
-			{#if hasEyeDropper}
-				<button
-					type="button"
-					class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
-					onclick={eyedrop}
-				>
-					<Pipette size="1rem" />
-				</button>
-			{/if}
+		<div class="relative mb-3">
+			<div
+				class="relative h-24 overflow-hidden rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
+			>
+				{#if hasEyeDropper}
+					<button
+						type="button"
+						class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+						onclick={eyedrop}
+					>
+						<Pipette size="1rem" />
+					</button>
+				{/if}
+			</div>
+
+			{@render sourceSwitcher()}
 		</div>
 
 		{#snippet hsl()}
@@ -208,18 +260,18 @@
 {/snippet}
 
 {#snippet selectSeries()}
-	<Button size="xs" color="alternative" class="cursor-pointer relative gap-1 justify-start w-32">
+	<Button size="xs" color="alternative" class="relative w-32 cursor-pointer justify-start gap-1">
 		Series:
 		{#if searchFilters.selectedSeries.size > 0}
 			<Badge
-				class="absolute pl-1.5 pr-1.5 text-xs top-1.5 right-7 rounded-full bg-primary-500 dark:bg-primary-500 dark:text-white"
+				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
 			>
 				{searchFilters.selectedSeries.size}
 			</Badge>
 		{:else}
 			Any
 		{/if}
-		<ChevronDown class="h-3 w-3 ms-auto" />
+		<ChevronDown class="ms-auto h-3 w-3" />
 	</Button>
 	<Dropdown class="w-136 p-0" placement="bottom-start">
 		<div class="flex h-96">
@@ -232,7 +284,7 @@
 						onmouseenter={() => (activeFilterBrand = brand)}
 						onclick={() => (activeFilterBrand = brand)}
 						title={name}
-						class="cursor-pointer flex w-full items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
+						class="flex w-full cursor-pointer items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
 						brand
 							? 'bg-gray-100 dark:bg-gray-600'
 							: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
@@ -262,7 +314,7 @@
 							<span class="text-xs text-gray-400">{Object.keys(series).length} series</span>
 							<button
 								type="button"
-								class="text-primary-500 dark:text-primary-400 text-xs hover:underline"
+								class="text-xs text-primary-500 hover:underline dark:text-primary-400"
 								onclick={() => toggleBrandAll(brand)}
 							>
 								{isBrandFullySelected(brand) ? 'Cancel All' : 'Select All'}
@@ -316,25 +368,37 @@
 	</Dropdown>
 {/snippet}
 
-<div class="flex h-full flex-col overflow-y-auto p-4">
-	<div
-		class="color-picker-root grid gap-3 sm:grid-flow-col sm:auto-cols-[125px_1fr]"
-		style="
+<div class="flex h-full flex-col overflow-y-auto px-6 py-4">
+	{#if source === 'camera'}
+		<div class="relative">
+			<CameraPicker
+				onsample={(r, g, b) => {
+					oklch = toOklch({ mode: 'rgb', r, g, b });
+					source = 'palette';
+				}}
+			/>
+			{@render sourceSwitcher()}
+		</div>
+	{:else}
+		<div
+			class="color-picker-root grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col"
+			style="
     --slider-thumb-l: {oklch.l};
     --slider-thumb-c: {oklch.c};
     --slider-thumb-h: {oklch.h ?? 0};
     --slider-thumb-hue: {hwb.h ?? 0};
     --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});"
-	>
-		{@render colorPicker()}
-	</div>
+		>
+			{@render colorPicker()}
+		</div>
+	{/if}
 
 	<div class="mt-4 flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
-		<span
-			class="flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
+		<!-- <span
+			class="-ml-4 flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
 		>
 			<Funnel class="h-4 w-4" />
-		</span>
+		</span> -->
 
 		<div class="flex flex-auto flex-wrap items-center gap-2">
 			{@render selectSeries()}
@@ -389,7 +453,7 @@
 			{#if !isDefaultFilter}
 				<button
 					type="button"
-					class="text-primary-500 dark:text-primary-400 text-xs whitespace-nowrap hover:underline"
+					class="text-xs whitespace-nowrap text-primary-500 hover:underline dark:text-primary-400"
 					onclick={() => {
 						resetFilter();
 					}}
@@ -402,7 +466,7 @@
 
 	<div class="mt-4 pb-4">
 		<h3 class="mb-2 text-sm font-semibold">{results.length} Results</h3>
-		<div class="grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3">
+		<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
 			{#if searching}
 				{#each Array(8) as _}
 					<div
@@ -436,7 +500,7 @@
 										>
 										{#if isMix}
 											<span
-												class="text-primary-700 dark:text-primary-300 shrink-0 rounded-sm bg-gray-100 px-1.5 py-0.5 font-medium dark:bg-gray-700"
+												class="shrink-0 rounded-sm bg-gray-100 px-1.5 py-0.5 font-medium text-primary-700 dark:bg-gray-700 dark:text-primary-300"
 											>
 												{(p.t * 100).toFixed(0)}%
 											</span>

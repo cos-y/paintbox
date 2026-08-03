@@ -125,13 +125,11 @@
 		style={luminosityStyle}
 	/>
 
-	<div class="flex items-center gap-2 h-9">
+	<div class="flex h-9 items-center gap-2">
 		<ColorCode
 			re="^hsl\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)%\s*(?:,|\s)\s*([\d.]+)%\)$"
 			text={toText(localHue, localSaturation, localLuminosity)}
-			validate={([h, s, l]) =>
-				+h >= 0 && +h <= 360 && +s >= 0 && +s <= 100 && +l >= 0 && +l <= 100
-			}
+			validate={([h, s, l]) => +h >= 0 && +h <= 360 && +s >= 0 && +s <= 100 && +l >= 0 && +l <= 100}
 			oninput={(h, s, l) => update(+h, +s / 100, +l / 100)}
 			class="flex-3"
 		/>
@@ -139,7 +137,7 @@
 		<ColorCode
 			re={`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`}
 			text={toHex(localHue, localSaturation, localLuminosity)}
-			class="not-sm:flex-1 sm:w-24 h-full"
+			class="h-full not-sm:flex-1 sm:w-24"
 			textAlign="left"
 			oninput={(hex) => {
 				const rgb = hexToRgb(hex);

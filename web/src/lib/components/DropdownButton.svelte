@@ -11,15 +11,23 @@
 	interface Props extends DropdownProps {
 		children: Snippet;
 		options: Option[];
+		/** 触发按钮样式（默认 alternative 小按钮，可覆盖成任意外观） */
+		buttonClass?: string;
 	}
 
-	let { isOpen = $bindable(false), children, options, ...dropdownProps }: Props = $props();
+	let {
+		isOpen = $bindable(false),
+		children,
+		options,
+		buttonClass = 'cursor-pointer',
+		...dropdownProps
+	}: Props = $props();
 </script>
 
 <Button
 	size="xs"
 	color="alternative"
-	class="cursor-pointer"
+	class={buttonClass}
 	onkeydown={(e: any) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();

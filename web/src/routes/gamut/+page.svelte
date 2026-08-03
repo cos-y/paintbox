@@ -419,7 +419,7 @@
 		<CollapseGroup
 			title="Clipping"
 			isOpen={isSm}
-			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-12 py-4 sm:px-6"
+			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-6 py-4"
 		>
 			<RangeSlider
 				gradient={['#000', '#fff']}
@@ -444,7 +444,7 @@
 			/>
 		</CollapseGroup>
 
-		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-8 py-3 sm:px-4">
+		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-6 py-2">
 			<div data-add-btn class="flex items-center justify-between">
 				<span class="text-xs text-gray-500 dark:text-gray-400"
 					>{colors.size} color{colors.size !== 1 ? 's' : ''} in gamut</span
