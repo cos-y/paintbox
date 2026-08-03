@@ -2,7 +2,8 @@
 	"name": "paintbox",
 	"private": true,
 	"scripts": {
-		"tauri": "tauri"
+		"tauri": "tauri",
+		"icons": "node scripts/generate-icons.mjs"
 	},
 	"devDependencies": {
 		"@tauri-apps/cli": "^2.11.4"

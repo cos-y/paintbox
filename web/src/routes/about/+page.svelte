@@ -3,6 +3,7 @@
 	import Qq from '$lib/icons/Qq.svelte';
 	import { ShieldCheck, EyeOff, Info, TriangleAlert, Coffee, Handshake } from '@lucide/svelte';
 	import { isTauri } from '$lib/utils';
+	import favicon from '$lib/assets/favicon.svg';
 	// Tauri 环境显式调 opener 插件打开外链（绕开 WebView 对自定义 scheme 的解析）
 	import { openUrl } from '@tauri-apps/plugin-opener';
 
@@ -23,9 +24,12 @@
 	<!-- 可滚动内容区 -->
 	<div class="min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
 		<!-- 头部标题 -->
-		<div class="border-b border-gray-800 pb-4">
-			<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
-			<p class="mt-1 font-mono text-xs text-gray-400">Version {__APP_VERSION__}</p>
+		<div class="flex items-center gap-4 border-b border-gray-800 pb-4">
+			<img src={favicon} alt="PaintBox" class="h-16 w-16 shrink-0 object-contain" />
+			<div>
+				<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
+				<p class="mt-1 font-mono text-xs text-gray-400">Version {__APP_VERSION__}</p>
+			</div>
 		</div>
 
 		<!-- 1. 隐私与离线声明 -->
