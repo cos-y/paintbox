@@ -138,7 +138,7 @@
 					? 'font-semibold text-gray-900 dark:text-white'
 					: 'text-gray-500 dark:text-gray-400'}"
 			>
-				Paints
+				Brands
 			</button>
 			{#if selectedBrand}
 				<span class="text-gray-400">/</span>
@@ -240,9 +240,9 @@
 								type="button"
 								onclick={() => selectSerie(serie)}
 								title={serieMeta?.desc}
-								class="cursor-pointer flex w-full items-center gap-2 px-2 py-1.5 text-left text-xs {serie ===
+								class="flex w-full cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-xs {serie ===
 								selectedSerie
-									? 'bg-primary-50 text-primary-700 dark:bg-gray-700 dark:text-white font-medium'
+									? 'bg-primary-50 font-medium text-primary-700 dark:bg-gray-700 dark:text-white'
 									: 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'}"
 							>
 								<img
@@ -293,7 +293,7 @@
 										stock.toggle(paintId(paint));
 										e.currentTarget.blur();
 									}}
-									class="cursor-pointer absolute top-0 right-0 h-6 w-6 scale-75 text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
+									class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
 										? 'scale-100 opacity-100'
 										: ''}"
 								>
@@ -343,7 +343,7 @@
 								type="button"
 								aria-label={inStock ? '移出油漆库' : '加入油漆库'}
 								onclick={() => stock.toggle(paintId(paint))}
-								class="cursor-pointer flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors {inStock
+								class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors {inStock
 									? 'bg-primary-500 text-white hover:bg-primary-600'
 									: 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}"
 							>
@@ -385,7 +385,7 @@
 						{#if comparePaint}
 							<div class="flex w-full text-left">
 								{#if compareDeltaE !== null}
-									<div class="text-xs text-gray-400 flex-1">
+									<div class="flex-1 text-xs text-gray-400">
 										{similarity(compareDeltaE).toFixed(0)}% 相似
 									</div>
 								{/if}
@@ -436,7 +436,7 @@
 									<button
 										type="button"
 										onclick={() => toggleCompare(p)}
-										class="cursor-pointer flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+										class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
 										paintId(p)
 											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"

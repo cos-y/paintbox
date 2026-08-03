@@ -4,6 +4,7 @@
 	import { Package, Search, Palette, Info, Eclipse } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
 	let { children } = $props();
 
@@ -38,6 +39,11 @@
 							? 'bg-gray-200 text-primary-600 dark:bg-gray-700 dark:text-white'
 							: 'text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}"
 						href={route}
+						onclick={(e) => {
+							e.preventDefault();
+							// 区段切换不压历史：回退不会跨区段跳转，区段顶层回退即退出应用
+							goto(route, { replaceState: true, noScroll: true });
+						}}
 					>
 						<Icon />
 					</a>
@@ -47,13 +53,13 @@
 		</ul>
 	</aside>
 
-	<main class="flex-1 h-full overflow-y-auto pb-14 sm:pb-0">
+	<main class="flex-1 h-full overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0">
 		{@render children()}
 	</main>
 
 	<!-- mobile bottom nav -->
 	<nav
-		class="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+		class="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-gray-700 dark:bg-gray-900"
 	>
 		<div class="mx-auto flex h-14 max-w-lg items-center justify-around">
 			{#each navs as { title, route, svg: Icon }}
@@ -63,6 +69,10 @@
 					class="flex flex-col items-center gap-0.5 px-3 py-1 transition-colors {active
 						? 'text-primary-600 dark:text-primary-400'
 						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}"
+					onclick={(e) => {
+						e.preventDefault();
+						goto(route, { replaceState: true, noScroll: true });
+					}}
 				>
 					<Icon class="size-5" />
 					<span class="text-[10px] leading-none font-medium">{title}</span>

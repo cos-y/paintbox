@@ -260,7 +260,7 @@
 		<div class="min-w-0 flex-1">
 			<input
 				type="text"
-				class="w-full rounded-md border border-gray-300 bg-white py-1 px-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
+				class="w-full rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
 				placeholder="#ff0000"
 				maxlength="9"
 				spellcheck="false"
@@ -298,7 +298,7 @@
 				/>
 				<input
 					type="text"
-					class="w-full rounded-md border border-gray-300 bg-white py-1 pl-7 pr-2 text-xs text-gray-900 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 placeholder:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
+					class="w-full rounded-md border border-gray-300 bg-white py-1 pr-2 pl-7 text-xs text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
 					placeholder="search brand / code / name..."
 					value={src.searchText}
 					oninput={(e) => updatePaintSearch(src, (e.target as HTMLInputElement).value)}
@@ -406,20 +406,20 @@
 	</DropdownButton>
 {/snippet}
 
-<div class="flex flex-col sm:flex-row h-full">
-	<div class="h-80 sm:h-auto sm:flex-1 relative min-w-0 bg-gray-950">
+<div class="flex h-full flex-col sm:flex-row">
+	<div class="relative h-80 min-w-0 bg-gray-950 sm:h-auto sm:flex-1">
 		<Canvas>
 			<Scene {ndiv} {...scene} onselect={handleSelect} />
 		</Canvas>
 	</div>
 
 	<div
-		class="flex-1 sm:flex-none sm:w-[40%] sm:max-w-86 sm:shrink-0 flex flex-col overflow-hidden bg-white dark:bg-gray-900"
+		class="flex flex-1 flex-col overflow-hidden bg-white sm:w-[40%] sm:max-w-86 sm:flex-none sm:shrink-0 dark:bg-gray-900"
 	>
 		<CollapseGroup
 			title="Clipping"
 			isOpen={isSm}
-			class="range-sliders-root grid grid-flow-row gap-3 px-6 py-4 overflow-hidden"
+			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-12 py-4 sm:px-6"
 		>
 			<RangeSlider
 				gradient={['#000', '#fff']}
@@ -444,7 +444,7 @@
 			/>
 		</CollapseGroup>
 
-		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-4 py-3">
+		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-8 py-3 sm:px-4">
 			<div data-add-btn class="flex items-center justify-between">
 				<span class="text-xs text-gray-500 dark:text-gray-400"
 					>{colors.size} color{colors.size !== 1 ? 's' : ''} in gamut</span
