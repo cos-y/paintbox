@@ -11,7 +11,7 @@
 	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity } from '$lib/utils';
+	import { clamp, similarity, isTauri } from '$lib/utils';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
@@ -43,7 +43,6 @@
 
 	// 取色源：调色板 / 摄像机（仅 Tauri 应用内可用）
 	let source: 'palette' | 'camera' = $state('palette');
-	const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 	const canCamera = $derived(
 		isTauri && typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
 	);

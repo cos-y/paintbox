@@ -19,3 +19,5 @@ export const hexToRgb = (hex: string): number[] => {
 	}
 	return rgb.map((c) => clamp(parseInt(c, 16) / 255, 0, 1));
 };
+
+export const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;

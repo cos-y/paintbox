@@ -1,19 +1,22 @@
 <script lang="ts">
 	import Github from '$lib/icons/Github.svelte';
 	import Qq from '$lib/icons/Qq.svelte';
-	import {
-		ShieldCheck,
-		EyeOff,
-		Info,
-		TriangleAlert,
-		Mail,
-		Coffee,
-		Handshake
-	} from '@lucide/svelte';
+	import { ShieldCheck, EyeOff, Info, TriangleAlert, Coffee, Handshake } from '@lucide/svelte';
+	import { isTauri } from '$lib/utils';
+	// Tauri 环境显式调 opener 插件打开外链（绕开 WebView 对自定义 scheme 的解析）
+	import { openUrl } from '@tauri-apps/plugin-opener';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
-	const qqUrl = 'https://qm.qq.com/q/3bWtHScQUo';
+	const qqUrl = isTauri
+		? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=963504621'
+		: 'https://qm.qq.com/q/3bWtHScQUo';
 	const donateUrl = 'https://afdian.com/a/cos_y';
+
+	// Tauri 内用系统 Intent 打开（QQ 链接可直接唤起 QQ App）；浏览器内普通新标签
+	const openExternal = (url: string) => {
+		if (isTauri) openUrl(url);
+		else window.open(url, '_blank', 'noopener');
+	};
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-3xl flex-col p-6 text-gray-200 select-none">
@@ -107,13 +110,29 @@
 	<!-- 4. 链接与反馈（固定显示） -->
 	<section class="mt-4 shrink-0 border-t border-gray-800 pt-4">
 		<div class="flex flex-row items-center justify-center gap-4">
-			<a class="cursor-pointer text-white" href={githubUrl} target="_blank">
+			<a
+				class="cursor-pointer text-white"
+				href={githubUrl}
+				target="_blank"
+				onclick={(e) => {
+					if (isTauri) {
+						e.preventDefault();
+						openExternal(githubUrl);
+					}
+				}}
+			>
 				<Github class="h-8 w-8" />
 			</a>
 			<a
 				class="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#2365da] p-1.5"
 				href={qqUrl}
 				target="_blank"
+				onclick={(e) => {
+					if (isTauri) {
+						e.preventDefault();
+						openExternal(qqUrl);
+					}
+				}}
 			>
 				<Qq class="h-5 w-5 text-white" />
 			</a>
@@ -121,6 +140,12 @@
 				href={donateUrl}
 				target="_blank"
 				rel="noopener noreferrer"
+				onclick={(e) => {
+					if (isTauri) {
+						e.preventDefault();
+						openExternal(donateUrl);
+					}
+				}}
 				class="inline-flex items-center gap-2 rounded-full bg-yellow-400 p-2 text-sm font-bold text-gray-900 shadow-lg shadow-yellow-400/20 transition-colors hover:bg-yellow-300"
 			>
 				<Coffee class="h-4 w-4" strokeWidth={2.5} />
