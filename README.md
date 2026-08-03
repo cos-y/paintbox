@@ -2,14 +2,14 @@
 
 搜索与指定颜色最相似的油漆配方。
 
-## Market Search
+## Color Search
 
-![](pics/market_search.png)
+<img src="./pics/1.jpg" width="256px">
 
-## Mix Search
+## Gamut Visualization
 
-![](pics/mix_grayscale.png)
+<img src="./pics/2.jpg" width="256px">
 
-## Mix3
+## Stock Management
 
-![](pics/mix3.png)
+<img src="./pics/3.jpg" width="256px">
