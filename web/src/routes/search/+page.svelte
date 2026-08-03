@@ -17,6 +17,7 @@
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import { searchFilters } from '$lib/searchFilters.svelte';
+	import { t } from '$lib/i18n.svelte';
 
 	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
@@ -183,12 +184,12 @@
 
 {#snippet srcPalette()}
 	<Palette class="size-4" />
-	Palette
+	{t('search.sourcePalette')}
 {/snippet}
 
 {#snippet srcCamera()}
 	<Camera class="size-4" />
-	Camera
+	{t('search.sourceCamera')}
 {/snippet}
 
 {#snippet srcBtn()}
@@ -260,7 +261,7 @@
 
 {#snippet selectSeries()}
 	<Button size="xs" color="alternative" class="relative w-32 cursor-pointer justify-start gap-1">
-		Series:
+		{t('search.series')}
 		{#if searchFilters.selectedSeries.size > 0}
 			<Badge
 				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
@@ -268,7 +269,7 @@
 				{searchFilters.selectedSeries.size}
 			</Badge>
 		{:else}
-			Any
+			{t('search.any')}
 		{/if}
 		<ChevronDown class="ms-auto h-3 w-3" />
 	</Button>
@@ -310,13 +311,13 @@
 					{#if series}
 						{@const brand = activeFilterBrand}
 						<div class="mb-2 flex items-center justify-between">
-							<span class="text-xs text-gray-400">{Object.keys(series).length} series</span>
+							<span class="text-xs text-gray-400">{t('search.seriesCount', { n: Object.keys(series).length })}</span>
 							<button
 								type="button"
 								class="text-xs text-primary-500 hover:underline dark:text-primary-400"
 								onclick={() => toggleBrandAll(brand)}
 							>
-								{isBrandFullySelected(brand) ? 'Cancel All' : 'Select All'}
+								{isBrandFullySelected(brand) ? t('search.cancelAll') : t('search.selectAll')}
 							</button>
 						</div>
 						<div class="grid grid-cols-4 gap-2.5">
@@ -350,7 +351,7 @@
 											{serieMeta?.name ?? serie}
 										</div>
 										<div class="truncate text-[9px] leading-tight text-white/75">
-											{paints.length} paints
+											{t('search.paintsCount', { n: paints.length })}
 										</div>
 									</div>
 								</div>
@@ -359,7 +360,7 @@
 					{/if}
 				{:else}
 					<div class="flex h-full items-center justify-center text-center text-xs text-gray-400">
-						将鼠标悬停在品牌上<br />查看系列
+						{@html t('search.hoverBrandHint')}
 					</div>
 				{/if}
 			</div>
@@ -403,50 +404,50 @@
 			{@render selectSeries()}
 
 			<MultiSelect
-				tooltip="surface type"
+				tooltip={t('search.surfaceTooltip')}
 				class="w-36 text-xs"
 				options={{
-					G: 'Gloss',
-					SG: 'Semi-Gloss',
-					M: 'Flat',
-					ME: 'Metallic',
-					C: 'Clear',
-					PA: 'Mica',
-					FL: 'Fluorescence',
-					W: 'Weathering'
+					G: t('search.surface.G'),
+					SG: t('search.surface.SG'),
+					M: t('search.surface.M'),
+					ME: t('search.surface.ME'),
+					C: t('search.surface.C'),
+					PA: t('search.surface.PA'),
+					FL: t('search.surface.FL'),
+					W: t('search.surface.W')
 				}}
-				title="Surface"
+				title={t('search.surfaceTitle')}
 				bind:value={searchFilters.surfaceTypes}
 			/>
 
 			<MultiSelect
-				tooltip="solvent base type"
+				tooltip={t('search.baseTooltip')}
 				class="w-28 text-xs"
 				options={{
-					0: 'Lacquer',
-					1: 'Alcohol',
-					2: 'Enamel',
-					3: 'Water'
+					0: t('search.base.0'),
+					1: t('search.base.1'),
+					2: t('search.base.2'),
+					3: t('search.base.3')
 				}}
-				title="Base"
+				title={t('search.baseTitle')}
 				bind:value={searchFilters.baseTypes}
 			/>
 
 			<Select
-				tooltip="search scope"
+				tooltip={t('search.scopeTooltip')}
 				class="w-28 text-xs"
-				options={['Market', 'My Stock']}
+				options={[t('search.market'), t('search.myStock')]}
 				bind:value={searchFilters.searchScope}
 			/>
 
 			<Select
-				tooltip="mixing"
+				tooltip={t('search.mixTooltip')}
 				class="w-28 text-xs"
-				options={['Mix Off', 'Mix-1', 'Mix-2']}
+				options={[t('search.mixOff'), t('search.mix1'), t('search.mix2')]}
 				bind:value={searchFilters.mixingLimit}
 				disabled={searchFilters.searchScope != 1}
 				disabledValue={0}
-				disabledTooltip={'mixing requires search scope: my stock'}
+				disabledTooltip={t('search.mixScopeRequired')}
 			/>
 
 			{#if !isDefaultFilter}
@@ -457,14 +458,14 @@
 						resetFilter();
 					}}
 				>
-					Reset Filter
+					{t('search.resetFilter')}
 				</button>
 			{/if}
 		</div>
 	</div>
 
 	<div class="mt-4 pb-4">
-		<h3 class="mb-2 text-sm font-semibold">{results.length} Results</h3>
+		<h3 class="mb-2 text-sm font-semibold">{t('search.results', { n: results.length })}</h3>
 		<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
 			{#if searching}
 				{#each Array(8) as _}
@@ -514,7 +515,7 @@
 							{/if}
 							<div class="mt-1.5 flex items-center justify-between text-[10px] text-gray-400">
 								<span>ΔE {r.delta_e.toFixed(2)}</span>
-								<span>{similarity(r.delta_e).toFixed(0)}% 相似</span>
+								<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
 							</div>
 						</div>
 					</div>

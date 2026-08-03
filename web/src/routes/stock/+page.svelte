@@ -17,6 +17,7 @@
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { similarity } from '$lib/utils';
+	import { t } from '$lib/i18n.svelte';
 
 	const allPaints = listPaints();
 	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
@@ -123,7 +124,7 @@
 		{#if level > 0}
 			<button
 				type="button"
-				aria-label="返回"
+				aria-label={t('stock.back')}
 				onclick={goBack}
 				class="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700"
 			>
@@ -138,7 +139,7 @@
 					? 'font-semibold text-gray-900 dark:text-white'
 					: 'text-gray-500 dark:text-gray-400'}"
 			>
-				Brands
+				{t('stock.brands')}
 			</button>
 			{#if selectedBrand}
 				<span class="text-gray-400">/</span>
@@ -219,7 +220,7 @@
 										<div class="truncate text-xs text-gray-500 dark:text-gray-400">{meta.desc}</div>
 									{/if}
 									<div class="text-[11px] text-gray-400">
-										{Object.keys(series).length} series · {totalModels(series)} paints
+										{t('stock.brandStats', { series: Object.keys(series).length, paints: totalModels(series) })}
 									</div>
 								</div>
 							</div>
@@ -287,7 +288,7 @@
 							>
 								<button
 									type="button"
-									title={inStock ? 'remove from stock' : 'add to stock'}
+									title={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
 									onclick={(e) => {
 										e.stopPropagation();
 										stock.toggle(paintId(paint));
@@ -341,7 +342,7 @@
 							</div>
 							<button
 								type="button"
-								aria-label={inStock ? '移出油漆库' : '加入油漆库'}
+								aria-label={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
 								onclick={() => stock.toggle(paintId(paint))}
 								class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors {inStock
 									? 'bg-primary-500 text-white hover:bg-primary-600'
@@ -386,7 +387,7 @@
 							<div class="flex w-full text-left">
 								{#if compareDeltaE !== null}
 									<div class="flex-1 text-xs text-gray-400">
-										{similarity(compareDeltaE).toFixed(0)}% 相似
+										{t('stock.similarity', { n: similarity(compareDeltaE).toFixed(0) })}
 									</div>
 								{/if}
 								<div class="text-right">
@@ -403,7 +404,7 @@
 
 						<div>
 							<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
-								直接等价
+								{t('stock.directEquiv')}
 							</h3>
 							<div class="flex flex-wrap gap-2">
 								{#each directEquivalences as p (paintId(p))}
@@ -422,14 +423,14 @@
 										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 									</button>
 								{:else}
-									<div class="text-xs text-gray-400">暂无同名的其他油漆</div>
+									<div class="text-xs text-gray-400">{t('stock.noDirectEquiv')}</div>
 								{/each}
 							</div>
 						</div>
 
 						<div>
 							<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
-								相近同色漆
+								{t('stock.similarColors')}
 							</h3>
 							<div class="flex flex-wrap gap-2">
 								{#each colorEquivalences as p (paintId(p))}
@@ -448,7 +449,7 @@
 										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 									</button>
 								{:else}
-									<div class="text-xs text-gray-400">暂无相近的其他油漆</div>
+									<div class="text-xs text-gray-400">{t('stock.noSimilar')}</div>
 								{/each}
 							</div>
 						</div>

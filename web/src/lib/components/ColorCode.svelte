@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Copy } from '@lucide/svelte';
 	import { Input, Tooltip } from 'flowbite-svelte';
+	import { t } from '$lib/i18n.svelte';
 
 	interface Props {
 		re: string;
@@ -100,7 +101,7 @@
 			<Copy size="1rem" />
 		</button>
 		<Tooltip placement="bottom" class="text-xs"
-			>{isCopied ? 'copied!' : 'copy to clipboard'}</Tooltip
+			>{isCopied ? t('colorCode.copied') : t('colorCode.copy')}</Tooltip
 		>
 	</div>
 </div>

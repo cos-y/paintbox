@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Camera, CameraOff } from '@lucide/svelte';
+	import { t } from '$lib/i18n.svelte';
 
 	interface Props {
 		/** 拍照取色回调，参数为 sRGB 0-1 浮点值 */
@@ -10,7 +11,7 @@
 
 	let video: HTMLVideoElement | undefined = $state();
 	let canvas: HTMLCanvasElement | undefined = $state();
-	let error: string = $state('');
+	let error = $state(false);
 	let ready = $state(false);
 	// 中心像素实时颜色
 	let live: [number, number, number] = $state([0, 0, 0]);
@@ -45,7 +46,7 @@
 				ready = true;
 			} catch {
 				if (!cancelled) {
-					error = '无法访问摄像头（未授权或设备不可用）';
+					error = true;
 				}
 			}
 		})();
@@ -92,7 +93,7 @@
 				class="flex h-full items-center justify-center gap-2 px-4 text-center text-xs text-gray-300"
 			>
 				<CameraOff class="size-5" />
-				<span>{error}</span>
+				<span>{t('camera.accessError')}</span>
 			</div>
 		{:else}
 			<canvas bind:this={canvas} class="hidden"></canvas>
@@ -109,7 +110,7 @@
 				<div
 					class="absolute inset-0 flex items-center justify-center bg-black text-xs text-white/75"
 				>
-					Launching Camera...
+					{t('camera.launching')}
 				</div>
 			{:else}
 				<!-- 中心准星 -->
@@ -136,12 +137,12 @@
 		<button
 			type="button"
 			class="ml-auto flex cursor-pointer items-center gap-1 rounded-md bg-primary-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
-			title="capture color"
+			title={t('camera.captureColor')}
 			onclick={capture}
 			disabled={!ready}
 		>
 			<Camera size="0.9rem" />
-			Pick
+			{t('camera.pick')}
 		</button>
 	</div>
 </div>

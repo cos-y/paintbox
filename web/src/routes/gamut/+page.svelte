@@ -13,6 +13,7 @@
 	import { loadGamut, saveGamut, type SerializedSource } from '$lib/gamutSettings.svelte';
 	import * as THREE from 'three';
 	import ColorCode from '$lib/components/ColorCode.svelte';
+	import { t } from '$lib/i18n.svelte';
 
 	const allPaints = listPaints();
 
@@ -287,7 +288,7 @@
 				type="button"
 				class="cursor-pointer text-[10px] text-gray-400 hover:text-primary-500"
 				tabindex="-1"
-				onclick={() => clearPaint(src)}>change</button
+				onclick={() => clearPaint(src)}>{t('gamut.change')}</button
 			>
 		</div>
 	{:else}
@@ -299,7 +300,7 @@
 				<input
 					type="text"
 					class="w-full rounded-md border border-gray-300 bg-white py-1 pr-2 pl-7 text-xs text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
-					placeholder="search brand / code / name..."
+					placeholder={t('gamut.searchPlaceholder')}
 					value={src.searchText}
 					oninput={(e) => updatePaintSearch(src, (e.target as HTMLInputElement).value)}
 					onblur={() => {
@@ -382,9 +383,9 @@
 			<Package class="h-4 w-4" />
 		</div>
 		<div class="min-w-0 flex-1 text-xs">
-			<div class="font-semibold text-gray-700 dark:text-gray-200">My Stock</div>
+			<div class="font-semibold text-gray-700 dark:text-gray-200">{t('gamut.myStock')}</div>
 			<div class="text-gray-500 dark:text-gray-400">
-				{stockCount} paint{stockCount !== 1 ? 's' : ''}
+				{t('gamut.stockCount', { n: stockCount })}
 			</div>
 		</div>
 	</div>
@@ -393,16 +394,16 @@
 {#snippet addSourceBtn()}
 	{#snippet color()}<span
 			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-gradient-to-br from-red-400 via-green-400 to-blue-500"
-		></span>Color{/snippet}
-	{#snippet paint()}<Search class="h-3.5 w-3.5" />Paint{/snippet}
-	{#snippet stock()}<Package class="h-3.5 w-3.5" />My Stock{/snippet}
+		></span>{t('gamut.color')}{/snippet}
+	{#snippet paint()}<Search class="h-3.5 w-3.5" />{t('gamut.paint')}{/snippet}
+	{#snippet stock()}<Package class="h-3.5 w-3.5" />{t('gamut.myStock')}{/snippet}
 	{@const options = [
 		{ onclick: addColor, children: color },
 		{ onclick: addPaint, children: paint },
 		{ onclick: addStock, children: stock, disabled: hasStock }
 	]}
 	<DropdownButton {options} placement="bottom-end">
-		<Plus class="h-3.5 w-3.5" />Add
+		<Plus class="h-3.5 w-3.5" />{t('gamut.add')}
 	</DropdownButton>
 {/snippet}
 
@@ -417,7 +418,7 @@
 		class="flex flex-1 flex-col overflow-hidden bg-white sm:w-[40%] sm:max-w-86 sm:flex-none sm:shrink-0 dark:bg-gray-900"
 	>
 		<CollapseGroup
-			title="Clipping"
+			title={t('gamut.clipping')}
 			isOpen={isSm}
 			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-6 py-4"
 		>
@@ -444,10 +445,10 @@
 			/>
 		</CollapseGroup>
 
-		<CollapseGroup title="Sources" class="flex-1 space-y-2 overflow-y-auto px-6 py-2">
+		<CollapseGroup title={t('gamut.sources')} class="flex-1 space-y-2 overflow-y-auto px-6 py-2">
 			<div data-add-btn class="flex items-center justify-between">
 				<span class="text-xs text-gray-500 dark:text-gray-400"
-					>{colors.size} color{colors.size !== 1 ? 's' : ''} in gamut</span
+					>{t('gamut.colorsInGamut', { n: colors.size })}</span
 				>
 				{@render addSourceBtn()}
 			</div>
@@ -476,8 +477,8 @@
 				</div>
 			{:else}
 				<div class="flex flex-col items-center justify-center py-12 text-center text-gray-400">
-					<div class="mb-2 text-sm">No sources yet</div>
-					<div class="text-xs">Click <span class="font-medium">Add</span> to start</div>
+					<div class="mb-2 text-sm">{t('gamut.noSources')}</div>
+					<div class="text-xs">{@html t('gamut.clickAddHint')}</div>
 				</div>
 			{/each}
 		</CollapseGroup>

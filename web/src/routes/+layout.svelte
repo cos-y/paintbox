@@ -5,14 +5,15 @@
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { t, type MessageKey } from '$lib/i18n.svelte';
 
 	let { children } = $props();
 
-	const navs = [
-		{ title: 'stock', route: '/stock', svg: Package },
-		{ title: 'search', route: '/search', svg: Search },
-		{ title: 'gamut', route: '/gamut', svg: Eclipse },
-		{ title: 'about', route: '/about', svg: Info }
+	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
+		{ key: 'nav.stock', route: '/stock', svg: Package },
+		{ key: 'nav.search', route: '/search', svg: Search },
+		{ key: 'nav.gamut', route: '/gamut', svg: Eclipse },
+		{ key: 'nav.about', route: '/about', svg: Info }
 	];
 
 	const isActive = (route: string) => page.url.pathname.startsWith(route);
@@ -31,7 +32,7 @@
 	<!-- desktop sidebar -->
 	<aside class="hidden sm:block w-16 bg-gray-50 dark:bg-gray-800 shrink-0 h-full overflow-y-auto">
 		<ul class="w-full h-full flex flex-col py-2 space-y-1 overflow-hidden">
-			{#each navs as { title, route, svg: Icon }, i}
+			{#each navs as { key, route, svg: Icon }, i}
 				{@const active = isActive(route)}
 				<li class={i == navs.length - 1 ? 'mt-auto' : ''}>
 					<a
@@ -47,7 +48,7 @@
 					>
 						<Icon />
 					</a>
-					<Tooltip placement="right">{title}</Tooltip>
+					<Tooltip placement="right">{t(key)}</Tooltip>
 				</li>
 			{/each}
 		</ul>
@@ -62,7 +63,7 @@
 		class="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-gray-700 dark:bg-gray-900"
 	>
 		<div class="mx-auto flex h-14 max-w-lg items-center justify-around">
-			{#each navs as { title, route, svg: Icon }}
+			{#each navs as { key, route, svg: Icon }}
 				{@const active = isActive(route)}
 				<a
 					href={route}
@@ -75,7 +76,7 @@
 					}}
 				>
 					<Icon class="size-5" />
-					<span class="text-[10px] leading-none font-medium">{title}</span>
+					<span class="text-[10px] leading-none font-medium">{t(key)}</span>
 				</a>
 			{/each}
 		</div>
