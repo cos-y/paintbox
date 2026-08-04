@@ -1,0 +1,129 @@
+name: Release Android
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: ver
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # tag 是版本单一来源：同步各版本文件（tauri CLI 会据此同步 tauri.properties 的 versionName/versionCode）
+      - name: Sync version files
+        run: |
+          V="${{ steps.ver.outputs.version }}"
+          sed -i "s/^version = \".*\"/version = \"$V\"/" src-tauri/Cargo.toml
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$V\"/" src-tauri/tauri.conf.json
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$V\"/" web/package.json
+          echo "synced version: $V"
+
+      # 从 secrets 还原签名密钥（绝不进仓库）
+      - name: Restore keystores
+        run: |
+          mkdir -p src-tauri/keystore
+          echo "${{ secrets.PAINTBOX_UPLOAD_JKS }}" | base64 -d > src-tauri/keystore/paintbox-upload.jks
+          echo "${{ secrets.PAINTBOX_SIGNING_JKS }}" | base64 -d > src-tauri/keystore/paintbox-signing.jks
+          PASS="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}"
+          cat > src-tauri/keystore/keystore.properties <<EOF
+          upload.storePassword=$PASS
+          upload.keyAlias=paintbox-upload
+          upload.keyPassword=$PASS
+          signing.storePassword=$PASS
+          signing.keyAlias=paintbox
+          signing.keyPassword=$PASS
+          EOF
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install JS deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android,wasm32-unknown-unknown
+
+      - name: Cache cargo
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Android NDK
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/lib/android/sdk/ndk
+          key: android-ndk-${{ runner.os }}
+
+      - name: Install NDK & SDK packages
+        run: |
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.1.0"
+          sdkmanager "ndk;27.1.12297006"
+
+      # 用项目自带的 @tauri-apps/cli（npm 预编译二进制，pnpm install 已装好），
+      # 不用 cargo install tauri-cli（现场编译很慢）。
+      # tauri CLI 会执行 beforeBuildCommand（wasm-pack + web build）并打包前端资源，
+      # 同时修正 gen/android 工程配置（tauri.settings.gradle 指向本机 cargo registry）。
+      # 注意：产物格式参数是 --aab / --apk；--target 是 ABI（aarch64 等），别搞混。
+      - name: Build AAB & APK
+        run: |
+          pnpm tauri android build --aab
+          pnpm tauri android build --apk
+
+      # Play 用 AAB（上传密钥签名，直接传 Play Console）
+      # 侧载用 APK：重签为签名密钥，与 Play 分发版本签名一致
+      - name: Resign sideload APK
+        run: bash scripts/android-sign-sideload.sh
+
+      - name: Verify signatures
+        run: |
+          KT="${JAVA_HOME}/bin/keytool"
+          echo "== AAB (expect upload key) =="
+          "$KT" -printcert -jarfile src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab | grep -i "SHA256:" || true
+          echo "== Sideload APK (expect signing key) =="
+          "$ANDROID_HOME/build-tools/36.1.0/apksigner" verify --print-certs dist/paintbox-sideload.apk | grep -i "SHA-256" || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-${{ steps.ver.outputs.version }}
+          path: |
+            src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
+            dist/paintbox-sideload.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/paintbox-sideload.apk
+          generate_release_notes: true
