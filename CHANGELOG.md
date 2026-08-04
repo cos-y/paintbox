@@ -10,6 +10,16 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-08-04
+
+### Added
+
+- Update checker on the About page (Tauri apps): detects new versions and links to your store or GitHub release page to review the changelog before updating.
+
+### Changed
+
+- Refined Chinese translations.
+
 ## [0.2.2] - 2026-08-04
 
 ### Added
@@ -48,3 +58,9 @@ into the **"What's new"** field of Google Play Console when publishing a release
 ### Added
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
+
+[0.2.3]: https://github.com/cos-y/paintbox/releases/tag/v0.2.3
+[0.2.2]: https://github.com/cos-y/paintbox/releases/tag/v0.2.2
+[0.2.1]: https://github.com/cos-y/paintbox/releases/tag/v0.2.1
+[0.2.0]: https://github.com/cos-y/paintbox/releases/tag/v0.2.0
+[0.1.0]: https://github.com/cos-y/paintbox/releases/tag/v0.1.0
