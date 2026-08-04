@@ -97,6 +97,12 @@ const en = {
 	'about.contribution2':
 		'If you have data for these brands and are willing to share, <strong class="font-medium text-gray-300">contributions are welcome</strong> — reach us via GitHub / QQ at the bottom of this page.',
 	'about.buyMeCoffee': 'Buy me a coffee',
+	'about.checkUpdate': 'Check Update',
+	'about.checking': 'Checking…',
+	'about.upToDate': 'Up to date',
+	'about.updateAvailable': 'Latest: v{n}',
+	'about.viewUpdate': 'View Update',
+	'about.checkFailed': 'Unable to check for updates',
 
 	// ---- shared components ----
 	'camera.accessError': 'Cannot access the camera (permission denied or device unavailable)',
@@ -197,6 +203,12 @@ const zh = {
 	'about.contribution2':
 		'如果您拥有相关品牌的数据并愿意共享，<strong class="font-medium text-gray-300">欢迎贡献数据</strong>，可通过页面底部的 GitHub / QQ 联系我们。',
 	'about.buyMeCoffee': 'Buy me a coffee',
+	'about.checkUpdate': '检查更新',
+	'about.checking': '正在检查…',
+	'about.upToDate': '已是最新版本',
+	'about.updateAvailable': '发现新版本 v{n}',
+	'about.viewUpdate': '查看更新',
+	'about.checkFailed': '无法检查更新',
 
 	'camera.accessError': '无法访问摄像头（未授权或设备不可用）',
 	'camera.launching': '正在启动摄像头...',

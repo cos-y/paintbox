@@ -96,10 +96,12 @@ jobs:
       # tauri CLI 会执行 beforeBuildCommand（wasm-pack + web build）并打包前端资源，
       # 同时修正 gen/android 工程配置（tauri.settings.gradle 指向本机 cargo registry）。
       # 注意：产物格式参数是 --aab / --apk；--target 是 ABI（aarch64 等），别搞混。
-      - name: Build AAB & APK
-        run: |
-          pnpm tauri android build --aab
-          pnpm tauri android build --apk
+      # channel 由 CHANNEL 环境变量注入到前端 __CHANNEL__（vite define）。
+      - name: Build AAB (play channel)
+        run: CHANNEL=play pnpm tauri android build --aab
+
+      - name: Build APK (sideload, no channel)
+        run: pnpm tauri android build --apk
 
       # Play 用 AAB（上传密钥签名，直接传 Play Console）
       # 侧载用 APK：重签为签名密钥，与 Play 分发版本签名一致
@@ -114,6 +116,15 @@ jobs:
           echo "== Sideload APK (expect signing key) =="
           "$ANDROID_HOME/build-tools/36.1.0/apksigner" verify --print-certs dist/paintbox-sideload.apk | grep -i "SHA-256" || true
 
+      # 从 CHANGELOG.md 提取当前版本节作为 release notes（英文，可直接用于 Play Console）
+      # 解析逻辑在 scripts/extract-changelog.mjs（逐行状态机，无依赖）
+      - name: Extract changelog for release notes
+        run: |
+          mkdir -p dist
+          node scripts/extract-changelog.mjs "${{ steps.ver.outputs.version }}" > dist/release-notes.md
+          echo "--- release notes preview ---"
+          head -8 dist/release-notes.md
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -122,8 +133,9 @@ jobs:
             src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
             dist/paintbox-sideload.apk
 
+      # release body = CHANGELOG.md 里该版本的文本（不再用 GitHub 自动生成的 commit 列表）
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/paintbox-sideload.apk
-          generate_release_notes: true
+          body_path: dist/release-notes.md

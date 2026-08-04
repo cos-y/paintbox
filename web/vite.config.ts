@@ -6,7 +6,9 @@ import { version } from './package.json';
 
 export default defineConfig({
 	define: {
-		__APP_VERSION__: JSON.stringify(version)
+		__APP_VERSION__: JSON.stringify(version),
+		// 渠道标识：CI 打包时通过 CHANNEL 环境变量注入（play / 空=sideload / 未来 huawei 等）
+		__CHANNEL__: JSON.stringify(process.env.CHANNEL ?? '')
 	},
 	plugins: [
 		tailwindcss(),

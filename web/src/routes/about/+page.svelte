@@ -2,10 +2,20 @@
 	import Github from '$lib/icons/Github.svelte';
 	import Qq from '$lib/icons/Qq.svelte';
 	import Discord from '$lib/icons/Discord.svelte';
-	import { ShieldCheck, EyeOff, Info, TriangleAlert, Coffee, Handshake, Languages } from '@lucide/svelte';
+	import PlayStore from '$lib/icons/PlayStore.svelte';
+	import {
+		ShieldCheck,
+		EyeOff,
+		Info,
+		TriangleAlert,
+		Coffee,
+		Handshake,
+		Languages
+	} from '@lucide/svelte';
 	import { isTauri } from '$lib/utils';
 	import favicon from '$lib/assets/favicon.svg';
 	import { i18n, toggleLocale, t } from '$lib/i18n.svelte';
+	import { updateChecker, channelUrl, channelId } from '$lib/update.svelte';
 	// Tauri 环境显式调 opener 插件打开外链（绕开 WebView 对自定义 scheme 的解析）
 	import { openUrl } from '@tauri-apps/plugin-opener';
 
@@ -31,7 +41,48 @@
 			<img src={favicon} alt="PaintBox" class="h-16 w-16 shrink-0 object-contain" />
 			<div class="min-w-0">
 				<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
-				<p class="mt-1 font-mono text-xs text-gray-400">Version {__APP_VERSION__}</p>
+				<p class="mt-1 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-400">
+					<span>Version {__APP_VERSION__}</span>
+					{#if isTauri}
+						<button
+							type="button"
+							onclick={() => updateChecker.check()}
+							disabled={updateChecker.state.status === 'checking'}
+							class="cursor-pointer rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white disabled:cursor-default disabled:opacity-50"
+						>
+							{updateChecker.state.status === 'checking'
+								? t('about.checking')
+								: t('about.checkUpdate')}
+						</button>
+						{#if updateChecker.state.status === 'up-to-date'}
+							<span class="text-gray-500">{t('about.upToDate')}</span>
+						{:else if updateChecker.state.status === 'outdated'}
+							<span class="text-green-400"
+								>{t('about.updateAvailable', { n: updateChecker.state.latest ?? '' })}</span
+							>
+							<a
+								href={channelUrl}
+								target="_blank"
+								onclick={(e) => {
+									if (isTauri) {
+										e.preventDefault();
+										openExternal(channelUrl);
+									}
+								}}
+								class="inline-flex cursor-pointer items-center gap-1 rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+							>
+								{#if channelId === 'sideload'}
+									<Github class="h-3 w-3" />
+								{:else}
+									<PlayStore class="h-3 w-3" />
+								{/if}
+								{t('about.viewUpdate')}
+							</a>
+						{:else if updateChecker.state.status === 'error'}
+							<span class="text-gray-500">{t('about.checkFailed')}</span>
+						{/if}
+					{/if}
+				</p>
 			</div>
 			<!-- 语言切换（后续设置区入口） -->
 			<div class="ml-auto shrink-0">
