@@ -16,6 +16,23 @@ val tauriProperties = Properties().apply {
 android {
     compileSdk = 36
     namespace = "com.cosy.paintbox"
+    signingConfigs {
+        create("release") {
+            val signProps = Properties().apply {
+                val propFile = file("../../../keystore/keystore.properties")
+                if (propFile.exists()) {
+                    propFile.inputStream().use { load(it) }
+                }
+            }
+            storeFile = file("../../../keystore/paintbox-upload.jks")
+            storePassword =
+                signProps.getProperty("upload.storePassword", System.getenv("PAINTBOX_UPLOAD_STORE_PASSWORD") ?: "")
+            keyAlias =
+                signProps.getProperty("upload.keyAlias", System.getenv("PAINTBOX_UPLOAD_KEY_ALIAS") ?: "")
+            keyPassword =
+                signProps.getProperty("upload.keyPassword", System.getenv("PAINTBOX_UPLOAD_KEY_PASSWORD") ?: "")
+        }
+    }
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
         applicationId = "com.cosy.paintbox"
@@ -38,6 +55,7 @@ android {
             }
         }
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             proguardFiles(
                 *fileTree(".") { include("**/*.pro") }

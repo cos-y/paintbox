@@ -4,7 +4,7 @@
 //     → web/src/lib/assets/app-icon.svg（1024×1024 方形 App 图标源图）
 //     → src-tauri/icons/（tauri 全套图标：安卓/桌面/ico/icns）
 // 用法：项目根目录执行  pnpm icons  （等价 node scripts/generate-icons.mjs）
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, readdirSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -97,4 +97,32 @@ if (existsSync(bgRes)) {
 	);
 	writeFileSync(bgRes, bg, 'utf8');
 	console.log(`✓ Adaptive 背景色已设为 ${BG_COLOR}`);
+}
+
+// 6. 同步 Android 图标到 icons/android/（tauri 的 Android 图标模板目录）：
+// tauri icon 在有 android 工程时只写 gen/android 的 res，不更新 icons/android/；
+// 若日后重新 android init 会用模板目录的旧图标，所以这里保持它同步最新
+const resDir = resolve(root, 'src-tauri/gen/android/app/src/main/res');
+const tplDir = resolve(root, 'src-tauri/icons/android');
+if (existsSync(resDir) && existsSync(tplDir)) {
+	for (const dir of [
+		'mipmap-anydpi-v26',
+		'mipmap-mdpi',
+		'mipmap-hdpi',
+		'mipmap-xhdpi',
+		'mipmap-xxhdpi',
+		'mipmap-xxxhdpi',
+		'values'
+	]) {
+		const s = resolve(resDir, dir);
+		const d = resolve(tplDir, dir);
+		if (!existsSync(s)) continue;
+		mkdirSync(d, { recursive: true });
+		for (const f of readdirSync(s)) {
+			if (f.endsWith('.png') || f.endsWith('.xml')) {
+				copyFileSync(resolve(s, f), resolve(d, f));
+			}
+		}
+	}
+	console.log('✓ Android 模板图标已同步（icons/android/）');
 }
