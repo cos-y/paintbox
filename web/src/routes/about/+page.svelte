@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Github from '$lib/icons/Github.svelte';
 	import Qq from '$lib/icons/Qq.svelte';
+	import Discord from '$lib/icons/Discord.svelte';
 	import { ShieldCheck, EyeOff, Info, TriangleAlert, Coffee, Handshake, Languages } from '@lucide/svelte';
 	import { isTauri } from '$lib/utils';
 	import favicon from '$lib/assets/favicon.svg';
@@ -9,6 +10,7 @@
 	import { openUrl } from '@tauri-apps/plugin-opener';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
+	const discordUrl = 'https://discord.gg/QG2ZdVRkxN'; // TODO: 替换为实际邀请链接
 	const qqUrl = isTauri
 		? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=963504621'
 		: 'https://qm.qq.com/q/3bWtHScQUo';
@@ -116,6 +118,19 @@
 				}}
 			>
 				<Github class="h-8 w-8" />
+			</a>
+			<a
+				class="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#5865F2] p-1.5"
+				href={discordUrl}
+				target="_blank"
+				onclick={(e) => {
+					if (isTauri) {
+						e.preventDefault();
+						openExternal(discordUrl);
+					}
+				}}
+			>
+				<Discord class="h-5 w-5 text-white" />
 			</a>
 			<a
 				class="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#2365da] p-1.5"
