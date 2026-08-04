@@ -232,7 +232,7 @@
 				{#if hasEyeDropper}
 					<button
 						type="button"
-						class="absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+						class="cursor-pointer absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
 						onclick={eyedrop}
 					>
 						<Pipette size="1rem" />
@@ -311,7 +311,9 @@
 					{#if series}
 						{@const brand = activeFilterBrand}
 						<div class="mb-2 flex items-center justify-between">
-							<span class="text-xs text-gray-400">{t('search.seriesCount', { n: Object.keys(series).length })}</span>
+							<span class="text-xs text-gray-400"
+								>{t('search.seriesCount', { n: Object.keys(series).length })}</span
+							>
 							<button
 								type="button"
 								class="text-xs text-primary-500 hover:underline dark:text-primary-400"

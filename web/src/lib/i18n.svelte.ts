@@ -73,6 +73,10 @@ const en = {
 	'gamut.colorsInGamut': (p: Params) => `${p.n} color${p.n == 1 ? '' : 's'} in gamut`,
 	'gamut.noSources': 'No source colors yet',
 	'gamut.clickAddHint': 'Click <span class="font-medium">Add</span> to start',
+	'gamut.drag': 'Drag to reorder',
+	'gamut.delete': 'Delete',
+	'gamut.hide': 'Hide from gamut',
+	'gamut.show': 'Show in gamut',
 
 	// ---- about page ----
 	'about.switchToZh': 'Switch to 中文',
@@ -181,6 +185,10 @@ const zh = {
 	'gamut.colorsInGamut': (p: Params) => `色域内 ${p.n} 个基础色`,
 	'gamut.noSources': '还没有基础色',
 	'gamut.clickAddHint': '点击 <span class="font-medium">添加</span> 开始',
+	'gamut.drag': '拖动排序',
+	'gamut.delete': '删除',
+	'gamut.hide': '从色域中隐藏',
+	'gamut.show': '在色域中显示',
 
 	'about.switchToZh': '切换到中文',
 	'about.switchToEn': '切换到英文',
