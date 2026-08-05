@@ -38,3 +38,9 @@ debug = true
 [[bench]]
 name = "hull_bench"
 harness = false
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = "debuginfo"

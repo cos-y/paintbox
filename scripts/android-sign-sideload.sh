@@ -38,11 +38,13 @@ SIGN_PASS=$(grep '^signing.storePassword=' "$KS_PROPS" | cut -d= -f2)
 KEY_PASS=$(grep '^signing.keyPassword=' "$KS_PROPS" | cut -d= -f2)
 KEY_ALIAS=$(grep '^signing.keyAlias=' "$KS_PROPS" | cut -d= -f2)
 
-BUILT_APK="$(find "$ROOT/src-tauri/gen/android/app/build/outputs/apk" -name "*universal*release*.apk" 2>/dev/null | head -1 || true)"
+BUILT_APK="$(find "$ROOT/src-tauri/gen/android/app/build/outputs/apk" -path "*release*" -name "*.apk" 2>/dev/null | head -1 || true)"
 if [ -z "$BUILT_APK" ]; then
-	echo "未找到 universal release APK，请先执行 tauri android build"
+	echo "未找到 release APK，请先执行 tauri android build"
 	exit 1
 fi
+
+echo "重签来源：$BUILT_APK"
 
 mkdir -p "$OUT_DIR"
 ALIGNED="$OUT_DIR/_aligned.apk"
@@ -52,8 +54,8 @@ ALIGNED="$OUT_DIR/_aligned.apk"
 	--ks-pass pass:"$SIGN_PASS" \
 	--ks-key-alias "$KEY_ALIAS" \
 	--key-pass pass:"$KEY_PASS" \
-	--out "$OUT_DIR/paintbox-sideload.apk" \
+	--out "$OUT_DIR/paintbox.apk" \
 	"$ALIGNED"
 rm -f "$ALIGNED"
-echo "侧载版已生成：$OUT_DIR/paintbox-sideload.apk"
-"$APKSIGNER" verify "$OUT_DIR/paintbox-sideload.apk"
+echo "侧载版已生成：$OUT_DIR/paintbox.apk"
+"$APKSIGNER" verify "$OUT_DIR/paintbox.apk"

@@ -3,7 +3,7 @@ name: Release Android
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
   contents: write
@@ -101,7 +101,7 @@ jobs:
         run: CHANNEL=play pnpm tauri android build --aab
 
       - name: Build APK (sideload, no channel)
-        run: pnpm tauri android build --apk
+        run: pnpm tauri android build --apk --target aarch64
 
       # Play 用 AAB（上传密钥签名，直接传 Play Console）
       # 侧载用 APK：重签为签名密钥，与 Play 分发版本签名一致
@@ -114,7 +114,7 @@ jobs:
           echo "== AAB (expect upload key) =="
           "$KT" -printcert -jarfile src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab | grep -i "SHA256:" || true
           echo "== Sideload APK (expect signing key) =="
-          "$ANDROID_HOME/build-tools/36.1.0/apksigner" verify --print-certs dist/paintbox-sideload.apk | grep -i "SHA-256" || true
+          "$ANDROID_HOME/build-tools/36.1.0/apksigner" verify --print-certs dist/paintbox.apk | grep -i "SHA-256" || true
 
       # 从 CHANGELOG.md 提取当前版本节作为 release notes（英文，可直接用于 Play Console）
       # 解析逻辑在 scripts/extract-changelog.mjs（逐行状态机，无依赖）
@@ -131,11 +131,11 @@ jobs:
           name: android-release-${{ steps.ver.outputs.version }}
           path: |
             src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
-            dist/paintbox-sideload.apk
+            dist/paintbox.apk
 
       # release body = CHANGELOG.md 里该版本的文本（不再用 GitHub 自动生成的 commit 列表）
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/paintbox-sideload.apk
+          files: dist/paintbox.apk
           body_path: dist/release-notes.md

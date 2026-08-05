@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"identifier": "com.cosy.paintbox",
 	"build": {
+		"removeUnusedCommands": true,
 		"frontendDist": "../web/build",
 		"devUrl": "http://localhost:5173",
 		"beforeDevCommand": "pnpm --dir web dev",
