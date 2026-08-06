@@ -1,6 +1,7 @@
 {
 	"name": "paintbox",
 	"private": true,
+	"packageManager": "pnpm@11.18.0",
 	"scripts": {
 		"tauri": "tauri",
 		"icons": "node scripts/generate-icons.mjs"

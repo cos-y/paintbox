@@ -1,5 +1,6 @@
 *.smali
 
+.pi
 .claude
 CLAUDE.md
 AGENT.md

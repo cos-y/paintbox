@@ -46,18 +46,18 @@
 		{disabled}
 		size="xs"
 		color="alternative"
-		class="gap-1 justify-start! cursor-pointer {clz}"
+		class="cursor-pointer justify-start! gap-1 {clz}"
 	>
 		{@render renderDesc(options[value])}
-		<ChevronDown class="h-3 w-3 ms-auto" />
+		<ChevronDown class="ms-auto h-3 w-3" />
 	</Button>
 	{#if disabled}
 		{#if disabledTooltip}
-			<Tooltip placement="top" class="text-xs p-1">{disabledTooltip}</Tooltip>
+			<Tooltip placement="top" class="p-1 text-xs">{disabledTooltip}</Tooltip>
 		{/if}
 	{:else}
 		{#if tooltip}
-			<Tooltip placement="top" class="text-xs p-1">{tooltip}</Tooltip>
+			<Tooltip placement="top" class="p-1 text-xs">{tooltip}</Tooltip>
 		{/if}
 	{/if}
 </div>
@@ -71,7 +71,7 @@
 		{#each options as desc, i}
 			<DropdownItem
 				class="cursor-pointer text-xs text-gray-700 dark:text-gray-200 
-				{value == i ? 'bg-gray-100 dark:bg-gray-600 font-bold' : 'font-light'}"
+				{value == i ? 'bg-gray-100 font-bold dark:bg-gray-600' : 'font-light'}"
 				onclick={() => {
 					value = i;
 					isOpen = false;
