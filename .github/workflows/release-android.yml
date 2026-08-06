@@ -139,6 +139,25 @@ jobs:
             src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
             dist/paintbox.apk
 
+      # 上传 AAB 到 Google Play 内部测试轨道（internal testing）：
+      # - 必须指定 track：Play API 上传 bundle 后需分配到轨道才会分发，internal 即时可用、无需审核
+      # - 确认稳定后可在 Play Console 网页端 Promote release 提升到 Closed testing (alpha)
+      # - 前置（Play Console 手动完成一次）：服务账号授权后把 JSON key 原文存入 Secret PLAY_SERVICE_ACCOUNT_JSON
+      # - 未配置 Secret 时跳过本步骤，不影响其他产物
+      # - 注意：r0adkll action 的参数是驼峰；serviceAccountJson 是文件路径，
+      #   secret 里的 JSON 原文要传 serviceAccountJsonPlainText
+      - name: Upload AAB to Google Play (internal testing)
+        if: env.PLAY_SERVICE_ACCOUNT_JSON != ''
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.cosy.paintbox
+          releaseFiles: src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
+          track: internal
+          status: completed
+
       # release body = CHANGELOG.md 里该版本的文本（不再用 GitHub 自动生成的 commit 列表）
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

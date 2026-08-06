@@ -19,15 +19,20 @@ into the **"What's new"** field of Google Play Console when publishing a release
   - Temporarily hide a source from the gamut with the eye toggle (card is kept, state persists).
   - Swipe left/right to delete cards on touch screens.
 - A default "My Stock" card is created on first use only.
+- Play channel: in-app update flow via Google Play In-app Updates (store builds prompt the official update flow).
+- Sideload channel: update check now reads version.json from the GitHub Release asset — the request is routed through the Rust side (tauri-plugin-http), so WebView CORS no longer blocks it.
 
 ### Changed
 
 - Android app size optimized: release profile (LTO + stripping) and arm64-only sideload builds (~46 MB → ~9 MB APK).
 - Refined touch interactions (input vs. swipe conflicts resolved; hidden cards still draggable).
+- Update checker refactored: channel-based factory + subclass design (Play / GitHub).
+- CI: on tag push, the release AAB is automatically uploaded to Google Play Console (internal testing track).
 
 ### Fixed
 
 - My Stock card no longer reappears after being deleted.
+- Play channel update check: no longer reports an error when up to date, and correctly detects an available update.
 
 ## [0.2.3] - 2026-08-04
 
