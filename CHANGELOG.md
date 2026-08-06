@@ -10,6 +10,25 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-08-05
+
+### Added
+
+- Source Colors panel overhaul:
+  - Drag to reorder cards with the grip handle.
+  - Temporarily hide a source from the gamut with the eye toggle (card is kept, state persists).
+  - Swipe left/right to delete cards on touch screens.
+- A default "My Stock" card is created on first use only.
+
+### Changed
+
+- Android app size optimized: release profile (LTO + stripping) and arm64-only sideload builds (~46 MB → ~9 MB APK).
+- Refined touch interactions (input vs. swipe conflicts resolved; hidden cards still draggable).
+
+### Fixed
+
+- My Stock card no longer reappears after being deleted.
+
 ## [0.2.3] - 2026-08-04
 
 ### Added
@@ -59,6 +78,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.2.4]: https://github.com/cos-y/paintbox/releases/tag/v0.2.4
 [0.2.3]: https://github.com/cos-y/paintbox/releases/tag/v0.2.3
 [0.2.2]: https://github.com/cos-y/paintbox/releases/tag/v0.2.2
 [0.2.1]: https://github.com/cos-y/paintbox/releases/tag/v0.2.1

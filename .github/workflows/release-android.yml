@@ -125,6 +125,12 @@ jobs:
           echo "--- release notes preview ---"
           head -8 dist/release-notes.md
 
+      # version.json 作为 release asset：更新检测的 fallback 端点（静态文件，不受 GitHub API 限流）
+      - name: Generate version.json
+        run: |
+          printf '{"version":"v%s"}\n' "${{ steps.ver.outputs.version }}" > dist/version.json
+          cat dist/version.json
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -137,5 +143,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/paintbox.apk
+          files: |
+            dist/paintbox.apk
+            dist/version.json
           body_path: dist/release-notes.md

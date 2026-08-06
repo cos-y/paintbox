@@ -2,8 +2,10 @@
 // 渠道链接按 channel 映射（内置），无 channel（sideload）时视为 GitHub 渠道。
 // 注意：GitHub API 未认证限 60 次/小时/IP，手动检查更新完全够用。
 
-/** 最新 release 信息接口（返回 JSON，含 tag_name） */
-const RELEASE_API = 'https://api.github.com/repos/cos-y/paintbox/releases/latest';
+/** 最新版本来源：GitHub Release 的静态文件（releases/latest/download/version.json，CI 发版时自动上传）。
+ * 不走 api.github.com（未认证限 60 次/小时），静态文件无 API 限流。 */
+const RELEASE_URL =
+	'https://github.com/cos-y/paintbox/releases/latest/download/version.json';
 
 /**
  * 各渠道的更新/Changelog 页面（channel 由打包时 CHANNEL 环境变量注入；无则视为 sideload = GitHub 渠道）。
@@ -47,14 +49,12 @@ class UpdateChecker {
 	async check() {
 		this.state = { status: 'checking' };
 		try {
-			const res = await fetch(RELEASE_API, {
-				cache: 'no-store',
-				headers: { Accept: 'application/vnd.github+json' }
-			});
+			const res = await fetch(RELEASE_URL, { cache: 'no-store' });
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-			const data = (await res.json()) as { tag_name?: string };
-			const latest = String(data.tag_name ?? '').replace(/^v/, '');
-			if (latest && compareVersions(latest, __APP_VERSION__) > 0) {
+			const data = (await res.json()) as { version?: string };
+			const latest = String(data.version ?? '').replace(/^v/, '');
+			if (!latest) throw new Error('empty version');
+			if (compareVersions(latest, __APP_VERSION__) > 0) {
 				this.state = { status: 'outdated', latest };
 			} else {
 				this.state = { status: 'up-to-date' };
