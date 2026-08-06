@@ -94,6 +94,46 @@
 	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
 
 	let activeFilterBrand: string | null = $state(null);
+	let seriesOpen = $state(false);
+
+	// 品牌 chip 条横向滚动的渐隐遮罩状态（仅手机端显示）
+	let brandStrip = $state<HTMLElement | null>(null);
+	let stripLeft = $state(false);
+	let stripRight = $state(true);
+
+	const updateStrip = () => {
+		const el = brandStrip;
+		if (!el) return;
+		stripLeft = el.scrollLeft > 4;
+		stripRight = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+	};
+
+	$effect(() => {
+		const el = brandStrip;
+		if (!el) return;
+		// 打开时 DOM 可能尚未完成布局（scrollWidth 为 0），用 rAF 延迟到下一帧再算
+		const tick = () => requestAnimationFrame(updateStrip);
+		tick();
+		// chip 尺寸/容器尺寸变化（如字体加载）时重算遮罩状态
+		const ro = new ResizeObserver(tick);
+		ro.observe(el);
+		for (const child of el.children) ro.observe(child);
+		el.addEventListener('scroll', updateStrip, { passive: true });
+		window.addEventListener('resize', tick);
+		return () => {
+			el.removeEventListener('scroll', updateStrip);
+			ro.disconnect();
+			window.removeEventListener('resize', tick);
+		};
+	});
+
+	// 打开系列筛选时未选中任何品牌则默认选中第一个，避免面板空白
+	$effect(() => {
+		if (seriesOpen && !activeFilterBrand) {
+			const first = Object.keys(catalog)[0];
+			if (first) activeFilterBrand = first;
+		}
+	});
 
 	const toggleSerie = (brand: string, serie: string) => {
 		const key = serieKey(brand, serie);
@@ -232,7 +272,7 @@
 				{#if hasEyeDropper}
 					<button
 						type="button"
-						class="cursor-pointer absolute right-1.5 bottom-1.5 rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+						class="absolute right-1.5 bottom-1.5 cursor-pointer rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
 						onclick={eyedrop}
 					>
 						<Pipette size="1rem" />
@@ -273,39 +313,87 @@
 		{/if}
 		<ChevronDown class="ms-auto h-3 w-3" />
 	</Button>
-	<Dropdown class="w-136 p-0" placement="bottom-start">
-		<div class="flex h-96">
-			<div class="w-40 shrink-0 overflow-y-auto border-r border-gray-200 py-1 dark:border-gray-700">
-				{#each Object.entries(catalog) as [brand, series]}
-					{@const selectedCount = selectedCountInBrand(brand)}
-					{@const name = getBrandMeta(brand)?.name ?? brand}
-					<button
-						type="button"
-						onmouseenter={() => (activeFilterBrand = brand)}
-						onclick={() => (activeFilterBrand = brand)}
-						title={name}
-						class="flex w-full cursor-pointer items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 dark:text-gray-200 {activeFilterBrand ===
-						brand
-							? 'bg-gray-100 dark:bg-gray-600'
-							: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
-					>
-						<img
-							src="/brands/{brand}.png"
-							alt=""
-							class="h-7 w-7 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
-						/>
-						<span class="min-w-0 flex-1 truncate">{name}</span>
-						{#if selectedCount > 0}
-							<Badge
-								class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
-							>
-								{selectedCount}
-							</Badge>
-						{/if}
-					</button>
-				{/each}
+	<Dropdown
+		bind:isOpen={seriesOpen}
+		class="w-136 max-w-[calc(100vw-3rem)] p-0 overflow-hidden!"
+		placement="bottom-start"
+	>
+		<div class="flex max-h-[55vh] flex-col overflow-hidden sm:h-96 sm:flex-row">
+			<!-- 品牌列表：手机为横向滚动 chip 条，桌面为纵向列表 -->
+			<div
+				class="relative w-full shrink-0 sm:w-40 sm:border-r sm:border-gray-200 sm:dark:border-gray-700"
+			>
+				<div
+					bind:this={brandStrip}
+					onscroll={updateStrip}
+					class="mx-1 flex gap-1.5 overflow-x-auto px-2 py-2 sm:mx-0 sm:flex-col sm:gap-0 sm:overflow-y-auto sm:p-0"
+				>
+					{#each Object.entries(catalog) as [brand, series]}
+						{@const selectedCount = selectedCountInBrand(brand)}
+						{@const name = getBrandMeta(brand)?.name ?? brand}
+						<!-- 手机 chip -->
+						<button
+							type="button"
+							onclick={() => (activeFilterBrand = brand)}
+							title={name}
+							class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs whitespace-nowrap sm:hidden {activeFilterBrand ===
+							brand
+								? 'border-primary-500 bg-primary-50 text-primary-700 ring-1 ring-primary-500 dark:border-primary-600 dark:bg-primary-900/50 dark:text-primary-200'
+								: 'border-gray-200 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
+						>
+							<img
+								src="/brands/{brand}.png"
+								alt=""
+								class="h-5 w-5 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
+							/>
+							<span class="max-w-28 truncate">{name}</span>
+							{#if selectedCount > 0}
+								<Badge
+									class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
+								>
+									{selectedCount}
+								</Badge>
+							{/if}
+						</button>
+						<!-- 桌面行 -->
+						<button
+							type="button"
+							onmouseenter={() => (activeFilterBrand = brand)}
+							onclick={() => (activeFilterBrand = brand)}
+							title={name}
+							class="hidden w-full cursor-pointer items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 sm:flex dark:text-gray-200 {activeFilterBrand ===
+							brand
+								? 'bg-gray-100 dark:bg-gray-600'
+								: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
+						>
+							<img
+								src="/brands/{brand}.png"
+								alt=""
+								class="h-7 w-7 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
+							/>
+							<span class="min-w-0 flex-1 truncate">{name}</span>
+							{#if selectedCount > 0}
+								<Badge
+									class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
+								>
+									{selectedCount}
+								</Badge>
+							{/if}
+						</button>
+					{/each}
+				</div>
+				{#if stripRight}
+					<div
+						class="pointer-events-none absolute inset-y-1 right-0 w-6 bg-linear-to-l from-white via-white/70 to-transparent sm:hidden dark:from-gray-700 dark:via-gray-700/70"
+					></div>
+				{/if}
+				{#if stripLeft}
+					<div
+						class="pointer-events-none absolute inset-y-1 left-0 w-6 bg-linear-to-r from-white via-white/70 to-transparent sm:hidden dark:from-gray-700 dark:via-gray-700/70"
+					></div>
+				{/if}
 			</div>
-			<div class="flex-1 overflow-y-auto p-3">
+			<div class="min-h-0 flex-1 overflow-y-auto p-3">
 				{#if activeFilterBrand}
 					{@const series = catalog[activeFilterBrand]}
 					{#if series}
