@@ -10,6 +10,21 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-08-07
+
+### Changed
+
+- Series filter dropdown rebuilt for mobile:
+  - Responsive layout: brand chips in a horizontally scrollable strip (with fade-mask affordance) on small screens; the classic two-column layout is kept on desktop.
+  - The first brand is auto-selected when the panel opens, so the series grid is never empty.
+  - Panel width/height are clamped to the viewport, so it never overflows the screen edges on narrow devices.
+  - Brand chips restyled to match Flowbite alternative buttons (dark mode text is now readable).
+
+### Fixed
+
+- Dropdown panel corner radius was covered by inner button hover backgrounds on desktop (panel overflow clipping restored).
+- Fade mask on the chip strip was not visible on first open (layout timing); it now appears immediately and tracks scroll/resize.
+
 ## [0.2.4] - 2026-08-05
 
 ### Added
@@ -83,6 +98,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.2.5]: https://github.com/cos-y/paintbox/releases/tag/v0.2.5
 [0.2.4]: https://github.com/cos-y/paintbox/releases/tag/v0.2.4
 [0.2.3]: https://github.com/cos-y/paintbox/releases/tag/v0.2.3
 [0.2.2]: https://github.com/cos-y/paintbox/releases/tag/v0.2.2
