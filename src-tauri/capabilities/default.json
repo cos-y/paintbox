@@ -8,11 +8,28 @@
   "permissions": [
     "core:default",
     "opener:default",
+    "app-update:allow-check",
+    "app-update:allow-start-update",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://github.com/**"
+        },
+        {
+          "url": "https://release-assets.githubusercontent.com/**"
+        }
+      ]
+    },
     {
       "identifier": "opener:allow-open-url",
       "allow": [
-        { "url": "mqqapi://*" },
-        { "url": "mqqwpa://*" }
+        {
+          "url": "mqqapi://*"
+        },
+        {
+          "url": "mqqwpa://*"
+        }
       ]
     }
   ]

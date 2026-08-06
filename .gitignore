@@ -1,13 +1,14 @@
 *.smali
 
-node_modules
-
 .claude
 CLAUDE.md
 AGENT.md
 
 # Tauri
 src-tauri/target/
+src-tauri/plugins/*/target/
+src-tauri/plugins/*/android/.tauri/
+src-tauri/plugins/*/android/build/
 src-tauri/gen/android/app/build/
 src-tauri/gen/android/build/
 src-tauri/gen/android/.gradle/

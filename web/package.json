@@ -19,6 +19,7 @@
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
+		"@tauri-apps/api": "^2.11.1",
 		"@types/culori": "^4.0.1",
 		"@types/node": "^24",
 		"eslint": "^10.4.1",
@@ -40,6 +41,7 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.25.0",
+		"@tauri-apps/plugin-http": "^2.5.9",
 		"@tauri-apps/plugin-opener": "^2.5.4",
 		"@threlte/core": "^8.5.16",
 		"@threlte/extras": "^9.21.0",

@@ -24,6 +24,8 @@ log = "0.4"
 tauri = { version = "2.11.3", features = [] }
 tauri-plugin-log = "2"
 tauri-plugin-opener = "2"
+tauri-plugin-app-update = { path = "./plugins/tauri-plugin-app-update" }
+tauri-plugin-http = "2"
 
 [profile.dev]
 incremental = true
