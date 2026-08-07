@@ -277,8 +277,9 @@
 					<Pipette size="1rem" />
 				</button>
 			{/if}
+		{:else}
+			{@render sourceSwitcher()}
 		{/if}
-		{@render sourceSwitcher()}
 	</div>
 {/snippet}
 
@@ -470,8 +471,7 @@
 {/snippet}
 
 <div
-	class="color-provider relative flex h-full flex-col px-6 {source === 'camera' &&
-	isLandscape
+	class="color-provider relative flex h-full flex-col px-6 {source === 'camera' && isLandscape
 		? 'overflow-hidden'
 		: 'overflow-y-auto'}"
 	style="--slider-thumb-l: {oklch.l};
@@ -483,9 +483,7 @@
 	{#if source === 'camera'}
 		{#if isLandscape}
 			<!-- 横屏：摄像机无圆角全屏覆盖右侧内容区，锁定滚动，挡住所有内容 -->
-			<div
-				class="fixed inset-y-0 right-0 left-0 z-40 flex flex-col bg-black sm:left-16"
-			>
+			<div class="fixed inset-y-0 right-0 left-0 z-40 flex flex-col bg-black sm:left-16">
 				<CameraPicker
 					fill
 					onsample={(r, g, b) => {
