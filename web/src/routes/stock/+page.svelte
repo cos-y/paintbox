@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus } from '@lucide/svelte';
+	import { fade, fly } from 'svelte/transition';
+	import { ChevronLeft, Check, Plus, Search, X, ArrowUpDown } from '@lucide/svelte';
 	import { Card, Button, Badge } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
@@ -115,60 +115,192 @@
 		const key = paintId(p);
 		compareCode = compareCode === key ? null : key;
 	};
+
+	// ---- 排序 / 搜索（品牌内跨系列） ----
+	type SortKey = 'code' | 'hue' | 'sat' | 'light' | 'stock';
+	let sortKey = $state<SortKey>('code');
+	let sortOpen = $state(false);
+	let searchOpen = $state(false);
+	let query = $state('');
+
+	const hslOf = (rgb: number): [number, number, number] => {
+		const r = ((rgb >> 16) & 0xff) / 255;
+		const g = ((rgb >> 8) & 0xff) / 255;
+		const b = (rgb & 0xff) / 255;
+		const max = Math.max(r, g, b);
+		const min = Math.min(r, g, b);
+		const l = (max + min) / 2;
+		const d = max - min;
+		if (d === 0) return [0, 0, l];
+		const s = d / (1 - Math.abs(2 * l - 1));
+		let h: number;
+		if (max === r) h = ((g - b) / d) % 6;
+		else if (max === g) h = (b - r) / d + 2;
+		else h = (r - g) / d + 4;
+		return [(h * 60 + 360) % 360, s, l];
+	};
+
+	const sortPaints = (list: PaintInfo[]): PaintInfo[] => {
+		const arr = [...list];
+		switch (sortKey) {
+			case 'hue':
+				return arr.sort((a, b) => hslOf(a.rgb)[0] - hslOf(b.rgb)[0]);
+			case 'sat':
+				return arr.sort((a, b) => hslOf(b.rgb)[1] - hslOf(a.rgb)[1]);
+			case 'light':
+				return arr.sort((a, b) => hslOf(b.rgb)[2] - hslOf(a.rgb)[2]);
+			case 'stock':
+				return arr.sort((a, b) => Number(stock.has(paintId(b))) - Number(stock.has(paintId(a))));
+			default:
+				return arr.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
+		}
+	};
+
+	const matches = (p: PaintInfo): boolean => {
+		const q = query.trim().toLowerCase();
+		if (!q) return true;
+		return p.code.toLowerCase().includes(q) || (p.desc ?? '').toLowerCase().includes(q);
+	};
+
+	const isSearching = $derived(searchOpen && query.trim().length > 0);
+	// 搜索时左侧栏：仅显示有匹配的系列
+	const visibleSeries = $derived.by(() => {
+		const entries = Object.entries(currentBrandGroup ?? {});
+		if (!isSearching) return entries;
+		return entries.filter(([, paints]) => paints.some(matches));
+	});
+	// 搜索时色卡区：当前选中系列内匹配（左侧导航切换系列）
+	const searchSerieResults = $derived.by(() => {
+		if (!isSearching) return null;
+		return sortPaints((currentSerieGroup ?? []).filter(matches));
+	});
+	// 搜索激活且当前系列无匹配时，自动切到第一个有匹配的系列
+	$effect(() => {
+		if (isSearching && visibleSeries.length > 0) {
+			const first = visibleSeries.find(([s]) => s === selectedSerie) ?? visibleSeries[0];
+			if (first && first[0] !== selectedSerie) selectSerie(first[0]);
+		}
+	});
+	const sortedCurrentSerie = $derived(sortPaints(currentSerieGroup ?? []));
 </script>
 
 <div class="flex h-full flex-col">
-	<div
-		class="flex shrink-0 items-center gap-2 border-b border-gray-200 px-4 py-3 dark:border-gray-700"
-	>
-		{#if level > 0}
-			<button
-				type="button"
-				aria-label={t('stock.back')}
-				onclick={goBack}
-				class="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700"
-			>
-				<ChevronLeft />
-			</button>
-		{/if}
-		<nav class="flex items-center gap-1 text-sm">
-			<button
-				type="button"
-				onclick={goToLevel0}
-				class="cursor-pointer hover:underline {level === 0
-					? 'font-semibold text-gray-900 dark:text-white'
-					: 'text-gray-500 dark:text-gray-400'}"
-			>
-				{t('stock.brands')}
-			</button>
-			{#if selectedBrand}
-				<span class="text-gray-400">/</span>
+	<div class="shrink-0 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
+		<div class="flex min-h-13 items-center gap-2">
+			{#if level > 0}
 				<button
 					type="button"
-					onclick={goToLevel1}
-					class="cursor-pointer hover:underline {level === 1
-						? 'font-semibold text-gray-900 dark:text-white'
-						: 'text-gray-500 dark:text-gray-400'}"
+					onclick={goBack}
+					class="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700"
 				>
-					{getBrandMeta(selectedBrand)?.name ?? selectedBrand}
+					<ChevronLeft class="h-5 w-5" />
 				</button>
 			{/if}
-			{#if selectedPaint}
-				<span class="text-gray-400">/</span>
-				<span class="cursor-pointer font-semibold text-gray-900 dark:text-white"
-					>{selectedPaint.code}
-				</span>
+			<div class="relative min-w-0 flex-1">
+				<div
+					class="transition-opacity duration-150 {searchOpen
+						? 'max-sm:pointer-events-none max-sm:opacity-0'
+						: 'opacity-100'}"
+				>
+					<div class="truncate text-xl font-semibold text-gray-900 dark:text-white">
+						{level > 0
+							? (getBrandMeta(selectedBrand ?? '')?.name ?? selectedBrand)
+							: t('stock.brands')}
+					</div>
+					{#if selectedSerie}
+						<nav class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+							<button type="button" onclick={goToLevel1} class="cursor-pointer hover:underline">
+								{getSerieMeta(selectedBrand ?? '', selectedSerie)?.name ?? selectedSerie}
+							</button>
+							{#if selectedPaint}
+								<span>/</span>
+								<span>{selectedPaint.code}</span>
+							{/if}
+						</nav>
+					{/if}
+				</div>
+				{#if searchOpen}
+					<input
+						type="search"
+						autofocus
+						in:fade={{ duration: 150 }}
+						out:fade={{ duration: 150 }}
+						bind:value={query}
+						placeholder={t('stock.searchPlaceholder')}
+						class="absolute top-1/2 left-0 h-9 w-full -translate-y-1/2
+							rounded-md border border-gray-200 bg-gray-100 px-2 py-1.5 text-sm
+							placeholder:text-gray-500 focus:border-primary-500 focus:outline-none
+							sm:right-0 sm:left-auto sm:w-2/3
+							dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+					/>
+				{/if}
+			</div>
+			{#if searchOpen}
+				<button
+					type="button"
+					onclick={() => {
+						searchOpen = false;
+						query = '';
+					}}
+					title={t('stock.closeSearch')}
+					class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+				>
+					<X class="h-4 w-4" />
+				</button>
+			{:else}
+				<button
+					type="button"
+					onclick={() => (searchOpen = true)}
+					title={t('stock.searchTitle')}
+					class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+				>
+					<Search class="h-4 w-4" />
+				</button>
 			{/if}
-		</nav>
+			{@render sortBtn()}
+		</div>
 	</div>
 
+	{#snippet sortBtn()}
+		<div class="relative shrink-0">
+			<button
+				type="button"
+				onclick={() => (sortOpen = !sortOpen)}
+				title={t('stock.sortTitle')}
+				class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+			>
+				<ArrowUpDown class="h-4 w-4" />
+			</button>
+			{#if sortOpen}
+				<div
+					class="absolute top-full right-0 z-30 mt-1 w-36 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800"
+				>
+					{#each [{ k: 'code', label: t('stock.sortCode') }, { k: 'hue', label: t('stock.sortHue') }, { k: 'sat', label: t('stock.sortSat') }, { k: 'light', label: t('stock.sortLight') }, { k: 'stock', label: t('stock.sortStock') }] as opt}
+						<button
+							type="button"
+							onclick={() => {
+								sortKey = opt.k as SortKey;
+								sortOpen = false;
+							}}
+							class="flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left text-xs text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
+						>
+							<span>{opt.label}</span>
+							{#if sortKey === opt.k}
+								<Check class="h-3.5 w-3.5 text-primary-500" />
+							{/if}
+						</button>
+					{/each}
+				</div>
+			{/if}
+		</div>
+	{/snippet}
 	{#snippet labelPrimary(paint: PaintInfo)}
 		{@const brandMeta = getBrandMeta(paint.brand)}
 		{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
-		<span class="text-gray-600 dark:text-gray-300">
+		<span class=" text-gray-500 dark:text-gray-400">
 			<Button
 				color="secondary"
-				class="inline-block cursor-pointer p-0 text-gray-600 dark:text-gray-300"
+				class="inline-block cursor-pointer p-0 text-xs text-gray-500 dark:text-gray-400"
 				onclick={() => navigateTo({ brand: paint.brand, serie: paint.serie })}
 			>
 				{serieMeta?.name ?? paint.serie}
@@ -176,7 +308,7 @@
 			/
 			<Button
 				color="secondary"
-				class="inline-block cursor-pointer p-0 text-gray-600 dark:text-gray-300"
+				class="inline-block cursor-pointer p-0 text-xs text-gray-500 dark:text-gray-400"
 				onclick={() => navigateTo({ brand: paint.brand })}
 			>
 				{brandMeta?.name ?? paint.brand}
@@ -234,10 +366,11 @@
 		{:else if level === 1}
 			{#key `${level}-${selectedBrand}`}
 				<div class="flex h-full" in:fly={{ x: 24, duration: 150 }}>
+					<!-- 桌面侧栏：宽栏（图标 + 系列名/描述 + 库存） -->
 					<div
-						class="w-40 shrink-0 overflow-y-auto border-r border-gray-200 sm:w-56 dark:border-gray-700"
+						class="hidden w-56 shrink-0 overflow-y-auto border-r border-gray-200 sm:block dark:border-gray-700"
 					>
-						{#each Object.entries(currentBrandGroup ?? {}) as [serie, paints]}
+						{#each visibleSeries as [serie, paints]}
 							{@const serieMeta = getSerieMeta(selectedBrand ?? '', serie)}
 							{@const ownCount = ownedCountInSerie(paints)}
 							<button
@@ -273,59 +406,121 @@
 							</button>
 						{/each}
 					</div>
+					<!-- 移动侧栏：极窄栏（第一行 图标 + 库存角标 + 型号总数，第二行 系列名小字） -->
+					<div
+						class="w-24 shrink-0 overflow-y-auto border-r border-gray-200 sm:hidden dark:border-gray-700"
+					>
+						{#each visibleSeries as [serie, paints]}
+							{@const serieMeta = getSerieMeta(selectedBrand ?? '', serie)}
+							{@const ownCount = ownedCountInSerie(paints)}
+							<button
+								type="button"
+								onclick={() => selectSerie(serie)}
+								title={serieMeta?.desc}
+								class="flex w-full cursor-pointer flex-col items-center py-1 pr-2 pl-2 {serie ===
+								selectedSerie
+									? 'bg-primary-50 dark:bg-gray-700'
+									: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
+							>
+								<div class="relative aspect-square w-full overflow-hidden rounded-md shadow-sm">
+									<img
+										src={serieThumb(selectedBrand ?? '', serie)}
+										alt=""
+										class="h-full w-full object-cover"
+										onerror={(e) => {
+											if (e.currentTarget instanceof HTMLElement) {
+												e.currentTarget.style.visibility = 'hidden';
+											}
+										}}
+									/>
+									{#if ownCount > 0}
+										<Badge
+											class="absolute top-0.5 right-0.5 rounded-full bg-primary-500 px-1.5 text-[10px] text-white dark:bg-primary-500 dark:text-white"
+										>
+											{ownCount}
+										</Badge>
+									{/if}
+									<div
+										class="absolute inset-x-0 bottom-0 bg-black/65 px-0.5 py-0.5 backdrop-blur-[1px]"
+									>
+										<div class="truncate text-[9px] leading-tight font-semibold text-white">
+											{serieMeta?.name ?? serie}
+										</div>
+										<div class="truncate text-[8px] leading-tight text-white/75">
+											{t('search.paintsCount', { n: paints.length })}
+										</div>
+									</div>
+								</div>
+							</button>
+						{/each}
+					</div>
+					{#snippet paintCard(paint: PaintInfo, showSerie: boolean)}
+						{@const inStock = stock.has(paintId(paint))}
+						<div
+							role="button"
+							tabindex="0"
+							onclick={() => selectPaint(paint)}
+							onkeydown={(e) => e.key === 'Enter' && selectPaint(paint)}
+							class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-sm transition-transform hover:scale-105 {inStock
+								? 'ring-[3px] ring-primary-500'
+								: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
+							style="background-color: {rgbToHex(paint.rgb)}"
+							title={paint.desc}
+						>
+							<button
+								type="button"
+								title={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
+								onclick={(e) => {
+									e.stopPropagation();
+									stock.toggle(paintId(paint));
+									e.currentTarget.blur();
+								}}
+								class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
+									? 'scale-100 opacity-100'
+									: ''}"
+							>
+								<span
+									class="absolute inset-0 [clip-path:polygon(100%_0,0_0,100%_100%)] {inStock
+										? 'bg-primary-500'
+										: 'bg-black/60 hover:bg-black/75'}"
+								></span>
+								<span class="absolute top-0.5 right-0.5">
+									{#if inStock}
+										<Check class="h-2.5 w-2.5" />
+									{:else}
+										<Plus class="h-2.5 w-2.5" />
+									{/if}
+								</span>
+							</button>
+							<div class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]">
+								<div class="truncate text-[10px] leading-tight font-semibold text-white">
+									{paint.code}
+								</div>
+								<div class="truncate text-[9px] leading-tight text-white/75">
+									{showSerie
+										? (getSerieMeta(paint.brand, paint.serie)?.name ?? paint.serie)
+										: paint.desc}
+								</div>
+							</div>
+						</div>
+					{/snippet}
 					<div
 						class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
 					>
-						{#each currentSerieGroup ?? [] as paint (paint.code)}
-							{@const inStock = stock.has(paintId(paint))}
-							<div
-								role="button"
-								tabindex="0"
-								onclick={() => selectPaint(paint)}
-								onkeydown={(e) => e.key === 'Enter' && selectPaint(paint)}
-								class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-sm transition-transform hover:scale-105 {inStock
-									? 'ring-[3px] ring-primary-500'
-									: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
-								style="background-color: {rgbToHex(paint.rgb)}"
-								title={paint.desc}
-							>
-								<button
-									type="button"
-									title={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
-									onclick={(e) => {
-										e.stopPropagation();
-										stock.toggle(paintId(paint));
-										e.currentTarget.blur();
-									}}
-									class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
-										? 'scale-100 opacity-100'
-										: ''}"
-								>
-									<span
-										class="absolute inset-0 [clip-path:polygon(100%_0,0_0,100%_100%)] {inStock
-											? 'bg-primary-500'
-											: 'bg-black/60 hover:bg-black/75'}"
-									></span>
-									<span class="absolute top-0.5 right-0.5">
-										{#if inStock}
-											<Check class="h-2.5 w-2.5" />
-										{:else}
-											<Plus class="h-2.5 w-2.5" />
-										{/if}
-									</span>
-								</button>
-								<div
-									class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
-								>
-									<div class="truncate text-[10px] leading-tight font-semibold text-white">
-										{paint.code}
-									</div>
-									<div class="truncate text-[9px] leading-tight text-white/75">
-										{paint.desc}
-									</div>
+						{#if searchSerieResults}
+							{#each searchSerieResults as paint (paint.code)}
+								{@render paintCard(paint, false)}
+							{/each}
+							{#if searchSerieResults.length === 0}
+								<div class="col-span-full p-4 text-center text-xs text-gray-400">
+									{t('stock.noResults')}
 								</div>
-							</div>
-						{/each}
+							{/if}
+						{:else}
+							{#each sortedCurrentSerie as paint (paint.code)}
+								{@render paintCard(paint, false)}
+							{/each}
+						{/if}
 					</div>
 				</div>
 			{/key}
@@ -339,7 +534,6 @@
 							<div class="min-w-0">
 								<div>
 									<span class="text-4xl font-bold">{paint.code}</span>
-									{@render labelPrimary(paint)}
 								</div>
 								<div class="font-bold text-gray-500 dark:text-gray-400">{paint.desc}</div>
 							</div>
