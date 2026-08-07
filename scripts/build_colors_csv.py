@@ -1,8 +1,13 @@
 import csv
+import os
+
+# 脚本所在目录（scripts/）与项目根目录
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(SCRIPT_DIR)
 
 li = [['brand', 'serie', 'code', 'color', 'desc', 'base', 'prop']]
 
-with open("gunze.csv", "r", encoding='utf-8') as f:
+with open(os.path.join(SCRIPT_DIR, "gunze.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     for base, serie, code, color, desc, prop, _ in reader:
@@ -17,7 +22,7 @@ with open("gunze.csv", "r", encoding='utf-8') as f:
         ))
 
 
-with open("tamiya.csv", "r", encoding='utf-8') as f:
+with open(os.path.join(SCRIPT_DIR, "tamiya.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     tamiya = []
@@ -42,7 +47,7 @@ with open("tamiya.csv", "r", encoding='utf-8') as f:
     li += tamiya
 
 
-with open("ak.csv", "r", encoding='utf-8') as f:
+with open(os.path.join(SCRIPT_DIR, "ak.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     ak = []
@@ -65,7 +70,7 @@ with open("ak.csv", "r", encoding='utf-8') as f:
     li += ak
 
 
-with open("av.csv", "r", encoding='utf-8') as f:
+with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     av = []
@@ -84,6 +89,6 @@ with open("av.csv", "r", encoding='utf-8') as f:
     li += av
 
 
-with open("web/static/colors.csv", "w", newline="", encoding="utf-8") as f:
+with open(os.path.join(ROOT, "web/static/colors.csv"), "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerows(li)
