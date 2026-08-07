@@ -176,7 +176,7 @@
 	let swipeId: string | null = $state(null);
 	let swipeX = $state(0); // 跟手水平位移
 	let swipeOut = $state(false); // 正在滑出（带 transition 的删除动画）
-	let swipeW = 0;
+	let swipeW = $state(0);
 	let swipeStartX = 0;
 	let swipeStartY = 0;
 	let swipeMoved = false; // 本次手势是否产生实际位移（用于抑制回弹后的误触 click）
@@ -607,7 +607,11 @@
 		data-card-id={src.id}
 		role="group"
 		onpointerdown={(e) => onCardPointerDown(e, src)}
-		style={`transform: translate(${swipeId === src.id ? swipeX : 0}px, ${shift}px); transition: ${
+		style={`transform: translate(${swipeId === src.id ? swipeX : 0}px, ${shift}px); opacity: ${
+			swipeId === src.id
+				? (1 - Math.min(Math.abs(swipeX) / swipeW, 1)) * (src.hidden ? 0.5 : 1)
+				: ''
+		}; transition: ${
 			src.id === dragId || (swipeId === src.id && !swipeOut)
 				? 'none'
 				: 'transform 150ms ease, opacity 150ms, box-shadow 150ms'

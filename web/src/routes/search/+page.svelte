@@ -5,7 +5,6 @@
 	import Rgb from '$lib/components/Rgb.svelte';
 	import { Box, Camera, ChevronDown, Cylinder, Palette, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
-	import DropdownButton from '$lib/components/DropdownButton.svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
 	import { listPaints, getCatalog, paintId, floatRgbToCss, type SearchResult } from '$lib/paints';
 	import { searchAsync } from '$lib/searchClient';
@@ -44,9 +43,20 @@
 
 	// 取色源：调色板 / 摄像机（仅 Tauri 应用内可用）
 	let source: 'palette' | 'camera' = $state('palette');
-	const canCamera = $derived(
-		isTauri && typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
+	const hasCamera = $derived(
+		// isTauri &&
+		typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
 	);
+
+	// 设备横屏（横屏时摄像机全屏覆盖右侧内容区）
+	let isLandscape = $state(false);
+	$effect(() => {
+		const mq = window.matchMedia('(orientation: landscape)');
+		isLandscape = mq.matches;
+		const onChange = () => (isLandscape = mq.matches);
+		mq.addEventListener('change', onChange);
+		return () => mq.removeEventListener('change', onChange);
+	});
 
 	const eyedrop = () => {
 		let EyeDropper = (window as any).EyeDropper;
@@ -222,40 +232,34 @@
 	});
 </script>
 
-{#snippet srcPalette()}
-	<Palette class="size-4" />
-	{t('search.sourcePalette')}
-{/snippet}
-
-{#snippet srcCamera()}
-	<Camera class="size-4" />
-	{t('search.sourceCamera')}
-{/snippet}
-
-{#snippet srcBtn()}
-	{#if source === 'camera'}
-		<Camera class="size-4" />
-	{:else}
-		<Palette class="size-4" />
-	{/if}
-{/snippet}
-
 {#snippet sourceSwitcher()}
-	<div class="absolute top-1.5 right-1.5 z-10">
-		<DropdownButton
-			buttonClass="cursor-pointer rounded-md !border-transparent !bg-black/40 !p-1.5 !text-white backdrop-blur-sm transition-colors hover:!bg-black/60"
-			placement="bottom-end"
-			options={[
-				{ children: srcPalette, onclick: () => (source = 'palette') },
-				{
-					children: srcCamera,
-					onclick: () => (source = 'camera'),
-					disabled: !canCamera
-				}
-			]}
+	<div
+		class="absolute top-1.5 right-1.5 z-10 flex flex-col overflow-hidden rounded-md bg-black/40 backdrop-blur-sm"
+	>
+		<button
+			type="button"
+			class="cursor-pointer p-1.5 text-white transition-colors hover:bg-white/15 {source ===
+			'palette'
+				? 'bg-white/25'
+				: ''}"
+			title={t('search.sourcePalette')}
+			onclick={() => (source = 'palette')}
 		>
-			{@render srcBtn()}
-		</DropdownButton>
+			<Palette class="size-4" />
+		</button>
+		<div class="h-px bg-white/25"></div>
+		<button
+			type="button"
+			class="cursor-pointer p-1.5 text-white transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-40 {source ===
+			'camera'
+				? 'bg-white/25'
+				: ''}"
+			title={t('search.sourceCamera')}
+			onclick={() => (source = 'camera')}
+			disabled={!hasCamera}
+		>
+			<Camera class="size-4" />
+		</button>
 	</div>
 {/snippet}
 
@@ -273,9 +277,8 @@
 					<Pipette size="1rem" />
 				</button>
 			{/if}
-		{:else}
-			{@render sourceSwitcher()}
 		{/if}
+		{@render sourceSwitcher()}
 	</div>
 {/snippet}
 
@@ -467,7 +470,10 @@
 {/snippet}
 
 <div
-	class="color-provider flex h-full flex-col overflow-y-auto px-6"
+	class="color-provider relative flex h-full flex-col px-6 {source === 'camera' &&
+	isLandscape
+		? 'overflow-hidden'
+		: 'overflow-y-auto'}"
 	style="--slider-thumb-l: {oklch.l};
     --slider-thumb-c: {oklch.c};
     --slider-thumb-h: {oklch.h ?? 0};
@@ -475,15 +481,35 @@
     --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});"
 >
 	{#if source === 'camera'}
-		<div class="relative py-4">
-			<CameraPicker
-				onsample={(r, g, b) => {
-					oklch = toOklch({ mode: 'rgb', r, g, b });
-					source = 'palette';
-				}}
-			/>
-			{@render sourceSwitcher()}
-		</div>
+		{#if isLandscape}
+			<!-- 横屏：摄像机无圆角全屏覆盖右侧内容区，锁定滚动，挡住所有内容 -->
+			<div
+				class="fixed inset-y-0 right-0 left-0 z-40 flex flex-col bg-black sm:left-16"
+			>
+				<CameraPicker
+					fill
+					onsample={(r, g, b) => {
+						oklch = toOklch({ mode: 'rgb', r, g, b });
+						source = 'palette';
+					}}
+				/>
+				{@render sourceSwitcher()}
+			</div>
+		{:else}
+			<div
+				class="sticky top-0 z-20 -mx-6 bg-white px-6 pt-4 pb-4 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
+			>
+				<div class="relative overflow-hidden rounded-xl border border-gray-700">
+					<CameraPicker
+						onsample={(r, g, b) => {
+							oklch = toOklch({ mode: 'rgb', r, g, b });
+							source = 'palette';
+						}}
+					/>
+					{@render sourceSwitcher()}
+				</div>
+			</div>
+		{/if}
 	{:else}
 		{#if !isSm()}
 			<div

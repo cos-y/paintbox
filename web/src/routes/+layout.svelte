@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
+	import { isTauri } from '$lib/utils.svelte';
 
 	let { children } = $props();
 
@@ -17,6 +18,31 @@
 	];
 
 	const isActive = (route: string) => page.url.pathname.startsWith(route);
+
+	// Tauri 环境禁止双指缩放（WebView 默认允许 pinch-zoom，原生手势优先）
+	$effect(() => {
+		if (!isTauri) return;
+		// 双指触摸时阻止默认行为（pinch 缩放）
+		const preventPinch = (e: TouchEvent) => {
+			if (e.touches.length > 1) e.preventDefault();
+		};
+		// iOS WebView 的 gesturestart（传统手势事件，双保险）
+		const preventGesture = ((e: Event) => e.preventDefault()) as EventListener;
+		document.addEventListener('touchmove', preventPinch, { passive: false });
+		document.addEventListener('gesturestart', preventGesture, { passive: false });
+		// 同步收紧 viewport（Android WebView 会遵守 user-scalable=no）
+		const vp = document.querySelector('meta[name="viewport"]');
+		if (vp) {
+			vp.setAttribute(
+				'content',
+				'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
+			);
+		}
+		return () => {
+			document.removeEventListener('touchmove', preventPinch);
+			document.removeEventListener('gesturestart', preventGesture);
+		};
+	});
 </script>
 
 <svelte:head>
@@ -30,8 +56,8 @@
 
 <div class="flex h-dvh w-screen overflow-hidden">
 	<!-- desktop sidebar -->
-	<aside class="hidden sm:block w-16 bg-gray-50 dark:bg-gray-800 shrink-0 h-full overflow-y-auto">
-		<ul class="w-full h-full flex flex-col py-2 space-y-1 overflow-hidden">
+	<aside class="hidden h-full w-16 shrink-0 overflow-y-auto bg-gray-50 sm:block dark:bg-gray-800">
+		<ul class="flex h-full w-full flex-col space-y-1 overflow-hidden py-2">
 			{#each navs as { key, route, svg: Icon }, i}
 				{@const active = isActive(route)}
 				<li class={i == navs.length - 1 ? 'mt-auto' : ''}>
@@ -54,13 +80,15 @@
 		</ul>
 	</aside>
 
-	<main class="flex-1 h-full overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0">
+	<main
+		class="h-full flex-1 overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
+	>
 		{@render children()}
 	</main>
 
 	<!-- mobile bottom nav -->
 	<nav
-		class="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-gray-700 dark:bg-gray-900"
+		class="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] sm:hidden dark:border-gray-700 dark:bg-gray-900"
 	>
 		<div class="mx-auto flex h-14 max-w-lg items-center justify-around">
 			{#each navs as { key, route, svg: Icon }}
