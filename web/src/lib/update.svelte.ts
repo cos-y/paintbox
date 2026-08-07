@@ -1,4 +1,4 @@
-import { isTauri } from '$lib/utils';
+import { isTauri } from '$lib/utils.svelte';
 
 // 更新检测：
 // - play 渠道：走 Google Play 应用内更新插件（plugin:app-update|check，按 versionCode 对比商店版本）

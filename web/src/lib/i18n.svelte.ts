@@ -125,7 +125,7 @@ const zh = {
 	'nav.gamut': '色域',
 	'nav.about': '关于',
 
-	'search.sourcePalette': '取色板',
+	'search.sourcePalette': '调色盘',
 	'search.sourceCamera': '相机',
 	'search.series': '系列:',
 	'search.any': '不限',

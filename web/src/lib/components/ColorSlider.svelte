@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clamp } from '$lib/utils';
+	import { clamp } from '$lib/utils.svelte';
 	import { Input } from 'flowbite-svelte';
 	import './style.css';
 
@@ -61,13 +61,13 @@
 	});
 </script>
 
-<div class="flex items-center gap-2 h-9 sm:h-6">
-	<div class="relative w-full h-full flex-3">
+<div class="flex h-9 items-center gap-2 sm:h-6">
+	<div class="relative h-full w-full flex-3">
 		<input
-			class="no-handle m-0 w-full h-full
-				outline-0 rounded-lg border border-gray-600
-				select-none appearance-none pointer-auto
-				touch-pan-y touch-pinch-zoom disabled:opacity-50"
+			class="no-handle pointer-auto m-0 h-full
+				w-full touch-pan-y touch-pinch-zoom appearance-none
+				rounded-lg border border-gray-600
+				outline-0 select-none disabled:opacity-50"
 			tabindex="-1"
 			type="range"
 			{min}
@@ -79,10 +79,10 @@
 		/>
 		<div class="slider-thumb" style="left: {left}%"></div>
 	</div>
-	<div class="not-sm:flex-1 sm:w-24 h-full">
+	<div class="h-full not-sm:flex-1 sm:w-24">
 		<Input
-			class={`text-xs! font-mono p-1 text-right h-full${
-				error ? ' ring-2! ring-red-500! border-red-500!' : ''
+			class={`p-1 text-right font-mono text-xs! h-full${
+				error ? ' border-red-500! ring-2! ring-red-500!' : ''
 			}`}
 			type="number"
 			{min}

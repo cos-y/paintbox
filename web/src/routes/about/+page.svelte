@@ -12,7 +12,7 @@
 		Handshake,
 		Languages
 	} from '@lucide/svelte';
-	import { isTauri } from '$lib/utils';
+	import { isTauri } from '$lib/utils.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import { i18n, toggleLocale, t } from '$lib/i18n.svelte';
 	import { updater } from '$lib/update.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clamp } from '$lib/utils';
+	import { clamp } from '$lib/utils.svelte';
 	import './style.css';
 
 	interface Props {
@@ -65,10 +65,10 @@
 		<div class="range-slider-input absolute inset-0">
 			<input
 				type="range"
-				class="no-handle m-0 h-full w-full
-					bg-transparent outline-0
-					select-none appearance-none pointer-auto
-					touch-pan-y touch-pinch-zoom disabled:opacity-50"
+				class="no-handle pointer-auto m-0 h-full
+					w-full touch-pan-y
+					touch-pinch-zoom appearance-none bg-transparent
+					outline-0 select-none disabled:opacity-50"
 				{min}
 				{max}
 				{step}
@@ -82,10 +82,10 @@
 		<div class="range-slider-input absolute inset-0">
 			<input
 				type="range"
-				class="no-handle m-0 h-full w-full
-					bg-transparent outline-0
-					select-none appearance-none pointer-auto
-					touch-pan-y touch-pinch-zoom disabled:opacity-50"
+				class="no-handle pointer-auto m-0 h-full
+					w-full touch-pan-y
+					touch-pinch-zoom appearance-none bg-transparent
+					outline-0 select-none disabled:opacity-50"
 				{min}
 				{max}
 				{step}

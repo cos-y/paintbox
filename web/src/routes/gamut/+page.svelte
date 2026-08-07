@@ -1,20 +1,9 @@
 <script lang="ts">
 	import { listPaints, paintId, type PaintInfo } from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
-	import {
-		Plus,
-		X,
-		Search,
-		Package,
-		ChevronDown,
-		Copy,
-		GripVertical,
-		Eye,
-		EyeOff
-	} from '@lucide/svelte';
-	import { Button, Dropdown, DropdownItem, Input, Tooltip } from 'flowbite-svelte';
+	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
-	import { onMount, tick, type Snippet } from 'svelte';
+	import { tick, type Snippet } from 'svelte';
 	import { callWasm } from '$lib/wasmClient';
 	import { Canvas } from '@threlte/core';
 	import Scene from './scene.svelte';
@@ -24,6 +13,7 @@
 	import * as THREE from 'three';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
+	import { isSm, isCoarse } from '$lib/utils.svelte';
 
 	const allPaints = listPaints();
 
@@ -35,6 +25,7 @@
 		valid: boolean;
 		hidden: boolean;
 	}
+
 	interface PaintSource {
 		id: string;
 		type: 'paint';
@@ -42,6 +33,7 @@
 		searchText: string;
 		hidden: boolean;
 	}
+
 	interface StockSource {
 		id: string;
 		type: 'stock';
@@ -344,7 +336,7 @@
 			new THREE.Vector3(rangeL[0], rangeA[0], rangeB[0]),
 			new THREE.Vector3(rangeL[1], rangeA[1], rangeB[1])
 		]);
-		defaultZoom = $derived(isSm ? 1 : 1.5);
+		defaultZoom = $derived(isSm() ? 1 : 1.5);
 	}
 	const scene = new SceneProps();
 
@@ -431,23 +423,6 @@
 		window.removeEventListener('pointerup', endDrag);
 	}
 
-	let isSm = $state(false);
-	$effect(() => {
-		const mq = window.matchMedia('(min-width: 640px)');
-		isSm = mq.matches;
-		const handler = (e: MediaQueryListEvent) => (isSm = e.matches);
-		mq.addEventListener('change', handler);
-		return () => mq.removeEventListener('change', handler);
-	});
-	// 触屏（coarse pointer）设备：隐藏 X 按钮，用左右滑动删除代替（避免误触）
-	let isCoarse = $state(false);
-	$effect(() => {
-		const mq = window.matchMedia('(pointer: coarse)');
-		isCoarse = mq.matches;
-		const handler = (e: MediaQueryListEvent) => (isCoarse = e.matches);
-		mq.addEventListener('change', handler);
-		return () => mq.removeEventListener('change', handler);
-	});
 	$effect(() => {
 		saveGamut({ sources: serializeSources(sources), clipL, clipA, clipB, nextId, persisted: true });
 	});
@@ -620,7 +595,7 @@
 						: 0
 				: 0}
 	<div
-		class="relative flex select-none touch-pan-y items-center gap-2 rounded-lg border p-2 pl-8 {valid
+		class="relative flex touch-pan-y items-center gap-2 rounded-lg border p-2 pl-8 select-none {valid
 			? 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
 			: 'border-dashed border-gray-300 bg-gray-100/70 dark:border-gray-600 dark:bg-gray-800/60'}"
 		class:z-20={src.id === dragId}
@@ -650,12 +625,12 @@
 			<GripVertical class="h-4 w-4" />
 		</button>
 		<!-- 正文：卡片内容（input 除外，触控条由 grip 处理，其余区域均可滑动删除） -->
-		<div class="min-w-0 flex-1 m-1" class:pointer-events-none={src.hidden}>
+		<div class="m-1 min-w-0 flex-1" class:pointer-events-none={src.hidden}>
 			{@render children(src)}
 		</div>
 		<!-- 右侧操作列：flex 竖排自适应卡片高度，不会溢出 -->
 		<div class="flex shrink-0 flex-col items-center">
-			{#if !isCoarse}
+			{#if !isCoarse()}
 				<button
 					type="button"
 					class="cursor-pointer rounded p-0.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
@@ -709,7 +684,7 @@
 	>
 		<CollapseGroup
 			title={t('gamut.clipping')}
-			isOpen={isSm}
+			isOpen={isSm()}
 			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-6 py-4"
 		>
 			<RangeSlider

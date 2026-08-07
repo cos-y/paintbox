@@ -2,7 +2,7 @@
 	import { Gizmo, OrbitControls, interactivity } from '@threlte/extras';
 	import { T, useThrelte } from '@threlte/core';
 	import * as THREE from 'three';
-	import { clamp, linearToSrgb } from '$lib/utils';
+	import { clamp, linearToSrgb } from '$lib/utils.svelte';
 
 	const { toneMapping, invalidate, renderer } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);

@@ -11,7 +11,7 @@
 	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity, isTauri } from '$lib/utils';
+	import { clamp, similarity, isTauri, isSm } from '$lib/utils.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
@@ -241,61 +241,69 @@
 {/snippet}
 
 {#snippet sourceSwitcher()}
-	{#if isTauri}
-		<div class="absolute top-1.5 right-1.5 z-10">
-			<DropdownButton
-				buttonClass="cursor-pointer rounded-md !border-transparent !bg-black/40 !p-1.5 !text-white backdrop-blur-sm transition-colors hover:!bg-black/60"
-				placement="bottom-end"
-				options={[
-					{ children: srcPalette, onclick: () => (source = 'palette') },
-					{
-						children: srcCamera,
-						onclick: () => (source = 'camera'),
-						disabled: !canCamera
-					}
-				]}
-			>
-				{@render srcBtn()}
-			</DropdownButton>
-		</div>
-	{/if}
+	<div class="absolute top-1.5 right-1.5 z-10">
+		<DropdownButton
+			buttonClass="cursor-pointer rounded-md !border-transparent !bg-black/40 !p-1.5 !text-white backdrop-blur-sm transition-colors hover:!bg-black/60"
+			placement="bottom-end"
+			options={[
+				{ children: srcPalette, onclick: () => (source = 'palette') },
+				{
+					children: srcCamera,
+					onclick: () => (source = 'camera'),
+					disabled: !canCamera
+				}
+			]}
+		>
+			{@render srcBtn()}
+		</DropdownButton>
+	</div>
+{/snippet}
+
+{#snippet colorSwatch()}
+	<div
+		class="relative h-24 overflow-hidden rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
+	>
+		{#if !isTauri}
+			{#if hasEyeDropper}
+				<button
+					type="button"
+					class="absolute right-1.5 bottom-1.5 cursor-pointer rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+					onclick={eyedrop}
+				>
+					<Pipette size="1rem" />
+				</button>
+			{/if}
+		{:else}
+			{@render sourceSwitcher()}
+		{/if}
+	</div>
 {/snippet}
 
 {#snippet colorPicker()}
 	{@const Picker = [Hsl, Rgb][searchFilters.model]}
 
-	<div>
-		<div class="relative mb-3">
-			<div
-				class="relative h-24 overflow-hidden rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
-			>
-				{#if hasEyeDropper}
-					<button
-						type="button"
-						class="absolute right-1.5 bottom-1.5 cursor-pointer rounded-md bg-black/40 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
-						onclick={eyedrop}
-					>
-						<Pipette size="1rem" />
-					</button>
-				{/if}
-			</div>
+	<div class="grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col">
+		<div>
+			{#if isSm()}
+				<div class="mb-3">
+					{@render colorSwatch()}
+				</div>
+			{/if}
 
-			{@render sourceSwitcher()}
+			{#snippet hsl()}
+				<span class="inline-flex items-center gap-1"><Cylinder class="size-4" />HSL</span>
+			{/snippet}
+
+			{#snippet rgb()}
+				<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
+			{/snippet}
+
+			<Select class="w-full" options={[hsl, rgb]} bind:value={searchFilters.model} />
 		</div>
 
-		{#snippet hsl()}
-			<span class="inline-flex items-center gap-1"><Cylinder class="size-4" />HSL</span>
-		{/snippet}
-
-		{#snippet rgb()}
-			<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
-		{/snippet}
-
-		<Select class="w-full" options={[hsl, rgb]} bind:value={searchFilters.model} />
-	</div>
-
-	<div class="min-w-45 sm:max-w-135">
-		<Picker bind:oklch />
+		<div class="min-w-45 sm:max-w-135">
+			<Picker bind:oklch />
+		</div>
 	</div>
 {/snippet}
 
@@ -315,7 +323,7 @@
 	</Button>
 	<Dropdown
 		bind:isOpen={seriesOpen}
-		class="w-136 max-w-[calc(100vw-3rem)] p-0 overflow-hidden!"
+		class="w-136 max-w-[calc(100vw-3rem)] overflow-hidden! p-0"
 		placement="bottom-start"
 	>
 		<div class="flex max-h-[55vh] flex-col overflow-hidden sm:h-96 sm:flex-row">
@@ -458,9 +466,16 @@
 	</Dropdown>
 {/snippet}
 
-<div class="flex h-full flex-col overflow-y-auto px-6 py-4">
+<div
+	class="color-provider flex h-full flex-col overflow-y-auto px-6"
+	style="--slider-thumb-l: {oklch.l};
+    --slider-thumb-c: {oklch.c};
+    --slider-thumb-h: {oklch.h ?? 0};
+    --slider-thumb-hue: {hwb.h ?? 0};
+    --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});"
+>
 	{#if source === 'camera'}
-		<div class="relative">
+		<div class="relative py-4">
 			<CameraPicker
 				onsample={(r, g, b) => {
 					oklch = toOklch({ mode: 'rgb', r, g, b });
@@ -470,20 +485,23 @@
 			{@render sourceSwitcher()}
 		</div>
 	{:else}
-		<div
-			class="color-picker-root grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col"
-			style="
-    --slider-thumb-l: {oklch.l};
-    --slider-thumb-c: {oklch.c};
-    --slider-thumb-h: {oklch.h ?? 0};
-    --slider-thumb-hue: {hwb.h ?? 0};
-    --picker-color-srgb: rgb({rgb.r * 255} {rgb.g * 255} {rgb.b * 255});"
-		>
-			{@render colorPicker()}
-		</div>
+		{#if !isSm()}
+			<div
+				class="sticky top-0 z-20 -mx-6 bg-white px-6 pt-4 pb-2 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
+			>
+				{@render colorSwatch()}
+			</div>
+			<div class="pt-2 pb-4">
+				{@render colorPicker()}
+			</div>
+		{:else}
+			<div class="py-4">
+				{@render colorPicker()}
+			</div>
+		{/if}
 	{/if}
 
-	<div class="mt-4 flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
+	<div class="flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
 		<!-- <span
 			class="-ml-4 flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
 		>

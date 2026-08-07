@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useMode, modeRgb, modeOklch, type Oklch } from 'culori/fn';
 	import ColorSlider from './ColorSlider.svelte';
-	import { clamp, hexToRgb } from '$lib/utils';
+	import { clamp, hexToRgb } from '$lib/utils.svelte';
 	import ColorCode from './ColorCode.svelte';
 
 	interface Props {
@@ -90,13 +90,11 @@
 		style={blueStyle}
 	/>
 
-	<div class="flex items-center gap-2 h-9">
+	<div class="flex h-9 items-center gap-2">
 		<ColorCode
 			re="^rgb\(([\d.]+)\s*(?:,|\s)\s*([\d.]+)\s*(?:,|\s)\s*([\d.]+)\)$"
 			text={toText(r, g, b)}
-			validate={([r, g, b]) =>
-				+r >= 0 && +r <= 255 && +g >= 0 && +g <= 255 && +b >= 0 && +b <= 255
-			}
+			validate={([r, g, b]) => +r >= 0 && +r <= 255 && +g >= 0 && +g <= 255 && +b >= 0 && +b <= 255}
 			oninput={(r, g, b) => update(+r / 255, +g / 255, +b / 255)}
 			class="flex-3"
 		/>
@@ -104,7 +102,7 @@
 		<ColorCode
 			re={`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`}
 			text={toHex(r, g, b)}
-			class="not-sm:flex-1 sm:w-24 h-full"
+			class="h-full not-sm:flex-1 sm:w-24"
 			textAlign="left"
 			oninput={(hex) => {
 				const rgb = hexToRgb(hex);

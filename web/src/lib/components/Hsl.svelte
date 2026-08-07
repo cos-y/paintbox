@@ -2,7 +2,7 @@
 	import { useMode, modeHsl, modeRgb, modeOklch, type Oklch } from 'culori/fn';
 	import SliderTrack from './ColorSlider.svelte';
 	import ColorCode from './ColorCode.svelte';
-	import { clamp, hexToRgb } from '$lib/utils';
+	import { clamp, hexToRgb } from '$lib/utils.svelte';
 
 	interface Props {
 		oklch: Oklch;

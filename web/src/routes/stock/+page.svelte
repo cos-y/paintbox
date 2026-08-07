@@ -16,7 +16,7 @@
 	} from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { similarity } from '$lib/utils';
+	import { similarity } from '$lib/utils.svelte';
 	import { t } from '$lib/i18n.svelte';
 
 	const allPaints = listPaints();
@@ -220,7 +220,10 @@
 										<div class="truncate text-xs text-gray-500 dark:text-gray-400">{meta.desc}</div>
 									{/if}
 									<div class="text-[11px] text-gray-400">
-										{t('stock.brandStats', { series: Object.keys(series).length, paints: totalModels(series) })}
+										{t('stock.brandStats', {
+											series: Object.keys(series).length,
+											paints: totalModels(series)
+										})}
 									</div>
 								</div>
 							</div>

@@ -20,4 +20,20 @@ export const hexToRgb = (hex: string): number[] => {
 	return rgb.map((c) => clamp(parseInt(c, 16) / 255, 0, 1));
 };
 
+let isSm_ = $state(false);
+if (typeof window !== 'undefined') {
+	const mq = window.matchMedia('(min-width: 640px)');
+	isSm_ = mq.matches;
+	mq.addEventListener('change', (e) => (isSm_ = e.matches));
+}
+
+let isCoarse_ = $state(false);
+if (typeof window !== 'undefined') {
+	const mq = window.matchMedia('(pointer: coarse)');
+	isCoarse_ = mq.matches;
+	mq.addEventListener('change', (e) => (isCoarse_ = e.matches));
+}
+
 export const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+export const isSm = () => isSm_;
+export const isCoarse = () => isCoarse_;
