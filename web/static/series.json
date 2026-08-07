@@ -25,6 +25,12 @@
   },
   {
     "brand": "gunze",
+    "serie": "H",
+    "name": "Hobby Color",
+    "desc": "Acrylic paints"
+  },
+  {
+    "brand": "gunze",
     "serie": "CL",
     "name": "Lascivus",
     "desc": "Lacquer paints for anime figures"

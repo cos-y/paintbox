@@ -1,5 +1,7 @@
 # PaintBox
 
+[![Release Android](https://github.com/cos-y/paintbox/actions/workflows/release-android.yml/badge.svg)](https://github.com/cos-y/paintbox/actions/workflows/release-android.yml)
+
 搜索与指定颜色最相似的油漆配方。
 
 ## Color Search
