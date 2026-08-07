@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.2.7] - 2026-08-08
+
+### Added
+
+- Stock page: brand-wide cross-series search (fuzzy match on paint code/name); the series list filters to only matching series, and the right pane follows the selected series.
+- Stock page: sort menu in the header (by hue, saturation, lightness, in-stock first), applied to both the normal view and search results.
+- Stock page: mobile series sidebar redesigned as compact thumbnail cards (stock badge + paint count), matching the search page filter style.
+- README badges added (release version, build status, repo stats, tech stack).
+- Gunze 2026 catalog data: H301-H340 color values updated from the new catalog; GX series names translated to English.
+
+### Changed
+
+- Stock page breadcrumb now shows the current series; the header shows the brand name in a title row with the breadcrumb below in smaller text.
+- Search box expand/collapse uses gentle fade transitions; the header height stays stable, and on desktop the title stays visible with the search box right-aligned at half width.
+
+### Fixed
+
+- Switching series while searching now updates the right pane to the selected series (previously it stayed on global results).
+- Closing the search box no longer flickers the header/breadcrumb (the title area stays in layout flow and the input overlays it absolutely).
+
 ## [0.2.6] - 2026-08-07
 
 ### Added

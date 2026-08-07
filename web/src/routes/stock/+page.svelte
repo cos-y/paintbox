@@ -219,7 +219,7 @@
 						</nav>
 					{/if}
 				</div>
-				{#if searchOpen}
+				{#if searchOpen && level === 1}
 					<input
 						type="search"
 						autofocus
@@ -235,29 +235,31 @@
 					/>
 				{/if}
 			</div>
-			{#if searchOpen}
-				<button
-					type="button"
-					onclick={() => {
-						searchOpen = false;
-						query = '';
-					}}
-					title={t('stock.closeSearch')}
-					class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-				>
-					<X class="h-4 w-4" />
-				</button>
-			{:else}
-				<button
-					type="button"
-					onclick={() => (searchOpen = true)}
-					title={t('stock.searchTitle')}
-					class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
-				>
-					<Search class="h-4 w-4" />
-				</button>
-			{/if}
-			{@render sortBtn()}
+{#if level === 1}
+				{#if searchOpen}
+					<button
+						type="button"
+						onclick={() => {
+							searchOpen = false;
+							query = '';
+						}}
+						title={t('stock.closeSearch')}
+						class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+					>
+						<X class="h-4 w-4" />
+					</button>
+				{:else}
+					<button
+						type="button"
+						onclick={() => (searchOpen = true)}
+						title={t('stock.searchTitle')}
+						class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+					>
+						<Search class="h-4 w-4" />
+					</button>
+				{/if}
+				{@render sortBtn()}
+{/if}
 		</div>
 	</div>
 
@@ -656,3 +658,10 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	:global(input[type='search'])::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+		appearance: none;
+	}
+</style>
