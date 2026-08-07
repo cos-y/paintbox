@@ -8,7 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
-## [Unreleased]
+## [0.2.6] - 2026-08-07
+
+### Added
+
+- Gunze (Gunze Sangyo) H series paint data (H1-H417 and more) added to the paint library.
+- Camera in landscape now covers the full right pane (no rounded corners) and locks page scrolling, so the viewfinder fills the screen and hides all other content.
+- Camera follows device orientation: portrait requests a vertical stream (3:4 viewfinder), landscape requests a horizontal one; rotating the device re-acquires the stream in the new orientation.
+- Camera capture button moved inside the viewfinder — bottom-center in portrait, right-center in landscape — styled as a classic round white shutter.
+- Camera live color swatch and hex code shown at the top-left of the viewfinder.
+- Camera viewfinder renders as a full-width 16:9 placeholder while launching, avoiding a layout jump before the stream is ready.
+- Gamut cards now fade out (opacity) while being swiped away to delete.
+- Tauri: pinch-zoom is disabled inside the app.
+- Tauri: debug builds use "[debug] paintbox" as the Android launcher label and window title, so debug and release builds are easy to tell apart.
+
+### Changed
+
+- Color swatch is pinned to the top of the search page while scrolling (mobile).
+- Similarity function tuned for better color matching results.
+- Source switcher (palette/camera) is now an icon-only, connected button group, placed consistently above both modes.
+- Python scripts and CSV data files moved under /scripts for a cleaner repository root.
 
 ## [0.2.5] - 2026-08-07
 
