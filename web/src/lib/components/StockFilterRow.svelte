@@ -16,10 +16,16 @@
 	<span class="text-[11px] font-semibold text-gray-400 uppercase">{@render children()}</span>
 	<button
 		type="button"
-		onclick={() => (values = [...Object.keys(options)])}
-		class="cursor-pointer text-[10px] text-primary-500 hover:underline"
+		onclick={() => {
+			if (values.length === 0) {
+				values = [...Object.keys(options)];
+			} else {
+				values = [];
+			}
+		}}
+		class="w-16 cursor-pointer text-center text-[10px] text-primary-500 hover:underline"
 	>
-		{values.length === 0 ? t('search.selectAll') : t('search.cancelAll')}
+		{values.length === 0 ? t('search.selectAll') : t('search.resetFilter')}
 	</button>
 </div>
 {#each Object.entries(options) as [key, label]}

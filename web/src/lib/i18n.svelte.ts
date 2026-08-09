@@ -14,7 +14,6 @@ const en = {
 	'search.sourceCamera': 'Camera',
 	'search.series': 'Series:',
 	'search.any': 'Any',
-	'search.cancelAll': 'Reset',
 	'search.selectAll': 'Select All',
 	'search.seriesCount': (p: Params) => `${p.n} series`,
 	'search.paintsCount': (p: Params) => `${p.n} paints`,
@@ -43,7 +42,7 @@ const en = {
 	'search.mix1': 'Mix-1',
 	'search.mix2': 'Mix-2',
 	'search.mixScopeRequired': 'Mixing requires search scope: My Stock',
-	'search.resetFilter': 'Reset Filter',
+	'search.resetFilter': 'Reset',
 	'search.results': (p: Params) => `${p.n} Result${p.n == 1 ? '' : 's'}`,
 	'search.similarity': (p: Params) => `${p.n}% similar`,
 
@@ -143,7 +142,6 @@ const zh = {
 	'search.sourceCamera': '相机',
 	'search.series': '系列:',
 	'search.any': '不限',
-	'search.cancelAll': '重置',
 	'search.selectAll': '全选',
 	'search.seriesCount': (p: Params) => `${p.n} 个系列`,
 	'search.paintsCount': (p: Params) => `${p.n} 款油漆`,
@@ -172,7 +170,7 @@ const zh = {
 	'search.mix1': '混色-1',
 	'search.mix2': '混色-2',
 	'search.mixScopeRequired': '混色需将搜索范围设为「我的库存」',
-	'search.resetFilter': '重置筛选',
+	'search.resetFilter': '重置',
 	'search.results': (p: Params) => `${p.n} 条结果`,
 	'search.similarity': (p: Params) => `相似度 ${p.n}%`,
 

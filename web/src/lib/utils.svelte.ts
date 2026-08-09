@@ -34,6 +34,5 @@ if (typeof window !== 'undefined') {
 	mq.addEventListener('change', (e) => (isCoarse_ = e.matches));
 }
 
-export const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 export const isSm = () => isSm_;
 export const isCoarse = () => isCoarse_;

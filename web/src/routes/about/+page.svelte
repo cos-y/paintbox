@@ -12,23 +12,23 @@
 		Handshake,
 		Languages
 	} from '@lucide/svelte';
-	import { isTauri } from '$lib/utils.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import { i18n, toggleLocale, t } from '$lib/i18n.svelte';
 	import { updater } from '$lib/update.svelte';
 	// Tauri 环境显式调 opener 插件打开外链（绕开 WebView 对自定义 scheme 的解析）
 	import { openUrl } from '@tauri-apps/plugin-opener';
+	import { isTauri } from '@tauri-apps/api/core';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
 	const discordUrl = 'https://discord.gg/QG2ZdVRkxN'; // TODO: 替换为实际邀请链接
-	const qqUrl = isTauri
+	const qqUrl = isTauri()
 		? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=963504621'
 		: 'https://qm.qq.com/q/3bWtHScQUo';
 	const donateUrl = 'https://afdian.com/a/cos_y';
 
 	// Tauri 内用系统 Intent 打开（QQ 链接可直接唤起 QQ App）；浏览器内普通新标签
 	const openExternal = (url: string) => {
-		if (isTauri) openUrl(url);
+		if (isTauri()) openUrl(url);
 		else window.open(url, '_blank', 'noopener');
 	};
 </script>
@@ -43,7 +43,7 @@
 				<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
 				<p class="mt-1 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-400">
 					<span>Version {__APP_VERSION__}</span>
-					{#if isTauri && updater}
+					{#if isTauri() && updater}
 						<button
 							type="button"
 							onclick={() => updater!.check()}
@@ -62,7 +62,7 @@
 								href={updater.channelUrl}
 								target="_blank"
 								onclick={(e) => {
-									if (isTauri) {
+									if (isTauri()) {
 										e.preventDefault();
 										openExternal(updater!.channelUrl);
 									}
@@ -167,7 +167,7 @@
 				href={githubUrl}
 				target="_blank"
 				onclick={(e) => {
-					if (isTauri) {
+					if (isTauri()) {
 						e.preventDefault();
 						openExternal(githubUrl);
 					}
@@ -180,7 +180,7 @@
 				href={discordUrl}
 				target="_blank"
 				onclick={(e) => {
-					if (isTauri) {
+					if (isTauri()) {
 						e.preventDefault();
 						openExternal(discordUrl);
 					}
@@ -193,7 +193,7 @@
 				href={qqUrl}
 				target="_blank"
 				onclick={(e) => {
-					if (isTauri) {
+					if (isTauri()) {
 						e.preventDefault();
 						openExternal(qqUrl);
 					}
@@ -206,7 +206,7 @@
 				target="_blank"
 				rel="noopener noreferrer"
 				onclick={(e) => {
-					if (isTauri) {
+					if (isTauri()) {
 						e.preventDefault();
 						openExternal(donateUrl);
 					}

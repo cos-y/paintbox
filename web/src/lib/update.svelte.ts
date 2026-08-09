@@ -1,10 +1,10 @@
-import { isTauri } from '$lib/utils.svelte';
-
 // 更新检测：
 // - play 渠道：走 Google Play 应用内更新插件（plugin:app-update|check，按 versionCode 对比商店版本）
 // - sideload 渠道：走 GitHub Release 的 version.json 资产（releases/latest/download，跟随 302 到实际资产）
 // UpdateChecker 为抽象基类（统一状态机/错误处理），各渠道用子类继承接管检查逻辑，
 // 工厂 createUpdateChecker 按 __CHANNEL__ 构造对应实例。
+
+import { isTauri } from '@tauri-apps/api/core';
 
 /** 最新版本来源（sideload 渠道）：GitHub Release 资产 version.json。
  * 资产 URL 会 302 到不带 CORS 头的 release-assets.githubusercontent.com，WebView 原生 fetch 会被跨域拦截。
@@ -155,4 +155,4 @@ function createUpdater(channel: string): Updater {
 }
 
 /** 当前渠道的更新检查器：仅 Tauri 环境有意义，非 Tauri 时导出 null（调用方按需判空） */
-export const updater: Updater | null = isTauri ? createUpdater(__CHANNEL__ || 'sideload') : null;
+export const updater: Updater | null = isTauri() ? createUpdater(__CHANNEL__ || 'sideload') : null;

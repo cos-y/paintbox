@@ -6,7 +6,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
-	import { isTauri } from '$lib/utils.svelte';
+	import { isTauri } from '@tauri-apps/api/core';
 
 	let { children } = $props();
 
@@ -21,7 +21,7 @@
 
 	// Tauri 环境禁止双指缩放（WebView 默认允许 pinch-zoom，原生手势优先）
 	$effect(() => {
-		if (!isTauri) return;
+		if (!isTauri()) return;
 		// 双指触摸时阻止默认行为（pinch 缩放）
 		const preventPinch = (e: TouchEvent) => {
 			if (e.touches.length > 1) e.preventDefault();

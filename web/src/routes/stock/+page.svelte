@@ -215,7 +215,7 @@
 			{/if}
 			<div class="relative min-w-0 flex-1">
 				<div
-					class="transition-opacity duration-150 {searchOpen
+					class="transition-opacity duration-150 {searchOpen && level === 1
 						? 'max-sm:pointer-events-none max-sm:opacity-0'
 						: 'opacity-100'}"
 				>
@@ -295,20 +295,16 @@
 		</div>
 	</div>
 
-	{#snippet filterRow()}
-
-	{/snippet}
-
 	{#snippet filterBtn()}
 		<div class="relative shrink-0">
 			<button
 				type="button"
-				onclick={() => (filterOpen = !filterOpen)}
 				title={t('stock.filterTitle')}
-				class="relative cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 {filterCount >
-				0
-					? 'text-primary-500'
-					: ''} dark:hover:bg-gray-700 dark:hover:text-gray-200"
+				class="relative cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 {filterOpen
+					? 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-white'
+					: filterCount > 0
+						? 'text-primary-500'
+						: ''}"
 			>
 				<Funnel class="h-4 w-4" />
 				{#if filterCount > 0}
@@ -355,6 +351,7 @@
 			</Dropdown>
 		</div>
 	{/snippet}
+
 	{#snippet labelPrimary(paint: PaintInfo)}
 		{@const brandMeta = getBrandMeta(paint.brand)}
 		{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}

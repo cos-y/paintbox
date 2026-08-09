@@ -84,6 +84,7 @@ export const callWasm = <T = unknown>(
 	const { cancelInFlight = false } = opts;
 	if (cancelInFlight && pending.size > 0) {
 		terminateWorker();
+		console.warn(`wasm call "${method}" cancelled ${pending.size} in-flight requests`);
 	}
 	const w = getWorker();
 	const id = nextId++;

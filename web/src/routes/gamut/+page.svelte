@@ -3,7 +3,7 @@
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
-	import { tick, type Snippet } from 'svelte';
+	import { onDestroy, tick, type Snippet } from 'svelte';
 	import { callWasm } from '$lib/wasmClient';
 	import { Canvas } from '@threlte/core';
 	import Scene from './scene.svelte';
@@ -13,7 +13,8 @@
 	import * as THREE from 'three';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
-	import { isSm, isCoarse } from '$lib/utils.svelte';
+	import { isSm, isCoarse, clamp } from '$lib/utils.svelte';
+	import { isTauri } from '@tauri-apps/api/core';
 
 	const allPaints = listPaints();
 
@@ -78,6 +79,8 @@
 		});
 	}
 
+	const ndiv = isTauri() ? 12 : 16;
+
 	const persisted = loadGamut();
 	// 首次使用（无持久化记录）默认一个 My Stock 卡片；有记录则严格按记录加载（用户删光 stock 也不复活）
 	const initialSources: Source[] = persisted.persisted
@@ -85,10 +88,23 @@
 		: [{ id: String(persisted.nextId), type: 'stock', hidden: false }];
 	let sources: Source[] = $state(initialSources);
 	let nextId = persisted.persisted ? persisted.nextId : persisted.nextId + 1;
-	let lastAddedId: string | null = $state(null);
 	let gamut: string | undefined;
 	let task: Promise<any>;
-	const ndiv = 16;
+
+	const freeGamut = async (gamut: string) => {
+		console.log('Gamut::free');
+		await callWasm<void>('free', [gamut]).catch(() => {});
+	};
+
+	// 页面销毁时释放 wasm 持有的 Gamut 内存（worker 是全局共享单例，不能 terminate，只 free 对象）
+	let destroyed = false;
+	onDestroy(() => {
+		destroyed = true;
+		if (gamut !== undefined) {
+			freeGamut(gamut).catch(() => {});
+			gamut = undefined;
+		}
+	});
 
 	let localColors = $state(new Set<number>());
 	const colors = $derived.by(() => {
@@ -119,12 +135,16 @@
 				const newGamut = await callWasm<string>('new_gamut', [ndiv, new Uint32Array(colors)], {
 					cancelInFlight: true
 				});
+				console.log('Gamut::new');
 				if (gamut !== undefined) {
-					await callWasm<void>('free', [gamut]);
-					console.log('Gamut::free');
+					await freeGamut(gamut);
 				}
 				gamut = newGamut;
-				console.log('Gamut::new');
+				if (destroyed) {
+					// 页面已销毁：释放刚创建的对象，避免泄漏
+					await freeGamut(newGamut);
+					return;
+				}
 				await updateScene(newGamut);
 			};
 			task = fn();
@@ -133,6 +153,7 @@
 			if (newColors.size > 0) {
 				const fn = async (task: Promise<any>) => {
 					await task;
+					if (destroyed) return;
 					const modified = await callWasm<boolean>('gamut_insert_many', [
 						gamut,
 						new Uint32Array(newColors)
@@ -152,7 +173,6 @@
 	function addColor() {
 		const id = String(nextId++);
 		sources.push({ id, type: 'color', text: '', rgb: 0, valid: false, hidden: false });
-		lastAddedId = id;
 		tick().then(() => {
 			(document.querySelector(`[data-card-id="${id}"] input`) as HTMLInputElement | null)?.focus();
 		});
@@ -160,7 +180,6 @@
 	function addPaint() {
 		const id = String(nextId++);
 		sources.push({ id, type: 'paint', paint: null, searchText: '', hidden: false });
-		lastAddedId = id;
 		tick().then(() => {
 			(document.querySelector(`[data-card-id="${id}"] input`) as HTMLInputElement | null)?.focus();
 		});
@@ -309,10 +328,7 @@
 		highlightedIdx[src.id] = -1;
 	}
 
-	let addOpen = $state(false);
-
 	let selectedColor: { rgb: [number, number, number]; hex: string } | null = $state(null);
-	let copied = $state(false);
 	function handleSelect(rgb: [number, number, number], hex: string) {
 		selectedColor = { rgb, hex };
 	}
@@ -321,9 +337,9 @@
 	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), Math.ceil(0.85 * ndiv)]);
 	const rangeB: [number, number] = $derived([-Math.ceil(0.9 * ndiv), Math.ceil(0.7 * ndiv)]);
 
-	let clipL = $state(persisted.clipL);
-	let clipA = $state(persisted.clipA);
-	let clipB = $state(persisted.clipB);
+	let clipL = $state(persisted.clipL.map((x) => clamp(x, ...rangeL)) as [number, number]);
+	let clipA = $state(persisted.clipA.map((x) => clamp(x, ...rangeA)) as [number, number]);
+	let clipB = $state(persisted.clipB.map((x) => clamp(x, ...rangeB)) as [number, number]);
 
 	class SceneProps {
 		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;

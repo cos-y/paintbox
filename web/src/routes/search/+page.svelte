@@ -6,17 +6,25 @@
 	import { Box, Camera, ChevronDown, Cylinder, Palette, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
-	import { listPaints, getCatalog, paintId, floatRgbToCss, SURFACE_BITS, type SearchResult } from '$lib/paints';
+	import {
+		listPaints,
+		getCatalog,
+		paintId,
+		floatRgbToCss,
+		SURFACE_BITS,
+		type SearchResult
+	} from '$lib/paints';
 	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity, isTauri, isSm } from '$lib/utils.svelte';
+	import { clamp, similarity, isSm } from '$lib/utils.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import { searchFilters } from '$lib/searchFilters.svelte';
 	import { t } from '$lib/i18n.svelte';
+	import { isTauri } from '@tauri-apps/api/core';
 
 	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
@@ -44,8 +52,7 @@
 	// 取色源：调色板 / 摄像机（仅 Tauri 应用内可用）
 	let source: 'palette' | 'camera' = $state('palette');
 	const hasCamera = $derived(
-		// isTauri &&
-		typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
+		isTauri() && typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
 	);
 
 	// 设备横屏（横屏时摄像机全屏覆盖右侧内容区）
@@ -267,7 +274,7 @@
 	<div
 		class="relative h-24 overflow-hidden rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
 	>
-		{#if !isTauri}
+		{#if !isTauri()}
 			{#if hasEyeDropper}
 				<button
 					type="button"
