@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.2.9] - 2026-08-10
+
+### Changed
+
+- Page-level runtime state hoisted into module stores so it survives page navigation:
+  - Search results are cached as a pure function of (color, filter, stock) — returning to the search page shows the previous results without re-searching, and results update only when an input actually changes.
+  - Gamut view state (clip ranges, camera position/target/zoom) and the WebAssembly gamut object persist across page switches instead of being torn down and rebuilt.
+- Surface-type filtering rewritten as bitmask flags with compact integer serialization (still accepts the legacy string/array format), making the search filter check a single AND instead of a set lookup.
+- Stock entries now carry the paint index (lazy-resolved once the paint data is loaded) and the stock store exposes an entries() iterator.
+- Root layout gates page rendering on a wasmReady flag, so routes never mount before the wasm paint data is initialized.
+
 ## [0.2.7] - 2026-08-08
 
 ### Added
@@ -137,6 +148,9 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9
+[0.2.7]: https://github.com/cos-y/paintbox/releases/tag/v0.2.7
+[0.2.6]: https://github.com/cos-y/paintbox/releases/tag/v0.2.6
 [0.2.5]: https://github.com/cos-y/paintbox/releases/tag/v0.2.5
 [0.2.4]: https://github.com/cos-y/paintbox/releases/tag/v0.2.4
 [0.2.3]: https://github.com/cos-y/paintbox/releases/tag/v0.2.3
