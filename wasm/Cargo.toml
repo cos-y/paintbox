@@ -8,6 +8,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 binary_serde = "1.0.25"
+bitflags = "2.9.0"
 console_error_panic_hook = "0.1.7"
 csv = "1.4.0"
 derivative = "2.2.0"

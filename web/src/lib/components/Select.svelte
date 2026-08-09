@@ -7,10 +7,14 @@
 		options: (string | Snippet)[];
 		value: number;
 		class?: string;
+		activeClass?: string;
 		tooltip?: string;
 		disabled?: boolean;
 		disabledValue?: number;
 		disabledTooltip?: string;
+		children?: Snippet<[]>;
+		placement?: any;
+		lockWidth?: boolean;
 	}
 
 	let {
@@ -19,8 +23,12 @@
 		disabledTooltip,
 		tooltip,
 		class: clz,
+		activeClass,
 		options,
-		value = $bindable()
+		value = $bindable(),
+		children,
+		placement = 'bottom-start',
+		lockWidth = true
 	}: Props = $props();
 
 	let isOpen = $state(false);
@@ -46,10 +54,14 @@
 		{disabled}
 		size="xs"
 		color="alternative"
-		class="cursor-pointer justify-start! gap-1 {clz}"
+		class="cursor-pointer justify-start! gap-1 {clz} {isOpen ? activeClass : ''}"
 	>
-		{@render renderDesc(options[value])}
-		<ChevronDown class="ms-auto h-3 w-3" />
+		{#if children === undefined}
+			{@render renderDesc(options[value])}
+			<ChevronDown class="ms-auto h-3 w-3" />
+		{:else}
+			{@render children()}
+		{/if}
 	</Button>
 	{#if disabled}
 		{#if disabledTooltip}
@@ -63,9 +75,10 @@
 </div>
 {#if !disabled}
 	<Dropdown
-		placement="bottom-start"
+		{placement}
+		// placement="bottom-start"
 		class="list-none overflow-hidden!"
-		style="width: {buttonWidth}px !important;"
+		style={lockWidth ? `width: ${buttonWidth}px !important;` : ''}
 		bind:isOpen
 	>
 		{#each options as desc, i}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus, Search, X, ArrowUpDown } from '@lucide/svelte';
-	import { Card, Button, Badge } from 'flowbite-svelte';
+	import { ChevronLeft, Check, Plus, Search, X, ArrowUpDown, Funnel } from '@lucide/svelte';
+	import { Card, Button, Badge, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import {
@@ -12,12 +12,15 @@
 		searchNearest,
 		colorDiff,
 		findDirectEquivalences,
+		SURFACE_BITS,
 		type PaintInfo
 	} from '$lib/paints';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { similarity } from '$lib/utils.svelte';
 	import { t } from '$lib/i18n.svelte';
+	import Select from '$lib/components/Select.svelte';
+	import StockFilterRow from '$lib/components/StockFilterRow.svelte';
 
 	const allPaints = listPaints();
 	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
@@ -27,15 +30,13 @@
 	// 这样浏览时地址栏会实时更新，且任意页面都能通过完整URL直接分享/刷新进入，
 	// 同时因为只有查询参数在变、路径始终是同一个/stock，静态文件服务器不需要
 	// 为每个品牌/系列/型号单独生成页面文件。
-	const selectedBrand = $derived(page.url.searchParams.get('brand'));
+	const selectedBrand = $derived(page.url.searchParams.get('brand') ?? '');
 	const selectedSerieParam = $derived(page.url.searchParams.get('serie'));
 	const selectedCode = $derived(page.url.searchParams.get('code'));
 
-	const currentBrandGroup = $derived(selectedBrand ? (catalog[selectedBrand] ?? null) : null);
-	const selectedSerie = $derived(
-		selectedSerieParam ?? Object.keys(currentBrandGroup ?? {})[0] ?? null
-	);
-	const currentSerieGroup = $derived((currentBrandGroup ?? {})[selectedSerie] ?? null);
+	const currentBrandGroup = $derived(catalog[selectedBrand] ?? {});
+	const selectedSerie = $derived(selectedSerieParam ?? Object.keys(currentBrandGroup)[0] ?? null);
+	const currentSerieGroup = $derived(currentBrandGroup[selectedSerie] ?? []);
 	const selectedPaint = $derived(
 		selectedCode ? (currentSerieGroup.find((p) => p.code === selectedCode) ?? null) : null
 	);
@@ -117,11 +118,23 @@
 	};
 
 	// ---- 排序 / 搜索（品牌内跨系列） ----
-	type SortKey = 'code' | 'hue' | 'sat' | 'light' | 'stock';
-	let sortKey = $state<SortKey>('code');
+	let sortKey = $state(0);
 	let sortOpen = $state(false);
 	let searchOpen = $state(false);
 	let query = $state('');
+	// 筛选：漆面 + 溶剂（空数组 = 不限，AND）
+	let filterOpen = $state(false);
+	let surfSel = $state<string[]>([]);
+	let baseSel = $state<string[]>([]);
+	const baseFilter = $derived(
+		baseSel.length == 0 ? 0x7fffffff : baseSel.reduce((a, b) => a | (1 << +b), 0)
+	);
+	const surfFilter = $derived(new Set(surfSel.map((k) => SURFACE_BITS[k])));
+	const filterCount = $derived(surfSel.length + baseSel.length);
+	const passFilter = (p: PaintInfo): boolean => {
+		if (surfSel.length > 0 && !surfFilter.has(p.prop)) return false;
+		return (baseFilter & p.base) != 0;
+	};
 
 	const hslOf = (rgb: number): [number, number, number] => {
 		const r = ((rgb >> 16) & 0xff) / 255;
@@ -143,13 +156,13 @@
 	const sortPaints = (list: PaintInfo[]): PaintInfo[] => {
 		const arr = [...list];
 		switch (sortKey) {
-			case 'hue':
+			case 1:
 				return arr.sort((a, b) => hslOf(a.rgb)[0] - hslOf(b.rgb)[0]);
-			case 'sat':
+			case 2:
 				return arr.sort((a, b) => hslOf(b.rgb)[1] - hslOf(a.rgb)[1]);
-			case 'light':
+			case 3:
 				return arr.sort((a, b) => hslOf(b.rgb)[2] - hslOf(a.rgb)[2]);
-			case 'stock':
+			case 4:
 				return arr.sort((a, b) => Number(stock.has(paintId(b))) - Number(stock.has(paintId(a))));
 			default:
 				return arr.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
@@ -163,25 +176,29 @@
 	};
 
 	const isSearching = $derived(searchOpen && query.trim().length > 0);
-	// 搜索时左侧栏：仅显示有匹配的系列
+	// 筛选激活（无搜索时也启用搜索式联动：左侧栏过滤 + 自动切换系列）
+	const isFiltering = $derived(filterCount > 0);
+	const isActiveFilter = $derived(isSearching || isFiltering);
+	const filterMatch = (p: PaintInfo): boolean => passFilter(p) && (!isSearching || matches(p));
+	// 搜索/筛选时左侧栏：仅显示有匹配的系列（品牌内联动）
 	const visibleSeries = $derived.by(() => {
 		const entries = Object.entries(currentBrandGroup ?? {});
-		if (!isSearching) return entries;
-		return entries.filter(([, paints]) => paints.some(matches));
+		if (!isActiveFilter) return entries;
+		return entries.filter(([, paints]) => paints.some(filterMatch));
 	});
-	// 搜索时色卡区：当前选中系列内匹配（左侧导航切换系列）
+	// 搜索/筛选时色卡区：当前选中系列内匹配（左侧导航切换系列）
 	const searchSerieResults = $derived.by(() => {
-		if (!isSearching) return null;
-		return sortPaints((currentSerieGroup ?? []).filter(matches));
+		if (!isActiveFilter) return null;
+		return sortPaints(currentSerieGroup.filter(filterMatch));
 	});
-	// 搜索激活且当前系列无匹配时，自动切到第一个有匹配的系列
+	// 搜索/筛选激活且当前系列无匹配时，自动切到第一个有匹配的系列
 	$effect(() => {
-		if (isSearching && visibleSeries.length > 0) {
+		if (isActiveFilter && visibleSeries.length > 0) {
 			const first = visibleSeries.find(([s]) => s === selectedSerie) ?? visibleSeries[0];
 			if (first && first[0] !== selectedSerie) selectSerie(first[0]);
 		}
 	});
-	const sortedCurrentSerie = $derived(sortPaints(currentSerieGroup ?? []));
+	const sortedCurrentSerie = $derived(sortPaints(currentSerieGroup.filter(passFilter)));
 </script>
 
 <div class="flex h-full flex-col">
@@ -203,14 +220,12 @@
 						: 'opacity-100'}"
 				>
 					<div class="truncate text-xl font-semibold text-gray-900 dark:text-white">
-						{level > 0
-							? (getBrandMeta(selectedBrand ?? '')?.name ?? selectedBrand)
-							: t('stock.brands')}
+						{level > 0 ? (getBrandMeta(selectedBrand)?.name ?? selectedBrand) : t('stock.brands')}
 					</div>
 					{#if selectedSerie}
 						<nav class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
 							<button type="button" onclick={goToLevel1} class="cursor-pointer hover:underline">
-								{getSerieMeta(selectedBrand ?? '', selectedSerie)?.name ?? selectedSerie}
+								{getSerieMeta(selectedBrand, selectedSerie)?.name ?? selectedSerie}
 							</button>
 							{#if selectedPaint}
 								<span>/</span>
@@ -235,7 +250,7 @@
 					/>
 				{/if}
 			</div>
-{#if level === 1}
+			{#if level === 1}
 				{#if searchOpen}
 					<button
 						type="button"
@@ -258,42 +273,86 @@
 						<Search class="h-4 w-4" />
 					</button>
 				{/if}
-				{@render sortBtn()}
-{/if}
+				{@render filterBtn()}
+				<Select
+					options={[
+						t('stock.sortCode'),
+						t('stock.sortHue'),
+						t('stock.sortSat'),
+						t('stock.sortLight'),
+						t('stock.sortStock')
+					]}
+					bind:value={sortKey}
+					class="rounded-full border-0 p-1.5
+					text-gray-500 ring-0! dark:bg-gray-900 dark:hover:bg-gray-700"
+					activeClass="dark:bg-gray-700 dark:text-white"
+					lockWidth={false}
+					placement="bottom-end"
+				>
+					<ArrowUpDown class="h-4 w-4" />
+				</Select>
+			{/if}
 		</div>
 	</div>
 
-	{#snippet sortBtn()}
+	{#snippet filterRow()}
+
+	{/snippet}
+
+	{#snippet filterBtn()}
 		<div class="relative shrink-0">
 			<button
 				type="button"
-				onclick={() => (sortOpen = !sortOpen)}
-				title={t('stock.sortTitle')}
-				class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+				onclick={() => (filterOpen = !filterOpen)}
+				title={t('stock.filterTitle')}
+				class="relative cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 {filterCount >
+				0
+					? 'text-primary-500'
+					: ''} dark:hover:bg-gray-700 dark:hover:text-gray-200"
 			>
-				<ArrowUpDown class="h-4 w-4" />
+				<Funnel class="h-4 w-4" />
+				{#if filterCount > 0}
+					<span
+						class="absolute -top-0.5 -right-0.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-primary-500 px-0.5 text-[9px] font-semibold text-white"
+					>
+						{filterCount}
+					</span>
+				{/if}
 			</button>
-			{#if sortOpen}
-				<div
-					class="absolute top-full right-0 z-30 mt-1 w-36 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800"
-				>
-					{#each [{ k: 'code', label: t('stock.sortCode') }, { k: 'hue', label: t('stock.sortHue') }, { k: 'sat', label: t('stock.sortSat') }, { k: 'light', label: t('stock.sortLight') }, { k: 'stock', label: t('stock.sortStock') }] as opt}
-						<button
-							type="button"
-							onclick={() => {
-								sortKey = opt.k as SortKey;
-								sortOpen = false;
+			<Dropdown class="list-none overflow-hidden!" placement="bottom-end" bind:isOpen={filterOpen}>
+				<div class="grid min-w-70 grid-cols-2 gap-x-4 p-3">
+					<div class="space-y-0.5 border-r border-gray-200 pr-3 dark:border-gray-700">
+						<StockFilterRow
+							options={{
+								G: t('search.surface.G'),
+								SG: t('search.surface.SG'),
+								M: t('search.surface.M'),
+								ME: t('search.surface.ME'),
+								C: t('search.surface.C'),
+								PA: t('search.surface.PA'),
+								FL: t('search.surface.FL'),
+								W: t('search.surface.W')
 							}}
-							class="flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left text-xs text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
+							bind:values={surfSel}
 						>
-							<span>{opt.label}</span>
-							{#if sortKey === opt.k}
-								<Check class="h-3.5 w-3.5 text-primary-500" />
-							{/if}
-						</button>
-					{/each}
+							{t('stock.surfaceTitle')}
+						</StockFilterRow>
+					</div>
+					<div class="space-y-0.5">
+						<StockFilterRow
+							options={{
+								0: t('search.base.0'),
+								1: t('search.base.1'),
+								2: t('search.base.2'),
+								3: t('search.base.3')
+							}}
+							bind:values={baseSel}
+						>
+							{t('stock.baseTitle')}
+						</StockFilterRow>
+					</div>
 				</div>
-			{/if}
+			</Dropdown>
 		</div>
 	{/snippet}
 	{#snippet labelPrimary(paint: PaintInfo)}
@@ -373,7 +432,7 @@
 						class="hidden w-56 shrink-0 overflow-y-auto border-r border-gray-200 sm:block dark:border-gray-700"
 					>
 						{#each visibleSeries as [serie, paints]}
-							{@const serieMeta = getSerieMeta(selectedBrand ?? '', serie)}
+							{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 							{@const ownCount = ownedCountInSerie(paints)}
 							<button
 								type="button"
@@ -385,7 +444,7 @@
 									: 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'}"
 							>
 								<img
-									src={serieThumb(selectedBrand ?? '', serie)}
+									src={serieThumb(selectedBrand, serie)}
 									alt=""
 									class="h-7 w-7 shrink-0 rounded bg-white object-cover ring-1 ring-black/10"
 									onerror={(e) => {
@@ -413,7 +472,7 @@
 						class="w-24 shrink-0 overflow-y-auto border-r border-gray-200 sm:hidden dark:border-gray-700"
 					>
 						{#each visibleSeries as [serie, paints]}
-							{@const serieMeta = getSerieMeta(selectedBrand ?? '', serie)}
+							{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 							{@const ownCount = ownedCountInSerie(paints)}
 							<button
 								type="button"
@@ -426,7 +485,7 @@
 							>
 								<div class="relative aspect-square w-full overflow-hidden rounded-md shadow-sm">
 									<img
-										src={serieThumb(selectedBrand ?? '', serie)}
+										src={serieThumb(selectedBrand, serie)}
 										alt=""
 										class="h-full w-full object-cover"
 										onerror={(e) => {

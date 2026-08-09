@@ -13,7 +13,24 @@ export interface PaintInfo {
 	serie: string;
 	serie_code: string;
 	rgb: number;
+	base: number;
+	/** 漆面类型，SurfaceType 单 bit 值（1=G, 2=SG, 4=M…） */
+	prop: number;
 }
+
+// SurfaceType 位定义，与 wasm 端 bitflags 对齐
+// prettier-ignore
+export const SURFACE_BITS: Record<string, number> = {
+	G: 1 << 0,
+	SG: 1 << 1,
+	M: 1 << 2,
+	ME: 1 << 3,
+	C: 1 << 4,
+	PA: 1 << 5,
+	FL: 1 << 6,
+	W: 1 << 7,
+	U: 1 << 8
+};
 
 export const paintId = (paint: { brand: string; code: string }) => `${paint.brand}:${paint.code}`;
 
@@ -43,7 +60,8 @@ export interface SearchResult {
 export interface FilterOptions {
 	series?: string[][];
 	all?: number[];
-	surfaces?: string[];
+	/** 漆面类型 bitmask；缺省/0 = 不限制 */
+	surfaces?: number;
 	bases?: number[];
 	mix?: number;
 	limit?: number;

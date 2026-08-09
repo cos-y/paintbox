@@ -1,5 +1,6 @@
-use std::{cmp::Reverse, collections::HashSet, num::NonZero};
+use std::{cmp::Reverse, collections::HashSet, fmt, num::NonZero};
 
+use bitflags::bitflags;
 use fixedbitset::FixedBitSet;
 use kiddo::{ImmutableKdTree, SquaredEuclidean};
 use ordered_float::OrderedFloat;
@@ -25,17 +26,79 @@ pub struct PaintInfo {
     pub prop: SurfaceType,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub enum SurfaceType {
-    G,
-    SG,
-    M,
-    ME,
-    C,
-    PA,
-    FL,
-    W,
-    U,
+bitflags! {
+    /// 漆面类型，每个变体占一个 bit；`prop` 字段是单 bit 值，过滤时是多个 bit 的 mask
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct SurfaceType: u16 {
+        const G = 1 << 0;
+        const SG = 1 << 1;
+        const M = 1 << 2;
+        const ME = 1 << 3;
+        const C = 1 << 4;
+        const PA = 1 << 5;
+        const FL = 1 << 6;
+        const W = 1 << 7;
+        const U = 1 << 8;
+    }
+}
+
+impl Default for SurfaceType {
+    fn default() -> Self {
+        SurfaceType::empty()
+    }
+}
+
+/// 序列化输出整数（bit值/mask，紧凑、快）；反序列化兼容：
+/// - 字符串名（"G"、"SG"…，csv / 旧数据）
+/// - 整数（单bit值或mask，JS 传入）
+/// - 数组（旧 Web 端传入的 ["G","SG"] 或 [1,2]），自动 OR 成 mask
+impl Serialize for SurfaceType {
+    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        s.serialize_u16(self.bits())
+    }
+}
+
+impl<'de> Deserialize<'de> for SurfaceType {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+        struct V;
+        impl<'de> serde::de::Visitor<'de> for V {
+            type Value = SurfaceType;
+            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(
+                    f,
+                    "a surface type name, bitmask integer, or an array of them"
+                )
+            }
+            fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<Self::Value, E> {
+                SurfaceType::from_name(v)
+                    .ok_or_else(|| E::custom(format!("unknown surface type: {v}")))
+            }
+            fn visit_u64<E: serde::de::Error>(self, v: u64) -> Result<Self::Value, E> {
+                Ok(SurfaceType::from_bits_retain(v as u16))
+            }
+            fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
+                Ok(SurfaceType::from_bits_retain(v as u16))
+            }
+            fn visit_f64<E: serde::de::Error>(self, v: f64) -> Result<Self::Value, E> {
+                if v.fract() == 0.0 {
+                    Ok(SurfaceType::from_bits_retain(v as u16))
+                } else {
+                    Err(E::custom(format!("non-integer surface bitmask: {v}")))
+                }
+            }
+            fn visit_seq<A: serde::de::SeqAccess<'de>>(
+                self,
+                mut seq: A,
+            ) -> Result<Self::Value, A::Error> {
+                let mut acc = 0u16;
+                while let Some(x) = seq.next_element::<SurfaceType>()? {
+                    acc |= x.bits();
+                }
+                Ok(SurfaceType::from_bits_retain(acc))
+            }
+        }
+        d.deserialize_any(V)
+    }
 }
 
 #[derive(Debug, Clone, Deserialize, Default)]
@@ -47,8 +110,10 @@ pub struct FilterOptions {
     #[serde(default)]
     pub all: Option<Vec<usize>>,
 
+    /// 允许的漆面类型 bitmask；NONE（默认）表示不限制。
+    /// 反序列化兼容旧格式字符串/数字数组（如 ["G","SG"]）和新格式整数 mask
     #[serde(default)]
-    pub surfaces: Vec<SurfaceType>,
+    pub surfaces: SurfaceType,
 
     #[serde(default)]
     pub bases: Vec<u8>,
@@ -222,11 +287,7 @@ impl Searcher {
         };
         let all_filter: Option<HashSet<usize>> =
             opts.all.as_ref().map(|ids| ids.iter().copied().collect());
-        let prop_filter: Option<HashSet<SurfaceType>> = if opts.surfaces.is_empty() {
-            None
-        } else {
-            Some(opts.surfaces.iter().map(|x| *x).collect())
-        };
+        let prop_mask = opts.surfaces;
         let base_filter: u8 = if opts.bases.is_empty() {
             u8::MAX
         } else {
@@ -235,23 +296,16 @@ impl Searcher {
 
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
-            // base
-            if (maj.base & base_filter) != 0 {
-                // idxs
-                if all_filter.as_ref().is_none_or(|s| s.contains(&i)) {
-                    // prop
-                    if prop_filter.as_ref().is_none_or(|s| s.contains(&maj.prop)) {
-                        //serie
-                        let serie_ok = series_filter
-                            .as_ref()
-                            .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())));
-
-                        if serie_ok {
-                            unsafe {
-                                candidates.insert_unchecked(i);
-                            }
-                        }
-                    }
+            // base + idxs + prop + serie
+            if (maj.base & base_filter) != 0
+                && all_filter.as_ref().is_none_or(|s| s.contains(&i))
+                && (prop_mask.is_empty() || prop_mask.intersects(maj.prop))
+                && series_filter
+                    .as_ref()
+                    .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())))
+            {
+                unsafe {
+                    candidates.insert_unchecked(i);
                 }
             }
         }

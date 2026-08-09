@@ -6,7 +6,7 @@
 	import { Box, Camera, ChevronDown, Cylinder, Palette, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
-	import { listPaints, getCatalog, paintId, floatRgbToCss, type SearchResult } from '$lib/paints';
+	import { listPaints, getCatalog, paintId, floatRgbToCss, SURFACE_BITS, type SearchResult } from '$lib/paints';
 	import { searchAsync } from '$lib/searchClient';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
@@ -204,7 +204,7 @@
 		const opts = {
 			series,
 			all,
-			surfaces: [...searchFilters.surfaceTypes] as string[],
+			surfaces: searchFilters.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
 			bases: searchFilters.baseTypes.map((x) => +x),
 			mix: searchFilters.mixingLimit,
 			limit: 12
