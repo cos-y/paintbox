@@ -14,7 +14,7 @@
 		findDirectEquivalences,
 		SURFACE_BITS,
 		type PaintInfo
-	} from '$lib/paints';
+	} from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { similarity } from '$lib/utils.svelte';

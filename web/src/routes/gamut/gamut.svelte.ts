@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'paintbox:gamutSettings';
+const STORAGE_KEY = 'paintbox:gamut';
 
 export interface SerializedSource {
 	id: string;
@@ -23,12 +23,26 @@ export interface GamutData {
 
 export function loadGamut(): GamutData {
 	if (typeof localStorage === 'undefined')
-		return { sources: [], clipL: [0, 16], clipA: [-12, 14], clipB: [-15, 12], nextId: 0, persisted: false };
+		return {
+			sources: [],
+			clipL: [0, 16],
+			clipA: [-12, 14],
+			clipB: [-15, 12],
+			nextId: 0,
+			persisted: false
+		};
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
 		if (raw) return { ...JSON.parse(raw), persisted: true };
 	} catch {}
-	return { sources: [], clipL: [0, 16], clipA: [-12, 14], clipB: [-15, 12], nextId: 0, persisted: false };
+	return {
+		sources: [],
+		clipL: [0, 16],
+		clipA: [-12, 14],
+		clipB: [-15, 12],
+		nextId: 0,
+		persisted: false
+	};
 }
 
 export function saveGamut(data: GamutData) {

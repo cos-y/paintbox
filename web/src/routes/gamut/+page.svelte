@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { listPaints, paintId, type PaintInfo } from '$lib/paints';
+	import { listPaints, paintId, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
@@ -9,7 +9,7 @@
 	import Scene from './scene.svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
-	import { loadGamut, saveGamut, type SerializedSource } from '$lib/gamutSettings.svelte';
+	import { loadGamut, saveGamut, type SerializedSource } from './gamut.svelte';
 	import * as THREE from 'three';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';

@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'paintbox:searchFilters';
+const STORAGE_KEY = 'paintbox:search';
 
 interface Serialized {
 	selectedSeries: string[];
@@ -19,7 +19,7 @@ function load(): Serialized {
 	return { selectedSeries: [], surfaceTypes: [], baseTypes: [], searchScope: 0, mixingLimit: 0, model: 0 };
 }
 
-class SearchFilterStore {
+class SearchStore {
 	selectedSeries = $state<Set<string>>(new Set(load().selectedSeries));
 	surfaceTypes = $state<string[]>(load().surfaceTypes);
 	baseTypes = $state<string[]>(load().baseTypes);
@@ -49,4 +49,4 @@ class SearchFilterStore {
 	}
 }
 
-export const searchFilters = new SearchFilterStore();
+export const search = new SearchStore();

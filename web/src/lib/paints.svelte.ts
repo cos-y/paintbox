@@ -39,10 +39,6 @@ export const rgbToHex = (rgb: number) => `#${rgb.toString(16).padStart(6, '0')}`
 export const floatRgbToCss = ([r, g, b]: [number, number, number]) =>
 	`rgb(${Math.round(r * 255)} ${Math.round(g * 255)} ${Math.round(b * 255)})`;
 
-export const listPaints = (): PaintInfo[] => {
-	return (list_paints() as PaintInfo[]) ?? [];
-};
-
 export interface SearchResultPortion {
 	t: number;
 	brand: string;
@@ -84,20 +80,36 @@ export interface PaintCatalog {
 	};
 }
 
-export const getCatalog = (paints: PaintInfo[]): PaintCatalog => {
-	const catalog: PaintCatalog = {};
-	for (const paint of paints) {
-		let brand = catalog[paint.brand];
-		if (brand === undefined) {
-			brand = catalog[paint.brand] = {};
-		}
+// ---- 全局数据：模块级单例，页面间导航不重新计算（数据源在 wasm 里一次性加载，不可变）----
 
-		let serie = brand[paint.serie];
-		if (serie === undefined) {
-			serie = brand[paint.serie] = [];
-		}
+let paints = $state<PaintInfo[] | null>(null);
 
-		serie.push(paint);
+export const listPaints = (): PaintInfo[] => {
+	if (paints === null) {
+		paints = (list_paints() as PaintInfo[]) ?? [];
+	}
+	return paints;
+};
+
+let catalog = $state<PaintCatalog | null>(null);
+
+export const getCatalog = (paintsArg: PaintInfo[]): PaintCatalog => {
+	if (catalog === null) {
+		const c: PaintCatalog = {};
+		for (const paint of paintsArg) {
+			let brand = c[paint.brand];
+			if (brand === undefined) {
+				brand = c[paint.brand] = {};
+			}
+
+			let serie = brand[paint.serie];
+			if (serie === undefined) {
+				serie = brand[paint.serie] = [];
+			}
+
+			serie.push(paint);
+		}
+		catalog = c;
 	}
 	return catalog;
 };

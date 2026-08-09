@@ -12,9 +12,9 @@
 		paintId,
 		floatRgbToCss,
 		SURFACE_BITS,
-		type SearchResult
-	} from '$lib/paints';
-	import { searchAsync } from '$lib/searchClient';
+		type SearchResult,
+		type FilterOptions
+	} from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { clamp, similarity, isSm } from '$lib/utils.svelte';
@@ -22,9 +22,10 @@
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
-	import { searchFilters } from '$lib/searchFilters.svelte';
+	import { search } from './search.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
+	import { callWasm, WorkerCancelled } from '$lib/wasmClient';
 
 	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
@@ -154,40 +155,57 @@
 
 	const toggleSerie = (brand: string, serie: string) => {
 		const key = serieKey(brand, serie);
-		const next = new Set(searchFilters.selectedSeries);
+		const next = new Set(search.selectedSeries);
 		if (next.has(key)) next.delete(key);
 		else next.add(key);
-		searchFilters.selectedSeries = next;
+		search.selectedSeries = next;
 	};
 
 	const isBrandFullySelected = (brand: string) =>
-		Object.keys(catalog[brand]).every((s) => searchFilters.selectedSeries.has(serieKey(brand, s)));
+		Object.keys(catalog[brand]).every((s) => search.selectedSeries.has(serieKey(brand, s)));
 
 	const selectedCountInBrand = (brand: string) =>
-		Object.keys(catalog[brand]).filter((s) => searchFilters.selectedSeries.has(serieKey(brand, s)))
-			.length;
+		Object.keys(catalog[brand]).filter((s) => search.selectedSeries.has(serieKey(brand, s))).length;
 
 	const toggleBrandAll = (brand: string) => {
 		const on = !isBrandFullySelected(brand);
-		const next = new Set(searchFilters.selectedSeries);
+		const next = new Set(search.selectedSeries);
 		for (const s of Object.keys(catalog[brand])) {
 			const key = serieKey(brand, s);
 			if (on) next.add(key);
 			else next.delete(key);
 		}
-		searchFilters.selectedSeries = next;
+		search.selectedSeries = next;
 	};
 
 	const isDefaultFilter = $derived(
-		searchFilters.selectedSeries.size == 0 &&
-			searchFilters.surfaceTypes.length == 0 &&
-			searchFilters.baseTypes.length == 0 &&
-			!searchFilters.searchScope &&
-			searchFilters.mixingLimit == 0
+		search.selectedSeries.size == 0 &&
+			search.surfaceTypes.length == 0 &&
+			search.baseTypes.length == 0 &&
+			!search.searchScope &&
+			search.mixingLimit == 0
 	);
 
 	const resetFilter = () => {
-		searchFilters.reset();
+		search.reset();
+	};
+
+	// search 的薄封装，保持原有接口。底层走通用 wasm RPC 客户端：
+	// 新请求会取消（terminate）仍在执行的旧请求。被取消的请求这里静默返回空数组，
+	// 维持旧行为（旧实现里被取消的 Promise 直接丢弃、不 resolve）。
+	const searchAsync = async (rgb: number, opts: FilterOptions): Promise<SearchResult[]> => {
+		try {
+			const results = await callWasm<SearchResult[] | null>('search', [rgb, opts], {
+				cancelInFlight: true
+			});
+			return results ?? [];
+		} catch (err) {
+			if (err instanceof WorkerCancelled) {
+				// 被更新的请求抢占，返回空，让调用方忽略这次结果
+				return [];
+			}
+			throw err;
+		}
 	};
 
 	let results: SearchResult[] = $state([]);
@@ -199,21 +217,21 @@
 		const seq = ++searchSeq;
 		searching = true;
 
-		const series = [...searchFilters.selectedSeries].map((key) => {
+		const series = [...search.selectedSeries].map((key) => {
 			const [brand, serie] = key.split('::');
 			return [brand, serie];
 		});
 		const all =
 			// FIXME: optimize performance
-			searchFilters.searchScope == 0
+			search.searchScope == 0
 				? undefined
 				: allPaints.filter((p) => stock.has(paintId(p))).map((p) => p.index);
 		const opts = {
 			series,
 			all,
-			surfaces: searchFilters.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
-			bases: searchFilters.baseTypes.map((x) => +x),
-			mix: searchFilters.mixingLimit,
+			surfaces: search.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
+			bases: search.baseTypes.map((x) => +x),
+			mix: search.mixingLimit,
 			limit: 12
 		};
 
@@ -229,13 +247,13 @@
 
 	$effect(() => {
 		// track all filter state for persistence
-		searchFilters.selectedSeries;
-		searchFilters.surfaceTypes;
-		searchFilters.baseTypes;
-		searchFilters.searchScope;
-		searchFilters.mixingLimit;
-		searchFilters.model;
-		searchFilters.persist();
+		search.selectedSeries;
+		search.surfaceTypes;
+		search.baseTypes;
+		search.searchScope;
+		search.mixingLimit;
+		search.model;
+		search.persist();
 	});
 </script>
 
@@ -291,7 +309,7 @@
 {/snippet}
 
 {#snippet colorPicker()}
-	{@const Picker = [Hsl, Rgb][searchFilters.model]}
+	{@const Picker = [Hsl, Rgb][search.model]}
 
 	<div class="grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col">
 		<div>
@@ -309,7 +327,7 @@
 				<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
 			{/snippet}
 
-			<Select class="w-full" options={[hsl, rgb]} bind:value={searchFilters.model} />
+			<Select class="w-full" options={[hsl, rgb]} bind:value={search.model} />
 		</div>
 
 		<div class="min-w-45 sm:max-w-135">
@@ -321,11 +339,11 @@
 {#snippet selectSeries()}
 	<Button size="xs" color="alternative" class="relative w-32 cursor-pointer justify-start gap-1">
 		{t('search.series')}
-		{#if searchFilters.selectedSeries.size > 0}
+		{#if search.selectedSeries.size > 0}
 			<Badge
 				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
 			>
-				{searchFilters.selectedSeries.size}
+				{search.selectedSeries.size}
 			</Badge>
 		{:else}
 			{t('search.any')}
@@ -426,13 +444,13 @@
 								class="text-xs text-primary-500 hover:underline dark:text-primary-400"
 								onclick={() => toggleBrandAll(brand)}
 							>
-								{isBrandFullySelected(brand) ? t('search.cancelAll') : t('search.selectAll')}
+								{isBrandFullySelected(brand) ? t('search.resetFilter') : t('search.selectAll')}
 							</button>
 						</div>
 						<div class="grid grid-cols-4 gap-2.5">
 							{#each Object.entries(series) as [serie, paints]}
 								{@const serieMeta = getSerieMeta(brand, serie)}
-								{@const selected = searchFilters.selectedSeries.has(serieKey(brand, serie))}
+								{@const selected = search.selectedSeries.has(serieKey(brand, serie))}
 								<div
 									role="button"
 									tabindex="0"
@@ -556,7 +574,7 @@
 					W: t('search.surface.W')
 				}}
 				title={t('search.surfaceTitle')}
-				bind:value={searchFilters.surfaceTypes}
+				bind:value={search.surfaceTypes}
 			/>
 
 			<MultiSelect
@@ -569,22 +587,22 @@
 					3: t('search.base.3')
 				}}
 				title={t('search.baseTitle')}
-				bind:value={searchFilters.baseTypes}
+				bind:value={search.baseTypes}
 			/>
 
 			<Select
 				tooltip={t('search.scopeTooltip')}
 				class="w-28 text-xs"
 				options={[t('search.market'), t('search.myStock')]}
-				bind:value={searchFilters.searchScope}
+				bind:value={search.searchScope}
 			/>
 
 			<Select
 				tooltip={t('search.mixTooltip')}
 				class="w-28 text-xs"
 				options={[t('search.mixOff'), t('search.mix1'), t('search.mix2')]}
-				bind:value={searchFilters.mixingLimit}
-				disabled={searchFilters.searchScope != 1}
+				bind:value={search.mixingLimit}
+				disabled={search.searchScope != 1}
 				disabledValue={0}
 				disabledTooltip={t('search.mixScopeRequired')}
 			/>
