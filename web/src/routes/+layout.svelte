@@ -1,14 +1,14 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { Package, Search, Palette, Info, Eclipse } from '@lucide/svelte';
+	import { Package, Search, Info, Eclipse } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 
-	let { children } = $props();
+	let { data, children } = $props();
 
 	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
 		{ key: 'nav.stock', route: '/stock', svg: Package },
@@ -83,7 +83,9 @@
 	<main
 		class="h-full flex-1 overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
 	>
-		{@render children()}
+		{#if data.wasmReady}
+			{@render children()}
+		{/if}
 	</main>
 
 	<!-- mobile bottom nav -->

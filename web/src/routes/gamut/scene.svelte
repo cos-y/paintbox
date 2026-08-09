@@ -3,6 +3,7 @@
 	import { T, useThrelte } from '@threlte/core';
 	import * as THREE from 'three';
 	import { clamp, linearToSrgb } from '$lib/utils.svelte';
+	import { sceneProps } from './gamut.svelte';
 
 	const { toneMapping, invalidate, renderer } = useThrelte();
 	toneMapping.set(THREE.NoToneMapping);
@@ -14,13 +15,28 @@
 		colors: Float32Array;
 		clip: THREE.Vector3[];
 		range: THREE.Vector3[];
-		defaultZoom?: number;
 		onselect?: (rgb: [number, number, number], hex: string) => void;
 	}
 
-	const { matrices, colors, ndiv, clip, range, defaultZoom = 1, onselect }: Props = $props();
+	const { matrices, colors, ndiv, clip, range, onselect }: Props = $props();
 
-	const zoom = $state(defaultZoom);
+	// 相机角度双向同步：OrbitControls 变化写回 sceneProps；sceneProps 变化驱动相机
+	let orbitControls: any = $state();
+	const sameVec = (a: [number, number, number], b: [number, number, number]) =>
+		a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+	const syncCamera = () => {
+		if (!orbitControls) return;
+		const cam = orbitControls.object as THREE.PerspectiveCamera;
+		const pos: [number, number, number] = [cam.position.x, cam.position.y, cam.position.z];
+		const tgt: [number, number, number] = [
+			orbitControls.target.x,
+			orbitControls.target.y,
+			orbitControls.target.z
+		];
+		// 内容相同时不赋值（$state 数组按引用比较），避免 damping 每帧更新造成环路
+		if (!sameVec(sceneProps.cameraPos, pos)) sceneProps.cameraPos = pos;
+		if (!sameVec(sceneProps.cameraTarget, tgt)) sceneProps.cameraTarget = tgt;
+	};
 
 	interactivity({
 		filter(items) {
@@ -105,13 +121,18 @@
 <T.PerspectiveCamera
 	makeDefault
 	fov={50}
-	position={[3, 0.5, 1]}
+	position={sceneProps.cameraPos}
 	oncreate={(ref) => {
-		ref.lookAt(0, 0, 0);
+		ref.lookAt(...sceneProps.cameraTarget);
 	}}
-	{zoom}
+	zoom={sceneProps.zoom}
 >
-	<OrbitControls enableDamping={true} enableZoom={true}>
+	<OrbitControls
+		bind:ref={orbitControls}
+		enableDamping={true}
+		enableZoom={true}
+		onchange={syncCamera}
+	>
 		<Gizmo x={{ label: 'L' }} y={{ label: 'a' }} z={{ label: 'b' }} />
 	</OrbitControls>
 </T.PerspectiveCamera>

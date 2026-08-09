@@ -3,18 +3,15 @@
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
-	import { onDestroy, tick, type Snippet } from 'svelte';
-	import { callWasm } from '$lib/wasmClient';
+	import { tick, type Snippet } from 'svelte';
 	import { Canvas } from '@threlte/core';
 	import Scene from './scene.svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
-	import { loadGamut, saveGamut, type SerializedSource } from './gamut.svelte';
-	import * as THREE from 'three';
+	import { store, sceneProps, ndiv, rangeL, rangeA, rangeB, type SerializedSource } from './gamut.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
-	import { isSm, isCoarse, clamp } from '$lib/utils.svelte';
-	import { isTauri } from '@tauri-apps/api/core';
+	import { isSm, isCoarse } from '$lib/utils.svelte';
 
 	const allPaints = listPaints();
 
@@ -79,34 +76,12 @@
 		});
 	}
 
-	const ndiv = isTauri() ? 12 : 16;
-
-	const persisted = loadGamut();
-	// 首次使用（无持久化记录）默认一个 My Stock 卡片；有记录则严格按记录加载（用户删光 stock 也不复活）
-	const initialSources: Source[] = persisted.persisted
-		? hydrateSources(persisted.sources)
-		: [{ id: String(persisted.nextId), type: 'stock', hidden: false }];
+	const initialSources: Source[] = store.persisted
+		? hydrateSources(store.sources)
+		: [{ id: String(store.nextId), type: 'stock', hidden: false }];
 	let sources: Source[] = $state(initialSources);
-	let nextId = persisted.persisted ? persisted.nextId : persisted.nextId + 1;
-	let gamut: string | undefined;
-	let task: Promise<any>;
+	let nextId = store.persisted ? store.nextId : store.nextId + 1;
 
-	const freeGamut = async (gamut: string) => {
-		console.log('Gamut::free');
-		await callWasm<void>('free', [gamut]).catch(() => {});
-	};
-
-	// 页面销毁时释放 wasm 持有的 Gamut 内存（worker 是全局共享单例，不能 terminate，只 free 对象）
-	let destroyed = false;
-	onDestroy(() => {
-		destroyed = true;
-		if (gamut !== undefined) {
-			freeGamut(gamut).catch(() => {});
-			gamut = undefined;
-		}
-	});
-
-	let localColors = $state(new Set<number>());
 	const colors = $derived.by(() => {
 		const li = new Set<number>();
 		for (const src of sources) {
@@ -120,51 +95,10 @@
 		return li;
 	});
 
+	// gamut 维护流程（重建/增量/句柄生命周期）在 gamut.svelte.ts 的 sceneProps 里，
+	// 这里只把颜色集合喂给它；切页回来输入相同则不重算。
 	$effect(() => {
-		const updateScene = async (gamut: string) => {
-			const [matrices, colors] = await Promise.all([
-				callWasm<Float32Array>('gamut_matrices', [gamut]),
-				callWasm<Float32Array>('gamut_colors', [gamut])
-			]);
-			scene.matrices = matrices;
-			scene.colors = colors;
-		};
-		const remColors = localColors.difference(colors);
-		if (remColors.size > 0 || task === undefined) {
-			const fn = async () => {
-				const newGamut = await callWasm<string>('new_gamut', [ndiv, new Uint32Array(colors)], {
-					cancelInFlight: true
-				});
-				console.log('Gamut::new');
-				if (gamut !== undefined) {
-					await freeGamut(gamut);
-				}
-				gamut = newGamut;
-				if (destroyed) {
-					// 页面已销毁：释放刚创建的对象，避免泄漏
-					await freeGamut(newGamut);
-					return;
-				}
-				await updateScene(newGamut);
-			};
-			task = fn();
-		} else {
-			const newColors = colors.difference(localColors);
-			if (newColors.size > 0) {
-				const fn = async (task: Promise<any>) => {
-					await task;
-					if (destroyed) return;
-					const modified = await callWasm<boolean>('gamut_insert_many', [
-						gamut,
-						new Uint32Array(newColors)
-					]);
-					console.log('Gamut::insert', modified);
-					if (modified && gamut !== undefined) await updateScene(gamut);
-				};
-				task = fn(task);
-			}
-		}
-		localColors = colors;
+		sceneProps.updateColors(colors);
 	});
 
 	const hasStock = $derived(sources.some((s) => s.type === 'stock'));
@@ -333,29 +267,6 @@
 		selectedColor = { rgb, hex };
 	}
 
-	const rangeL: [number, number] = $derived([0, ndiv]);
-	const rangeA: [number, number] = $derived([-Math.ceil(0.7 * ndiv), Math.ceil(0.85 * ndiv)]);
-	const rangeB: [number, number] = $derived([-Math.ceil(0.9 * ndiv), Math.ceil(0.7 * ndiv)]);
-
-	let clipL = $state(persisted.clipL.map((x) => clamp(x, ...rangeL)) as [number, number]);
-	let clipA = $state(persisted.clipA.map((x) => clamp(x, ...rangeA)) as [number, number]);
-	let clipB = $state(persisted.clipB.map((x) => clamp(x, ...rangeB)) as [number, number]);
-
-	class SceneProps {
-		matrices = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
-		colors = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
-		clip = $derived([
-			new THREE.Vector3(clipL[0], clipA[0], clipB[0]),
-			new THREE.Vector3(clipL[1], clipA[1], clipB[1])
-		]);
-		range = $derived([
-			new THREE.Vector3(rangeL[0], rangeA[0], rangeB[0]),
-			new THREE.Vector3(rangeL[1], rangeA[1], rangeB[1])
-		]);
-		defaultZoom = $derived(isSm() ? 1 : 1.5);
-	}
-	const scene = new SceneProps();
-
 	function handleInputTab(e: KeyboardEvent, src: Source) {
 		if (e.key === 'Tab' && !e.shiftKey && src.id === sources.at(-1)?.id) {
 			e.preventDefault();
@@ -440,7 +351,12 @@
 	}
 
 	$effect(() => {
-		saveGamut({ sources: serializeSources(sources), clipL, clipA, clipB, nextId, persisted: true });
+		store.sources = serializeSources(sources);
+		store.clipL = sceneProps.clipL;
+		store.clipA = sceneProps.clipA;
+		store.clipB = sceneProps.clipB;
+		store.nextId = nextId;
+		store.persist();
 	});
 </script>
 
@@ -695,7 +611,7 @@
 <div class="flex h-full flex-col sm:flex-row">
 	<div class="relative h-80 min-w-0 bg-gray-950 sm:h-auto sm:flex-1">
 		<Canvas>
-			<Scene {ndiv} {...scene} onselect={handleSelect} />
+			<Scene {ndiv} {...sceneProps} onselect={handleSelect} />
 		</Canvas>
 	</div>
 
@@ -712,21 +628,21 @@
 				min={rangeL[0]}
 				max={rangeL[1]}
 				step={1}
-				bind:value={clipL}
+				bind:value={sceneProps.clipL}
 			/>
 			<RangeSlider
 				gradient={['#67ff00', '#ff0000']}
 				min={rangeA[0]}
 				max={rangeA[1]}
 				step={1}
-				bind:value={clipA}
+				bind:value={sceneProps.clipA}
 			/>
 			<RangeSlider
 				gradient={['#0021ff', '#fff504']}
 				min={rangeB[0]}
 				max={rangeB[1]}
 				step={1}
-				bind:value={clipB}
+				bind:value={sceneProps.clipB}
 			/>
 		</CollapseGroup>
 

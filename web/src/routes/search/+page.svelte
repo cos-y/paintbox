@@ -6,47 +6,35 @@
 	import { Box, Camera, ChevronDown, Cylinder, Palette, Pipette, Funnel } from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
-	import {
-		listPaints,
-		getCatalog,
-		paintId,
-		floatRgbToCss,
-		SURFACE_BITS,
-		type SearchResult,
-		type FilterOptions
-	} from '$lib/paints.svelte';
-	import { stock } from '$lib/stock.svelte';
+	import { listPaints, getCatalog, floatRgbToCss } from '$lib/paints.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { clamp, similarity, isSm } from '$lib/utils.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
-	import { search } from './search.svelte';
+	import { store, rt } from './search.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
-	import { callWasm, WorkerCancelled } from '$lib/wasmClient';
 
 	useMode(modeHsl);
 	const toHwb = useMode(modeHwb);
 	const toRgb = useMode(modeRgb);
 	const toOklch = useMode(modeOklch);
 
-	let oklch: Oklch = $state(toOklch({ mode: 'hsl', h: 189, s: 0.797, l: 0.465 }));
-	const hwb = $derived(toHwb(oklch));
-	const rgb = $derived(toRgb(oklch));
-
 	// 取色板初始颜色优先级：URL的?color=参数 > localStorage里存的上次颜色 > 默认黑色
-	const LAST_COLOR_KEY = 'paintbox:lastColor';
-	const initialColorParam =
-		page.url.searchParams.get('color') ?? localStorage.getItem(LAST_COLOR_KEY);
-	if (initialColorParam && /^[0-9a-fA-F]{6}$/.test(initialColorParam)) {
-		const hex = parseInt(initialColorParam, 16);
-		const r = ((hex >> 16) & 0xff) / 255;
-		const g = ((hex >> 8) & 0xff) / 255;
-		const b = (hex & 0xff) / 255;
-		oklch = toOklch({ mode: 'rgb', r, g, b });
+	let hex = store.color;
+	const color = page.url.searchParams.get('color');
+	if (color && /^[0-9a-fA-F]{6}$/.test(color)) {
+		hex = parseInt(color, 16);
 	}
+	const r = ((hex >> 16) & 0xff) / 255;
+	const g = ((hex >> 8) & 0xff) / 255;
+	const b = (hex & 0xff) / 255;
+
+	let oklch: Oklch = $state(toOklch({ mode: 'rgb', r, g, b }));
+	const rgb = $derived(toRgb(oklch));
+	const hwb = $derived(toHwb(oklch));
 
 	const hasEyeDropper = $derived('EyeDropper' in window);
 
@@ -84,7 +72,6 @@
 		const b = clamp(Math.round(rgb.b * 255), 0, 255);
 		return (r << 16) | (g << 8) | b;
 	});
-
 	const allPaints = listPaints();
 	const catalog = getCatalog(allPaints);
 	const paintByKey = new Map(allPaints.map((p) => [`${p.brand}:${p.code}`, p]));
@@ -95,19 +82,6 @@
 		params.set('code', code);
 		return `/stock?${params.toString()}`;
 	};
-
-	$effect(() => {
-		const hex = rgbInt.toString(16).padStart(6, '0');
-		const handle = setTimeout(() => {
-			localStorage.setItem(LAST_COLOR_KEY, hex);
-			const url = new URL(page.url);
-			if (url.searchParams.get('color') !== hex) {
-				url.searchParams.set('color', hex);
-				goto(url, { replaceState: true, keepFocus: true, noScroll: true });
-			}
-		}, 300);
-		return () => clearTimeout(handle);
-	});
 
 	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
 
@@ -155,105 +129,70 @@
 
 	const toggleSerie = (brand: string, serie: string) => {
 		const key = serieKey(brand, serie);
-		const next = new Set(search.selectedSeries);
+		const next = new Set(store.selectedSeries);
 		if (next.has(key)) next.delete(key);
 		else next.add(key);
-		search.selectedSeries = next;
+		store.selectedSeries = next;
 	};
 
 	const isBrandFullySelected = (brand: string) =>
-		Object.keys(catalog[brand]).every((s) => search.selectedSeries.has(serieKey(brand, s)));
+		Object.keys(catalog[brand]).every((s) => store.selectedSeries.has(serieKey(brand, s)));
 
 	const selectedCountInBrand = (brand: string) =>
-		Object.keys(catalog[brand]).filter((s) => search.selectedSeries.has(serieKey(brand, s))).length;
+		Object.keys(catalog[brand]).filter((s) => store.selectedSeries.has(serieKey(brand, s))).length;
 
 	const toggleBrandAll = (brand: string) => {
 		const on = !isBrandFullySelected(brand);
-		const next = new Set(search.selectedSeries);
+		const next = new Set(store.selectedSeries);
 		for (const s of Object.keys(catalog[brand])) {
 			const key = serieKey(brand, s);
 			if (on) next.add(key);
 			else next.delete(key);
 		}
-		search.selectedSeries = next;
+		store.selectedSeries = next;
 	};
 
 	const isDefaultFilter = $derived(
-		search.selectedSeries.size == 0 &&
-			search.surfaceTypes.length == 0 &&
-			search.baseTypes.length == 0 &&
-			!search.searchScope &&
-			search.mixingLimit == 0
+		store.selectedSeries.size == 0 &&
+			store.surfaceTypes.length == 0 &&
+			store.baseTypes.length == 0 &&
+			!store.searchScope &&
+			store.mixingLimit == 0
 	);
 
 	const resetFilter = () => {
-		search.reset();
+		store.reset();
 	};
 
 	// search 的薄封装，保持原有接口。底层走通用 wasm RPC 客户端：
 	// 新请求会取消（terminate）仍在执行的旧请求。被取消的请求这里静默返回空数组，
-	// 维持旧行为（旧实现里被取消的 Promise 直接丢弃、不 resolve）。
-	const searchAsync = async (rgb: number, opts: FilterOptions): Promise<SearchResult[]> => {
-		try {
-			const results = await callWasm<SearchResult[] | null>('search', [rgb, opts], {
-				cancelInFlight: true
-			});
-			return results ?? [];
-		} catch (err) {
-			if (err instanceof WorkerCancelled) {
-				// 被更新的请求抢占，返回空，让调用方忽略这次结果
-				return [];
-			}
-			throw err;
-		}
-	};
-
-	let results: SearchResult[] = $state([]);
-	let searching = $state(false);
-	let searchSeq = 0;
-
+	// 把取色板当前颜色写入模块级运行时状态并触发搜索；maybeSearch 内部比较
+	// (color, filter, stock) 签名，无变化时跳过（切页回来不会重新搜索）。
 	$effect(() => {
-		const targetRgb = rgbInt;
-		const seq = ++searchSeq;
-		searching = true;
+		store.color = rgbInt;
+		store.persist();
+		rt.search();
 
-		const series = [...search.selectedSeries].map((key) => {
-			const [brand, serie] = key.split('::');
-			return [brand, serie];
-		});
-		const all =
-			// FIXME: optimize performance
-			search.searchScope == 0
-				? undefined
-				: allPaints.filter((p) => stock.has(paintId(p))).map((p) => p.index);
-		const opts = {
-			series,
-			all,
-			surfaces: search.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
-			bases: search.baseTypes.map((x) => +x),
-			mix: search.mixingLimit,
-			limit: 12
-		};
-
-		const handle = setTimeout(async () => {
-			const r = await searchAsync(targetRgb, opts);
-			if (seq === searchSeq) {
-				results = r;
-				searching = false;
+		const handle = setTimeout(() => {
+			const hex = rgbInt.toString(16).padStart(6, '0');
+			const url = new URL(page.url);
+			if (url.searchParams.get('color') !== hex) {
+				url.searchParams.set('color', hex);
+				goto(url, { replaceState: true, keepFocus: true, noScroll: true });
 			}
-		}, 200);
+		}, 300);
 		return () => clearTimeout(handle);
 	});
 
 	$effect(() => {
 		// track all filter state for persistence
-		search.selectedSeries;
-		search.surfaceTypes;
-		search.baseTypes;
-		search.searchScope;
-		search.mixingLimit;
-		search.model;
-		search.persist();
+		store.selectedSeries;
+		store.surfaceTypes;
+		store.baseTypes;
+		store.searchScope;
+		store.mixingLimit;
+		store.model;
+		store.persist();
 	});
 </script>
 
@@ -309,7 +248,7 @@
 {/snippet}
 
 {#snippet colorPicker()}
-	{@const Picker = [Hsl, Rgb][search.model]}
+	{@const Picker = [Hsl, Rgb][store.model]}
 
 	<div class="grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col">
 		<div>
@@ -327,7 +266,7 @@
 				<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
 			{/snippet}
 
-			<Select class="w-full" options={[hsl, rgb]} bind:value={search.model} />
+			<Select class="w-full" options={[hsl, rgb]} bind:value={store.model} />
 		</div>
 
 		<div class="min-w-45 sm:max-w-135">
@@ -339,11 +278,11 @@
 {#snippet selectSeries()}
 	<Button size="xs" color="alternative" class="relative w-32 cursor-pointer justify-start gap-1">
 		{t('search.series')}
-		{#if search.selectedSeries.size > 0}
+		{#if store.selectedSeries.size > 0}
 			<Badge
 				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
 			>
-				{search.selectedSeries.size}
+				{store.selectedSeries.size}
 			</Badge>
 		{:else}
 			{t('search.any')}
@@ -450,7 +389,7 @@
 						<div class="grid grid-cols-4 gap-2.5">
 							{#each Object.entries(series) as [serie, paints]}
 								{@const serieMeta = getSerieMeta(brand, serie)}
-								{@const selected = search.selectedSeries.has(serieKey(brand, serie))}
+								{@const selected = store.selectedSeries.has(serieKey(brand, serie))}
 								<div
 									role="button"
 									tabindex="0"
@@ -574,7 +513,7 @@
 					W: t('search.surface.W')
 				}}
 				title={t('search.surfaceTitle')}
-				bind:value={search.surfaceTypes}
+				bind:value={store.surfaceTypes}
 			/>
 
 			<MultiSelect
@@ -587,22 +526,22 @@
 					3: t('search.base.3')
 				}}
 				title={t('search.baseTitle')}
-				bind:value={search.baseTypes}
+				bind:value={store.baseTypes}
 			/>
 
 			<Select
 				tooltip={t('search.scopeTooltip')}
 				class="w-28 text-xs"
 				options={[t('search.market'), t('search.myStock')]}
-				bind:value={search.searchScope}
+				bind:value={store.searchScope}
 			/>
 
 			<Select
 				tooltip={t('search.mixTooltip')}
 				class="w-28 text-xs"
 				options={[t('search.mixOff'), t('search.mix1'), t('search.mix2')]}
-				bind:value={search.mixingLimit}
-				disabled={search.searchScope != 1}
+				bind:value={store.mixingLimit}
+				disabled={store.searchScope != 1}
 				disabledValue={0}
 				disabledTooltip={t('search.mixScopeRequired')}
 			/>
@@ -622,9 +561,11 @@
 	</div>
 
 	<div class="mt-4 pb-4">
-		<h3 class="mb-2 text-sm font-semibold">{t('search.results', { n: results.length })}</h3>
+		<h3 class="mb-2 text-sm font-semibold">
+			{t('search.results', { n: rt.results.length })}
+		</h3>
 		<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
-			{#if searching}
+			{#if rt.searching}
 				{#each Array(8) as _}
 					<div
 						class="animate-pulse overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
@@ -637,7 +578,7 @@
 					</div>
 				{/each}
 			{:else}
-				{#each results as r, i (i)}
+				{#each rt.results as r, i (i)}
 					{@const isMix = r.portions.length > 1}
 					<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
 						<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
