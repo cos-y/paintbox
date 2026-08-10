@@ -9,7 +9,6 @@ export interface PaintInfo {
 	index: number;
 	brand: string;
 	code: string;
-	desc: string;
 	serie: string;
 	serie_code: string;
 	rgb: number;
@@ -43,7 +42,6 @@ export interface SearchResultPortion {
 	t: number;
 	brand: string;
 	code: string;
-	desc: string;
 	rgb: [number, number, number];
 }
 

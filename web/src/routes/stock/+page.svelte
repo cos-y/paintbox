@@ -18,6 +18,7 @@
 	import { stock } from '$lib/stock.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { similarity } from '$lib/utils.svelte';
+	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import StockFilterRow from '$lib/components/StockFilterRow.svelte';
@@ -172,7 +173,7 @@
 	const matches = (p: PaintInfo): boolean => {
 		const q = query.trim().toLowerCase();
 		if (!q) return true;
-		return p.code.toLowerCase().includes(q) || (p.desc ?? '').toLowerCase().includes(q);
+		return p.code.toLowerCase().includes(q) || paintDesc(p).toLowerCase().includes(q);
 	};
 
 	const isSearching = $derived(searchOpen && query.trim().length > 0);
@@ -523,7 +524,7 @@
 								? 'ring-[3px] ring-primary-500'
 								: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
 							style="background-color: {rgbToHex(paint.rgb)}"
-							title={paint.desc}
+							title={paintDesc(paint)}
 						>
 							<button
 								type="button"
@@ -557,7 +558,7 @@
 								<div class="truncate text-[9px] leading-tight text-white/75">
 									{showSerie
 										? (getSerieMeta(paint.brand, paint.serie)?.name ?? paint.serie)
-										: paint.desc}
+										: paintDesc(paint)}
 								</div>
 							</div>
 						</div>
@@ -593,7 +594,7 @@
 								<div>
 									<span class="text-4xl font-bold">{paint.code}</span>
 								</div>
-								<div class="font-bold text-gray-500 dark:text-gray-400">{paint.desc}</div>
+								<div class="font-bold text-gray-500 dark:text-gray-400">{paintDesc(paint)}</div>
 							</div>
 							<button
 								type="button"
@@ -647,7 +648,7 @@
 								{/if}
 								<div class="text-right">
 									<div class="font-bold text-gray-500 dark:text-gray-400">
-										{comparePaint.desc}
+										{paintDesc(comparePaint)}
 									</div>
 									<div>
 										{@render labelPrimary(comparePaint)}

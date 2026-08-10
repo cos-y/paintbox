@@ -15,6 +15,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import { store, rt } from './search.svelte';
 	import { t } from '$lib/i18n.svelte';
+	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 
 	useMode(modeHsl);
@@ -608,7 +609,7 @@
 							</div>
 							{#if !isMix}
 								<div class="mt-0.5 truncate pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
-									{r.portions[0].desc}
+									{paintDesc(r.portions[0])}
 								</div>
 							{/if}
 							<div class="mt-1.5 flex items-center justify-between text-[10px] text-gray-400">

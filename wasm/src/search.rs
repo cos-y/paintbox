@@ -21,7 +21,6 @@ pub struct PaintInfo {
     pub serie: String,
     pub code: String,
     pub rgb: u32,
-    pub desc: String,
     pub base: u8,
     pub prop: SurfaceType,
 }
@@ -139,7 +138,6 @@ pub struct SearchResultPortion {
     pub t: f32,
     pub brand: String,
     pub code: String,
-    pub desc: String,
     pub rgb: [f32; 3],
 }
 
@@ -339,7 +337,6 @@ impl Searcher {
                         t: t,
                         brand: major.brand.clone(),
                         code: major.code.clone(),
-                        desc: major.desc.clone(),
                         rgb: [rgb.r, rgb.g, rgb.b],
                     }
                 })

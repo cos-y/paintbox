@@ -18,6 +18,7 @@
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import { isSm, isCoarse } from '$lib/utils.svelte';
+	import { paintDesc } from '$lib/i18ndyn.svelte';
 
 	const allPaints = listPaints();
 
@@ -261,7 +262,7 @@
 				(p) =>
 					p.code.toLowerCase().includes(q) ||
 					p.brand.toLowerCase().includes(q) ||
-					p.desc.toLowerCase().includes(q) ||
+					paintDesc(p).toLowerCase().includes(q) ||
 					`${p.brand} ${p.code}`.toLowerCase().includes(q)
 			)
 			.slice(0, 20);
@@ -414,7 +415,7 @@
 			></div>
 			<div class="min-w-0 flex-1 text-xs">
 				<div class="font-semibold uppercase">{src.paint.brand}/{src.paint.code}</div>
-				<div class="truncate text-gray-500 dark:text-gray-400">{src.paint.desc}</div>
+				<div class="truncate text-gray-500 dark:text-gray-400">{paintDesc(src.paint)}</div>
 			</div>
 			<button
 				type="button"
@@ -498,7 +499,7 @@
 								style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
 							></span>
 							<span class="font-semibold uppercase">{p.brand}/{p.code}</span>
-							<span class="truncate text-gray-500 dark:text-gray-400">{p.desc}</span>
+							<span class="truncate text-gray-500 dark:text-gray-400">{paintDesc(p)}</span>
 						</button>
 					{/each}
 				</div>

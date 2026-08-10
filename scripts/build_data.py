@@ -1,22 +1,26 @@
 import csv
+import json
 import os
 
 # 脚本所在目录（scripts/）与项目根目录
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 
-li = [['brand', 'serie', 'code', 'color', 'desc', 'base', 'prop']]
+li = [['brand', 'serie', 'code', 'color', 'base', 'prop']]
+
+raw = {}
 
 with open(os.path.join(SCRIPT_DIR, "gunze.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
+    raw['gunze'] = tr = {}
     for base, serie, code, color, desc, prop, _ in reader:
+        tr[code] = desc
         li.append((
             'gunze',
             serie,
             code,
             int(color[1:], 16),
-            desc,
             1 << int(base),
             prop,
         ))
@@ -26,13 +30,14 @@ with open(os.path.join(SCRIPT_DIR, "tamiya.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     tamiya = []
+    raw['tamiya'] = tr = {}
     for color, serie, code, desc, prop, base in reader:
+        tr[code] = desc
         tamiya.append((
             'tamiya',
             serie,
             code,
             int(color[1:], 16),
-            desc,
             base,
             prop,
         ))
@@ -51,14 +56,16 @@ with open(os.path.join(SCRIPT_DIR, "ak.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     ak = []
+    raw['ak'] = tr = {}
     for row in reader:
         code, serie, desc, color = row[0:4]
+        code = code[2:]
+        tr[code] = desc
         ak.append((
             'ak',
             serie,
-            code[2:],
+            code,
             int(color[1:], 16),
-            desc,
             1 << 3,
             'ME' if serie == 'M' else \
             'C' if desc.startswith('Clear ') else \
@@ -74,13 +81,14 @@ with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     av = []
+    raw['av'] = tr = {}
     for prop, serie, ref, desc, color in reader:
+        tr[ref] = desc
         av.append((
             'av',
             serie,
             ref,
             int(color[1:], 16),
-            desc,
             1 << 1 if serie == 'LM' else 1 << 3,
             prop,
         ))
@@ -92,3 +100,6 @@ with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
 with open(os.path.join(ROOT, "web/static/colors.csv"), "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerows(li)
+
+with open(os.path.join(ROOT, "web/static/paints/raw.json"), "w", newline="", encoding="utf-8") as f:
+    json.dump(raw, f, indent=2)

@@ -1,6 +1,7 @@
 import type { LayoutLoad } from './$types';
 import init, { init_searcher } from '../wasm-pkg/paintbox_wasm';
 import { loadMeta } from '$lib/meta';
+import { loadPaintNames } from '$lib/i18ndyn.svelte';
 
 export const ssr = false;
 export const prerender = true;
@@ -14,7 +15,8 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		init(),
 		fetch('/colors.csv').then((data) => data.arrayBuffer()),
 		fetch('/equivalences.csv').then((data) => data.arrayBuffer()),
-		loadMeta(fetch)
+		loadMeta(fetch),
+		loadPaintNames(fetch)
 	]);
 	init_searcher(new Uint8Array(data), new Uint8Array(equivData));
 	return { wasmReady: true };
