@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.2.10] - 2026-08-10
+
+### Added
+
+- Full Chinese localization of all paint names (2,151 paints across Gunze, Tamiya, AK and Vallejo): translated names are shown in the zh locale and matched by the stock/gamut name search.
+- English names normalized for Gunze paints (all-caps catalog names converted to proper title case, e.g. CERULEAN BLUE → Cerulean Blue), added to en.json together with Tamiya's English translations.
+- Per-language paint dictionaries now cover every brand: zh.json and en.json each contain all 2,151 paints, so the app fetches only the dictionary matching the user's language.
+
+### Changed
+
+- Paint names are resolved through a new `i18ndyn` module that loads only the language-specific JSON up front and swaps dictionaries live when the language is switched on the About page (no reload).
+- Paint data slimmed down: the `desc` column was removed from colors.csv and from the wasm search result (smaller data file); display names are now looked up from the translation dictionaries by brand + code.
+
+### Fixed
+
+- Switching from Search to Gamut no longer freezes the UI: the 3D scene (three.js / @threlte Canvas) is now loaded lazily after the page renders, with a loading placeholder shown while WebGL initializes (previously the main thread blocked for several seconds).
+
 ## [0.2.9] - 2026-08-10
 
 ### Changed
@@ -148,6 +165,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.2.10]: https://github.com/cos-y/paintbox/releases/tag/v0.2.10
 [0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9
 [0.2.7]: https://github.com/cos-y/paintbox/releases/tag/v0.2.7
 [0.2.6]: https://github.com/cos-y/paintbox/releases/tag/v0.2.6
