@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.2.11] - 2026-08-10
+
+### Added
+
+- Lazy page loading: Search, Stock and Gamut pages now render through a shared lazy shell (`LazyPage`) that dynamically imports the page implementation only after the layout load (wasm init + data fetch) has finished. Page code can no longer run before the paint data is ready, which removes the `wasmReady` rendering gate and the need for per-module wasm-readiness checks.
+
+### Changed
+
+- Stock store simplified to a plain set of paint ids; paint indices are resolved on the fly from the paint data instead of being cached per entry.
+- Stale stock entries (paints no longer present in the data source, e.g. after a catalog id update) are automatically pruned, persisted and skipped during iteration — fixing search failures where an invalid index reached the wasm search, the deserialization errored (`-1.0, expected usize`) and the page was left with zero results.
+
+### Removed
+
+- Direct-equivalence catalog (brand cross-reference, e.g. Gunze H9 ↔ Gunze C9) from the wasm backend and frontend; color-based lookalikes remain available through nearest-color search.
+
 ## [0.2.10] - 2026-08-10
 
 ### Added
@@ -165,6 +180,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.2.11]: https://github.com/cos-y/paintbox/releases/tag/v0.2.11
 [0.2.10]: https://github.com/cos-y/paintbox/releases/tag/v0.2.10
 [0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9
 [0.2.7]: https://github.com/cos-y/paintbox/releases/tag/v0.2.7
