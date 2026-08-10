@@ -62,18 +62,6 @@ export function color_diff(a, b) {
     return ret;
 }
 
-/**
- * @param {number} index
- * @returns {any}
- */
-export function find_direct_equivalences(index) {
-    const ret = wasm.find_direct_equivalences(index);
-    if (ret[2]) {
-        throw takeFromExternrefTable0(ret[1]);
-    }
-    return takeFromExternrefTable0(ret[0]);
-}
-
 export function init_panic_hook() {
     wasm.init_panic_hook();
 }

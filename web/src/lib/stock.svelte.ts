@@ -20,38 +20,27 @@ const loadFromStorage = (): string[] => {
 	}
 };
 
-// id -> index 懒构建缓存。
-// 注意：wasmReady 门控只保证组件渲染在 wasm 之后，但页面 chunk 的模块求值（顶层代码）
-// 与 layout load 并行竞速，模块顶层调 listPaints() 会拿到未初始化的 wasm（实测报错）。
-// 因此只在运行时（用户交互 / 遍历）才解析 index。
-let indexById: Map<string, number> | null = null;
-const ensureIndex = (): Map<string, number> => {
-	if (indexById === null) {
-		indexById = new Map(listPaints().map((p) => [paintId(p), p.index]));
-	}
-	return indexById;
-};
+const indexMap = new Map(listPaints().map((p) => [paintId(p), p.index]));
 
 class StockStore {
 	/** 库存：key 是持久化的 id，value 含 listPaints 下标（不持久化） */
-	owned = $state<Map<string, StockEntry>>(
-		new Map(loadFromStorage().map((id) => [id, { id, index: -1 }]))
-	);
-
+	values = $state<Set<string>>(new Set(loadFromStorage()));
 	version = 0;
 
 	has(id: string): boolean {
-		return this.owned.has(id);
+		return this.values.has(id);
 	}
 
-	set(id: string, owned: boolean) {
-		const next = new Map(this.owned);
-		if (owned) {
-			next.set(id, { id, index: ensureIndex().get(id) ?? -1 });
+	set(id: string, value: boolean) {
+		if (this.values.has(id) != value) {
+			if (!value) {
+				this.values.delete(id);
+			} else {
+				this.values.add(id);
+			}
 		} else {
-			next.delete(id);
+			return;
 		}
-		this.owned = next;
 		this.persist();
 		this.version += 1;
 	}
@@ -60,16 +49,31 @@ class StockStore {
 		this.set(id, !this.has(id));
 	}
 
-	/** 遍历所有库存条目（首次调用时解析 index） */
+	/**
+	 * 遍历所有库存条目（index 从数据源实时解析；
+	 * 数据源中已不存在的条目自动跳过，由 prune() 负责持久化清理）
+	 */
 	*entries(): Generator<StockEntry> {
-		const idx = ensureIndex();
-		for (const e of this.owned.values()) {
-			yield { id: e.id, index: idx.get(e.id) ?? -1 };
+		let toRemove = [];
+		for (const id of this.values.values()) {
+			const index = indexMap.get(id);
+			if (index !== undefined) {
+				yield { id, index };
+			} else {
+				toRemove.push(id);
+			}
+		}
+		if (toRemove.length > 0) {
+			for (const id of toRemove) {
+				this.values.delete(id);
+			}
+			this.persist();
+			this.version += 1;
 		}
 	}
 
 	private persist() {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify([...this.owned.keys()]));
+		localStorage.setItem(STORAGE_KEY, JSON.stringify([...this.values.keys()]));
 	}
 }
 

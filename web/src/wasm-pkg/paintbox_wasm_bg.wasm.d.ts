@@ -3,7 +3,6 @@
 export const memory: WebAssembly.Memory;
 export const __wbg_gamut_free: (a: number, b: number) => void;
 export const color_diff: (a: number, b: number) => number;
-export const find_direct_equivalences: (a: number) => [number, number, number];
 export const gamut_colors: (a: number) => any;
 export const gamut_insert: (a: number, b: number) => number;
 export const gamut_insert_many: (a: number, b: number, c: number) => number;

@@ -19,5 +19,5 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		loadPaintNames(fetch)
 	]);
 	init_searcher(new Uint8Array(data), new Uint8Array(equivData));
-	return { wasmReady: true };
 };
+

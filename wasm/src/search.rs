@@ -129,8 +129,6 @@ pub struct Searcher {
     labs: Vec<Oklab>,
     latents: Vec<Latent>,
     kdtree: ImmutableKdTree<f32, 3>,
-    /// 每个油漆型号的直接对应关系（例如Gunze H9 <-> Gunze C9），direct_equivs[i]是与majors[i]对应的其他型号下标
-    direct_equivs: Vec<Vec<usize>>,
 }
 
 #[derive(Debug, Serialize)]
@@ -229,43 +227,12 @@ impl Searcher {
         let points: Vec<[f32; 3]> = labs.iter().map(|x| [x.l, x.a, x.b]).collect();
         let kdtree = ImmutableKdTree::new_from_slice(points.as_slice());
 
-        let direct_equivs = vec![Vec::new(); majors.len()];
-        // let mut direct_equivs = vec![Vec::new(); majors.len()];
-        // let equiv_s = std::str::from_utf8(equiv_blob)?;
-        // let mut equiv_rdr = csv::ReaderBuilder::new()
-        //     .delimiter(b',')
-        //     .has_headers(false)
-        //     .from_reader(equiv_s.as_bytes());
-        // for v in equiv_rdr.records() {
-        //     let ref rec = v?;
-        //     let a: usize = rec
-        //         .get(0)
-        //         .ok_or_else(|| BoxError::new("missing column a"))?
-        //         .parse()?;
-        //     let b: usize = rec
-        //         .get(1)
-        //         .ok_or_else(|| BoxError::new("missing column b"))?
-        //         .parse()?;
-        //     if a < direct_equivs.len() && b < direct_equivs.len() {
-        //         direct_equivs[a].push(b);
-        //         direct_equivs[b].push(a);
-        //     }
-        // }
-
         Ok(Searcher {
             majors,
             labs,
             latents,
             kdtree,
-            direct_equivs,
         })
-    }
-
-    pub fn direct_equivalences(&self, index: usize) -> Vec<&PaintInfo> {
-        let Some(indices) = self.direct_equivs.get(index) else {
-            return vec![];
-        };
-        indices.iter().map(|&i| &self.majors[i]).collect()
     }
 
     pub fn list(&self) -> Vec<&PaintInfo> {

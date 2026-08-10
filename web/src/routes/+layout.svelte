@@ -8,7 +8,7 @@
 	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 
-	let { data, children } = $props();
+	let { children } = $props();
 
 	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
 		{ key: 'nav.stock', route: '/stock', svg: Package },
@@ -83,9 +83,7 @@
 	<main
 		class="h-full flex-1 overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
 	>
-		{#if data.wasmReady}
-			{@render children()}
-		{/if}
+		{@render children()}
 	</main>
 
 	<!-- mobile bottom nav -->

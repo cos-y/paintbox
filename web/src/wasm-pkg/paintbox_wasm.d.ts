@@ -13,8 +13,6 @@ export class Gamut {
 
 export function color_diff(a: number, b: number): number;
 
-export function find_direct_equivalences(index: number): any;
-
 export function init_panic_hook(): void;
 
 export function init_searcher(blob: Uint8Array, equiv_blob: Uint8Array): void;
@@ -31,7 +29,6 @@ export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_gamut_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
-    readonly find_direct_equivalences: (a: number) => [number, number, number];
     readonly gamut_colors: (a: number) => any;
     readonly gamut_insert: (a: number, b: number) => number;
     readonly gamut_insert_many: (a: number, b: number, c: number) => number;

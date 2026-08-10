@@ -38,17 +38,6 @@ pub fn init_searcher(blob: &[u8], equiv_blob: &[u8]) -> Result<(), JsError> {
 }
 
 #[wasm_bindgen]
-pub fn find_direct_equivalences(index: usize) -> Result<JsValue, JsError> {
-    let searcher = SEARCHER.lock()?;
-    if let Some(ref searcher) = *searcher {
-        let r = serde_wasm_bindgen::to_value(&searcher.direct_equivalences(index))?;
-        Ok(r)
-    } else {
-        Ok(JsValue::null())
-    }
-}
-
-#[wasm_bindgen]
 pub fn list_paints() -> Result<JsValue, JsError> {
     let searcher = SEARCHER.lock()?;
     if let Some(ref searcher) = *searcher {

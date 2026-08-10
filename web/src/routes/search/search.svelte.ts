@@ -113,6 +113,7 @@ class SearchRuntime {
 	 * 有变化则 debounce 后重新搜索。
 	 */
 	search() {
+		// 先清理数据源中已失效的库存条目（编号更新后旧 id 不存在），避免 -1 传入 wasm
 		const sig = JSON.stringify([store.color, this.opts, stock.version]);
 		if (sig === this.lastSig) return;
 		this.lastSig = sig;
@@ -130,6 +131,7 @@ class SearchRuntime {
 					this.searching = false;
 				}
 			} catch (err) {
+				console.error(err);
 				if (seq === this.seq && !(err instanceof WorkerCancelled)) {
 					this.searching = false;
 				}
