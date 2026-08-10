@@ -84,6 +84,21 @@
 		return `/stock?${params.toString()}`;
 	};
 
+	/** 混合比例渐变条：按各组分比例生成横向 linear-gradient（色卡下方细细的一条） */
+	const mixGradient = (portions: { t: number; rgb: [number, number, number] }[]): string => {
+		const sum = portions.reduce((s, p) => s + p.t, 0) || 1;
+		let acc = 0;
+		const stops: string[] = [];
+		for (const p of portions) {
+			const start = (acc / sum) * 100;
+			acc += p.t;
+			const end = (acc / sum) * 100;
+			const c = floatRgbToCss(p.rgb);
+			stops.push(`${c} ${start}%`, `${c} ${end}%`);
+		}
+		return `linear-gradient(to right, ${stops.join(', ')})`;
+	};
+
 	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
 
 	let activeFilterBrand: string | null = $state(null);
@@ -491,12 +506,6 @@
 	{/if}
 
 	<div class="flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
-		<!-- <span
-			class="-ml-4 flex items-center gap-1 text-xs whitespace-nowrap text-gray-500 dark:text-gray-400"
-		>
-			<Funnel class="h-4 w-4" />
-		</span> -->
-
 		<div class="flex flex-auto flex-wrap items-center gap-2">
 			{@render selectSeries()}
 
@@ -583,6 +592,12 @@
 					{@const isMix = r.portions.length > 1}
 					<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
 						<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
+						{#if isMix}
+							<div
+								class="h-1.5 w-full border-t border-gray-200 dark:border-gray-700/50"
+								style="background: {mixGradient(r.portions)}"
+							></div>
+						{/if}
 						<div class="p-2">
 							<div class="flex flex-col gap-1">
 								{#each r.portions as p}
