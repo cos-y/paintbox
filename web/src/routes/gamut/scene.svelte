@@ -138,37 +138,37 @@
 </T.PerspectiveCamera>
 
 <T.Group position={[-0.5, 0, 0]}>
-	{#key nvoxels}
-		<T.InstancedMesh
-			{scale}
-			bind:ref={mesh}
-			args={[undefined, undefined, nvoxels]}
-			onpointermove={(e: any) => setHovered(e.instanceId ?? -1)}
-			onpointerleave={() => setHovered(-1)}
-			onclick={(e: any) => {
-				const id = e.instanceId ?? -1;
-				if (id >= 0) {
-					// colors 是 linear sRGB，需先经 sRGB 传递函数转成 8-bit 显示值
-					const toByte = (c: number) => clamp(Math.round(linearToSrgb(c) * 255), 0, 255);
-					const r = toByte(colors[id * 3]);
-					const g = toByte(colors[id * 3 + 1]);
-					const b = toByte(colors[id * 3 + 2]);
-					const hex = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
-					console.log('clicked voxel', id, hex);
-					onselect?.([r, g, b], hex);
-				}
+	<!-- {#key nvoxels} -->
+	<T.InstancedMesh
+		{scale}
+		bind:ref={mesh}
+		args={[undefined, undefined, nvoxels]}
+		onpointermove={(e: any) => setHovered(e.instanceId ?? -1)}
+		onpointerleave={() => setHovered(-1)}
+		onclick={(e: any) => {
+			const id = e.instanceId ?? -1;
+			if (id >= 0) {
+				// colors 是 linear sRGB，需先经 sRGB 传递函数转成 8-bit 显示值
+				const toByte = (c: number) => clamp(Math.round(linearToSrgb(c) * 255), 0, 255);
+				const r = toByte(colors[id * 3]);
+				const g = toByte(colors[id * 3 + 1]);
+				const b = toByte(colors[id * 3 + 2]);
+				const hex = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+				console.log('clicked voxel', id, hex);
+				onselect?.([r, g, b], hex);
+			}
+		}}
+	>
+		<T.InstancedBufferAttribute args={[matrices, 16]} attach="instanceMatrix" />
+		<T.InstancedBufferAttribute args={[colors, 3]} attach="instanceColor" />
+		<!-- <T.InstancedBufferAttribute args={[visible, 1]} attach="aVisible" /> -->
+		<T.BoxGeometry args={[1, 1, 1]} />
+		<T.ShaderMaterial
+			uniforms={{
+				uClipLow: { value: new THREE.Vector3() },
+				uClipHigh: { value: new THREE.Vector3() }
 			}}
-		>
-			<T.InstancedBufferAttribute args={[matrices, 16]} attach="instanceMatrix" />
-			<T.InstancedBufferAttribute args={[colors, 3]} attach="instanceColor" />
-			<!-- <T.InstancedBufferAttribute args={[visible, 1]} attach="aVisible" /> -->
-			<T.BoxGeometry args={[1, 1, 1]} />
-			<T.ShaderMaterial
-				uniforms={{
-					uClipLow: { value: new THREE.Vector3() },
-					uClipHigh: { value: new THREE.Vector3() }
-				}}
-				fragmentShader={`
+			fragmentShader={`
 					#include <common>
 					#include <color_pars_fragment>
 
@@ -182,7 +182,7 @@
 						#include <tonemapping_fragment>
 						#include <colorspace_fragment>
 					}`}
-				vertexShader={`
+			vertexShader={`
 					#include <common>
 					#include <color_pars_vertex>
 
@@ -203,9 +203,9 @@
 						#include <begin_vertex>
 						#include <project_vertex>
 					}`}
-			/>
-		</T.InstancedMesh>
-	{/key}
+		/>
+	</T.InstancedMesh>
+	<!-- {/key} -->
 
 	<T.ArrowHelper
 		args={[new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 1.25, 0xff3653, 0.15]}

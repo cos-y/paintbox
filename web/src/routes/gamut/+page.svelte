@@ -3,17 +3,38 @@
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
-	import { tick, type Snippet } from 'svelte';
-	import { Canvas } from '@threlte/core';
-	import Scene from './scene.svelte';
+	import { tick, type Component, type Snippet } from 'svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
-	import { store, sceneProps, ndiv, rangeL, rangeA, rangeB, type SerializedSource } from './gamut.svelte';
+	import {
+		store,
+		sceneProps,
+		ndiv,
+		rangeL,
+		rangeA,
+		rangeB,
+		type SerializedSource
+	} from './gamut.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import { isSm, isCoarse } from '$lib/utils.svelte';
 
 	const allPaints = listPaints();
+
+	// Canvas/Scene 动态加载：切换页面时先渲染 UI，Three.js 模块加载和
+	// WebGL 场景初始化（shader 编译等）在后台异步进行，不阻塞主线程。
+	// 模块级缓存 promise：第二次进入页面立即 resolve。
+	type SceneModule = {
+		Canvas: typeof import('@threlte/core').Canvas;
+		Scene: typeof import('./scene.svelte').default;
+	};
+	let scenePromise: Promise<SceneModule> | null = null;
+	function loadScene(): Promise<SceneModule> {
+		scenePromise ??= Promise.all([import('./scene.svelte'), import('@threlte/core')]).then(
+			([{ default: Scene }, { Canvas }]) => ({ Canvas, Scene })
+		);
+		return scenePromise;
+	}
 
 	interface ColorSource {
 		id: string;
@@ -610,9 +631,17 @@
 
 <div class="flex h-full flex-col sm:flex-row">
 	<div class="relative h-80 min-w-0 bg-gray-950 sm:h-auto sm:flex-1">
-		<Canvas>
-			<Scene {ndiv} {...sceneProps} onselect={handleSelect} />
-		</Canvas>
+		{#await loadScene()}
+			<div class="flex h-full w-full items-center justify-center">
+				<div
+					class="h-8 w-8 animate-spin rounded-full border-2 border-gray-700 border-t-primary-500"
+				></div>
+			</div>
+		{:then { Canvas, Scene }}
+			<Canvas>
+				<Scene {ndiv} {...sceneProps} onselect={handleSelect} />
+			</Canvas>
+		{/await}
 	</div>
 
 	<div
