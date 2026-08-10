@@ -4,11 +4,21 @@
 	import { Package, Search, Info, Eclipse } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import { goto, beforeNavigate } from '$app/navigation';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
+	import { viewStack } from '$lib/viewstack.svelte';
+	import ViewSheet from '$lib/components/ViewSheet.svelte';
+	import ViewOverlay from '$lib/components/ViewOverlay.svelte';
+	import { isSm } from '$lib/utils.svelte';
 
 	let { children } = $props();
+
+	// 非返回型导航（切段/跳转）清空视图栈；系统返回（popstate）由视图栈自身弹栈处理
+	// 清栈走动画：与页面切换并行播关闭动画，播完才真正清栈
+	beforeNavigate((navigation) => {
+		if (navigation.type !== 'popstate') viewStack.clear();
+	});
 
 	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
 		{ key: 'nav.stock', route: '/stock', svg: Package },
@@ -54,7 +64,7 @@
 {/if} -->
 <!-- TODO: -->
 
-<div class="flex h-dvh w-screen overflow-hidden">
+<div class="relative flex h-dvh w-screen overflow-hidden">
 	<!-- desktop sidebar -->
 	<aside class="hidden h-full w-16 shrink-0 overflow-y-auto bg-gray-50 sm:block dark:bg-gray-800">
 		<ul class="flex h-full w-full flex-col space-y-1 overflow-hidden py-2">
@@ -85,6 +95,13 @@
 	>
 		{@render children()}
 	</main>
+
+	<!-- 全局视图栈：手机端底部卡片，桌面端全屏压栈 -->
+	{#if !isSm()}
+		<ViewSheet />
+	{:else}
+		<ViewOverlay />
+	{/if}
 
 	<!-- mobile bottom nav -->
 	<nav

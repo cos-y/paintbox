@@ -31,6 +31,91 @@
   @apply grid grid-flow-row gap-3;
 }
 
+/* #region slider-input */
+
+/* 交互由轨道层的 Pointer Events 承担（slider-track），原生 input 只保留视觉与键盘可达性，
+   所以它的 thumb 几何（宽度会影响取值映射）不再重要，统一收窄为 1px 并隐藏 */
+input[type=range].slider-input {
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* #region slider-track */
+/* 轨道交互层：Pointer Events 拖拽 + 触摸手势声明（竖滑滚动页面，横滑驱动滑条） */
+.slider-track {
+  touch-action: pan-y pinch-zoom;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* #endregion */
+
+input[type=range].slider-input::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  cursor: ew-resize
+}
+
+input[type=range].slider-input::-moz-range-track {
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  cursor: ew-resize
+}
+
+input[type=range].slider-input::-ms-track {
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  cursor: ew-resize
+}
+
+input[type=range].slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+  cursor: ew-resize;
+  position: relative;
+  z-index: 20
+}
+
+input[type=range].slider-input::-moz-range-thumb {
+  -moz-appearance: none;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+  cursor: ew-resize;
+  position: relative;
+  z-index: 20
+}
+
+input[type=range].slider-input::-ms-thumb {
+  -ms-appearance: none;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+  cursor: ew-resize;
+  position: relative;
+  z-index: 20
+}
+
 /* #endregion */
 
 /* #region slider handle */
@@ -58,20 +143,20 @@
   box-shadow: var(--slider-thumb-box-shadow);
 }
 
-input:hover+.slider-thumb:after,
-input:focus+.slider-thumb:after,
-input:active+.slider-thumb:after {
+.slider-track:hover .slider-thumb:after,
+.slider-track:focus-within .slider-thumb:after,
+.slider-track:active .slider-thumb:after {
   width: 32px;
   left: -16px;
   rotate: 45deg;
   scale: 1.1
 }
 
-input:hover+.slider-thumb:after {
+.slider-track:hover .slider-thumb:after {
   box-shadow: var(--slider-thumb-box-shadow-hover)
 }
 
-input:focus+.slider-thumb:after {
+.slider-track:focus-within .slider-thumb:after {
   box-shadow: var(--slider-thumb-box-shadow-focus);
   transition-duration: 0s
 }
@@ -87,9 +172,9 @@ input:focus+.slider-thumb:after {
     left: -4px
   }
 
-  input:hover+.slider-thumb:after,
-  input:focus+.slider-thumb:after,
-  input:active+.slider-thumb:after {
+  .slider-track:hover .slider-thumb:after,
+  .slider-track:focus-within .slider-thumb:after,
+  .slider-track:active .slider-thumb:after {
     width: 20px;
     left: -10px;
     rotate: 45deg;

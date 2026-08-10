@@ -2,6 +2,7 @@ import type { LayoutLoad } from './$types';
 import init, { init_searcher } from '../wasm-pkg/paintbox_wasm';
 import { loadMeta } from '$lib/meta';
 import { loadPaintNames } from '$lib/i18ndyn.svelte';
+import { initEquivs } from '$lib/equivs.svelte';
 
 export const ssr = false;
 export const prerender = true;
@@ -18,6 +19,7 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		loadMeta(fetch),
 		loadPaintNames(fetch)
 	]);
+	initEquivs(new TextDecoder().decode(equivData));
 	init_searcher(new Uint8Array(data), new Uint8Array(equivData));
 };
 

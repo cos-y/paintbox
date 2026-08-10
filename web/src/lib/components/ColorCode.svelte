@@ -11,8 +11,8 @@
 		/** extra legality check on the parsed params (e.g. range bounds); false -> red ring, no oninput */
 		validate?: (params: string[]) => boolean;
 		class?: string;
+		inputClass?: string;
 		readonly?: boolean;
-		textAlign?: 'left' | 'center' | 'right';
 	}
 
 	const {
@@ -23,7 +23,7 @@
 		validate,
 		class: clz,
 		readonly,
-		textAlign = 'center'
+		inputClass
 	}: Props = $props();
 	const regexp = $derived(new RegExp(re));
 
@@ -75,8 +75,8 @@
 
 <div class="relative {clz}">
 	<Input
-		class={`text-xs! font-mono p-2 text-${textAlign} w-full${
-			error ? ' ring-2! ring-red-500! border-red-500!' : ''
+		class={`p-2 text-center font-mono text-xs! ${inputClass} w-full${
+			error ? ' border-red-500! ring-2! ring-red-500!' : ''
 		}`}
 		type="text"
 		name="rgb"
@@ -91,10 +91,10 @@
 		onblur={handleBlur}
 		{readonly}
 	/>
-	<div class="absolute right-0 top-1/2 -translate-y-1/2 flex font-mono">
+	<div class="absolute top-1/2 right-0 flex -translate-y-1/2 font-mono">
 		<button
-			class="px-2 py-2 cursor-pointer text-gray-400 hover:text-gray-200
-				outline-offset-0 focus:rounded-lg focus:outline-2 focus:outline-primary-500"
+			class="cursor-pointer px-2 py-2 text-gray-400 outline-offset-0
+				hover:text-gray-200 focus:rounded-lg focus:outline-2 focus:outline-primary-500"
 			onclick={handleCopy}
 			onmouseenter={handleMouseEnter}
 		>

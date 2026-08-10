@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { listPaints, paintId, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
-	import { Plus, X, Search, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
+	import { Plus, X, Search, Droplet, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
-	import { tick, type Component, type Snippet } from 'svelte';
+	import { tick, type Snippet } from 'svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
 	import DropdownButton from '$lib/components/DropdownButton.svelte';
 	import {
@@ -620,7 +620,7 @@
 	{#snippet color()}<span
 			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-gradient-to-br from-red-400 via-green-400 to-blue-500"
 		></span>{t('gamut.color')}{/snippet}
-	{#snippet paint()}<Search class="h-3.5 w-3.5" />{t('gamut.paint')}{/snippet}
+	{#snippet paint()}<Droplet class="h-3.5 w-3.5" />{t('gamut.paint')}{/snippet}
 	{#snippet stock()}<Package class="h-3.5 w-3.5" />{t('gamut.myStock')}{/snippet}
 	{@const options = [
 		{ onclick: addColor, children: color },
@@ -708,6 +708,7 @@
 						text={selectedColor.hex}
 						class="w-full"
 						onfocus={(e) => (e.target as HTMLInputElement).select()}
+						inputClass="dark:bg-gray-800"
 						readonly
 					/>
 				</div>

@@ -5,6 +5,9 @@ import { untrack } from 'svelte';
 
 const STORAGE_KEY = 'paintbox:search';
 
+/** 展示面板模式：调色板 / 摄像机（仅 Tauri）/ 油漆 */
+export type SourceMode = 'palette' | 'camera' | 'paint';
+
 interface Serialized {
 	selectedSeries: string[];
 	surfaceTypes: string[];
@@ -12,26 +15,35 @@ interface Serialized {
 	searchScope: number;
 	mixingLimit: number;
 	model: number;
-	/** 取色板上次颜色（hex），与 URL ?color= 互为备份 */
+	/** 取色板上次颜色（hex），localStorage 持久化 */
 	color: number;
+	/** 展示面板模式（持久化：刷新/重开后按模式直接进入对应面板） */
+	source: SourceMode;
+	/** 油漆模式锚点：详情页「调配/查看全部」设置，油漆信息展示与颜色来源解析依据 */
+	paintKey: string | null;
 }
+
+const DEFAULT: Serialized = {
+	selectedSeries: [],
+	surfaceTypes: [],
+	baseTypes: [],
+	searchScope: 0,
+	mixingLimit: 0,
+	model: 0,
+	color: 0x18b9d5,
+	source: 'palette',
+	paintKey: null
+};
 
 function load(): Serialized {
 	try {
 		if (typeof localStorage !== 'undefined') {
 			const raw = localStorage.getItem(STORAGE_KEY);
-			if (raw) return JSON.parse(raw);
+			// 与默认值合并：兼容旧版本缺省字段的持久化数据
+			if (raw) return { ...DEFAULT, ...JSON.parse(raw) };
 		}
 	} catch {}
-	return {
-		selectedSeries: [],
-		surfaceTypes: [],
-		baseTypes: [],
-		searchScope: 0,
-		mixingLimit: 0,
-		model: 0,
-		color: 0x18b9d5
-	};
+	return { ...DEFAULT };
 }
 
 // 只读一次持久化数据，供 SearchStore 各字段复用（避免每字段一次 load）
@@ -45,6 +57,8 @@ class SearchStore {
 	mixingLimit = $state(initial.mixingLimit);
 	model = $state(initial.model);
 	color = $state<number>(initial.color);
+	source = $state<SourceMode>(initial.source);
+	paintKey = $state<string | null>(initial.paintKey);
 
 	persist() {
 		untrack(() => {
@@ -55,7 +69,9 @@ class SearchStore {
 				searchScope: this.searchScope,
 				mixingLimit: this.mixingLimit,
 				model: this.model,
-				color: this.color
+				color: this.color,
+				source: this.source,
+				paintKey: this.paintKey
 			};
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 		});
@@ -68,6 +84,8 @@ class SearchStore {
 		this.searchScope = 0;
 		this.mixingLimit = 0;
 		this.color = 0x18b9d5;
+		this.paintKey = null;
+		this.source = 'palette';
 		this.persist();
 	}
 }

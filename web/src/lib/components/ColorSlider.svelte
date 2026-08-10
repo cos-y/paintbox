@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { clamp } from '$lib/utils.svelte';
 	import { Input } from 'flowbite-svelte';
+	import { useSlider } from './slider';
 	import './style.css';
 
 	interface Props {
@@ -17,8 +18,23 @@
 	const step = $derived(Math.pow(0.1, precision));
 
 	const left = $derived.by(() => {
-		return clamp(value / (max - min), 0, 1) * 100;
+		return clamp((value - min) / (max - min), 0, 1) * 100;
 	});
+
+	// 指针拖拽：值按指针在轨道宽度上的比例线性映射，移动端没有原生 44px thumb 的 22px 偏差。
+	// 原生 input 只保留视觉与键盘可达性（tabindex=-1，实际无键盘交互）。
+	let trackEl = $state<HTMLElement | null>(null);
+	const slider = $derived(
+		useSlider({
+			el: () => trackEl,
+			min,
+			max,
+			step,
+			start: (t) => min + t * (max - min),
+			move: (t) => min + t * (max - min),
+			oninput: (v) => oninput(v)
+		})
+	);
 
 	// ---- number text box ----
 	// While the box is focused (editing) its text is never overwritten by prop
@@ -62,19 +78,25 @@
 </script>
 
 <div class="flex h-9 items-center gap-2 sm:h-6">
-	<div class="relative h-full w-full flex-3">
+	<div
+		class="slider-track relative h-full w-full flex-3"
+		role="group"
+		bind:this={trackEl}
+		onpointerdown={slider.pointerdown}
+		onpointermove={slider.pointermove}
+		onpointerup={slider.pointerup}
+		onpointercancel={slider.pointercancel}
+	>
 		<input
-			class="no-handle pointer-auto m-0 h-full
-				w-full touch-pan-y touch-pinch-zoom appearance-none
-				rounded-lg border border-gray-600
-				outline-0 select-none disabled:opacity-50"
+			class="slider-input
+				rounded-lg border border-gray-600 disabled:opacity-50"
 			tabindex="-1"
 			type="range"
 			{min}
 			{max}
 			{step}
 			{value}
-			{style}
+			style={`pointer-events: none; ${style}`}
 			oninput={handleSliderInput}
 		/>
 		<div class="slider-thumb" style="left: {left}%"></div>

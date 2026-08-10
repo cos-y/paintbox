@@ -1,3 +1,6 @@
+import { isTauri } from '@tauri-apps/api/core';
+import { openUrl } from '@tauri-apps/plugin-opener';
+
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
 /** sRGB transfer function: linear [0,1] -> sRGB [0,1] */
@@ -36,3 +39,8 @@ if (typeof window !== 'undefined') {
 
 export const isSm = () => isSm_;
 export const isCoarse = () => isCoarse_;
+
+export const openExternal = (url: string) => {
+	if (isTauri()) openUrl(url);
+	else window.open(url, '_blank', 'noopener');
+};

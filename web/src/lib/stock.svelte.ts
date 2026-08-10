@@ -32,15 +32,15 @@ class StockStore {
 	}
 
 	set(id: string, value: boolean) {
-		if (this.values.has(id) != value) {
-			if (!value) {
-				this.values.delete(id);
-			} else {
-				this.values.add(id);
-			}
+		if (this.values.has(id) === value) return;
+		// $state 不代理 Set/Map，原地 add/delete 不会触发响应式更新；必须整体替换
+		const next = new Set(this.values);
+		if (value) {
+			next.add(id);
 		} else {
-			return;
+			next.delete(id);
 		}
+		this.values = next;
 		this.persist();
 		this.version += 1;
 	}
@@ -64,9 +64,11 @@ class StockStore {
 			}
 		}
 		if (toRemove.length > 0) {
+			const next = new Set(this.values);
 			for (const id of toRemove) {
-				this.values.delete(id);
+				next.delete(id);
 			}
+			this.values = next;
 			this.persist();
 			this.version += 1;
 		}

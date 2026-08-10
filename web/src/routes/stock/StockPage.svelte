@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus, Search, X, ArrowUpDown, Funnel } from '@lucide/svelte';
+	import { ChevronLeft, Check, Plus, Search, X, Funnel, ArrowDownWideNarrow } from '@lucide/svelte';
 	import { Card, Button, Badge, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
@@ -9,37 +9,34 @@
 		getCatalog,
 		paintId,
 		rgbToHex,
-		searchNearest,
-		colorDiff,
-		findDirectEquivalences,
 		SURFACE_BITS,
 		type PaintInfo
 	} from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
+	import { stockNav } from '$lib/stocknav.svelte';
+	import { isSm } from '$lib/utils.svelte';
+	import { viewStack } from '$lib/viewstack.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { similarity } from '$lib/utils.svelte';
+	import PaintDetail from '$lib/components/PaintDetail.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import StockFilterRow from '$lib/components/StockFilterRow.svelte';
 
 	const allPaints = listPaints();
-	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
 	const catalog = getCatalog(allPaints);
 
-	// 用查询参数（?brand=&serie=&code=）驱动状态，而不是纯内部state：
-	// 这样浏览时地址栏会实时更新，且任意页面都能通过完整URL直接分享/刷新进入，
-	// 同时因为只有查询参数在变、路径始终是同一个/stock，静态文件服务器不需要
-	// 为每个品牌/系列/型号单独生成页面文件。
-	const selectedBrand = $derived(page.url.searchParams.get('brand') ?? '');
-	const selectedSerieParam = $derived(page.url.searchParams.get('serie'));
-	const selectedCode = $derived(page.url.searchParams.get('code'));
+	// 导航层级从运行时 store 读取（跨路由存活）；首次挂载/刷新时由 URL 查询参数初始化，
+	// 之后 navigateTo 写回 store 并同步 URL（保留分享/刷新进入能力）。
+	const selectedBrand = $derived(stockNav.brand);
 
 	const currentBrandGroup = $derived(catalog[selectedBrand] ?? {});
-	const selectedSerie = $derived(selectedSerieParam ?? Object.keys(currentBrandGroup)[0] ?? null);
-	const currentSerieGroup = $derived(currentBrandGroup[selectedSerie] ?? []);
+	const selectedSerie = $derived(stockNav.serie || Object.keys(currentBrandGroup)[0] || null);
+	const currentSerieGroup = $derived(
+		selectedSerie != null ? (currentBrandGroup[selectedSerie] ?? []) : []
+	);
 	const selectedPaint = $derived(
-		selectedCode ? (currentSerieGroup.find((p) => p.code === selectedCode) ?? null) : null
+		stockNav.code ? (currentSerieGroup.find((p) => p.code === stockNav.code) ?? null) : null
 	);
 
 	const level = $derived(selectedPaint ? 2 : selectedBrand ? 1 : 0);
@@ -58,6 +55,9 @@
 		serie?: string | null;
 		code?: string | null;
 	}) => {
+		stockNav.brand = params.brand ?? '';
+		stockNav.serie = params.serie ?? '';
+		stockNav.code = params.code ?? '';
 		const url = new URL(page.url);
 		url.search = '';
 		if (params.brand) url.searchParams.set('brand', params.brand);
@@ -65,6 +65,18 @@
 		if (params.code) url.searchParams.set('code', params.code);
 		goto(url, { replaceState: false, keepFocus: true, noScroll: true });
 	};
+
+	// 首次挂载：store 无导航时从 URL 查询参数恢复（直接打开/刷新分享链接）
+	$effect(() => {
+		if (!stockNav.brand) {
+			const b = page.url.searchParams.get('brand');
+			if (b) {
+				stockNav.brand = b;
+				stockNav.serie = page.url.searchParams.get('serie') ?? '';
+				stockNav.code = page.url.searchParams.get('code') ?? '';
+			}
+		}
+	});
 
 	const selectBrand = (brand: string) => {
 		const serie = Object.keys(catalog[brand] ?? {})[0] ?? null;
@@ -77,7 +89,16 @@
 	};
 
 	const selectPaint = (paint: PaintInfo) => {
-		navigateTo({ brand: paint.brand, serie: paint.serie, code: paint.code });
+		if (!isSm()) {
+			// 手机端：底部卡片弹出详情，scrim 单击退回列表
+			viewStack.push({
+				key: paintId(paint),
+				component: PaintDetail,
+				props: { paint, inStack: true, isStockPage: true }
+			});
+		} else {
+			navigateTo({ brand: paint.brand, serie: paint.serie, code: paint.code });
+		}
 	};
 
 	const goToLevel0 = () => navigateTo({});
@@ -89,44 +110,13 @@
 
 	const goBack = () => (level === 2 ? goToLevel1() : goToLevel0());
 
-	// 相近同色漆：按颜色距离查询得到的、颜色相近但名字不一定相关的油漆
-	const colorEquivalences = $derived.by(() => {
-		if (!selectedPaint) return [];
-		const paint = selectedPaint;
-		return searchNearest(paint.rgb, { mix: 0, limit: 8 })
-			.map((r) => paintByKey.get(paintId(r.portions[0])))
-			.filter((p): p is PaintInfo => !!p && !(p.brand === paint.brand && p.code === paint.code));
-	});
-
-	// 直接等价：数据来源里的品牌对照表（例如Gunze H9 <-> Gunze C9），名字/型号对应但颜色不一定相近
-	const directEquivalences = $derived(
-		selectedPaint ? findDirectEquivalences(selectedPaint.index) : []
-	);
-
-	// 点击相近同色漆/直接等价里的某个方块时，在原色下方拼接一个对比条（单选，再点一次取消）
-	let compareCode = $state<string | null>(null);
-	$effect(() => {
-		selectedPaint;
-		compareCode = null;
-	});
-	const comparePaint = $derived(compareCode ? (paintByKey.get(compareCode) ?? null) : null);
-	const compareDeltaE = $derived(
-		selectedPaint && comparePaint ? colorDiff(selectedPaint.rgb, comparePaint.rgb) : null
-	);
-	const toggleCompare = (p: PaintInfo) => {
-		const key = paintId(p);
-		compareCode = compareCode === key ? null : key;
-	};
-
-	// ---- 排序 / 搜索（品牌内跨系列） ----
-	let sortKey = $state(0);
-	let sortOpen = $state(false);
-	let searchOpen = $state(false);
-	let query = $state('');
-	// 筛选：漆面 + 溶剂（空数组 = 不限，AND）
-	let filterOpen = $state(false);
-	let surfSel = $state<string[]>([]);
-	let baseSel = $state<string[]>([]);
+	// ---- 排序 / 搜索（品牌内跨系列）与筛选：状态放运行时 store，跨路由切回保持 ----
+	const sortKey = $derived(stockNav.sortKey);
+	const searchOpen = $derived(stockNav.searchOpen);
+	const query = $derived(stockNav.query);
+	const filterOpen = $derived(stockNav.filterOpen);
+	const surfSel = $derived(stockNav.surfSel);
+	const baseSel = $derived(stockNav.baseSel);
 	const baseFilter = $derived(
 		baseSel.length == 0 ? 0x7fffffff : baseSel.reduce((a, b) => a | (1 << +b), 0)
 	);
@@ -241,7 +231,7 @@
 						autofocus
 						in:fade={{ duration: 150 }}
 						out:fade={{ duration: 150 }}
-						bind:value={query}
+						bind:value={stockNav.query}
 						placeholder={t('stock.searchPlaceholder')}
 						class="absolute top-1/2 left-0 h-9 w-full -translate-y-1/2
 							rounded-md border border-gray-200 bg-gray-100 px-2 py-1.5 text-sm
@@ -256,8 +246,8 @@
 					<button
 						type="button"
 						onclick={() => {
-							searchOpen = false;
-							query = '';
+							stockNav.searchOpen = false;
+							stockNav.query = '';
 						}}
 						title={t('stock.closeSearch')}
 						class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -267,7 +257,7 @@
 				{:else}
 					<button
 						type="button"
-						onclick={() => (searchOpen = true)}
+						onclick={() => (stockNav.searchOpen = true)}
 						title={t('stock.searchTitle')}
 						class="cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
 					>
@@ -283,14 +273,14 @@
 						t('stock.sortLight'),
 						t('stock.sortStock')
 					]}
-					bind:value={sortKey}
+					bind:value={stockNav.sortKey}
 					class="rounded-full border-0 p-1.5
 					text-gray-500 ring-0! dark:bg-gray-900 dark:hover:bg-gray-700"
 					activeClass="dark:bg-gray-700 dark:text-white"
 					lockWidth={false}
 					placement="bottom-end"
 				>
-					<ArrowUpDown class="h-4 w-4" />
+					<ArrowDownWideNarrow class="h-4 w-4" />
 				</Select>
 			{/if}
 		</div>
@@ -316,7 +306,7 @@
 					</span>
 				{/if}
 			</button>
-			<Dropdown class="list-none overflow-hidden!" placement="bottom-end" bind:isOpen={filterOpen}>
+			<Dropdown class="list-none overflow-hidden!" placement="bottom-end" bind:isOpen={stockNav.filterOpen}>
 				<div class="grid min-w-70 grid-cols-2 gap-x-4 p-3">
 					<div class="space-y-0.5 border-r border-gray-200 pr-3 dark:border-gray-700">
 						<StockFilterRow
@@ -330,7 +320,7 @@
 								FL: t('search.surface.FL'),
 								W: t('search.surface.W')
 							}}
-							bind:values={surfSel}
+							bind:values={stockNav.surfSel}
 						>
 							{t('stock.surfaceTitle')}
 						</StockFilterRow>
@@ -343,7 +333,7 @@
 								2: t('search.base.2'),
 								3: t('search.base.3')
 							}}
-							bind:values={baseSel}
+							bind:values={stockNav.baseSel}
 						>
 							{t('stock.baseTitle')}
 						</StockFilterRow>
@@ -351,28 +341,6 @@
 				</div>
 			</Dropdown>
 		</div>
-	{/snippet}
-
-	{#snippet labelPrimary(paint: PaintInfo)}
-		{@const brandMeta = getBrandMeta(paint.brand)}
-		{@const serieMeta = getSerieMeta(paint.brand, paint.serie)}
-		<span class=" text-gray-500 dark:text-gray-400">
-			<Button
-				color="secondary"
-				class="inline-block cursor-pointer p-0 text-xs text-gray-500 dark:text-gray-400"
-				onclick={() => navigateTo({ brand: paint.brand, serie: paint.serie })}
-			>
-				{serieMeta?.name ?? paint.serie}
-			</Button>
-			/
-			<Button
-				color="secondary"
-				class="inline-block cursor-pointer p-0 text-xs text-gray-500 dark:text-gray-400"
-				onclick={() => navigateTo({ brand: paint.brand })}
-			>
-				{brandMeta?.name ?? paint.brand}
-			</Button>
-		</span>
 	{/snippet}
 
 	<div class="flex-1 overflow-hidden">
@@ -585,131 +553,9 @@
 			{/key}
 		{:else if level === 2 && selectedPaint}
 			{@const paint = selectedPaint}
-			{@const inStock = stock.has(paintId(paint))}
 			{#key `${level}-${paint.brand}-${paint.code}`}
-				<div class="h-full overflow-y-auto p-4" in:fly={{ x: 24, duration: 150 }}>
-					<div class="mx-auto max-w-xl space-y-4">
-						<div class="flex items-start justify-between gap-3">
-							<div class="min-w-0">
-								<div>
-									<span class="text-4xl font-bold">{paint.code}</span>
-								</div>
-								<div class="font-bold text-gray-500 dark:text-gray-400">{paintDesc(paint)}</div>
-							</div>
-							<button
-								type="button"
-								aria-label={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
-								onclick={() => stock.toggle(paintId(paint))}
-								class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors {inStock
-									? 'bg-primary-500 text-white hover:bg-primary-600'
-									: 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}"
-							>
-								{#if inStock}
-									<Check class="h-5 w-5" />
-								{:else}
-									<Plus class="h-5 w-5" />
-								{/if}
-							</button>
-						</div>
-
-						<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
-							<div
-								class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}"
-								style="background-color: {rgbToHex(paint.rgb)}"
-							>
-								<img
-									src="/brands/{paint.brand}.png"
-									alt=""
-									class="absolute top-1.5 left-1.5 h-8 w-8 object-contain drop-shadow"
-								/>
-							</div>
-							{#if comparePaint}
-								<button
-									type="button"
-									onclick={() => selectPaint(comparePaint)}
-									class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
-									style="background-color: {rgbToHex(comparePaint.rgb)}"
-								>
-									<img
-										src="/brands/{comparePaint.brand}.png"
-										alt=""
-										class="absolute right-1.5 bottom-1.5 h-8 w-8 object-contain drop-shadow"
-									/>
-								</button>
-							{/if}
-						</div>
-
-						{#if comparePaint}
-							<div class="flex w-full text-left">
-								{#if compareDeltaE !== null}
-									<div class="flex-1 text-xs text-gray-400">
-										{t('stock.similarity', { n: similarity(compareDeltaE).toFixed(0) })}
-									</div>
-								{/if}
-								<div class="text-right">
-									<div class="font-bold text-gray-500 dark:text-gray-400">
-										{paintDesc(comparePaint)}
-									</div>
-									<div>
-										{@render labelPrimary(comparePaint)}
-										<span class="text-4xl font-bold">{comparePaint.code}</span>
-									</div>
-								</div>
-							</div>
-						{/if}
-
-						<div>
-							<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
-								{t('stock.directEquiv')}
-							</h3>
-							<div class="flex flex-wrap gap-2">
-								{#each directEquivalences as p (paintId(p))}
-									<button
-										type="button"
-										onclick={() => toggleCompare(p)}
-										class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
-										paintId(p)
-											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
-									>
-										<div
-											class="h-5 w-5 shrink-0 rounded"
-											style="background-color: {rgbToHex(p.rgb)}"
-										></div>
-										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-									</button>
-								{:else}
-									<div class="text-xs text-gray-400">{t('stock.noDirectEquiv')}</div>
-								{/each}
-							</div>
-						</div>
-
-						<div>
-							<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
-								{t('stock.similarColors')}
-							</h3>
-							<div class="flex flex-wrap gap-2">
-								{#each colorEquivalences as p (paintId(p))}
-									<button
-										type="button"
-										onclick={() => toggleCompare(p)}
-										class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
-										paintId(p)
-											? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-											: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
-									>
-										<div
-											class="h-5 w-5 shrink-0 rounded"
-											style="background-color: {rgbToHex(p.rgb)}"
-										></div>
-										<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-									</button>
-								{:else}
-									<div class="text-xs text-gray-400">{t('stock.noSimilar')}</div>
-								{/each}
-							</div>
-						</div>
-					</div>
+				<div class="h-full" in:fly={{ x: 24, duration: 150 }}>
+					<PaintDetail {paint} isStockPage />
 				</div>
 			{/key}
 		{/if}

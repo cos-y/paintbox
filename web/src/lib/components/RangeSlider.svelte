@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { clamp } from '$lib/utils.svelte';
+	import { useSlider } from './slider';
 	import './style.css';
 
 	interface Props {
@@ -18,7 +19,7 @@
 	let low = $derived(value[0]);
 	let high = $derived(value[1]);
 
-	const trackRange = max - min;
+	const trackRange = $derived(max - min);
 
 	const lowPercent = $derived(((low - min) / trackRange) * 100);
 	const highPercent = $derived(((high - min) / trackRange) * 100);
@@ -43,8 +44,27 @@
 		}
 	}
 
-	// track background: gradient only visible between the two thumbs
-	const trackBg = $derived(``);
+	// 指针拖拽：pointerdown 时按指针离哪个 thumb 近决定拖哪个，之后只动它
+	let active: 'low' | 'high' = $state('low');
+	let trackEl = $state<HTMLElement | null>(null);
+	const slider = $derived(useSlider({
+		el: () => trackEl,
+		min,
+		max,
+		step,
+		start: (t) => {
+			const el = trackEl;
+			if (!el) return null;
+			const w = el.getBoundingClientRect().width;
+			const x = t * w;
+			const lowC = (lowPercent / 100) * w;
+			const highC = (highPercent / 100) * w;
+			active = Math.abs(x - lowC) < Math.abs(x - highC) ? 'low' : 'high';
+			return min + t * (max - min);
+		},
+		move: (t) => min + t * (max - min),
+		oninput: (v) => (active === 'low' ? setLow(v) : setHigh(v))
+	}));
 </script>
 
 <div
@@ -61,37 +81,35 @@
 		<!-- track background -->
 		<div class="range-slider-track absolute inset-0 rounded-lg"></div>
 
-		<!-- low thumb -->
-		<div class="range-slider-input absolute inset-0">
+		<!-- 交互层：接收指针事件；内部原生 input 仅保留键盘可达性，thumb 均 pointer-events: none -->
+		<div
+			class="slider-track absolute inset-0"
+			role="group"
+			bind:this={trackEl}
+			onpointerdown={slider.pointerdown}
+			onpointermove={slider.pointermove}
+			onpointerup={slider.pointerup}
+			onpointercancel={slider.pointercancel}
+		>
 			<input
 				type="range"
-				class="no-handle pointer-auto m-0 h-full
-					w-full touch-pan-y
-					touch-pinch-zoom appearance-none bg-transparent
-					outline-0 select-none disabled:opacity-50"
+				class="slider-input bg-transparent disabled:opacity-50"
 				{min}
 				{max}
 				{step}
 				value={low}
 				oninput={(e) => setLow(+(e.target as HTMLInputElement).value)}
 			/>
-			<div class="slider-thumb" style="left: {lowPercent}%"></div>
-		</div>
-
-		<!-- high thumb -->
-		<div class="range-slider-input absolute inset-0">
 			<input
 				type="range"
-				class="no-handle pointer-auto m-0 h-full
-					w-full touch-pan-y
-					touch-pinch-zoom appearance-none bg-transparent
-					outline-0 select-none disabled:opacity-50"
+				class="slider-input bg-transparent disabled:opacity-50"
 				{min}
 				{max}
 				{step}
 				value={high}
 				oninput={(e) => setHigh(+(e.target as HTMLInputElement).value)}
 			/>
+			<div class="slider-thumb" style="left: {lowPercent}%"></div>
 			<div class="slider-thumb" style="left: {highPercent}%"></div>
 		</div>
 	</div>

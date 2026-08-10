@@ -18,6 +18,7 @@
 	// Tauri 环境显式调 opener 插件打开外链（绕开 WebView 对自定义 scheme 的解析）
 	import { openUrl } from '@tauri-apps/plugin-opener';
 	import { isTauri } from '@tauri-apps/api/core';
+	import { openExternal } from '$lib/utils.svelte';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
 	const discordUrl = 'https://discord.gg/QG2ZdVRkxN'; // TODO: 替换为实际邀请链接
@@ -25,12 +26,6 @@
 		? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=963504621'
 		: 'https://qm.qq.com/q/3bWtHScQUo';
 	const donateUrl = 'https://afdian.com/a/cos_y';
-
-	// Tauri 内用系统 Intent 打开（QQ 链接可直接唤起 QQ App）；浏览器内普通新标签
-	const openExternal = (url: string) => {
-		if (isTauri()) openUrl(url);
-		else window.open(url, '_blank', 'noopener');
-	};
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-3xl flex-col p-6 text-gray-200 select-none">

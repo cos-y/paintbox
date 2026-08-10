@@ -103,7 +103,7 @@
 			re={`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`}
 			text={toHex(r, g, b)}
 			class="h-full not-sm:flex-1 sm:w-24"
-			textAlign="left"
+			inputClass="text-left"
 			oninput={(hex) => {
 				const rgb = hexToRgb(hex);
 				if (rgb) {
