@@ -207,7 +207,7 @@
 				<Button
 					onclick={reportIssue}
 					color="secondary"
-					class="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px]! 
+					class="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px]! 
 						text-gray-600 dark:text-gray-400"
 				>
 					<Mail class="size-3" />
@@ -279,7 +279,8 @@
 					<button
 						type="button"
 						onclick={() => toggleCompare(p)}
-						class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === p.id
+						class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+						p.id
 							? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 							: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
 					>

@@ -62,7 +62,7 @@ const en = {
 	'stock.noSimilar': 'No similar paint found',
 	'stock.similarity': (p: Params) => `${p.n}% similar`,
 	'stock.mixFromStock': 'Mix from stock',
-	'stock.reportIssue': 'Report data issue',
+	'stock.reportIssue': 'Report issue',
 	'stock.viewAllSimilar': 'View all',
 	'stock.searchPlaceholder': 'Search by code or name',
 	'stock.sortCode': 'Code',

@@ -14,6 +14,8 @@
 
 	let { children } = $props();
 
+	// 字体：JetBrains Mono latin 子集由 layout.css 的 @font-face 声明，全平台生效
+
 	// 非返回型导航（切段/跳转）清空视图栈；系统返回（popstate）由视图栈自身弹栈处理
 	// 清栈走动画：与页面切换并行播关闭动画，播完才真正清栈
 	beforeNavigate((navigation) => {
