@@ -50,11 +50,16 @@
 
 	// 导航层级由运行时 store（stockNav）驱动，同时用同 URL history entry（state 标记）
 	// 记录导航栈：返回按钮/返回手势走 popstate 恢复 state（不依赖 searchParams）。
-	const navigateTo = (params: {
-		brand?: string | null;
-		serie?: string | null;
-		code?: string | null;
-	}) => {
+	// push 新增一档（品牌选择、桌面 PaintDetail）；replace 覆盖当前档（系列切换），
+	// 保证系列层只占一档——切换系列后手势回退直接回到品牌层而不是上一系列。
+	const navigateTo = (
+		params: {
+			brand?: string | null;
+			serie?: string | null;
+			code?: string | null;
+		},
+		opts?: { replace?: boolean }
+	) => {
 		const brand = params.brand ?? '';
 		const serie = params.serie ?? '';
 		const code = params.code ?? '';
@@ -62,7 +67,9 @@
 		stockNav.brand = brand;
 		stockNav.serie = serie;
 		stockNav.code = code;
-		history.pushState({ paintboxNav: { brand, serie, code } }, '');
+		const state = { paintboxNav: { brand, serie, code } };
+		if (opts?.replace) history.replaceState(state, '');
+		else history.pushState(state, '');
 	};
 
 	const selectBrand = (brand: string) => {
@@ -72,7 +79,7 @@
 
 	const selectSerie = (serie: string) => {
 		if (!selectedBrand) return;
-		navigateTo({ brand: selectedBrand, serie });
+		navigateTo({ brand: selectedBrand, serie }, { replace: true });
 	};
 
 	const selectPaint = (paint: PaintInfo) => {
@@ -91,19 +98,22 @@
 	// 返回按钮 = 后退一档：popstate 恢复 history state（含手势共用同一路径）
 	const goBack = () => history.back();
 
-	// 系列名面包屑：清空 code 回系列层
+	// 系列名面包屑：清空 code 回系列层（覆盖 PaintDetail 档，不新增返回层级）
 	const goToLevel1 = () => {
 		if (!selectedBrand) return;
-		navigateTo({ brand: selectedBrand, serie: selectedSerie });
+		navigateTo({ brand: selectedBrand, serie: selectedSerie }, { replace: true });
 	};
 
 	// popstate（返回按钮/手势/tauri 返回键）：恢复 stockNav 到对应导航层级。
-	// paintboxView（详情 sheet）的 entry 由 viewStack 处理，这里跳过；
-	// 无 paintboxNav 的 entry（初始/刷新前的整页）→ 回品牌层。
+	// 不依赖 event.state（个别 webview 下可能丢失）：sheet 打开时由 viewStack 播关闭
+	// 动画（栈空前的 popstate 一律不动 stockNav）；栈空时用 history.state 区分
+	// sheet 撤销 entry（拖拽/遮罩关闭的 back()）与 stock 导航 entry。
 	$effect(() => {
-		const onPop = (e: PopStateEvent) => {
-			if (e.state?.paintboxView) return;
-			const nav = e.state?.paintboxNav as
+		const onPop = () => {
+			if (viewStack.size > 0) return;
+			const st = history.state;
+			if (st?.paintboxView) return;
+			const nav = st?.paintboxNav as
 				| { brand?: string; serie?: string; code?: string }
 				| undefined;
 			stockNav.brand = nav?.brand ?? '';
