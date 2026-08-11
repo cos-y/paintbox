@@ -694,7 +694,7 @@
 				{@render colorPicker()}
 			</div>
 		{:else}
-			<div class="mx-auto w-full max-w-[1440px] px-6 py-4">
+			<div class="w-full max-w-360 px-6 py-4">
 				{@render colorPicker()}
 			</div>
 		{/if}
