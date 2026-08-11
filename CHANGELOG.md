@@ -8,6 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.0] - 2026-08-11
+
+### Added
+
+- Three color sources on the search page: palette, camera (Tauri only) and **from paint**. Picking a paint anchors the color to it — the swatch shows the brand logo, an info card lists the paint details with a readonly hex value, and a paint search box swaps the anchored paint.
+- Paint detail card: opens a mobile bottom sheet (or desktop overlay) with full paint info, add-to-stock toggle, mix-from-stock and view-all-similar actions.
+- Paint search box with keyboard navigation (arrows/enter/escape), auto-highlighted first result.
+- Stock page navigation survives leaving and returning to the page: brand → series → paint level plus the sort, search and filter configuration are kept in a runtime store instead of being reset by route switching.
+- Visual color bar strip above the search results.
+
+### Changed
+
+- Sliders (color channels, ranges) rewritten around pointer-event dragging through a shared composable: exact 1:1 touch mapping with no dead zones, keyboard accessibility preserved.
+- Desktop layout (≥640px): page content capped at 1440px and centered; the top area (swatch + picker) keeps its natural width with whitespace on the sides, while the search area (filter row + results) spans the full width; result cards capped at 220px.
+- The color swatch is always visible on the search page in every color-source mode, rendered at a consistent position.
+
+### Fixed
+
+- Mobile slider dead zones: the visual thumb no longer diverges from the finger (Chrome's native range mapping over the 44px touch thumb caused up to 22px of error at the track edges).
+- Bottom sheet dragging: whole-card drag with proper touch handling; catching a card mid-close animation no longer leaves it stuck halfway.
+- The paint anchor on the search page was silently cleared when the page loaded in palette mode; it is now only cleared when the color is changed through a non-paint channel.
+
 ## [0.2.11] - 2026-08-10
 
 ### Added
