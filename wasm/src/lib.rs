@@ -1,3 +1,4 @@
+use lab::Lab;
 use mixbox::{float_rgb_to_latent, latent_to_float_rgb};
 use oklab::*;
 
@@ -19,6 +20,11 @@ pub fn hex_to_rgb(hex: u32) -> Rgb<f32> {
     let g = (hex >> 8) as u8;
     let r = (hex >> 16) as u8;
     Rgb::new((r as f32) / 255.0, (g as f32) / 255.0, (b as f32) / 255.0)
+}
+
+#[inline]
+pub fn rgb_to_lab(rgb: Rgb<f32>) -> Lab {
+    Lab::from_rgb_normalized(&[rgb.r, rgb.g, rgb.b])
 }
 
 #[inline]

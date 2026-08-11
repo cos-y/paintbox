@@ -434,7 +434,7 @@
 
 {#snippet colorPicker()}
 	{#if store.source === 'paint'}
-		<div class="grid gap-0 sm:auto-cols-[125px_1fr] sm:grid-flow-col sm:gap-3">
+		<div class="grid gap-0 sm:auto-cols-[150px_1fr] sm:grid-flow-col sm:gap-3">
 			<div>
 				{#if isSm()}
 					{@render colorSwatch()}
@@ -447,7 +447,7 @@
 	{:else}
 		{@const Picker = [Hsl, Rgb][store.model]}
 
-		<div class="grid gap-3 sm:auto-cols-[125px_1fr] sm:grid-flow-col">
+		<div class="grid gap-3 sm:auto-cols-[150px_1fr] sm:grid-flow-col">
 			<div>
 				{#if isSm()}
 					<div class="mb-3">
@@ -778,7 +778,9 @@
 				{:else}
 					{#each rt.results as r, i (i)}
 						{@const isMix = r.portions.length > 1}
-						<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+						<div
+							class="flex flex-col overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
+						>
 							<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
 							{#if isMix}
 								<div
@@ -786,7 +788,7 @@
 									style="background: {mixGradient(r.portions)}"
 								></div>
 							{/if}
-							<div class="p-2">
+							<div class="flex flex-1 flex-col p-2">
 								<div class="flex flex-col gap-1">
 									{#each r.portions as p}
 										<button
@@ -816,7 +818,9 @@
 										{paintDesc(r.portions[0])}
 									</div>
 								{/if}
-								<div class="mt-1.5 flex items-center justify-between text-[10px] text-gray-400">
+								<div
+									class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-400"
+								>
 									<span>ΔE {r.delta_e.toFixed(2)}</span>
 									<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
 								</div>

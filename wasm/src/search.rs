@@ -1,15 +1,16 @@
 use std::{cmp::Reverse, collections::HashSet, fmt, num::NonZero};
 
 use bitflags::bitflags;
+use empfindung::cie00;
 use fixedbitset::FixedBitSet;
 use kiddo::{ImmutableKdTree, SquaredEuclidean};
+use lab::Lab;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
 
 use crate::{
-    BoxError, Latent, Oklab, Rgb, hex_to_rgb, latent_to_rgb, lerp_latent, oklab_dist,
-    rgb_to_latent, rgb_to_oklab,
+    BoxError, Latent, Rgb, hex_to_rgb, latent_to_rgb, lerp_latent, rgb_to_lab, rgb_to_latent,
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -126,7 +127,7 @@ pub struct FilterOptions {
 
 pub struct Searcher {
     majors: Vec<PaintInfo>,
-    labs: Vec<Oklab>,
+    labs: Vec<Lab>,
     latents: Vec<Latent>,
     kdtree: ImmutableKdTree<f32, 3>,
 }
@@ -216,7 +217,7 @@ impl Searcher {
             row.index = majors.len();
 
             let rgb = hex_to_rgb(row.rgb);
-            let lab = rgb_to_oklab(rgb);
+            let lab = rgb_to_lab(rgb);
             let latent = rgb_to_latent(rgb);
 
             majors.push(row);
@@ -322,7 +323,7 @@ impl Searcher {
 
     fn search_impl(&self, ctx: &mut SearchContext, rgb: u32, max_mix: u32) -> Vec<SearchMix> {
         let rgb_out = hex_to_rgb(rgb);
-        let lab_out = rgb_to_oklab(rgb_out);
+        let lab_out = rgb_to_lab(rgb_out);
 
         let li = self.search_nearest_n(&ctx, lab_out);
         let mut results: Vec<_> = li
@@ -381,7 +382,7 @@ impl Searcher {
             let li = match rem {
                 0 => vec![],
                 1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
-                    let lab = rgb_to_oklab(rgb);
+                    let lab = rgb_to_lab(rgb);
                     self.search_mix_target(ctx, lab, mix_base)
                         .map(|MeasuredItem { i, delta_e }| SearchMix {
                             portions: smallvec![Portion { i, t: 1f32 }],
@@ -425,7 +426,7 @@ impl Searcher {
         search_next: &dyn Fn(&mut SearchContext, Rgb<f32>) -> Vec<SearchMix>,
     ) -> Vec<SearchMix> {
         let latent_out = rgb_to_latent(rgb_out);
-        let lab_out = rgb_to_oklab(rgb_out);
+        let lab_out = rgb_to_lab(rgb_out);
         let latent_0 = &self.latents[i_0];
 
         let n = ctx.mix2_iter;
@@ -485,7 +486,7 @@ impl Searcher {
         ctx: &SearchContext,
         latent_0: &Latent,
         latent_1: &Latent,
-        lab_out: Oklab,
+        lab_out: Lab,
         mut t0: f32,
         mut dt: f32,
     ) -> SearchMix2Portion {
@@ -501,8 +502,8 @@ impl Searcher {
                 let latent = std::array::from_fn(|i| t * latent_0[i] + (1f32 - t) * latent_1[i]);
 
                 let rgb = latent_to_rgb(&latent);
-                let lab = rgb_to_oklab(rgb);
-                let d = oklab_dist(lab, lab_out);
+                let lab = rgb_to_lab(rgb);
+                let d = cie00::diff(lab, lab_out);
 
                 if d < mind {
                     mink = Some(k);
@@ -531,7 +532,7 @@ impl Searcher {
         }
     }
 
-    fn search_nearest_n(&self, ctx: &SearchContext, lab: Oklab) -> Vec<MeasuredItem> {
+    fn search_nearest_n(&self, ctx: &SearchContext, lab: Lab) -> Vec<MeasuredItem> {
         let mut results: Vec<_> = if ctx.candidates.count_ones(..) > 3000 {
             // use kdtree
             let nearest_n = self
@@ -544,7 +545,7 @@ impl Searcher {
                 .filter_map(|x| {
                     let i = x.item as usize;
                     if ctx.candidates.contains(i) {
-                        let d = oklab_dist(lab, self.labs[x.item as usize]);
+                        let d = cie00::diff(lab, self.labs[x.item as usize]);
                         Some(MeasuredItem { i, delta_e: d })
                     } else {
                         None
@@ -556,7 +557,7 @@ impl Searcher {
                 .ones()
                 .map(|i| MeasuredItem {
                     i,
-                    delta_e: oklab_dist(lab, self.labs[i]),
+                    delta_e: cie00::diff(lab, self.labs[i]),
                 })
                 .collect()
         };
@@ -565,13 +566,13 @@ impl Searcher {
         results
     }
 
-    fn search_mix_target(&self, ctx: &SearchContext, lab: Oklab, base: u8) -> Option<MeasuredItem> {
+    fn search_mix_target(&self, ctx: &SearchContext, lab: Lab, base: u8) -> Option<MeasuredItem> {
         let mut mini = None;
         let mut mind = f32::MAX;
         for i in ctx.candidates.ones() {
             // cannot mix paint of different base
             if (self.majors[i].base & base) != 0 {
-                let d = oklab_dist(lab, self.labs[i]);
+                let d = cie00::diff(lab, self.labs[i]);
                 if d < mind {
                     mini = Some(i);
                     mind = d;

@@ -1,12 +1,13 @@
 use std::sync::Mutex;
 
+use empfindung::cie00;
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::*;
 use web_sys::js_sys::Float32Array;
 use web_time::Instant;
 
 use crate::{
-    BoxError, hex_to_rgb, log, oklab_dist, rgb_to_oklab,
+    BoxError, hex_to_rgb, log, oklab_dist, rgb_to_lab,
     search::{FilterOptions, Searcher},
 };
 
@@ -23,9 +24,9 @@ pub fn init_panic_hook() {
 
 #[wasm_bindgen]
 pub fn color_diff(a: u32, b: u32) -> f32 {
-    let a = rgb_to_oklab(hex_to_rgb(a));
-    let b = rgb_to_oklab(hex_to_rgb(b));
-    oklab_dist(a, b)
+    let a = rgb_to_lab(hex_to_rgb(a));
+    let b = rgb_to_lab(hex_to_rgb(b));
+    cie00::diff(a, b)
 }
 
 #[wasm_bindgen]
