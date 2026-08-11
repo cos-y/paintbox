@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.1] - 2026-08-11
+
+- Bug fixes
+
 ## [0.3.0] - 2026-08-11
 
 ### Added
@@ -202,6 +206,8 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.1]: https://github.com/cos-y/paintbox/releases/tag/v0.3.1
+[0.3.0]: https://github.com/cos-y/paintbox/releases/tag/v0.3.0
 [0.2.11]: https://github.com/cos-y/paintbox/releases/tag/v0.2.11
 [0.2.10]: https://github.com/cos-y/paintbox/releases/tag/v0.2.10
 [0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9

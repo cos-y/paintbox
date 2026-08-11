@@ -25,6 +25,7 @@ let closeHandler: (() => void) | null = null;
 let closeAllPending = false;
 let popPending = false; // 系统后退触发，动画完成后弹栈
 let animating = false; // 关闭动画进行中（拖拽/后退/导航共用）
+let ignorePopstate = false; // 内部关闭用 history.back() 撤销 entry 时，跳过随后的 popstate 处理
 
 export const viewStack = {
 	get stack(): StackView[] {
@@ -84,13 +85,19 @@ export const viewStack = {
 	resolveClose(): void {
 		animating = false;
 		if (closeAllPending) {
+			// 导航清栈：history 由 SvelteKit 的 goto 管理，不做撤销
 			closeAllPending = false;
 			stack.length = 0;
 		} else if (popPending) {
+			// 系统后退触发：popstate 本身已回退一档，无需再撤销
 			popPending = false;
 			stack.pop();
 		} else {
+			// 拖拽/遮罩关闭：撤销本次 push 追加的 history entry（同 URL pushState），
+			// 避免每次开-关残留 entry，导致后退手势要多次消耗空档才能生效
 			stack.pop();
+			ignorePopstate = true;
+			history.back();
 		}
 	}
 };
@@ -98,6 +105,11 @@ export const viewStack = {
 // 系统返回键 / 手势 → popstate → 弹栈（有动画执行器时先播关闭动画）
 if (typeof window !== 'undefined') {
 	window.addEventListener('popstate', () => {
+		// 内部关闭（拖拽/遮罩）history.back() 撤销 entry 触发的 popstate：跳过
+		if (ignorePopstate) {
+			ignorePopstate = false;
+			return;
+		}
 		viewStack.onPopstate();
 	});
 }

@@ -2,8 +2,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import { ChevronLeft, Check, Plus, Search, X, Funnel, ArrowDownWideNarrow } from '@lucide/svelte';
 	import { Card, Button, Badge, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 	import {
 		listPaints,
 		getCatalog,
@@ -26,8 +24,8 @@
 	const allPaints = listPaints();
 	const catalog = getCatalog(allPaints);
 
-	// 导航层级从运行时 store 读取（跨路由存活）；首次挂载/刷新时由 URL 查询参数初始化，
-	// 之后 navigateTo 写回 store 并同步 URL（保留分享/刷新进入能力）。
+	// 导航层级完全由运行时 store（stockNav）驱动：不写 URL、不进 history，
+	// 返回按钮/后退手势不会经过 stock 导航的 history entry；刷新回品牌层（store 重置）。
 	const selectedBrand = $derived(stockNav.brand);
 
 	const currentBrandGroup = $derived(catalog[selectedBrand] ?? {});
@@ -50,33 +48,22 @@
 	const ownedCountInSerie = (s: PaintInfo[]) =>
 		s.reduce((n, p) => n + (stock.has(paintId(p)) ? 1 : 0), 0);
 
+	// 导航层级由运行时 store（stockNav）驱动，同时用同 URL history entry（state 标记）
+	// 记录导航栈：返回按钮/返回手势走 popstate 恢复 state（不依赖 searchParams）。
 	const navigateTo = (params: {
 		brand?: string | null;
 		serie?: string | null;
 		code?: string | null;
 	}) => {
-		stockNav.brand = params.brand ?? '';
-		stockNav.serie = params.serie ?? '';
-		stockNav.code = params.code ?? '';
-		const url = new URL(page.url);
-		url.search = '';
-		if (params.brand) url.searchParams.set('brand', params.brand);
-		if (params.serie) url.searchParams.set('serie', params.serie);
-		if (params.code) url.searchParams.set('code', params.code);
-		goto(url, { replaceState: false, keepFocus: true, noScroll: true });
+		const brand = params.brand ?? '';
+		const serie = params.serie ?? '';
+		const code = params.code ?? '';
+		if (brand === stockNav.brand && serie === stockNav.serie && code === stockNav.code) return;
+		stockNav.brand = brand;
+		stockNav.serie = serie;
+		stockNav.code = code;
+		history.pushState({ paintboxNav: { brand, serie, code } }, '');
 	};
-
-	// 首次挂载：store 无导航时从 URL 查询参数恢复（直接打开/刷新分享链接）
-	$effect(() => {
-		if (!stockNav.brand) {
-			const b = page.url.searchParams.get('brand');
-			if (b) {
-				stockNav.brand = b;
-				stockNav.serie = page.url.searchParams.get('serie') ?? '';
-				stockNav.code = page.url.searchParams.get('code') ?? '';
-			}
-		}
-	});
 
 	const selectBrand = (brand: string) => {
 		const serie = Object.keys(catalog[brand] ?? {})[0] ?? null;
@@ -101,14 +88,31 @@
 		}
 	};
 
-	const goToLevel0 = () => navigateTo({});
+	// 返回按钮 = 后退一档：popstate 恢复 history state（含手势共用同一路径）
+	const goBack = () => history.back();
 
+	// 系列名面包屑：清空 code 回系列层
 	const goToLevel1 = () => {
-		if (!selectedBrand) return goToLevel0();
+		if (!selectedBrand) return;
 		navigateTo({ brand: selectedBrand, serie: selectedSerie });
 	};
 
-	const goBack = () => (level === 2 ? goToLevel1() : goToLevel0());
+	// popstate（返回按钮/手势/tauri 返回键）：恢复 stockNav 到对应导航层级。
+	// paintboxView（详情 sheet）的 entry 由 viewStack 处理，这里跳过；
+	// 无 paintboxNav 的 entry（初始/刷新前的整页）→ 回品牌层。
+	$effect(() => {
+		const onPop = (e: PopStateEvent) => {
+			if (e.state?.paintboxView) return;
+			const nav = e.state?.paintboxNav as
+				| { brand?: string; serie?: string; code?: string }
+				| undefined;
+			stockNav.brand = nav?.brand ?? '';
+			stockNav.serie = nav?.serie ?? '';
+			stockNav.code = nav?.code ?? '';
+		};
+		window.addEventListener('popstate', onPop);
+		return () => window.removeEventListener('popstate', onPop);
+	});
 
 	// ---- 排序 / 搜索（品牌内跨系列）与筛选：状态放运行时 store，跨路由切回保持 ----
 	const sortKey = $derived(stockNav.sortKey);

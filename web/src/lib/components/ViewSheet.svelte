@@ -21,8 +21,7 @@
 	const CLOSE_THRESHOLD = 0.25; // 位移占面板高度比例，超过触发关闭
 	const VELOCITY_CLOSE = 0.6; // px/ms，向下甩动关闭
 	const VELOCITY_UP = 0.3; // px/ms，向上甩动回弹（永不关闭）
-	const GRAVITY = 0.025; // px/ms²，关闭下滑轻微加速
-	const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+	const GRAVITY = 0.03; // px/ms²，关闭下滑轻微加速
 
 	let sheetEl = $state<HTMLElement | null>(null);
 	let scrimEl = $state<HTMLElement | null>(null);
@@ -101,8 +100,7 @@
 		const dur = clamp((3 * from) / Math.max(v, 0.05), 80, 350);
 		if (sheetEl)
 			sheetEl.style.transition = `transform ${dur}ms cubic-bezier(0.215, 0.61, 0.355, 1)`;
-		if (scrimEl)
-			scrimEl.style.transition = `opacity ${dur}ms cubic-bezier(0.215, 0.61, 0.355, 1)`;
+		if (scrimEl) scrimEl.style.transition = `opacity ${dur}ms cubic-bezier(0.215, 0.61, 0.355, 1)`;
 		dragY = 0;
 		scrimOpacity = 1;
 		applyDrag();
