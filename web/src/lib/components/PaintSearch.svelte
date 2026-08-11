@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Search } from '@lucide/svelte';
-	import { listPaints, type PaintInfo } from '$lib/paints.svelte';
+	import { searchPaints, listPaints, type PaintInfo } from '$lib/paints.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 
@@ -12,8 +12,6 @@
 
 	let { onselect, oncancel }: Props = $props();
 
-	const allPaints = listPaints();
-
 	let text = $state('');
 	let results: PaintInfo[] = $state([]);
 	let highlighted = $state(-1);
@@ -23,20 +21,6 @@
 	$effect(() => {
 		inputEl?.focus();
 	});
-
-	const searchPaints = (query: string): PaintInfo[] => {
-		if (!query) return [];
-		const q = query.toLowerCase();
-		return allPaints
-			.filter(
-				(p) =>
-					p.code.toLowerCase().includes(q) ||
-					p.brand.toLowerCase().includes(q) ||
-					paintDesc(p).toLowerCase().includes(q) ||
-					`${p.brand} ${p.code}`.toLowerCase().includes(q)
-			)
-			.slice(0, 20);
-	};
 
 	const handleInput = (e: Event) => {
 		text = (e.target as HTMLInputElement).value;

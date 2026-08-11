@@ -10,12 +10,13 @@
 	} from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import {
-		listPaints,
 		paintId,
 		rgbToHex,
 		searchNearest,
 		colorDiff,
-		type PaintInfo
+		type PaintInfo,
+		getPaintById,
+		getPaintByIndex
 	} from '$lib/paints.svelte';
 	import { baseLabels, surfaceLabels } from '$lib/paintInfo';
 	import { stock } from '$lib/stock.svelte';
@@ -39,33 +40,28 @@
 
 	let { paint, inStack = false, isStockPage }: Props = $props();
 
-	const allPaints = listPaints();
-	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
-	const paintByIndex = new Map(allPaints.map((p) => [p.index, p]));
-
-	const inStock = $derived(stock.has(paintId(paint)));
+	const inStock = $derived(stock.has(paint.id));
 
 	// ---- 官标等价（数据源品牌对照表，如 Gunze H9 <-> Gunze C9） ----
 	const directEquivalences = $derived(
 		findEquivIndices(paint.index)
-			.map((i) => paintByIndex.get(i))
+			.map((i) => getPaintByIndex(i))
 			.filter((p): p is PaintInfo => !!p)
 	);
 
 	// ---- 相近同色漆：按颜色距离查询，名字不一定相关 ----
 	const colorEquivalences = $derived.by(() =>
 		searchNearest(paint.rgb, { mix: 0, limit: 8 })
-			.map((r) => paintByKey.get(paintId(r.portions[0])))
-			.filter((p): p is PaintInfo => !!p && paintId(p) !== paintId(paint))
+			.map((r) => getPaintById(paintId(r.portions[0])))
+			.filter((p): p is PaintInfo => !!p && p.id !== paint.id)
 	);
 
 	// ---- 对比：点击等价/相近色方块，在原色下方拼接对比条（单选，再点一次取消） ----
 	let compareCode = $state<string | null>(null);
-	const comparePaint = $derived(compareCode ? (paintByKey.get(compareCode) ?? null) : null);
+	const comparePaint = $derived(compareCode ? getPaintById(compareCode) : null);
 	const compareDeltaE = $derived(comparePaint ? colorDiff(paint.rgb, comparePaint.rgb) : null);
 	const toggleCompare = (p: PaintInfo) => {
-		const key = paintId(p);
-		compareCode = compareCode === key ? null : key;
+		compareCode = compareCode === p.id ? null : p.id;
 	};
 
 	// ---- 操作 ----
@@ -76,7 +72,7 @@
 		store.color = paint.rgb;
 		store.searchScope = 1;
 		store.mixingLimit = 2;
-		store.paintKey = paintId(paint);
+		store.paintKey = paint.id;
 		store.source = 'paint';
 		goto('/search/', { noScroll: true });
 	};
@@ -85,7 +81,7 @@
 		store.color = paint.rgb;
 		store.searchScope = 0;
 		store.mixingLimit = 0;
-		store.paintKey = paintId(paint);
+		store.paintKey = paint.id;
 		store.source = 'paint';
 		goto('/search/', { noScroll: true });
 	};
@@ -225,7 +221,7 @@
 			<div class="flex flex-wrap gap-2">
 				<button
 					type="button"
-					onclick={() => stock.toggle(paintId(paint))}
+					onclick={() => stock.toggle(paint.id)}
 					class="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors {inStock
 						? 'bg-primary-500 text-white hover:bg-primary-600'
 						: 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}"
@@ -246,11 +242,11 @@
 				{t('stock.directEquiv')}
 			</h3>
 			<div class="flex flex-wrap gap-2">
-				{#each directEquivalences as p (paintId(p))}
+				{#each directEquivalences as p (p.id)}
 					<button
 						type="button"
 						onclick={() => toggleCompare(p)}
-						class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === paintId(p)
+						class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === p.id
 							? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 							: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
 					>
@@ -279,11 +275,11 @@
 				</button>
 			</div>
 			<div class="flex flex-wrap gap-2">
-				{#each colorEquivalences as p (paintId(p))}
+				{#each colorEquivalences as p (p.id)}
 					<button
 						type="button"
 						onclick={() => toggleCompare(p)}
-						class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === paintId(p)
+						class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === p.id
 							? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 							: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
 					>

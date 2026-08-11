@@ -1,4 +1,4 @@
-import { listPaints, paintId } from '$lib/paints.svelte';
+import { getPaintById } from '$lib/paints.svelte';
 
 export interface StockEntry {
 	/** 持久化的唯一标识 `${brand}:${code}` */
@@ -19,8 +19,6 @@ const loadFromStorage = (): string[] => {
 		return [];
 	}
 };
-
-const indexMap = new Map(listPaints().map((p) => [paintId(p), p.index]));
 
 class StockStore {
 	/** 库存：key 是持久化的 id，value 含 listPaints 下标（不持久化） */
@@ -56,7 +54,7 @@ class StockStore {
 	*entries(): Generator<StockEntry> {
 		let toRemove = [];
 		for (const id of this.values.values()) {
-			const index = indexMap.get(id);
+			const { index } = getPaintById(id) ?? {};
 			if (index !== undefined) {
 				yield { id, index };
 			} else {

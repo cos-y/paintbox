@@ -1,4 +1,6 @@
 import { list_paints, search, color_diff } from '../wasm-pkg/paintbox_wasm';
+import { paintDesc } from './i18ndyn.svelte';
+import { hexToRgb, toHsl } from './utils.svelte';
 
 export interface PaintInfo {
 	index: number;
@@ -8,8 +10,10 @@ export interface PaintInfo {
 	serie_code: string;
 	rgb: number;
 	base: number;
-	/** 漆面类型，SurfaceType 单 bit 值（1=G, 2=SG, 4=M…） */
 	prop: number;
+	// js specific
+	hsl: [number, number, number];
+	id: string;
 }
 
 // SurfaceType 位定义，与 wasm 端 bitflags 对齐
@@ -74,21 +78,46 @@ export interface PaintCatalog {
 
 // ---- 全局数据：模块级单例，页面间导航不重新计算（数据源在 wasm 里一次性加载，不可变）----
 
-let paints = $state<PaintInfo[] | null>(null);
+let paints: PaintInfo[];
+let paintLookup: Map<string, PaintInfo>;
 
 export const listPaints = (): PaintInfo[] => {
-	if (paints === null) {
-		paints = (list_paints() as PaintInfo[]) ?? [];
+	if (paints === undefined) {
+		paints = list_paints().map(({ rgb, ...info }: any) => {
+			const [r, g, b] = hexToRgb(rgb!);
+			const { h, s, l } = toHsl({ mode: 'rgb', r, g, b });
+			return {
+				hsl: [h ?? 0, s, l],
+				id: paintId(info),
+				rgb,
+				...info
+			} satisfies PaintInfo;
+		});
 	}
-	return paints;
+	return paints!;
 };
 
-let catalog = $state<PaintCatalog | null>(null);
+export const getPaintByIndex = (index: number): PaintInfo | null => {
+	const li = listPaints();
+	return li[index] ?? null;
+};
 
-export const getCatalog = (paintsArg: PaintInfo[]): PaintCatalog => {
-	if (catalog === null) {
+export const getPaintById = (id: string): PaintInfo | null => {
+	if (paintLookup === undefined) {
+		paintLookup = new Map();
+		for (const p of listPaints()) {
+			paintLookup.set(p.id, p);
+		}
+	}
+	return paintLookup.get(id) ?? null;
+};
+
+let catalog: PaintCatalog;
+
+export const getCatalog = (): PaintCatalog => {
+	if (catalog === undefined) {
 		const c: PaintCatalog = {};
-		for (const paint of paintsArg) {
+		for (const paint of listPaints()) {
 			let brand = c[paint.brand];
 			if (brand === undefined) {
 				brand = c[paint.brand] = {};
@@ -104,4 +133,19 @@ export const getCatalog = (paintsArg: PaintInfo[]): PaintCatalog => {
 		catalog = c;
 	}
 	return catalog;
+};
+
+// TODO: better fuzzy search
+export const searchPaints = (query: string): PaintInfo[] => {
+	if (!query) return [];
+	const q = query.toLowerCase();
+	return listPaints()
+		.filter(
+			(p) =>
+				p.code.toLowerCase().includes(q) ||
+				p.brand.toLowerCase().includes(q) ||
+				paintDesc(p).toLowerCase().includes(q) ||
+				`${p.brand} ${p.code}`.toLowerCase().includes(q)
+		)
+		.slice(0, 20);
 };

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { useMode, modeHsl, modeRgb, modeOklch, type Oklch } from 'culori/fn';
+	import { type Oklch } from 'culori/fn';
 	import SliderTrack from './ColorSlider.svelte';
 	import ColorCode from './ColorCode.svelte';
-	import { clamp, hexToRgb } from '$lib/utils.svelte';
+	import { clamp, hexToRgb, toHsl, toOklch, toRgb } from '$lib/utils.svelte';
 
 	interface Props {
 		oklch: Oklch;
@@ -11,10 +11,6 @@
 	let { oklch = $bindable() }: Props = $props();
 
 	const eps = 1e-12;
-
-	const toHsl = useMode(modeHsl);
-	const toOklch = useMode(modeOklch);
-	const toRgb = useMode(modeRgb);
 
 	const { h, s, l } = toHsl(oklch);
 	// [0, 360)

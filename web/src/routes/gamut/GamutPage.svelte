@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { listPaints, paintId, type PaintInfo } from '$lib/paints.svelte';
+	import { getPaintById, getPaintByIndex, searchPaints, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { Plus, X, Search, Droplet, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
@@ -19,8 +19,6 @@
 	import { t } from '$lib/i18n.svelte';
 	import { isSm, isCoarse } from '$lib/utils.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
-
-	const allPaints = listPaints();
 
 	// Canvas/Scene 动态加载：切换页面时先渲染 UI，Three.js 模块加载和
 	// WebGL 场景初始化（shader 编译等）在后台异步进行，不阻塞主线程。
@@ -75,7 +73,7 @@
 					hidden: s.hidden ?? false
 				};
 			} else if (s.type === 'paint') {
-				const paint = s.paintId ? (allPaints.find((p) => paintId(p) === s.paintId) ?? null) : null;
+				const paint = s.paintId ? getPaintById(s.paintId) : null;
 				return { id: s.id, type: 'paint', paint, searchText: '', hidden: s.hidden ?? false };
 			} else {
 				return { id: s.id, type: 'stock', hidden: s.hidden ?? false };
@@ -91,7 +89,7 @@
 				return {
 					id: s.id,
 					type: 'paint',
-					paintId: s.paint ? paintId(s.paint) : undefined,
+					paintId: s.paint ? s.paint.id : undefined,
 					hidden: s.hidden
 				};
 			else return { id: s.id, type: 'stock', hidden: s.hidden };
@@ -112,7 +110,7 @@
 			else if (src.type === 'paint' && src.paint) li.add(src.paint.rgb);
 			else if (src.type === 'stock') {
 				for (const { index } of stock.entries()) {
-					li.add(allPaints[index].rgb);
+					li.add(getPaintByIndex(index)!.rgb);
 				}
 			}
 		}
@@ -126,7 +124,7 @@
 	});
 
 	const hasStock = $derived(sources.some((s) => s.type === 'stock'));
-	const stockCount = $derived(allPaints.filter((p) => stock.has(paintId(p))).length);
+	const stockCount = $derived([...stock.entries()].length);
 
 	function addColor() {
 		const id = String(nextId++);
@@ -256,19 +254,6 @@
 		src.valid = parsed.valid;
 	}
 
-	function searchPaints(query: string): PaintInfo[] {
-		if (!query || query.length < 1) return [];
-		const q = query.toLowerCase();
-		return allPaints
-			.filter(
-				(p) =>
-					p.code.toLowerCase().includes(q) ||
-					p.brand.toLowerCase().includes(q) ||
-					paintDesc(p).toLowerCase().includes(q) ||
-					`${p.brand} ${p.code}`.toLowerCase().includes(q)
-			)
-			.slice(0, 20);
-	}
 	function selectPaint(src: PaintSource, paint: PaintInfo) {
 		src.paint = paint;
 		src.searchText = '';

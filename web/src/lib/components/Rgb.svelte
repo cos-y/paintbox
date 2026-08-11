@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { useMode, modeRgb, modeOklch, type Oklch } from 'culori/fn';
+	import { type Oklch } from 'culori/fn';
 	import ColorSlider from './ColorSlider.svelte';
-	import { clamp, hexToRgb } from '$lib/utils.svelte';
+	import { clamp, hexToRgb, toOklch, toRgb } from '$lib/utils.svelte';
 	import ColorCode from './ColorCode.svelte';
 
 	interface Props {
@@ -9,9 +9,6 @@
 	}
 
 	let { oklch = $bindable() }: Props = $props();
-
-	const toRgb = useMode(modeRgb);
-	const toOklch = useMode(modeOklch);
 
 	const { r, g, b } = $derived(toRgb(oklch));
 

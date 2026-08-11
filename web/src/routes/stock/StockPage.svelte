@@ -1,15 +1,8 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { ChevronLeft, Check, Plus, Search, X, Funnel, ArrowDownWideNarrow } from '@lucide/svelte';
-	import { Card, Button, Badge, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import {
-		listPaints,
-		getCatalog,
-		paintId,
-		rgbToHex,
-		SURFACE_BITS,
-		type PaintInfo
-	} from '$lib/paints.svelte';
+	import { Card, Badge, Dropdown } from 'flowbite-svelte';
+	import { getCatalog, rgbToHex, SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav } from '$lib/stocknav.svelte';
 	import { isSm } from '$lib/utils.svelte';
@@ -21,8 +14,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import StockFilterRow from '$lib/components/StockFilterRow.svelte';
 
-	const allPaints = listPaints();
-	const catalog = getCatalog(allPaints);
+	const catalog = getCatalog();
 
 	// 导航层级完全由运行时 store（stockNav）驱动：不写 URL、不进 history，
 	// 返回按钮/后退手势不会经过 stock 导航的 history entry；刷新回品牌层（store 重置）。
@@ -46,7 +38,7 @@
 		Object.values(series).reduce((n, s) => n + ownedCountInSerie(s), 0);
 
 	const ownedCountInSerie = (s: PaintInfo[]) =>
-		s.reduce((n, p) => n + (stock.has(paintId(p)) ? 1 : 0), 0);
+		s.reduce((n, p) => n + (stock.has(p.id) ? 1 : 0), 0);
 
 	// 导航层级由运行时 store（stockNav）驱动，同时用同 URL history entry（state 标记）
 	// 记录导航栈：返回按钮/返回手势走 popstate 恢复 state（不依赖 searchParams）。
@@ -86,7 +78,7 @@
 		if (!isSm()) {
 			// 手机端：底部卡片弹出详情，scrim 单击退回列表
 			viewStack.push({
-				key: paintId(paint),
+				key: paint.id,
 				component: PaintDetail,
 				props: { paint, inStack: true, isStockPage: true }
 			});
@@ -113,9 +105,7 @@
 			if (viewStack.size > 0) return;
 			const st = history.state;
 			if (st?.paintboxView) return;
-			const nav = st?.paintboxNav as
-				| { brand?: string; serie?: string; code?: string }
-				| undefined;
+			const nav = st?.paintboxNav as { brand?: string; serie?: string; code?: string } | undefined;
 			stockNav.brand = nav?.brand ?? '';
 			stockNav.serie = nav?.serie ?? '';
 			stockNav.code = nav?.code ?? '';
@@ -141,34 +131,17 @@
 		return (baseFilter & p.base) != 0;
 	};
 
-	const hslOf = (rgb: number): [number, number, number] => {
-		const r = ((rgb >> 16) & 0xff) / 255;
-		const g = ((rgb >> 8) & 0xff) / 255;
-		const b = (rgb & 0xff) / 255;
-		const max = Math.max(r, g, b);
-		const min = Math.min(r, g, b);
-		const l = (max + min) / 2;
-		const d = max - min;
-		if (d === 0) return [0, 0, l];
-		const s = d / (1 - Math.abs(2 * l - 1));
-		let h: number;
-		if (max === r) h = ((g - b) / d) % 6;
-		else if (max === g) h = (b - r) / d + 2;
-		else h = (r - g) / d + 4;
-		return [(h * 60 + 360) % 360, s, l];
-	};
-
 	const sortPaints = (list: PaintInfo[]): PaintInfo[] => {
 		const arr = [...list];
 		switch (sortKey) {
 			case 1:
-				return arr.sort((a, b) => hslOf(a.rgb)[0] - hslOf(b.rgb)[0]);
+				return arr.sort((a, b) => a.hsl[0] - b.hsl[0]);
 			case 2:
-				return arr.sort((a, b) => hslOf(b.rgb)[1] - hslOf(a.rgb)[1]);
+				return arr.sort((a, b) => b.hsl[1] - a.hsl[1]);
 			case 3:
-				return arr.sort((a, b) => hslOf(b.rgb)[2] - hslOf(a.rgb)[2]);
+				return arr.sort((a, b) => b.hsl[2] - a.hsl[2]);
 			case 4:
-				return arr.sort((a, b) => Number(stock.has(paintId(b))) - Number(stock.has(paintId(a))));
+				return arr.sort((a, b) => Number(stock.has(b.id)) - Number(stock.has(a.id)));
 			default:
 				return arr.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
 		}
@@ -320,7 +293,11 @@
 					</span>
 				{/if}
 			</button>
-			<Dropdown class="list-none overflow-hidden!" placement="bottom-end" bind:isOpen={stockNav.filterOpen}>
+			<Dropdown
+				class="list-none overflow-hidden!"
+				placement="bottom-end"
+				bind:isOpen={stockNav.filterOpen}
+			>
 				<div class="grid min-w-70 grid-cols-2 gap-x-4 p-3">
 					<div class="space-y-0.5 border-r border-gray-200 pr-3 dark:border-gray-700">
 						<StockFilterRow
@@ -496,7 +473,7 @@
 						{/each}
 					</div>
 					{#snippet paintCard(paint: PaintInfo, showSerie: boolean)}
-						{@const inStock = stock.has(paintId(paint))}
+						{@const inStock = stock.has(paint.id)}
 						<div
 							role="button"
 							tabindex="0"
@@ -513,7 +490,7 @@
 								title={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
 								onclick={(e) => {
 									e.stopPropagation();
-									stock.toggle(paintId(paint));
+									stock.toggle(paint.id);
 									e.currentTarget.blur();
 								}}
 								class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock

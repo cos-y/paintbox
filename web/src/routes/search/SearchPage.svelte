@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useMode, modeHwb, modeRgb, modeOklch, modeHsl, type Oklch } from 'culori/fn';
+	import { type Oklch } from 'culori/fn';
 
 	import Hsl from '$lib/components/Hsl.svelte';
 	import Rgb from '$lib/components/Rgb.svelte';
@@ -16,20 +16,14 @@
 	} from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
-	import {
-		listPaints,
-		getCatalog,
-		paintId,
-		floatRgbToCss,
-		type PaintInfo
-	} from '$lib/paints.svelte';
+	import { getCatalog, floatRgbToCss, type PaintInfo, getPaintById } from '$lib/paints.svelte';
 	import { baseLabels, surfaceLabels } from '$lib/paintInfo';
 	import PaintSearch from '$lib/components/PaintSearch.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
 	import { viewStack } from '$lib/viewstack.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity, isSm } from '$lib/utils.svelte';
+	import { clamp, similarity, isSm, toRgb, toOklch, toHwb } from '$lib/utils.svelte';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import { store, rt } from './search.svelte';
@@ -37,11 +31,6 @@
 	import { untrack } from 'svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
-
-	useMode(modeHsl);
-	const toHwb = useMode(modeHwb);
-	const toRgb = useMode(modeRgb);
-	const toOklch = useMode(modeOklch);
 
 	/** store.color（rgb int）与色板 oklch 互转 */
 	const oklchToInt = (c: Oklch): number => {
@@ -101,14 +90,12 @@
 		});
 	};
 
-	const allPaints = listPaints();
-	const catalog = getCatalog(allPaints);
-	const paintByKey = new Map(allPaints.map((p) => [paintId(p), p]));
+	const catalog = getCatalog();
 
 	// 油漆来源：store.paintKey（详情页「调配/查看全部」设置），唯一指定当前油漆
 	const paintColor = $derived.by(() => {
 		const key = store.paintKey;
-		return key ? (paintByKey.get(key) ?? null) : null;
+		return key ? getPaintById(key) : null;
 	});
 
 	// 油漆信息标签（溶剂/漆面位拆解，与 PaintDetail 共享逻辑）
@@ -126,10 +113,10 @@
 
 	// 打开油漆详情：视图栈压栈（不离开本页，返回即回到搜索结果）
 	const openDetail = (brand: string, code: string) => {
-		const paint = paintByKey.get(`${brand}:${code}`);
+		const paint = getPaintById(`${brand}:${code}`);
 		if (paint) {
 			viewStack.push({
-				key: paintId(paint),
+				key: paint.id,
 				component: PaintDetail,
 				props: { paint, inStack: true, isStockPage: false }
 			});
@@ -426,7 +413,7 @@
 				<div class="mt-2">
 					<PaintSearch
 						onselect={(p2) => {
-							store.paintKey = paintId(p2);
+							store.paintKey = p2.id;
 							searching = false;
 						}}
 						oncancel={() => (searching = false)}
@@ -438,7 +425,7 @@
 		<!-- 无油漆锚点：直接显示搜索框 -->
 		<PaintSearch
 			onselect={(p2) => {
-				store.paintKey = paintId(p2);
+				store.paintKey = p2.id;
 				searching = false;
 			}}
 		/>

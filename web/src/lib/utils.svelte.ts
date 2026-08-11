@@ -1,5 +1,6 @@
 import { isTauri } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
+import { useMode, modeHsl, modeHwb, modeRgb, modeOklch } from 'culori/fn';
 
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
@@ -9,18 +10,27 @@ export const linearToSrgb = (c: number) =>
 
 export const similarity = (deltaE: number) => clamp(1 - deltaE * 3, 0, 1) * 100;
 
-export const hexToRgb = (hex: string): number[] => {
-	const raw = hex.replace(/^#/, '');
+export const hexToRgb = (hex: string | number): number[] => {
 	let rgb;
-	if (/^[0-9a-fA-F]{3}$/.test(raw)) {
-		const [r, g, b] = raw;
-		rgb = [r + r, g + g, b + b];
+	if (typeof hex === 'string') {
+		const raw = hex.replace(/^#/, '');
+		let rgbs;
+		if (/^[0-9a-fA-F]{3}$/.test(raw)) {
+			const [r, g, b] = raw;
+			rgbs = [r + r, g + g, b + b];
+		} else {
+			const m = raw.match(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/);
+			if (!m) return [];
+			rgbs = [m[1], m[2], m[3]];
+		}
+		rgb = rgbs.map((s) => parseInt(s, 16));
 	} else {
-		const m = raw.match(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/);
-		if (!m) return [];
-		rgb = [m[1], m[2], m[3]];
+		const r = ((hex >> 16) & 0xff) / 255;
+		const g = ((hex >> 8) & 0xff) / 255;
+		const b = (hex & 0xff) / 255;
+		rgb = [r, g, b];
 	}
-	return rgb.map((c) => clamp(parseInt(c, 16) / 255, 0, 1));
+	return rgb.map((c) => clamp(c / 255, 0, 1));
 };
 
 let isSm_ = $state(false);
@@ -44,3 +54,8 @@ export const openExternal = (url: string) => {
 	if (isTauri()) openUrl(url);
 	else window.open(url, '_blank', 'noopener');
 };
+
+export const toHsl = useMode(modeHsl);
+export const toOklch = useMode(modeOklch);
+export const toRgb = useMode(modeRgb);
+export const toHwb = useMode(modeHwb);
