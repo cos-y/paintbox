@@ -15,11 +15,16 @@ export interface StackView {
 
 const stack = $state<StackView[]>([]);
 
-// 关闭动画协作：导航（查看全部/调配/切段）时 sheet 先播关闭动画再清栈，
-// 使“跳转与关闭”同时发生。ViewSheet 挂载时注册动画执行器（closeHandler），
-// 动画播完弹栈后由 ViewSheet 调 resolveClose 统一清空剩余栈。
+// 关闭动画协作：导航（查看全部/调配/切段）与系统后退（popstate）时 sheet 先播关闭
+// 动画再弹栈。ViewSheet 挂载时注册动画执行器（closeHandler）；动画播完由 ViewSheet
+// 调 resolveClose 按触发源统一收尾：
+//   - 导航（clear）：清空整个栈
+//   - 系统后退（onPopstate）：弹一层
+//   - 拖拽/遮罩关闭：弹一层
 let closeHandler: (() => void) | null = null;
 let closeAllPending = false;
+let popPending = false; // 系统后退触发，动画完成后弹栈
+let animating = false; // 关闭动画进行中（拖拽/后退/导航共用）
 
 export const viewStack = {
 	get stack(): StackView[] {
@@ -46,27 +51,53 @@ export const viewStack = {
 		if (stack.length === 0) return;
 		if (closeHandler) {
 			closeAllPending = true;
+			animating = true;
 			closeHandler();
 		} else {
 			stack.length = 0;
+		}
+	},
+	/**
+	 * 系统返回键 / 后退手势（popstate）：优先播关闭动画，动画完弹一层；
+	 * 动画进行中再次后退则跳过动画直接弹栈（快速连续返回保持正确性）。
+	 */
+	onPopstate(): void {
+		if (stack.length === 0) return;
+		if (closeHandler && !animating) {
+			animating = true;
+			popPending = true;
+			closeHandler();
+		} else {
+			popPending = false;
+			stack.pop();
 		}
 	},
 	/** ViewSheet 挂载时注册关闭动画执行器，卸载时注销 */
 	setCloseHandler(fn: (() => void) | null): void {
 		closeHandler = fn;
 	},
-	/** 关闭动画播放完毕（ViewSheet 弹栈后调用）：执行清栈（导航场景） */
+	/** 动画进行中标记（拖拽/回弹动画由 ViewSheet 维护） */
+	setAnimating(flag: boolean): void {
+		animating = flag;
+	},
+	/** 关闭动画播放完毕（ViewSheet 弹栈后调用）：按触发源收尾 */
 	resolveClose(): void {
+		animating = false;
 		if (closeAllPending) {
 			closeAllPending = false;
 			stack.length = 0;
+		} else if (popPending) {
+			popPending = false;
+			stack.pop();
+		} else {
+			stack.pop();
 		}
 	}
 };
 
-// 系统返回键 / 手势 → popstate → 弹栈
+// 系统返回键 / 手势 → popstate → 弹栈（有动画执行器时先播关闭动画）
 if (typeof window !== 'undefined') {
 	window.addEventListener('popstate', () => {
-		viewStack.pop();
+		viewStack.onPopstate();
 	});
 }

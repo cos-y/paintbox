@@ -25,11 +25,12 @@
 	const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 	let sheetEl = $state<HTMLElement | null>(null);
+	let scrimEl = $state<HTMLElement | null>(null);
 	// 面板实际高度（dvh 与 innerHeight 在移动端地址栏场景有差异，直接量元素）
 	const panelHeight = () => sheetEl?.getBoundingClientRect().height ?? window.innerHeight * 0.75;
 
-	let dragY = $state(0);
-	let scrimOpacity = $state(1);
+	let dragY = $state.raw(0);
+	let scrimOpacity = $state.raw(1);
 
 	// 手势/动画账本用 $state.raw：不参与渲染，且组件重渲染不会重置（普通 let 会在重渲染时归零）
 	let dragging = $state.raw(false);
@@ -37,10 +38,10 @@
 	let startY = $state.raw(0);
 	let panelH = $state.raw(0); // 手势开始时的面板高度（避免动画中反复读布局）
 	let samples = $state.raw<{ y: number; t: number }[]>([]);
-	let animRaf = $state.raw<number | undefined>(undefined);
+	let animTimer = $state.raw<ReturnType<typeof setTimeout> | undefined>(undefined); // 关闭/回弹 CSS transition 计时
 
 	onMount(() => {
-		// 供 viewStack.requestClose 调用的关闭动画执行器（PaintDetail 导航按钮先关卡片再跳转）
+		// 供 viewStack.clear/onPopstate 调用的关闭动画执行器（导航/后退时先播关闭动画）
 		viewStack.setCloseHandler(() => {
 			panelH = panelHeight();
 			closeCard(0, panelH);
@@ -49,60 +50,69 @@
 	});
 
 	onDestroy(() => {
-		if (animRaf) cancelAnimationFrame(animRaf);
+		if (animTimer) clearTimeout(animTimer);
 	});
 
 	function resetSheet() {
 		closing = false;
 		dragY = 0;
 		scrimOpacity = 1;
+		applyDrag();
+		// 清掉关闭动画残留的 transition（下次打开是全新元素，这里双保险）
+		if (sheetEl) sheetEl.style.transition = '';
+		if (scrimEl) scrimEl.style.transition = '';
 	}
 
-	/** 关闭：以松手速度 v 为初速度匀加速下滑，整卡出屏后弹栈 */
+	/** 手动同步面板位移与遮罩透明度（不经 Svelte 样式绑定，避免覆盖内联 transition） */
+	function applyDrag() {
+		if (sheetEl) sheetEl.style.transform = `translateY(${dragY}px)`;
+		if (scrimEl) scrimEl.style.opacity = String(scrimOpacity);
+	}
+
+	/** 关闭：整卡下滑出屏（CSS transition 驱动，GPU 合成不掉帧）；初速度决定时长 */
 	function closeCard(initialV: number, h: number) {
 		if (closing) return;
 		closing = true;
-		if (animRaf) cancelAnimationFrame(animRaf);
-		const p0 = dragY;
+		viewStack.setAnimating(true);
+		if (animTimer) clearTimeout(animTimer);
 		const v = Math.max(initialV, 0.2);
-		const t0 = performance.now();
-		const step = (now: number) => {
-			const dt = now - t0;
-			const p = p0 + v * dt + 0.5 * GRAVITY * dt * dt;
-			dragY = p;
-			scrimOpacity = clamp(1 - p / h, 0, 1);
-			if (p < h) {
-				animRaf = requestAnimationFrame(step);
-			} else {
-				animRaf = undefined;
-				viewStack.pop();
-				viewStack.resolveClose();
-				resetSheet();
-			}
-		};
-		animRaf = requestAnimationFrame(step);
+		// 匀加速 p = v·t + ½G·t² 解出到达 h 的时长；速度越快越短
+		const t = (-v + Math.sqrt(v * v + 2 * GRAVITY * h)) / GRAVITY;
+		const dur = clamp(t, 120, 400);
+		if (sheetEl) sheetEl.style.transition = `transform ${dur}ms ease-in`;
+		if (scrimEl) scrimEl.style.transition = `opacity ${dur}ms ease-in`;
+		dragY = h;
+		scrimOpacity = 0;
+		applyDrag();
+		animTimer = setTimeout(() => {
+			animTimer = undefined;
+			viewStack.resolveClose(); // 按触发源弹栈/清栈（拖拽/后退/导航）
+			resetSheet();
+		}, dur);
 	}
 
-	/** 回弹到顶：easeOutCubic 初速度 = 3·Δ/dur，取 dur 使初速度恰为 v */
+	/** 回弹到顶：easeOutCubic，时长按初速度换算（同样走 CSS transition） */
 	function springBack(v: number, h: number) {
 		if (closing) return;
 		closing = true;
-		if (animRaf) cancelAnimationFrame(animRaf);
+		viewStack.setAnimating(true);
+		if (animTimer) clearTimeout(animTimer);
 		const from = dragY;
 		const dur = clamp((3 * from) / Math.max(v, 0.05), 80, 350);
-		const t0 = performance.now();
-		const step = (now: number) => {
-			const t = Math.min((now - t0) / dur, 1);
-			dragY = from * (1 - easeOutCubic(t));
-			scrimOpacity = clamp(1 - dragY / h, 0, 1);
-			if (t < 1) {
-				animRaf = requestAnimationFrame(step);
-			} else {
-				animRaf = undefined;
-				closing = false;
-			}
-		};
-		animRaf = requestAnimationFrame(step);
+		if (sheetEl)
+			sheetEl.style.transition = `transform ${dur}ms cubic-bezier(0.215, 0.61, 0.355, 1)`;
+		if (scrimEl)
+			scrimEl.style.transition = `opacity ${dur}ms cubic-bezier(0.215, 0.61, 0.355, 1)`;
+		dragY = 0;
+		scrimOpacity = 1;
+		applyDrag();
+		animTimer = setTimeout(() => {
+			animTimer = undefined;
+			closing = false;
+			viewStack.setAnimating(false);
+			if (sheetEl) sheetEl.style.transition = '';
+			if (scrimEl) scrimEl.style.transition = '';
+		}, dur);
 	}
 
 	function onPointerDown(e: PointerEvent) {
@@ -124,6 +134,7 @@
 		}
 		dragY = dy > 0 ? dy : 0; // 只允许向下；往上拖则位置跟随（回弹判定看释放瞬间）
 		scrimOpacity = clamp(1 - dragY / panelH, 0, 1);
+		applyDrag();
 		const now = performance.now();
 		// 只在真正移动时采样；停顿后甩动，旧样本会被 80ms 窗口淘汰，速度不掺水
 		if (samples.length === 0 || e.clientY !== samples[samples.length - 1].y) {
@@ -165,6 +176,7 @@
 		dragging = false;
 		dragY = 0;
 		scrimOpacity = 1;
+		applyDrag();
 		samples = [];
 	}
 
@@ -203,12 +215,12 @@
 {#if top}
 	<!-- 遮罩：单击退回上一层；栈空则关闭卡片 -->
 	<button
+		bind:this={scrimEl}
 		type="button"
 		aria-label="close detail"
 		class="fixed inset-0 z-60 block cursor-pointer touch-none bg-black/50"
-		style="opacity: {scrimOpacity}"
-		onclick={onScrimClick}
 		in:fade={{ duration: 150 }}
+		onclick={onScrimClick}
 	></button>
 
 	<!-- 底部卡片：盖住底部导航（z 高于 nav 的 z-50），整卡可拖拽 -->
@@ -218,7 +230,6 @@
 		aria-modal="true"
 		tabindex="-1"
 		class="fixed inset-x-0 bottom-0 z-61 flex h-[75dvh] touch-none flex-col rounded-t-2xl bg-white shadow-2xl outline-none dark:bg-gray-900"
-		style="transform: translateY({dragY}px)"
 		in:sheetSlide={{ duration: 200, easing: cubicOut }}
 		onpointerdown={onPointerDown}
 		onpointermove={onPointerMove}
