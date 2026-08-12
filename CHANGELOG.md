@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
-## [0.3.2] - 2026-08-12
+## [0.3.3] - 2026-08-12
 
 ### Added
 

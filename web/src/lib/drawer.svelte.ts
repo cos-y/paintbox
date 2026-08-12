@@ -21,6 +21,12 @@ let current = $state<SheetView | null>(null);
 // 桌面端无动画执行器，closeAnimated() 直接清状态。
 let closeAnimator: (() => void) | null = null;
 
+// 关闭安全兜底：动画启动后若 Drawer 组件在动画中销毁（animTimer 被 onDestroy 清除、
+// closeCard 的 closing 守卫永久短路），drawer 状态也必须最终清空——否则抽屉永远卡死
+// （所有关闭路径——拖拽/scrim/返回键——都依赖 closing=false 才放行）。
+// 正常关闭（动画播完 drawer.close()）会清掉这个超时，无副作用。
+let forceCloseTimer: ReturnType<typeof setTimeout> | undefined;
+
 export const drawer = {
 	get view(): SheetView | null {
 		return current;
@@ -29,16 +35,29 @@ export const drawer = {
 		return current !== null;
 	},
 	open(view: SheetView): void {
+		clearTimeout(forceCloseTimer);
+		forceCloseTimer = undefined;
 		current = view;
 	},
 	/** 播放关闭动画后关闭（Tauri 返回键 / 页面导航时调用） */
 	closeAnimated(): void {
 		if (!current) return;
-		if (closeAnimator) closeAnimator();
-		else current = null;
+		if (closeAnimator) {
+			closeAnimator();
+			// 安全兜底：动画最长 400ms，800ms 后无论组件生死都强制清状态
+			clearTimeout(forceCloseTimer);
+			forceCloseTimer = setTimeout(() => {
+				forceCloseTimer = undefined;
+				current = null;
+			}, 800);
+		} else {
+			current = null;
+		}
 	},
-	/** 直接关闭（拖拽/遮罩关闭的动画播完后由 ViewSheet 调用） */
+	/** 直接关闭（拖拽/遮罩关闭的动画播完后由 Drawer 调用） */
 	close(): void {
+		clearTimeout(forceCloseTimer);
+		forceCloseTimer = undefined;
 		current = null;
 	},
 	setCloseAnimator(fn: (() => void) | null): void {

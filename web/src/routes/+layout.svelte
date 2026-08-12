@@ -5,6 +5,7 @@
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto, beforeNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 	import { drawer } from '$lib/drawer.svelte';
@@ -17,6 +18,12 @@
 
 	// 任何导航（切段/跳转/浏览器返回）都关闭视图覆盖层：播关闭动画（与页面切换并行）
 	beforeNavigate(() => drawer.closeAnimated());
+
+	// 兜底：WebView 状态残留恢复（异常退出/强杀后重进）时抽屉可能还开着、
+	// scrim 遮挡全屏导致整页无法操作——挂载即强制清理残留状态
+	onMount(() => {
+		if (drawer.isOpen) drawer.close();
+	});
 
 	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
 		{ key: 'nav.stock', route: '/stock', svg: Package },

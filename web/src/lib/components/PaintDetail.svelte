@@ -64,7 +64,10 @@
 		store.mixingLimit = 2;
 		store.paintKey = paint.id;
 		store.source = 'paint';
-		goto('/search/', { noScroll: true, replaceState: true });
+		// 普通 goto（不 replaceState）：layout 的 beforeNavigate 会 closeAnimated，
+		// 关闭动画与页面切换并行；历史新增一条 /search/ 记录，listener 失效时
+		// 系统 back 的 WebView.goBack 也能回退到 /stock/ 并触发同样的关闭路径
+		goto('/search/', { noScroll: true });
 	};
 
 	const viewAllSimilar = () => {
@@ -73,7 +76,7 @@
 		store.mixingLimit = 0;
 		store.paintKey = paint.id;
 		store.source = 'paint';
-		goto('/search/', { noScroll: true, replaceState: true });
+		goto('/search/', { noScroll: true });
 	};
 
 	const reportIssue = () => {

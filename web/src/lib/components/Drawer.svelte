@@ -60,6 +60,9 @@
 
 	onDestroy(() => {
 		if (animTimer) clearTimeout(animTimer);
+		// 组件销毁时抽屉可能还开着（布局重建/异常）且动画 timer 已被清：
+		// 立即清状态，防止 drawer 卡死（scrim 残留遮挡全屏）
+		if (drawer.isOpen) drawer.close();
 	});
 
 	function resetSheet() {
