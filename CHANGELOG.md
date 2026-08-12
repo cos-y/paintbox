@@ -14,9 +14,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - localStorage data is now read through zod schemas with per-element recovery: corrupt or legacy entries are dropped individually instead of crashing the whole app (a legacy stock format could previously crash the module and lock the UI).
 
-## [0.3.3] - 2026-08-12
-
-- Critical bug fixes
+## [0.3.2] - 2026-08-12
 
 ### Added
 
