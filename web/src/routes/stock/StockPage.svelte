@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { ChevronLeft, Check, Plus, Search, X, Funnel, ArrowDownWideNarrow } from '@lucide/svelte';
 	import { Card, Badge, Dropdown } from 'flowbite-svelte';
 	import { getCatalog, rgbToHex, SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
@@ -506,7 +506,6 @@
 					{#key level}
 						<div
 							class="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 overflow-y-auto px-6 py-4"
-							in:fly={{ x: -24, duration: 150 }}
 						>
 							{#each Object.keys(catalog) as brand}
 								{@render brandCard(brand)}
@@ -515,7 +514,7 @@
 					{/key}
 				{:else}
 					{#key `${level}-${selectedBrand}`}
-						<div class="flex h-full" in:fly={{ x: 24, duration: 150 }}>
+						<div class="flex h-full">
 							{@render seriesNav()}
 							<div
 								class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
