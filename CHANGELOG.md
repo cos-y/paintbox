@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.2] - 2026-08-12
+
+### Added
+
+- Desktop (≥640px) two-column layout on the search and stock pages: the paint list stays on the left while a persistent detail panel on the right shows the selected paint, or a hint when nothing is selected. The panel width adapts to the window.
+- CIEDE2000 color distance replaces the previous Euclidean (Oklab) distance for color matching, for more perceptually accurate results.
+- JetBrains Mono is bundled with the app and used as the default font on all platforms (Android and desktop).
+- PanText: a single-line control for overlong text with a two-sided fading mask and drag-to-pan on mouse/pen.
+
+### Changed
+
+- Back navigation is now native-aware: on Android the system back button is handled by a JS listener registered on demand (drawer open, or a page level to pop), and falls back to the system default exit at the root level.
+- Stock page navigation no longer uses the browser history API; brand/series/paint levels live in a runtime store.
+- Media queries are reactive (isMedia()) so the layout adapts live on window resize.
+- The bottom drawer content is now scrollable on touch; drag-to-close only engages when scrolled to the top.
+
+### Fixed
+
+- Desktop search results area overflowed the viewport; the results list and the detail panel now scroll independently within the remaining page height.
+- The detail panel was shown on the stock brand list (root) level; it now only appears when a paint is selected.
+- Stock page header buttons (search/filter/sort) disappeared at the paint level.
+- Paint detail back required two presses to return to the brand list.
+
 ## [0.3.1] - 2026-08-11
 
 - Bug fixes
