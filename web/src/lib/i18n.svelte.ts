@@ -19,7 +19,7 @@ const en = {
 	'search.paintsCount': (p: Params) => `${p.n} paints`,
 	'search.hoverBrandHint': 'Select a brand<br />to view its series',
 	'search.surfaceTooltip': 'surface type',
-	'search.surfaceTitle': 'Surface',
+	'search.surfaceTitle': 'Finish: Any',
 	'search.surface.G': 'Gloss',
 	'search.surface.SG': 'Semi-Gloss',
 	'search.surface.M': 'Flat',
@@ -76,7 +76,7 @@ const en = {
 	'stock.noResults': 'No matching paints',
 	'stock.filterTitle': 'Filter',
 	'stock.filterClear': 'Clear',
-	'stock.surfaceTitle': 'Surface',
+	'stock.surfaceTitle': 'Finish',
 	'stock.baseTitle': 'Base',
 
 	// ---- gamut page ----

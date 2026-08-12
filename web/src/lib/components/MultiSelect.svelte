@@ -16,23 +16,23 @@
 </script>
 
 <div>
-	<Button size="xs" color="alternative" class="relative gap-1 justify-start! cursor-pointer {clz}">
+	<Button size="xs" color="alternative" class="relative cursor-pointer justify-start! gap-1 {clz}">
 		{value.length == 0 ? title : options[value[0]]}
 		{#if value.length > 1}
 			<Badge
-				class="absolute pl-1.5 pr-1.5 text-xs top-1.5 right-7 rounded-full bg-primary-500 dark:bg-primary-500 dark:text-white"
+				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
 				>{value.length}
 			</Badge>
 		{/if}
-		<ChevronDown class="h-3 w-3 ms-auto" />
+		<ChevronDown class="ms-auto h-3 w-3" />
 	</Button>
 	{#if tooltip}
-		<Tooltip placement="top" class="text-xs p-1">{tooltip}</Tooltip>
+		<Tooltip placement="top" class="p-1 text-xs">{tooltip}</Tooltip>
 	{/if}
 </div>
 <Dropdown
 	placement="bottom-start"
-	class="list-none overflow-hidden! cursor-pointer! {clz}"
+	class="cursor-pointer! list-none overflow-hidden! {clz}"
 	bind:isOpen
 >
 	{#each Object.entries(options) as [key, desc]}

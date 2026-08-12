@@ -7,8 +7,8 @@
 	import { goto, beforeNavigate } from '$app/navigation';
 	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
-	import { viewStack } from '$lib/viewstack.svelte';
-	import ViewSheet from '$lib/components/ViewSheet.svelte';
+	import { drawer } from '$lib/drawer.svelte';
+	import Drawer from '$lib/components/Drawer.svelte';
 	import ViewOverlay from '$lib/components/ViewOverlay.svelte';
 	import { isSm } from '$lib/utils.svelte';
 
@@ -16,11 +16,8 @@
 
 	// 字体：JetBrains Mono latin 子集由 layout.css 的 @font-face 声明，全平台生效
 
-	// 非返回型导航（切段/跳转）清空视图栈；系统返回（popstate）由视图栈自身弹栈处理
-	// 清栈走动画：与页面切换并行播关闭动画，播完才真正清栈
-	beforeNavigate((navigation) => {
-		if (navigation.type !== 'popstate') viewStack.clear();
-	});
+	// 任何导航（切段/跳转/浏览器返回）都关闭视图覆盖层：播关闭动画（与页面切换并行）
+	beforeNavigate(() => drawer.closeAnimated());
 
 	const navs: { key: MessageKey; route: string; svg: typeof Package }[] = [
 		{ key: 'nav.stock', route: '/stock', svg: Package },
@@ -34,6 +31,8 @@
 	// Tauri 环境禁止双指缩放（WebView 默认允许 pinch-zoom，原生手势优先）
 	$effect(() => {
 		if (!isTauri()) return;
+		// 原生 app 体验：默认禁用光标文本选择（输入框除外，CSS 在 layout.css）
+		document.documentElement.classList.add('tauri-no-select');
 		// 双指触摸时阻止默认行为（pinch 缩放）
 		const preventPinch = (e: TouchEvent) => {
 			if (e.touches.length > 1) e.preventDefault();
@@ -93,14 +92,14 @@
 	</aside>
 
 	<main
-		class="h-full flex-1 overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
+		class="h-full flex-1 overflow-y-auto overflow-x-hidden pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
 	>
 		{@render children()}
 	</main>
 
 	<!-- 全局视图栈：手机端底部卡片，桌面端全屏压栈 -->
 	{#if !isSm()}
-		<ViewSheet />
+		<Drawer />
 	{:else}
 		<ViewOverlay />
 	{/if}

@@ -28,78 +28,78 @@
 	const donateUrl = 'https://afdian.com/a/cos_y';
 </script>
 
-<div class="mx-auto flex h-full w-full max-w-3xl flex-col p-6 text-gray-200 select-none">
+<div class="relative mx-auto flex h-full w-full max-w-3xl flex-col p-6 text-gray-200 select-none">
+	<!-- 头部标题 -->
+	<div class="sticky top-0 flex items-center gap-4 border-b border-gray-800 pb-4">
+		<img src={favicon} alt="PaintBox" class="h-16 w-16 shrink-0 object-contain" />
+		<div class="min-w-0">
+			<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
+			<p class="mt-1 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-400">
+				<span>Version {__APP_VERSION__}</span>
+				{#if isTauri() && updater}
+					<button
+						type="button"
+						onclick={() => updater!.check()}
+						disabled={updater.state.status === 'checking'}
+						class="cursor-pointer rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white disabled:cursor-default disabled:opacity-50"
+					>
+						{updater.state.status === 'checking' ? t('about.checking') : t('about.checkUpdate')}
+					</button>
+					{#if updater.state.status === 'up-to-date'}
+						<span class="text-gray-500">{t('about.upToDate')}</span>
+					{:else if updater.state.status === 'outdated'}
+						<span class="text-green-400"
+							>{t('about.updateAvailable', { n: updater.state.latest ?? '' })}</span
+						>
+						<a
+							href={updater.channelUrl}
+							target="_blank"
+							onclick={(e) => {
+								if (isTauri()) {
+									e.preventDefault();
+									openExternal(updater!.channelUrl);
+								}
+							}}
+							class="inline-flex cursor-pointer items-center gap-1 rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+						>
+							{#if updater.channelId === 'sideload'}
+								<Github class="h-3 w-3" />
+							{:else}
+								<PlayStore class="h-3 w-3" />
+							{/if}
+							{t('about.viewUpdate')}
+						</a>
+					{:else if updater.state.status === 'error'}
+						<span class="text-gray-500">
+							{t('about.checkFailed')}
+							{#if updater.state.error}
+								<span class="text-gray-600" title={updater.state.error}
+									>({updater.state.error})</span
+								>
+							{/if}
+						</span>
+					{/if}
+				{/if}
+			</p>
+		</div>
+		<!-- 语言切换（后续设置区入口） -->
+		<div class="ml-auto shrink-0">
+			<button
+				type="button"
+				onclick={toggleLocale}
+				title={i18n.locale === 'en' ? t('about.switchToZh') : t('about.switchToEn')}
+				class="flex cursor-pointer items-center gap-1.5 rounded-md border border-gray-700 bg-gray-800/60 px-2.5 py-1.5 text-xs text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+			>
+				<Languages class="h-3.5 w-3.5" />
+				{i18n.locale === 'en' ? '中文' : 'EN'}
+			</button>
+		</div>
+	</div>
+
 	<!-- 可滚动内容区 -->
 	<div class="min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
-		<!-- 头部标题 -->
-		<div class="flex items-center gap-4 border-b border-gray-800 pb-4">
-			<img src={favicon} alt="PaintBox" class="h-16 w-16 shrink-0 object-contain" />
-			<div class="min-w-0">
-				<h1 class="text-2xl font-bold tracking-wide text-white">PaintBox</h1>
-				<p class="mt-1 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-400">
-					<span>Version {__APP_VERSION__}</span>
-					{#if isTauri() && updater}
-						<button
-							type="button"
-							onclick={() => updater!.check()}
-							disabled={updater.state.status === 'checking'}
-							class="cursor-pointer rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white disabled:cursor-default disabled:opacity-50"
-						>
-							{updater.state.status === 'checking' ? t('about.checking') : t('about.checkUpdate')}
-						</button>
-						{#if updater.state.status === 'up-to-date'}
-							<span class="text-gray-500">{t('about.upToDate')}</span>
-						{:else if updater.state.status === 'outdated'}
-							<span class="text-green-400"
-								>{t('about.updateAvailable', { n: updater.state.latest ?? '' })}</span
-							>
-							<a
-								href={updater.channelUrl}
-								target="_blank"
-								onclick={(e) => {
-									if (isTauri()) {
-										e.preventDefault();
-										openExternal(updater!.channelUrl);
-									}
-								}}
-								class="inline-flex cursor-pointer items-center gap-1 rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-							>
-								{#if updater.channelId === 'sideload'}
-									<Github class="h-3 w-3" />
-								{:else}
-									<PlayStore class="h-3 w-3" />
-								{/if}
-								{t('about.viewUpdate')}
-							</a>
-						{:else if updater.state.status === 'error'}
-							<span class="text-gray-500">
-								{t('about.checkFailed')}
-								{#if updater.state.error}
-									<span class="text-gray-600" title={updater.state.error}
-										>({updater.state.error})</span
-									>
-								{/if}
-							</span>
-						{/if}
-					{/if}
-				</p>
-			</div>
-			<!-- 语言切换（后续设置区入口） -->
-			<div class="ml-auto shrink-0">
-				<button
-					type="button"
-					onclick={toggleLocale}
-					title={i18n.locale === 'en' ? t('about.switchToZh') : t('about.switchToEn')}
-					class="flex cursor-pointer items-center gap-1.5 rounded-md border border-gray-700 bg-gray-800/60 px-2.5 py-1.5 text-xs text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-				>
-					<Languages class="h-3.5 w-3.5" />
-					{i18n.locale === 'en' ? '中文' : 'EN'}
-				</button>
-			</div>
-		</div>
-
 		<!-- 1. 隐私与离线声明 -->
-		<section class="space-y-4">
+		<section class="space-y-4 pt-4">
 			<div class="flex items-center gap-2 text-primary-400">
 				<ShieldCheck class="h-5 w-5" />
 				<h2 class="text-base font-semibold">{t('about.privacyTitle')}</h2>
@@ -155,7 +155,7 @@
 	</div>
 
 	<!-- 4. 链接与反馈（固定显示） -->
-	<section class="mt-4 shrink-0 border-t border-gray-800 pt-4">
+	<section class="shrink-0 border-t border-gray-800 pt-4">
 		<div class="flex flex-row items-center justify-center gap-4">
 			<a
 				class="cursor-pointer text-white"

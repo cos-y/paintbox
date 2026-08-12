@@ -16,12 +16,13 @@
 	} from '@lucide/svelte';
 	import { Badge, Button, Dropdown } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
+	import PanText from '$lib/components/PanText.svelte';
 	import { getCatalog, floatRgbToCss, type PaintInfo, getPaintById } from '$lib/paints.svelte';
 	import { baseLabels, surfaceLabels } from '$lib/paintInfo';
 	import PaintSearch from '$lib/components/PaintSearch.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
-	import { viewStack } from '$lib/viewstack.svelte';
+	import { drawer } from '$lib/drawer.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { clamp, similarity, isSm, toRgb, toOklch, toHwb } from '$lib/utils.svelte';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
@@ -100,7 +101,7 @@
 
 	// 油漆信息标签（溶剂/漆面位拆解，与 PaintDetail 共享逻辑）
 	// 油漆模式只读色值展示（跟随 store.color，切换 palette 后返回 paint 仍显示油漆色）
-	const hexText = $derived(`#${store.color.toString(16).padStart(6, '0').toUpperCase()}`);
+	const hexText = $derived(`#${store.color.toString(16).padStart(6, '0').toLowerCase()}`);
 	// paint 面板搜索态：无油漆锚点（待选择）时直接显示搜索框
 	let searching = $state(!store.paintKey);
 
@@ -111,14 +112,14 @@
 		}
 	});
 
-	// 打开油漆详情：视图栈压栈（不离开本页，返回即回到搜索结果）
+	// 打开油漆详情：打开单层覆盖层（不离开本页，关闭后回到搜索结果）
 	const openDetail = (brand: string, code: string) => {
 		const paint = getPaintById(`${brand}:${code}`);
 		if (paint) {
-			viewStack.push({
+			drawer.open({
 				key: paint.id,
 				component: PaintDetail,
-				props: { paint, inStack: true, isStockPage: false }
+				props: { paint, isStockPage: false }
 			});
 		}
 	};
@@ -281,19 +282,7 @@
 	<div
 		class="absolute top-1.5 right-1.5 z-10 flex flex-row overflow-hidden rounded-md bg-black/40 backdrop-blur-sm"
 	>
-		<button
-			type="button"
-			class="cursor-pointer p-1.5 text-white transition-colors hover:bg-white/15 {store.source ===
-			'palette'
-				? 'bg-white/25'
-				: ''}"
-			title={t('search.sourcePalette')}
-			onclick={() => (store.source = 'palette')}
-		>
-			<Palette class="size-4" />
-		</button>
 		{#if isTauri()}
-			<div class="w-px bg-white/25"></div>
 			<button
 				type="button"
 				class="cursor-pointer p-1.5 text-white transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-40 {store.source ===
@@ -306,7 +295,19 @@
 			>
 				<Camera class="size-4" />
 			</button>
+			<div class="w-px bg-white/25"></div>
 		{/if}
+		<button
+			type="button"
+			class="cursor-pointer p-1.5 text-white transition-colors hover:bg-white/15 {store.source ===
+			'palette'
+				? 'bg-white/25'
+				: ''}"
+			title={t('search.sourcePalette')}
+			onclick={() => (store.source = 'palette')}
+		>
+			<Palette class="size-4" />
+		</button>
 		<div class="w-px bg-white/25"></div>
 		<button
 			type="button"
@@ -356,14 +357,14 @@
 					<div class="min-w-0 flex-1">
 						<div class="flex min-w-0 items-baseline gap-2">
 							<span class="shrink-0 text-2xl font-bold">{p.code}</span>
-							<span class="truncate text-lg font-bold text-gray-500 dark:text-gray-400"
-								>{paintDesc(p)}</span
-							>
+							<PanText class="text-lg font-bold text-gray-500 dark:text-gray-400">
+								{paintDesc(p)}
+							</PanText>
 						</div>
-						<div class="mt-0.5 text-xs text-gray-400">
+						<PanText class="mt-0.5 text-xs text-gray-400">
 							{getSerieMeta(p.brand, p.serie)?.name ?? p.serie} /
 							{getBrandMeta(p.brand)?.name ?? p.brand}
-						</div>
+						</PanText>
 						{#if baseLabels(p).length > 0 || surfaceLabels(p).length > 0}
 							<div class="mt-2 flex flex-wrap gap-1.5">
 								{#each baseLabels(p) as l}
@@ -435,12 +436,10 @@
 {#snippet colorPicker()}
 	{#if store.source === 'paint'}
 		<div class="grid gap-0 sm:auto-cols-[150px_1fr] sm:grid-flow-col sm:gap-3">
-			<div>
-				{#if isSm()}
-					{@render colorSwatch()}
-				{/if}
-			</div>
-			<div class="sm:max-w-135">
+			{#if isSm()}
+				{@render colorSwatch()}
+			{/if}
+			<div class="min-w-45 sm:max-w-135">
 				{@render paintPanel(paintColor)}
 			</div>
 		</div>
@@ -695,7 +694,7 @@
 
 				<MultiSelect
 					tooltip={t('search.surfaceTooltip')}
-					class="w-36 text-xs"
+					class="w-48 text-xs"
 					options={{
 						G: t('search.surface.G'),
 						SG: t('search.surface.SG'),
@@ -814,8 +813,10 @@
 									{/each}
 								</div>
 								{#if !isMix}
-									<div class="mt-0.5 truncate pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
-										{paintDesc(r.portions[0])}
+									<div class="mt-0.5 pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
+										<PanText>
+											{paintDesc(r.portions[0])}
+										</PanText>
 									</div>
 								{/if}
 								<div

@@ -1,15 +1,23 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { viewStack } from '$lib/viewstack.svelte';
+	import { drawer } from '$lib/drawer.svelte';
+	import { setDrawerBackNeeded } from '$lib/back.svelte';
+
+	const view = $derived(drawer.view);
+
+	// 覆盖层打开时登记 back 需求（Android 根级注销后由系统接管退出）；关闭即清理
+	$effect(() => {
+		if (!view) return;
+		setDrawerBackNeeded(true);
+		return () => setDrawerBackNeeded(false);
+	});
 </script>
 
-{#each viewStack.stack as v, i (v.key)}
+{#if view}
 	<div
-		class="absolute inset-0 z-50 {i === viewStack.size - 1
-			? 'bg-white dark:bg-gray-900'
-			: 'pointer-events-none invisible'}"
+		class="absolute inset-0 z-50 bg-white dark:bg-gray-900"
 		transition:slide={{ axis: 'x', duration: 250 }}
 	>
-		<svelte:component this={v.component} {...v.props} />
+		<svelte:component this={view.component} {...view.props} />
 	</div>
-{/each}
+{/if}
