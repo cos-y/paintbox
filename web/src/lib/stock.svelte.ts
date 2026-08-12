@@ -1,4 +1,6 @@
 import { getPaintById } from '$lib/paints.svelte';
+import { z } from 'zod';
+import { loadData } from './utils.svelte';
 
 export interface StockEntry {
 	/** 持久化的唯一标识 `${brand}:${code}` */
@@ -9,20 +11,19 @@ export interface StockEntry {
 
 const STORAGE_KEY = 'paintbox:stock';
 
-// 持久化只存 id（string[]），index 是运行时数据
-const loadFromStorage = (): string[] => {
-	if (typeof localStorage === 'undefined') return [];
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? JSON.parse(raw) : [];
-	} catch {
-		return [];
-	}
-};
+// 持久化格式：string[]（0.2.3 起所有版本）。
+// 逐元素恢复：数组内非字符串元素单独丢弃，合法 id 保留（一个脏元素不连坐整个库存）；
+// 整体非数组 / 损坏 JSON → catch([]) 重置，杜绝 new Set(非 iterable) 崩溃。
+const StockSchema = z
+	.array(z.unknown())
+	.transform((arr) => arr.filter((x): x is string => typeof x === 'string'))
+	.catch([]);
+
+const initial = loadData(STORAGE_KEY, StockSchema);
 
 class StockStore {
 	/** 库存：key 是持久化的 id，value 含 listPaints 下标（不持久化） */
-	values = $state<Set<string>>(new Set(loadFromStorage()));
+	values = $state<Set<string>>(new Set(initial));
 	version = 0;
 
 	has(id: string): boolean {

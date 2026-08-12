@@ -8,7 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.4] - 2026-08-12
+
+### Fixed
+
+- localStorage data is now read through zod schemas with per-element recovery: corrupt or legacy entries are dropped individually instead of crashing the whole app (a legacy stock format could previously crash the module and lock the UI).
+
 ## [0.3.3] - 2026-08-12
+
+- Critical bug fixes
 
 ### Added
 

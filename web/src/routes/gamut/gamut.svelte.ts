@@ -1,51 +1,43 @@
 import { untrack } from 'svelte';
 import * as THREE from 'three';
-import { clamp, isMedia } from '$lib/utils.svelte';
+import { clamp, isMedia, loadData } from '$lib/utils.svelte';
 import { isTauri } from '@tauri-apps/api/core';
 import { callWasm } from '$lib/wasmClient';
+import { z } from 'zod';
 
 const STORAGE_KEY = 'paintbox:gamut';
 
-export interface SerializedSource {
-	id: string;
-	type: 'color' | 'paint' | 'stock';
+const SourceSchema = z.object({
+	id: z.string(),
+	type: z.enum(['color', 'paint', 'stock']),
 	/** color card: 6-digit hex as number */
-	rgb?: number;
+	rgb: z.number().optional(),
 	/** paint card: brand:code id */
-	paintId?: string;
+	paintId: z.string().optional(),
 	/** 暂时从色域中排除（不移除卡片） */
-	hidden?: boolean;
-}
+	hidden: z.boolean().optional()
+});
 
-interface Serialized {
-	sources: SerializedSource[];
-	clipL: [number, number];
-	clipA: [number, number];
-	clipB: [number, number];
-	nextId: number;
+type SerializedSource = z.infer<typeof SourceSchema>;
+export type { SerializedSource };
+
+// 持久化 schema：类型与校验单一来源（z.infer 推导 Serialized）。
+// 格式自引入（24fb59c, 2026-08-09）起一直为对象，未变过；
+// 缺字段/类型错误由逐字段 .catch() 兜底为默认值。
+const GamutSchema = z.object({
+	sources: z.array(SourceSchema).catch([]),
+	clipL: z.tuple([z.number(), z.number()]).catch([0, 16]),
+	clipA: z.tuple([z.number(), z.number()]).catch([-12, 14]),
+	clipB: z.tuple([z.number(), z.number()]).catch([-15, 12]),
+	nextId: z.number().catch(0),
 	/** localStorage 里是否有已保存的记录（区分首次使用 vs 用户保存过但清空了 sources） */
-	persisted: boolean;
-}
+	persisted: z.boolean().catch(true)
+});
 
-function load(): Serialized {
-	try {
-		if (typeof localStorage !== 'undefined') {
-			const raw = localStorage.getItem(STORAGE_KEY);
-			if (raw) return { ...JSON.parse(raw), persisted: true };
-		}
-	} catch {}
-	return {
-		sources: [],
-		clipL: [0, 16],
-		clipA: [-12, 14],
-		clipB: [-15, 12],
-		nextId: 0,
-		persisted: false
-	};
-}
+type Serialized = z.infer<typeof GamutSchema>;
 
 // 只读一次持久化数据
-const initial = load();
+const initial = loadData(STORAGE_KEY, GamutSchema);
 
 class GamutStore {
 	sources = $state<SerializedSource[]>(initial.sources);

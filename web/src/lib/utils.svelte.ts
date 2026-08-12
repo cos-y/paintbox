@@ -1,3 +1,4 @@
+import { z, ZodType } from 'zod';
 import { isTauri } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { useMode, modeHsl, modeHwb, modeRgb, modeOklch } from 'culori/fn';
@@ -69,3 +70,17 @@ export const toHsl = useMode(modeHsl);
 export const toOklch = useMode(modeOklch);
 export const toRgb = useMode(modeRgb);
 export const toHwb = useMode(modeHwb);
+
+export function loadData<Schema extends ZodType>(key: string, schema: Schema): z.infer<Schema> {
+	try {
+		if (typeof localStorage !== 'undefined') {
+			const raw = localStorage.getItem(key);
+			if (raw) {
+				const r = schema.safeParse(JSON.parse(raw));
+				if (r.success) return r.data;
+			}
+		}
+	} catch {}
+	// 空对象即全默认（逐字段 catch 兜底）；每次新建，避免共享默认数组被污染
+	return schema.parse({});
+}
