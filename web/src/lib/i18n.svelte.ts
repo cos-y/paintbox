@@ -48,10 +48,12 @@ const en = {
 	'search.similarity': (p: Params) => `${p.n}% similar`,
 	'search.sourcePaint': 'From paint',
 	'search.selectPaint': 'Select paint',
+	'search.selectPaintHint': 'Select a result on the left to view details',
 
 	// ---- stock page ----
 	'stock.back': 'Back',
 	'stock.brands': 'Brands',
+	'stock.selectPaintHint': 'Select a paint on the left to view details',
 	'stock.addToStock': 'Add to Stock',
 	'stock.removeFromStock': 'Remove from Stock',
 	'stock.brandStats': (p: Params) =>
@@ -182,9 +184,11 @@ const zh = {
 	'search.similarity': (p: Params) => `相似度 ${p.n}%`,
 	'search.sourcePaint': '来自油漆',
 	'search.selectPaint': '选择油漆',
+	'search.selectPaintHint': '点击左侧结果查看详情',
 
 	'stock.back': '返回',
 	'stock.brands': '品牌',
+	'stock.selectPaintHint': '点击左侧油漆查看详情',
 	'stock.addToStock': '加入库存',
 	'stock.removeFromStock': '移出库存',
 	'stock.brandStats': (p: Params) => `${p.series} 个系列 · ${p.paints} 款油漆`,

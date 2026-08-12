@@ -17,7 +17,7 @@
 	} from './gamut.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import { t } from '$lib/i18n.svelte';
-	import { isSm, isCoarse } from '$lib/utils.svelte';
+	import { isMedia } from '$lib/utils.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 
 	// Canvas/Scene 动态加载：切换页面时先渲染 UI，Three.js 模块加载和
@@ -575,7 +575,7 @@
 		</div>
 		<!-- 右侧操作列：flex 竖排自适应卡片高度，不会溢出 -->
 		<div class="flex shrink-0 flex-col items-center">
-			{#if !isCoarse()}
+			{#if !isMedia().coarse}
 				<button
 					type="button"
 					class="cursor-pointer rounded p-0.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
@@ -637,7 +637,7 @@
 	>
 		<CollapseGroup
 			title={t('gamut.clipping')}
-			isOpen={isSm()}
+			isOpen={isMedia().sm}
 			class="range-sliders-root grid grid-flow-row gap-3 overflow-hidden px-6 py-4"
 		>
 			<RangeSlider

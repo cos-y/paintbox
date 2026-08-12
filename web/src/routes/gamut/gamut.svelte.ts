@@ -1,6 +1,6 @@
 import { untrack } from 'svelte';
 import * as THREE from 'three';
-import { clamp, isSm } from '$lib/utils.svelte';
+import { clamp, isMedia } from '$lib/utils.svelte';
 import { isTauri } from '@tauri-apps/api/core';
 import { callWasm } from '$lib/wasmClient';
 
@@ -89,15 +89,9 @@ class SceneProps {
 	colors = $state(new Float32Array()) as Float32Array<ArrayBufferLike>;
 
 	/** 裁剪范围（RangeSlider 绑定 + scene 裁剪平面），初值来自持久化并 clamp 到 range */
-	clipL = $state<[number, number]>(
-		store.clipL.map((x) => clamp(x, ...rangeL)) as [number, number]
-	);
-	clipA = $state<[number, number]>(
-		store.clipA.map((x) => clamp(x, ...rangeA)) as [number, number]
-	);
-	clipB = $state<[number, number]>(
-		store.clipB.map((x) => clamp(x, ...rangeB)) as [number, number]
-	);
+	clipL = $state<[number, number]>(store.clipL.map((x) => clamp(x, ...rangeL)) as [number, number]);
+	clipA = $state<[number, number]>(store.clipA.map((x) => clamp(x, ...rangeA)) as [number, number]);
+	clipB = $state<[number, number]>(store.clipB.map((x) => clamp(x, ...rangeB)) as [number, number]);
 
 	clip = $derived([
 		new THREE.Vector3(this.clipL[0], this.clipA[0], this.clipB[0]),
@@ -113,7 +107,7 @@ class SceneProps {
 	cameraTarget = $state<[number, number, number]>([0, 0, 0]);
 
 	/** 相机缩放（fov 系数；移动端默认放大） */
-	zoom = $state(isSm() ? 1 : 1.5);
+	zoom = $state(isMedia().sm ? 1 : 1.5);
 
 	// ---- gamut 维护流程：wasm 对象生命周期 = 应用生命周期（不随页面销毁）----
 	// 组件 $effect 里调用 updateColors() 驱动；页面间导航时句柄与体素数据保持，

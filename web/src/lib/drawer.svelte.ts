@@ -17,8 +17,8 @@ export interface SheetView {
 
 let current = $state<SheetView | null>(null);
 
-// 关闭动画执行器：ViewSheet（手机端底部卡片）挂载时注册，动画播完由 ViewSheet 调 close()；
-// 桌面端 ViewOverlay 无动画执行器，closeAnimated() 直接清状态。
+// 关闭动画执行器：Drawer（手机端底部卡片）挂载时注册，动画播完由 Drawer 调 close()；
+// 桌面端无动画执行器，closeAnimated() 直接清状态。
 let closeAnimator: (() => void) | null = null;
 
 export const drawer = {

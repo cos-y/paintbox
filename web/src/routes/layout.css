@@ -27,6 +27,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
 }
+
 .tauri-no-select input,
 .tauri-no-select textarea,
 .tauri-no-select [contenteditable='true'],
@@ -50,6 +51,12 @@ body {
 :global(input[type='search'])::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
+}
+
+:root {
+  color-scheme: dark;
+  scrollbar-color: var(--color-gray-600) var(--color-gray-900);
+  scrollbar-width: thin;
 }
 
 @theme {

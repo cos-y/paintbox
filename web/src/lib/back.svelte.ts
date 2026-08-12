@@ -31,10 +31,10 @@ export function unregisterBackHandler(fn: BackHandler): void {
 	sync();
 }
 
-// 抽屉/覆盖层打开标志（Drawer/ViewOverlay 组件挂载时设置，卸载时清除）
+// 抽屉打开标志（Drawer 组件挂载时设置，卸载时清除）
 let drawerNeedsBack = false;
 
-/** 覆盖层是否打开（组件挂载时由 Drawer/ViewOverlay 调用） */
+/** 抽屉是否打开（组件挂载时由 Drawer 调用） */
 export function setDrawerBackNeeded(v: boolean): void {
 	if (drawerNeedsBack === v) return;
 	drawerNeedsBack = v;

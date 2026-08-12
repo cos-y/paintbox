@@ -9,8 +9,7 @@
 	import { isTauri } from '@tauri-apps/api/core';
 	import { drawer } from '$lib/drawer.svelte';
 	import Drawer from '$lib/components/Drawer.svelte';
-	import ViewOverlay from '$lib/components/ViewOverlay.svelte';
-	import { isSm } from '$lib/utils.svelte';
+	import { isMedia } from '$lib/utils.svelte';
 
 	let { children } = $props();
 
@@ -92,16 +91,14 @@
 	</aside>
 
 	<main
-		class="h-full flex-1 overflow-y-auto overflow-x-hidden pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
+		class="h-full flex-1 overflow-x-hidden overflow-y-auto pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+3.5rem)] sm:pb-0"
 	>
 		{@render children()}
 	</main>
 
-	<!-- 全局视图栈：手机端底部卡片，桌面端全屏压栈 -->
-	{#if !isSm()}
+	<!-- 全局视图栈：手机端底部卡片（桌面端用页面内常驻详情栏，不再有覆盖层） -->
+	{#if !isMedia().sm}
 		<Drawer />
-	{:else}
-		<ViewOverlay />
 	{/if}
 
 	<!-- mobile bottom nav -->

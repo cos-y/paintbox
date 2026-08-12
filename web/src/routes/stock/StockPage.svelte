@@ -5,11 +5,12 @@
 	import { getCatalog, rgbToHex, SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav, goBackOneLevel } from '$lib/stocknav.svelte';
-	import { isSm } from '$lib/utils.svelte';
+	import { isMedia } from '$lib/utils.svelte';
 	import { drawer } from '$lib/drawer.svelte';
 	import { registerBackHandler, unregisterBackHandler } from '$lib/back.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
+	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import Select from '$lib/components/Select.svelte';
@@ -68,7 +69,7 @@
 	};
 
 	const selectPaint = (paint: PaintInfo) => {
-		if (!isSm()) {
+		if (!isMedia().sm) {
 			// 手机端：底部卡片弹出详情，scrim 单击退回列表
 			drawer.open({
 				key: paint.id,
@@ -227,7 +228,7 @@
 {/snippet}
 
 {#snippet seriesNav()}
-	{#if isSm()}
+	{#if isMedia().xl}
 		<!-- 桌面侧栏：宽栏（图标 + 系列名/描述 + 库存） -->
 		<div class="w-56 shrink-0 overflow-y-auto border-r border-gray-200 dark:border-gray-700">
 			{#each visibleSeries as [serie, paints]}
@@ -417,7 +418,7 @@
 			{/if}
 			<div class="relative min-w-0 flex-1">
 				<div
-					class="transition-opacity duration-150 {searchOpen && level === 1
+					class="transition-opacity duration-150 {searchOpen && level > 0
 						? 'max-sm:pointer-events-none max-sm:opacity-0'
 						: 'opacity-100'}"
 				>
@@ -436,7 +437,7 @@
 						</nav>
 					{/if}
 				</div>
-				{#if searchOpen && level === 1}
+				{#if searchOpen && level > 0}
 					<input
 						type="search"
 						autofocus
@@ -452,7 +453,7 @@
 					/>
 				{/if}
 			</div>
-			{#if level === 1}
+			{#if level > 0}
 				{#if searchOpen}
 					<button
 						type="button"
@@ -498,48 +499,62 @@
 	</div>
 
 	<div class="flex-1 overflow-hidden">
-		{#if level === 0}
-			{#key level}
-				<div
-					class="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 overflow-y-auto px-6 py-4"
-					in:fly={{ x: -24, duration: 150 }}
+		<div class="flex h-full">
+			<!-- 左列：品牌列表 或 系列+油漆（详情在右侧面板时列表保持，可继续点选） -->
+			<div class="min-w-0 flex-1 overflow-hidden">
+				{#if level === 0}
+					{#key level}
+						<div
+							class="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 overflow-y-auto px-6 py-4"
+							in:fly={{ x: -24, duration: 150 }}
+						>
+							{#each Object.keys(catalog) as brand}
+								{@render brandCard(brand)}
+							{/each}
+						</div>
+					{/key}
+				{:else}
+					{#key `${level}-${selectedBrand}`}
+						<div class="flex h-full" in:fly={{ x: 24, duration: 150 }}>
+							{@render seriesNav()}
+							<div
+								class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
+							>
+								{#if searchSerieResults}
+									{#each searchSerieResults as paint (paint.code)}
+										{@render paintCard(paint)}
+									{/each}
+									{#if searchSerieResults.length === 0}
+										<div class="col-span-full p-4 text-center text-xs text-gray-400">
+											{t('stock.noResults')}
+										</div>
+									{/if}
+								{:else}
+									{#each sortedCurrentSerie as paint (paint.code)}
+										{@render paintCard(paint)}
+									{/each}
+								{/if}
+							</div>
+						</div>
+					{/key}
+				{/if}
+			</div>
+
+			<!-- 右栏：详情面板（品牌层及以上常驻；根路由纯列表不加分栏） -->
+			{#if isMedia().sm && level > 0}
+				<aside
+					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-gray-200 dark:border-gray-700"
 				>
-					{#each Object.keys(catalog) as brand}
-						{@render brandCard(brand)}
-					{/each}
-				</div>
-			{/key}
-		{:else if level === 1}
-			{#key `${level}-${selectedBrand}`}
-				<div class="flex h-full" in:fly={{ x: 24, duration: 150 }}>
-					{@render seriesNav()}
-					<div
-						class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
-					>
-						{#if searchSerieResults}
-							{#each searchSerieResults as paint (paint.code)}
-								{@render paintCard(paint)}
-							{/each}
-							{#if searchSerieResults.length === 0}
-								<div class="col-span-full p-4 text-center text-xs text-gray-400">
-									{t('stock.noResults')}
-								</div>
-							{/if}
-						{:else}
-							{#each sortedCurrentSerie as paint (paint.code)}
-								{@render paintCard(paint)}
-							{/each}
-						{/if}
-					</div>
-				</div>
-			{/key}
-		{:else if level === 2 && selectedPaint}
-			{@const paint = selectedPaint}
-			{#key `${level}-${paint.brand}-${paint.code}`}
-				<div class="h-full" in:fly={{ x: 24, duration: 150 }}>
-					<PaintDetail {paint} isStockPage />
-				</div>
-			{/key}
-		{/if}
+					{#if selectedPaint}
+						{@const paint = selectedPaint}
+						{#key paint.id}
+							<PaintDetail {paint} isStockPage />
+						{/key}
+					{:else}
+						<DetailEmpty hint={t('stock.selectPaintHint')} />
+					{/if}
+				</aside>
+			{/if}
+		</div>
 	</div>
 </div>

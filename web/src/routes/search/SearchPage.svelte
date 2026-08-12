@@ -22,9 +22,10 @@
 	import PaintSearch from '$lib/components/PaintSearch.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
+	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { drawer } from '$lib/drawer.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity, isSm, toRgb, toOklch, toHwb } from '$lib/utils.svelte';
+	import { clamp, similarity, toRgb, toOklch, toHwb, isMedia } from '$lib/utils.svelte';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import { store, rt } from './search.svelte';
@@ -112,10 +113,16 @@
 		}
 	});
 
-	// 打开油漆详情：打开单层覆盖层（不离开本页，关闭后回到搜索结果）
+	// 桌面端右侧详情栏的选中油漆（手机端走 Drawer 底部卡片）
+	let selectedPaint = $state<PaintInfo | null>(null);
+
+	// 打开油漆详情：桌面填充右侧常驻详情栏（不离开列表），手机打开底部卡片
 	const openDetail = (brand: string, code: string) => {
 		const paint = getPaintById(`${brand}:${code}`);
-		if (paint) {
+		if (!paint) return;
+		if (isMedia().sm) {
+			selectedPaint = paint;
+		} else {
 			drawer.open({
 				key: paint.id,
 				component: PaintDetail,
@@ -436,7 +443,7 @@
 {#snippet colorPicker()}
 	{#if store.source === 'paint'}
 		<div class="grid gap-0 sm:auto-cols-[150px_1fr] sm:grid-flow-col sm:gap-3">
-			{#if isSm()}
+			{#if isMedia().sm}
 				{@render colorSwatch()}
 			{/if}
 			<div class="min-w-45 sm:max-w-135">
@@ -448,7 +455,7 @@
 
 		<div class="grid gap-3 sm:auto-cols-[150px_1fr] sm:grid-flow-col">
 			<div>
-				{#if isSm()}
+				{#if isMedia().sm}
 					<div class="mb-3">
 						{@render colorSwatch()}
 					</div>
@@ -632,9 +639,11 @@
 {/snippet}
 
 <div
-	class="color-provider relative flex h-full flex-col {store.source === 'camera' && isLandscape
+	class="color-provider relative flex h-full flex-col {isMedia().sm
 		? 'overflow-hidden'
-		: 'overflow-y-auto'}"
+		: store.source === 'camera' && isLandscape
+			? 'overflow-hidden'
+			: 'overflow-y-auto'}"
 	style="--slider-thumb-l: {oklch.l};
     --slider-thumb-c: {oklch.c};
     --slider-thumb-h: {oklch.h ?? 0};
@@ -656,7 +665,7 @@
 			</div>
 		{:else}
 			<div
-				class="sticky top-0 z-20 bg-white px-6 pt-4 pb-4 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
+				class="sticky top-0 z-20 shrink-0 bg-white px-6 pt-4 pb-4 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
 			>
 				<div class="relative overflow-hidden rounded-xl border border-gray-700">
 					<CameraPicker
@@ -670,9 +679,9 @@
 			</div>
 		{/if}
 	{:else}
-		{#if !isSm()}
+		{#if !isMedia().sm}
 			<div
-				class="sticky top-0 z-20 bg-white px-6 pt-4 pb-2 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
+				class="sticky top-0 z-20 shrink-0 bg-white px-6 pt-4 pb-2 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
 			>
 				{@render colorSwatch()}
 			</div>
@@ -680,15 +689,15 @@
 				{@render colorPicker()}
 			</div>
 		{:else}
-			<div class="w-full max-w-360 px-6 py-4">
+			<div class="w-full max-w-360 shrink-0 px-6 py-4">
 				{@render colorPicker()}
 			</div>
 		{/if}
 	{/if}
 
-	<!-- sm+：搜索区域全宽（不套 max-w，宽屏下比顶部区域宽甚至溢出）；<sm：px-6 原样 -->
-	<div class={isSm() ? 'mx-auto w-full px-6' : 'px-6'}>
-		<div class="flex flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
+	<!-- sm+：容器为 flex-col 占满剩余高度（筛选行固定，结果区 flex-1 接管剩余）；<sm：px-6 原样 -->
+	<div class={isMedia().sm ? 'mx-auto flex min-h-0 w-full flex-1 flex-col px-6' : 'px-6'}>
+		<div class="flex shrink-0 flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
 			<div class="flex flex-auto flex-wrap items-center gap-2">
 				{@render selectSeries()}
 
@@ -753,85 +762,101 @@
 			</div>
 		</div>
 
-		<div class="mt-4 pb-4">
-			<h3 class="mb-2 text-sm font-semibold">
-				{t('search.results', { n: rt.results.length })}
-			</h3>
+		<div class={isMedia().sm ? 'flex min-h-0 flex-1 overflow-hidden pb-4' : 'flex gap-6 pb-4'}>
 			<div
-				class="grid gap-3 {isSm()
-					? 'grid-cols-[repeat(auto-fill,minmax(150px,220px))]'
-					: 'grid-cols-[repeat(auto-fill,minmax(150px,1fr))]'}"
+				class={isMedia().sm ? 'min-w-0 flex-1 overflow-y-auto pt-4 pr-4' : 'mt-4 min-w-0 flex-1'}
 			>
-				{#if rt.searching}
-					{#each Array(8) as _}
-						<div
-							class="animate-pulse overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-						>
-							<div class="h-16 w-full bg-gray-200 dark:bg-gray-700"></div>
-							<div class="space-y-1.5 p-2">
-								<div class="h-2.5 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
-								<div class="h-2 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
-							</div>
-						</div>
-					{/each}
-				{:else}
-					{#each rt.results as r, i (i)}
-						{@const isMix = r.portions.length > 1}
-						<div
-							class="flex flex-col overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-						>
-							<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
-							{#if isMix}
-								<div
-									class="h-1.5 w-full border-t border-gray-200 dark:border-gray-700/50"
-									style="background: {mixGradient(r.portions)}"
-								></div>
-							{/if}
-							<div class="flex flex-1 flex-col p-2">
-								<div class="flex flex-col gap-1">
-									{#each r.portions as p}
-										<button
-											type="button"
-											onclick={() => openDetail(p.brand, p.code)}
-											class="flex w-full cursor-pointer items-center gap-1.5 rounded-sm text-left text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
-										>
-											<span
-												class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
-												style="background-color: {floatRgbToCss(p.rgb)}"
-											></span>
-											<span class="min-w-0 flex-1 truncate font-medium uppercase"
-												>{p.brand}/{p.code}</span
-											>
-											{#if isMix}
-												<span
-													class="shrink-0 rounded-sm bg-gray-100 px-1.5 py-0.5 font-medium text-primary-700 dark:bg-gray-700 dark:text-primary-300"
-												>
-													{(p.t * 100).toFixed(0)}%
-												</span>
-											{/if}
-										</button>
-									{/each}
-								</div>
-								{#if !isMix}
-									<div class="mt-0.5 pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
-										<PanText>
-											{paintDesc(r.portions[0])}
-										</PanText>
-									</div>
-								{/if}
-								<div
-									class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-400"
-								>
-									<span>ΔE {r.delta_e.toFixed(2)}</span>
-									<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
+				<h3 class="mb-2 text-sm font-semibold">
+					{t('search.results', { n: rt.results.length })}
+				</h3>
+				<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
+					{#if rt.searching}
+						{#each Array(8) as _}
+							<div
+								class="animate-pulse overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
+							>
+								<div class="h-16 w-full bg-gray-200 dark:bg-gray-700"></div>
+								<div class="space-y-1.5 p-2">
+									<div class="h-2.5 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+									<div class="h-2 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
 								</div>
 							</div>
-						</div>
+						{/each}
 					{:else}
-						<!-- no result -->
-					{/each}
-				{/if}
+						{#each rt.results as r, i (i)}
+							{@const isMix = r.portions.length > 1}
+							<div
+								class="flex flex-col overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
+							>
+								<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
+								{#if isMix}
+									<div
+										class="h-1.5 w-full border-t border-gray-200 dark:border-gray-700/50"
+										style="background: {mixGradient(r.portions)}"
+									></div>
+								{/if}
+								<div class="flex flex-1 flex-col p-2">
+									<div class="flex flex-col gap-1">
+										{#each r.portions as p}
+											<button
+												type="button"
+												onclick={() => openDetail(p.brand, p.code)}
+												class="flex w-full cursor-pointer items-center gap-1.5 rounded-sm text-left text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
+											>
+												<span
+													class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
+													style="background-color: {floatRgbToCss(p.rgb)}"
+												></span>
+												<span class="min-w-0 flex-1 truncate font-medium uppercase"
+													>{p.brand}/{p.code}</span
+												>
+												{#if isMix}
+													<span
+														class="shrink-0 rounded-sm bg-gray-100 px-1.5 py-0.5 font-medium text-primary-700 dark:bg-gray-700 dark:text-primary-300"
+													>
+														{(p.t * 100).toFixed(0)}%
+													</span>
+												{/if}
+											</button>
+										{/each}
+									</div>
+									{#if !isMix}
+										<div class="mt-0.5 pl-5.5 text-[10px] text-gray-500 dark:text-gray-400">
+											<PanText>
+												{paintDesc(r.portions[0])}
+											</PanText>
+										</div>
+									{/if}
+									<div
+										class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-400"
+									>
+										<span>ΔE {r.delta_e.toFixed(2)}</span>
+										<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
+									</div>
+								</div>
+							</div>
+						{:else}
+							<!-- no result -->
+						{/each}
+					{/if}
+				</div>
 			</div>
+
+			{#if isMedia().sm}
+				<!-- 右栏：详情面板（flex 交叉轴 stretch 撑满结果区高度，独立滚动） -->
+				<aside
+					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-gray-200 dark:border-gray-700"
+				>
+					{#if selectedPaint}
+						{@const paint = selectedPaint}
+						{#key paint.id}
+							<PaintDetail {paint} isStockPage={false} />
+						{/key}
+					{:else}
+						<DetailEmpty hint={t('search.selectPaintHint')} />
+					{/if}
+				</aside>
+			{/if}
 		</div>
 	</div>
 </div>

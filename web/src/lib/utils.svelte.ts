@@ -33,22 +33,32 @@ export const hexToRgb = (hex: string | number): number[] => {
 	return rgb.map((c) => clamp(c / 255, 0, 1));
 };
 
-let isSm_ = $state(false);
-if (typeof window !== 'undefined') {
-	const mq = window.matchMedia('(min-width: 640px)');
-	isSm_ = mq.matches;
-	mq.addEventListener('change', (e) => (isSm_ = e.matches));
-}
+const breakpoints = {
+	sm: '(min-width: 640px)',
+	md: '(min-width: 768px)',
+	lg: '(min-width: 1024px)',
+	xl: '(min-width: 1280px)',
+	'2xl': '(min-width: 1536px)',
+	coarse: '(pointer: coarse)'
+};
 
-let isCoarse_ = $state(false);
-if (typeof window !== 'undefined') {
-	const mq = window.matchMedia('(pointer: coarse)');
-	isCoarse_ = mq.matches;
-	mq.addEventListener('change', (e) => (isCoarse_ = e.matches));
-}
+let media = $state({
+	sm: false,
+	md: false,
+	lg: false,
+	xl: false,
+	'2xl': false,
+	coarse: false
+});
 
-export const isSm = () => isSm_;
-export const isCoarse = () => isCoarse_;
+Object.entries(breakpoints).forEach(([key, query]) => {
+	const mq = window.matchMedia(query);
+	let dict = media as any;
+	dict[key] = mq.matches;
+	mq.addEventListener('change', (e) => (dict[key] = e.matches));
+});
+
+export const isMedia = () => media;
 
 export const openExternal = (url: string) => {
 	if (isTauri()) openUrl(url);
