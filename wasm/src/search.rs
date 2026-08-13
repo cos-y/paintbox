@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
 
 use crate::{
-    BoxError, Latent, Rgb, hex_to_rgb, latent_to_rgb, lerp_latent, rgb_to_lab, rgb_to_latent,
+    BoxError, Latent, Rgb, hex_to_rgb, latent_to_rgb, lerp_latent, log, rgb_to_lab, rgb_to_latent,
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -24,6 +24,7 @@ pub struct PaintInfo {
     pub rgb: u32,
     pub bases: BaseType,
     pub surfaces: SurfaceType,
+    pub mediums: MediumType,
 }
 
 bitflags! {
@@ -50,7 +51,7 @@ bitflags! {
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub struct MediaType: u16 {
+    pub struct MediumType: u16 {
         const Airbrush = 1 << 0;
         const Spray = 1 << 1;
         const Brush = 1 << 2;
@@ -156,21 +157,21 @@ impl Default for SurfaceType {
     }
 }
 
-impl Serialize for MediaType {
+impl Serialize for MediumType {
     fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
         serialize_flags(self, s)
     }
 }
 
-impl<'de> Deserialize<'de> for MediaType {
+impl<'de> Deserialize<'de> for MediumType {
     fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
         deserialize_flags(d)
     }
 }
 
-impl Default for MediaType {
+impl Default for MediumType {
     fn default() -> Self {
-        MediaType::all()
+        MediumType::all()
     }
 }
 
@@ -189,7 +190,7 @@ pub struct FilterOptions {
     pub surfaces: SurfaceType,
 
     #[serde(default)]
-    pub medias: MediaType,
+    pub mediums: MediumType,
 
     #[serde(default)]
     pub bases: BaseType,
@@ -225,6 +226,9 @@ pub struct SearchResult {
 
 struct SearchContext {
     candidates: FixedBitSet,
+    surfaces: SurfaceType,
+    mediums: MediumType,
+    bases: BaseType,
     limit: usize,
     mix_limit: usize,
     mix2_prec: f32,
@@ -332,13 +336,14 @@ impl Searcher {
 
         let surfaces = bitflags_coerce(opts.surfaces);
         let bases = bitflags_coerce(opts.bases);
-        let medias = bitflags_coerce(opts.medias);
+        let mediums = bitflags_coerce(opts.mediums);
 
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
             // base + idxs + prop + serie
             if bases.intersects(maj.bases)
                 && surfaces.intersects(maj.surfaces)
+                && mediums.intersects(maj.mediums)
                 && all_filter.as_ref().is_none_or(|s| s.contains(&i))
                 && series_filter
                     .as_ref()
@@ -353,6 +358,9 @@ impl Searcher {
         let limit = opts.limit.unwrap_or(10);
         let mut ctx = SearchContext {
             candidates,
+            surfaces,
+            bases,
+            mediums,
             limit,
             mix_limit: limit,
             mix2_prec: 0.01,
@@ -409,18 +417,37 @@ impl Searcher {
             })
             .collect();
 
+        let medium_mixable = MediumType::Airbrush | MediumType::Brush;
+
+        let non_mixable_li: Vec<_> = ctx
+            .candidates
+            .ones()
+            .filter(|i| !self.majors[*i].mediums.intersects(medium_mixable))
+            .collect();
+        for i in non_mixable_li {
+            ctx.candidates.remove(i);
+        }
+
         // TODO: use this or iter candidates
-        let li1: Vec<_> = li.iter().map(|x| x.i).collect();
+        let start_li: Vec<_> = li
+            .iter()
+            .filter_map(|x| {
+                if self.majors[x.i].mediums.intersects(medium_mixable) {
+                    Some(x.i)
+                } else {
+                    None
+                }
+            })
+            .collect();
 
         for rem in 1..=max_mix {
-            // 这里无需限制bases，因为只会从candidates里选择，而candidates已经在前面过滤过了
             results.append(&mut self.search_mix(
                 ctx,
                 rgb_out,
-                li1.as_slice(),
+                start_li.as_slice(),
                 rem,
                 ctx.limit * 3,
-                BaseType::all(),
+                ctx.bases,
             ));
         }
 

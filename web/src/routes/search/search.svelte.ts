@@ -1,4 +1,4 @@
-import { SURFACE_BITS, type FilterOptions, type SearchResult } from '$lib/paints.svelte';
+import { MEDIUM_BITS, SURFACE_BITS, type FilterOptions, type SearchResult } from '$lib/paints.svelte';
 import { stock } from '$lib/stock.svelte';
 import { loadData } from '$lib/utils.svelte';
 import { callWasm, WorkerCancelled } from '$lib/wasmClient';
@@ -25,6 +25,7 @@ const SerializedSchema = z.object({
 	selectedSeries: strArray(),
 	surfaceTypes: strArray(),
 	baseTypes: strArray(),
+	mediumTypes: strArray(),
 	searchScope: z.number().catch(0),
 	mixingLimit: z.number().catch(0),
 	model: z.number().catch(0),
@@ -45,6 +46,7 @@ class SearchStore {
 	selectedSeries = $state<Set<string>>(new Set(initial.selectedSeries));
 	surfaceTypes = $state<string[]>(initial.surfaceTypes);
 	baseTypes = $state<string[]>(initial.baseTypes);
+	mediumTypes = $state<string[]>(initial.mediumTypes);
 	searchScope = $state(initial.searchScope);
 	mixingLimit = $state(initial.mixingLimit);
 	model = $state(initial.model);
@@ -58,6 +60,7 @@ class SearchStore {
 				selectedSeries: [...this.selectedSeries],
 				surfaceTypes: this.surfaceTypes,
 				baseTypes: this.baseTypes,
+				mediumTypes: this.mediumTypes,
 				searchScope: this.searchScope,
 				mixingLimit: this.mixingLimit,
 				model: this.model,
@@ -73,6 +76,7 @@ class SearchStore {
 		this.selectedSeries = new Set();
 		this.surfaceTypes = [];
 		this.baseTypes = [];
+		this.mediumTypes = [];
 		this.searchScope = 0;
 		this.mixingLimit = 0;
 		this.color = 0x18b9d5;
@@ -113,6 +117,7 @@ class SearchRuntime {
 			all,
 			surfaces: store.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
 			bases: store.baseTypes.reduce((m, x) => m | (1 << +x), 0),
+			mediums: store.mediumTypes.reduce((m, k) => m | MEDIUM_BITS[k], 0),
 			mix: store.mixingLimit,
 			limit: 12
 		};

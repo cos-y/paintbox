@@ -10,7 +10,7 @@
 		getPaintById,
 		getPaintByIndex
 	} from '$lib/paints.svelte';
-	import { baseLabels, surfaceLabels } from '$lib/paintInfo';
+	import { baseLabels, mediumLabels, surfaceLabels } from '$lib/paintInfo';
 	import { stock } from '$lib/stock.svelte';
 	import { store } from '../../routes/search/search.svelte.ts';
 	import { getBrandMeta, getSerieMeta } from '$lib/meta';
@@ -20,6 +20,7 @@
 	import PanText from '$lib/components/PanText.svelte';
 	import { findEquivIndices } from '$lib/equivs.svelte';
 	import { Button } from 'flowbite-svelte';
+	import Tag from './Tag.svelte';
 
 	const FEEDBACK_EMAIL = 'zack.studios.15@gmail.com';
 
@@ -94,7 +95,40 @@
 	};
 </script>
 
-<div class="mx-auto max-w-xl space-y-4 p-4">
+{#snippet metaRow(paint: PaintInfo)}
+	{@const bases = baseLabels(paint)}
+	{@const surfaces = surfaceLabels(paint)}
+	{@const mediums = mediumLabels(paint)}
+	<div class="flex flex-wrap gap-1.5">
+		{#each bases as l}
+			<Tag>
+				<FlaskConical class="size-3" />
+				{l}
+			</Tag>
+		{/each}
+		{#each surfaces as l}
+			<Tag>
+				{l}
+			</Tag>
+		{/each}
+		{#each mediums as l}
+			<Tag>
+				{l}
+			</Tag>
+		{/each}
+		<Button
+			onclick={reportIssue}
+			color="secondary"
+			class="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px]! 
+						text-gray-600 dark:text-gray-400"
+		>
+			<Mail class="size-3" />
+			{t('stock.reportIssue')}
+		</Button>
+	</div>
+{/snippet}
+
+<div class="mx-auto max-w-xl space-y-4">
 	<!-- 头部：色号 + 名称 + 库存开关 -->
 	<div class="flex items-start justify-between gap-3">
 		<div class="min-w-0">
@@ -166,34 +200,7 @@
 	{/if}
 
 	<!-- 元信息：溶剂 + 漆面 -->
-	{#if baseLabels(paint).length > 0 || surfaceLabels(paint).length > 0}
-		<div class="flex flex-wrap gap-1.5">
-			{#each baseLabels(paint) as l}
-				<span
-					class="flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-				>
-					<FlaskConical class="size-3" />
-					{l}
-				</span>
-			{/each}
-			{#each surfaceLabels(paint) as l}
-				<span
-					class="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-				>
-					{l}
-				</span>
-			{/each}
-			<Button
-				onclick={reportIssue}
-				color="secondary"
-				class="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px]! 
-						text-gray-600 dark:text-gray-400"
-			>
-				<Mail class="size-3" />
-				{t('stock.reportIssue')}
-			</Button>
-		</div>
-	{/if}
+	{@render metaRow(paint)}
 
 	<!-- 操作：库存（仅 stock 页召唤时显示） -->
 	{#if isStockPage}

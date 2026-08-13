@@ -13,6 +13,8 @@ export interface SheetView {
 	key: string;
 	component: Component<any>;
 	props?: Record<string, unknown>;
+	/** 面板高度（任意 CSS 长度，如 '75dvh'、'auto'）；缺省 '75dvh' */
+	height?: string;
 }
 
 let current = $state<SheetView | null>(null);

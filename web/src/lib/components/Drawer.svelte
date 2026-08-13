@@ -308,7 +308,8 @@
 		role="dialog"
 		aria-modal="true"
 		tabindex="-1"
-		class="fixed inset-x-0 bottom-0 z-61 flex h-[75dvh] flex-col rounded-t-2xl bg-white shadow-2xl outline-none dark:bg-gray-900"
+		class="fixed inset-x-0 bottom-0 z-61 flex flex-col rounded-t-2xl bg-white shadow-2xl outline-none dark:bg-gray-900"
+		style:height={top.height ?? '75dvh'}
 		in:sheetSlide={{ duration: 200, easing: cubicOut }}
 		onpointerdown={onPointerDown}
 		onpointermove={onPointerMove}
@@ -316,9 +317,7 @@
 		onpointercancel={onPointerCancel}
 	>
 		<!-- 拖拽把手：纯视觉提示（整卡可拖），浮在内容顶部中央，不拦触摸 -->
-		<div
-			class="pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center"
-		>
+		<div class="pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center">
 			<div class="h-1.5 w-12 rounded-full bg-gray-300/90 dark:bg-gray-600/90"></div>
 		</div>
 		<!-- 内容滚动容器：原生滚动；顶部下拉手势被 touchmove 拦截转拖拽关闭 -->
@@ -332,7 +331,7 @@
 			ontouchcancel={onTouchCancel}
 		>
 			{#key top.key}
-				<div transition:fade={{ duration: 150 }}>
+				<div transition:fade={{ duration: 150 }} class="p-4">
 					<svelte:component this={top.component} {...top.props ?? {}} />
 				</div>
 			{/key}

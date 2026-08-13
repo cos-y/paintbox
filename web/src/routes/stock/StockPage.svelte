@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus, Search, X, Funnel, ArrowDownWideNarrow } from '@lucide/svelte';
-	import { Card, Badge, Dropdown } from 'flowbite-svelte';
-	import { getCatalog, rgbToHex, SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
+	import { ChevronLeft, Check, Plus, Search, X, Funnel } from '@lucide/svelte';
+	import { Card, Badge } from 'flowbite-svelte';
+	import {
+		getCatalog,
+		rgbToHex,
+		SURFACE_BITS,
+		MEDIUM_BITS,
+		type PaintInfo
+	} from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav, goBackOneLevel } from '$lib/stocknav.svelte';
 	import { isMedia } from '$lib/utils.svelte';
@@ -13,8 +19,7 @@
 	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
-	import Select from '$lib/components/Select.svelte';
-	import StockFilterRow from '$lib/components/StockFilterRow.svelte';
+	import StockFilterPanel from '$lib/components/StockFilterPanel.svelte';
 
 	const catalog = getCatalog();
 
@@ -105,17 +110,25 @@
 	const sortKey = $derived(stockNav.sortKey);
 	const searchOpen = $derived(stockNav.searchOpen);
 	const query = $derived(stockNav.query);
-	const filterOpen = $derived(stockNav.filterOpen);
 	const surfSel = $derived(stockNav.surfSel);
 	const baseSel = $derived(stockNav.baseSel);
+	const mediumSel = $derived(stockNav.mediumSel);
 	const baseFilter = $derived(
 		baseSel.length == 0 ? 0x7fffffff : baseSel.reduce((a, b) => a | (1 << +b), 0)
 	);
-	const surfFilter = $derived(new Set(surfSel.map((k) => SURFACE_BITS[k])));
-	const filterCount = $derived(surfSel.length + baseSel.length);
+	const surfFilter = $derived(
+		surfSel.length == 0 ? 0x7fffffff : surfSel.reduce((a, b) => a | SURFACE_BITS[b], 0)
+	);
+	const mediumFilter = $derived(
+		mediumSel.length == 0 ? 0x7fffffff : mediumSel.reduce((a, b) => a | MEDIUM_BITS[b], 0)
+	);
+	const filterCount = $derived(surfSel.length + baseSel.length + mediumSel.length);
 	const passFilter = (p: PaintInfo): boolean => {
-		if (surfSel.length > 0 && !surfFilter.has(p.prop)) return false;
-		return (baseFilter & p.base) != 0;
+		return (
+			(surfFilter & p.surfaces) != 0 &&
+			(baseFilter & p.bases) != 0 &&
+			(mediumFilter & p.mediums) != 0
+		);
 	};
 
 	const sortPaints = (list: PaintInfo[]): PaintInfo[] => {
@@ -166,12 +179,19 @@
 	const sortedCurrentSerie = $derived(sortPaints(currentSerieGroup.filter(passFilter)));
 </script>
 
+{#snippet filterBar()}
+	<div class="max-h-[50dvh] shrink-0 overflow-y-auto border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+		<StockFilterPanel />
+	</div>
+{/snippet}
+
 {#snippet filterBtn()}
 	<div class="relative shrink-0">
 		<button
 			type="button"
 			title={t('stock.filterTitle')}
-			class="relative cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 {filterOpen
+			onclick={() => (stockNav.filterOpen = !stockNav.filterOpen)}
+			class="relative cursor-pointer rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 {stockNav.filterOpen
 				? 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-white'
 				: filterCount > 0
 					? 'text-primary-500'
@@ -179,51 +199,10 @@
 		>
 			<Funnel class="h-4 w-4" />
 			{#if filterCount > 0}
-				<span
-					class="absolute -top-0.5 -right-0.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-primary-500 px-0.5 text-[9px] font-semibold text-white"
-				>
-					{filterCount}
-				</span>
+				<!-- 小蓝点：非默认筛选设置时提示有改动 -->
+				<span class="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-primary-500"></span>
 			{/if}
 		</button>
-		<Dropdown
-			class="list-none overflow-hidden!"
-			placement="bottom-end"
-			bind:isOpen={stockNav.filterOpen}
-		>
-			<div class="grid min-w-70 grid-cols-2 gap-x-4 p-3">
-				<div class="space-y-0.5 border-r border-gray-200 pr-3 dark:border-gray-700">
-					<StockFilterRow
-						options={{
-							G: t('search.surface.G'),
-							SG: t('search.surface.SG'),
-							M: t('search.surface.M'),
-							ME: t('search.surface.ME'),
-							C: t('search.surface.C'),
-							PA: t('search.surface.PA'),
-							FL: t('search.surface.FL'),
-							W: t('search.surface.W')
-						}}
-						bind:values={stockNav.surfSel}
-					>
-						{t('stock.surfaceTitle')}
-					</StockFilterRow>
-				</div>
-				<div class="space-y-0.5">
-					<StockFilterRow
-						options={{
-							0: t('search.lacquer'),
-							1: t('search.alcohol'),
-							2: t('search.enamel'),
-							3: t('search.water')
-						}}
-						bind:values={stockNav.baseSel}
-					>
-						{t('stock.baseTitle')}
-					</StockFilterRow>
-				</div>
-			</div>
-		</Dropdown>
 	</div>
 {/snippet}
 
@@ -477,23 +456,6 @@
 					</button>
 				{/if}
 				{@render filterBtn()}
-				<Select
-					options={[
-						t('stock.sortCode'),
-						t('stock.sortHue'),
-						t('stock.sortSat'),
-						t('stock.sortLight'),
-						t('stock.sortStock')
-					]}
-					bind:value={stockNav.sortKey}
-					class="rounded-full border-0 p-1.5
-					text-gray-500 ring-0! dark:bg-gray-900 dark:hover:bg-gray-700"
-					activeClass="dark:bg-gray-700 dark:text-white"
-					lockWidth={false}
-					placement="bottom-end"
-				>
-					<ArrowDownWideNarrow class="h-4 w-4" />
-				</Select>
 			{/if}
 		</div>
 	</div>
@@ -514,25 +476,36 @@
 					{/key}
 				{:else}
 					{#key `${level}-${selectedBrand}`}
-						<div class="flex h-full">
-							{@render seriesNav()}
-							<div
-								class="grid flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
-							>
-								{#if searchSerieResults}
-									{#each searchSerieResults as paint (paint.code)}
-										{@render paintCard(paint)}
-									{/each}
-									{#if searchSerieResults.length === 0}
-										<div class="col-span-full p-4 text-center text-xs text-gray-400">
-											{t('stock.noResults')}
-										</div>
+						<!-- 手机：筛选条横跨整页（第 1、2 列上方）；PC：位于第 2 列（油漆区）上方 -->
+						<div class="flex h-full flex-col sm:flex-row">
+							{#if !isMedia().sm && stockNav.filterOpen}
+								{@render filterBar()}
+							{/if}
+							<div class="flex min-h-0 flex-1">
+								{@render seriesNav()}
+								<div class="flex min-w-0 flex-1 flex-col">
+									{#if isMedia().sm && stockNav.filterOpen}
+										{@render filterBar()}
 									{/if}
-								{:else}
-									{#each sortedCurrentSerie as paint (paint.code)}
-										{@render paintCard(paint)}
-									{/each}
-								{/if}
+									<div
+										class="grid min-h-0 flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
+									>
+										{#if searchSerieResults}
+											{#each searchSerieResults as paint (paint.code)}
+												{@render paintCard(paint)}
+											{/each}
+											{#if searchSerieResults.length === 0}
+												<div class="col-span-full p-4 text-center text-xs text-gray-400">
+													{t('stock.noResults')}
+												</div>
+											{/if}
+										{:else}
+											{#each sortedCurrentSerie as paint (paint.code)}
+												{@render paintCard(paint)}
+											{/each}
+										{/if}
+									</div>
+								</div>
 							</div>
 						</div>
 					{/key}
@@ -547,7 +520,9 @@
 					{#if selectedPaint}
 						{@const paint = selectedPaint}
 						{#key paint.id}
-							<PaintDetail {paint} isStockPage />
+							<div class="p-4">
+								<PaintDetail {paint} isStockPage />
+							</div>
 						{/key}
 					{:else}
 						<DetailEmpty hint={t('stock.selectPaintHint')} />

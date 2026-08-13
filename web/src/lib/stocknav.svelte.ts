@@ -13,6 +13,7 @@ interface StockNavState {
 	filterOpen: boolean;
 	surfSel: string[];
 	baseSel: string[];
+	mediumSel: string[];
 }
 
 export const stockNav = $state<StockNavState>({
@@ -24,7 +25,8 @@ export const stockNav = $state<StockNavState>({
 	query: '',
 	filterOpen: false,
 	surfSel: [],
-	baseSel: []
+	baseSel: [],
+	mediumSel: []
 });
 
 /**

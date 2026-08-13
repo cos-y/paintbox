@@ -12,13 +12,16 @@
 		Palette,
 		Droplet,
 		Pipette,
-		ArrowLeftRight
+		ArrowLeftRight,
+		RotateCcwClock,
+		Paintbrush,
+		Eclipse
 	} from '@lucide/svelte';
-	import { Badge, Button, Dropdown } from 'flowbite-svelte';
+	import { Button, Dropdown, Tooltip } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
 	import PanText from '$lib/components/PanText.svelte';
 	import { getCatalog, floatRgbToCss, type PaintInfo, getPaintById } from '$lib/paints.svelte';
-	import { baseLabels, surfaceLabels } from '$lib/paintInfo';
+	import { baseLabels, mediumLabels, surfaceLabels } from '$lib/paintInfo';
 	import PaintSearch from '$lib/components/PaintSearch.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
@@ -26,13 +29,16 @@
 	import { drawer } from '$lib/drawer.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import { clamp, similarity, toRgb, toOklch, toHwb, isMedia } from '$lib/utils.svelte';
-	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
+	import TagSelect from '$lib/components/TagSelect.svelte';
+	import TagButtonGroup from '$lib/components/TagButtonGroup.svelte';
+	import SeriesPicker from '$lib/components/SeriesPicker.svelte';
 	import { store, rt } from './search.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import { untrack } from 'svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
+	import Tag from '$lib/components/Tag.svelte';
 
 	/** store.color（rgb int）与色板 oklch 互转 */
 	const oklchToInt = (c: Oklch): number => {
@@ -146,74 +152,7 @@
 		return `linear-gradient(to right, ${stops.join(', ')})`;
 	};
 
-	const serieKey = (brand: string, serie: string) => `${brand}::${serie}`;
-
-	let activeFilterBrand: string | null = $state(null);
 	let seriesOpen = $state(false);
-
-	// 品牌 chip 条横向滚动的渐隐遮罩状态（仅手机端显示）
-	let brandStrip = $state<HTMLElement | null>(null);
-	let stripLeft = $state(false);
-	let stripRight = $state(true);
-
-	const updateStrip = () => {
-		const el = brandStrip;
-		if (!el) return;
-		stripLeft = el.scrollLeft > 4;
-		stripRight = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
-	};
-
-	$effect(() => {
-		const el = brandStrip;
-		if (!el) return;
-		// 打开时 DOM 可能尚未完成布局（scrollWidth 为 0），用 rAF 延迟到下一帧再算
-		const tick = () => requestAnimationFrame(updateStrip);
-		tick();
-		// chip 尺寸/容器尺寸变化（如字体加载）时重算遮罩状态
-		const ro = new ResizeObserver(tick);
-		ro.observe(el);
-		for (const child of el.children) ro.observe(child);
-		el.addEventListener('scroll', updateStrip, { passive: true });
-		window.addEventListener('resize', tick);
-		return () => {
-			el.removeEventListener('scroll', updateStrip);
-			ro.disconnect();
-			window.removeEventListener('resize', tick);
-		};
-	});
-
-	// 打开系列筛选时未选中任何品牌则默认选中第一个，避免面板空白
-	$effect(() => {
-		if (seriesOpen && !activeFilterBrand) {
-			const first = Object.keys(catalog)[0];
-			if (first) activeFilterBrand = first;
-		}
-	});
-
-	const toggleSerie = (brand: string, serie: string) => {
-		const key = serieKey(brand, serie);
-		const next = new Set(store.selectedSeries);
-		if (next.has(key)) next.delete(key);
-		else next.add(key);
-		store.selectedSeries = next;
-	};
-
-	const isBrandFullySelected = (brand: string) =>
-		Object.keys(catalog[brand]).every((s) => store.selectedSeries.has(serieKey(brand, s)));
-
-	const selectedCountInBrand = (brand: string) =>
-		Object.keys(catalog[brand]).filter((s) => store.selectedSeries.has(serieKey(brand, s))).length;
-
-	const toggleBrandAll = (brand: string) => {
-		const on = !isBrandFullySelected(brand);
-		const next = new Set(store.selectedSeries);
-		for (const s of Object.keys(catalog[brand])) {
-			const key = serieKey(brand, s);
-			if (on) next.add(key);
-			else next.delete(key);
-		}
-		store.selectedSeries = next;
-	};
 
 	const isDefaultFilter = $derived(
 		store.selectedSeries.size == 0 &&
@@ -282,6 +221,13 @@
 		store.model;
 		store.persist();
 		rt.search();
+	});
+
+	// 搜索范围不是「我的库存」时混色不可用，强制复位（替代原 Select 的 disabledValue 联动）
+	$effect(() => {
+		if (store.searchScope != 1 && store.mixingLimit != 0) {
+			store.mixingLimit = 0;
+		}
 	});
 </script>
 
@@ -358,6 +304,9 @@
 
 {#snippet paintPanel(p: PaintInfo | null)}
 	{#if p}
+		{@const bases = baseLabels(p)}
+		{@const surfaces = surfaceLabels(p)}
+		{@const mediums = mediumLabels(p)}
 		<div class="relative">
 			<div class="rounded-xl border border-gray-200 p-3 sm:p-2 dark:border-gray-700">
 				<div class="flex items-start gap-3">
@@ -372,22 +321,23 @@
 							{getSerieMeta(p.brand, p.serie)?.name ?? p.serie} /
 							{getBrandMeta(p.brand)?.name ?? p.brand}
 						</PanText>
-						{#if baseLabels(p).length > 0 || surfaceLabels(p).length > 0}
+						{#if bases.length > 0 || surfaces.length > 0}
 							<div class="mt-2 flex flex-wrap gap-1.5">
-								{#each baseLabels(p) as l}
-									<span
-										class="flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-									>
+								{#each bases as l}
+									<Tag>
 										<FlaskConical class="size-3" />
 										{l}
-									</span>
+									</Tag>
 								{/each}
-								{#each surfaceLabels(p) as l}
-									<span
-										class="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-									>
+								{#each surfaces as l}
+									<Tag>
 										{l}
-									</span>
+									</Tag>
+								{/each}
+								{#each mediums as l}
+									<Tag>
+										{l}
+									</Tag>
 								{/each}
 							</div>
 						{/if}
@@ -480,162 +430,44 @@
 {/snippet}
 
 {#snippet selectSeries()}
-	<Button size="xs" color="alternative" class="relative w-32 cursor-pointer justify-start gap-1">
-		{t('search.series')}
+	<button
+		type="button"
+		onclick={() => {
+			if (isMedia().sm) {
+				// sm+：开关由 Dropdown(Popper) 的 mousedown toggle 接管，这里不做动作
+			} else {
+				// 手机端：用全局底部 Drawer（拖拽/遮罩/返回键关闭）
+				if (drawer.view?.key === 'series') drawer.close();
+				else drawer.open({ key: 'series', component: SeriesPicker, height: '100dvw' });
+			}
+		}}
+		class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-1 text-xs text-gray-600 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 {(
+			isMedia().sm ? seriesOpen : drawer.view?.key === 'series'
+		)
+			? 'bg-gray-200 dark:bg-gray-700'
+			: 'bg-gray-100 dark:bg-gray-800'}"
+	>
+		{t('search.series')}:
 		{#if store.selectedSeries.size > 0}
-			<Badge
-				class="absolute top-1.5 right-7 rounded-full bg-primary-500 pr-1.5 pl-1.5 text-xs dark:bg-primary-500 dark:text-white"
+			<span
+				class="rounded-full bg-primary-500 px-1.5 text-[10px] leading-4 text-white dark:bg-primary-500 dark:text-white"
 			>
 				{store.selectedSeries.size}
-			</Badge>
+			</span>
 		{:else}
-			{t('search.any')}
+			<span class="text-gray-400 dark:text-gray-500">{t('search.any')}</span>
 		{/if}
-		<ChevronDown class="ms-auto h-3 w-3" />
-	</Button>
-	<Dropdown
-		bind:isOpen={seriesOpen}
-		class="w-136 max-w-[calc(100vw-3rem)] overflow-hidden! p-0"
-		placement="bottom-start"
-	>
-		<div class="flex max-h-[55vh] flex-col overflow-hidden sm:h-96 sm:flex-row">
-			<!-- 品牌列表：手机为横向滚动 chip 条，桌面为纵向列表 -->
-			<div
-				class="relative w-full shrink-0 sm:w-40 sm:border-r sm:border-gray-200 sm:dark:border-gray-700"
-			>
-				<div
-					bind:this={brandStrip}
-					onscroll={updateStrip}
-					class="mx-1 flex gap-1.5 overflow-x-auto px-2 py-2 sm:mx-0 sm:flex-col sm:gap-0 sm:overflow-y-auto sm:p-0"
-				>
-					{#each Object.entries(catalog) as [brand, series]}
-						{@const selectedCount = selectedCountInBrand(brand)}
-						{@const name = getBrandMeta(brand)?.name ?? brand}
-						<!-- 手机 chip -->
-						<button
-							type="button"
-							onclick={() => (activeFilterBrand = brand)}
-							title={name}
-							class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs whitespace-nowrap sm:hidden {activeFilterBrand ===
-							brand
-								? 'border-primary-500 bg-primary-50 text-primary-700 ring-1 ring-primary-500 dark:border-primary-600 dark:bg-primary-900/50 dark:text-primary-200'
-								: 'border-gray-200 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
-						>
-							<img
-								src="/brands/{brand}.png"
-								alt=""
-								class="h-5 w-5 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
-							/>
-							<span class="max-w-28 truncate">{name}</span>
-							{#if selectedCount > 0}
-								<Badge
-									class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
-								>
-									{selectedCount}
-								</Badge>
-							{/if}
-						</button>
-						<!-- 桌面行 -->
-						<button
-							type="button"
-							onmouseenter={() => (activeFilterBrand = brand)}
-							onclick={() => (activeFilterBrand = brand)}
-							title={name}
-							class="hidden w-full cursor-pointer items-center gap-2 px-2.5 py-2 text-left text-sm text-gray-700 sm:flex dark:text-gray-200 {activeFilterBrand ===
-							brand
-								? 'bg-gray-100 dark:bg-gray-600'
-								: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
-						>
-							<img
-								src="/brands/{brand}.png"
-								alt=""
-								class="h-7 w-7 shrink-0 rounded-full bg-white object-cover ring-1 ring-black/10"
-							/>
-							<span class="min-w-0 flex-1 truncate">{name}</span>
-							{#if selectedCount > 0}
-								<Badge
-									class="rounded-full bg-primary-500 text-white dark:bg-primary-500 dark:text-white"
-								>
-									{selectedCount}
-								</Badge>
-							{/if}
-						</button>
-					{/each}
-				</div>
-				{#if stripRight}
-					<div
-						class="pointer-events-none absolute inset-y-1 right-0 w-6 bg-linear-to-l from-white via-white/70 to-transparent sm:hidden dark:from-gray-700 dark:via-gray-700/70"
-					></div>
-				{/if}
-				{#if stripLeft}
-					<div
-						class="pointer-events-none absolute inset-y-1 left-0 w-6 bg-linear-to-r from-white via-white/70 to-transparent sm:hidden dark:from-gray-700 dark:via-gray-700/70"
-					></div>
-				{/if}
-			</div>
-			<div class="min-h-0 flex-1 overflow-y-auto p-3">
-				{#if activeFilterBrand}
-					{@const series = catalog[activeFilterBrand]}
-					{#if series}
-						{@const brand = activeFilterBrand}
-						<div class="mb-2 flex items-center justify-between">
-							<span class="text-xs text-gray-400"
-								>{t('search.seriesCount', { n: Object.keys(series).length })}</span
-							>
-							<button
-								type="button"
-								class="text-xs text-primary-500 hover:underline dark:text-primary-400"
-								onclick={() => toggleBrandAll(brand)}
-							>
-								{isBrandFullySelected(brand) ? t('search.resetFilter') : t('search.selectAll')}
-							</button>
-						</div>
-						<div class="grid grid-cols-4 gap-2.5">
-							{#each Object.entries(series) as [serie, paints]}
-								{@const serieMeta = getSerieMeta(brand, serie)}
-								{@const selected = store.selectedSeries.has(serieKey(brand, serie))}
-								<div
-									role="button"
-									tabindex="0"
-									onclick={() => toggleSerie(brand, serie)}
-									onkeydown={(e) => e.key === 'Enter' && toggleSerie(brand, serie)}
-									title={serieMeta?.name}
-									class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md bg-gray-100 shadow-sm transition-transform hover:scale-105 dark:bg-gray-800 {selected
-										? 'ring-[3px] ring-primary-500'
-										: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
-								>
-									<img
-										src={serieThumb(brand, serie)}
-										alt=""
-										class="h-full w-full object-cover"
-										onerror={(e) => {
-											if (e.currentTarget instanceof HTMLElement) {
-												e.currentTarget.style.visibility = 'hidden';
-											}
-										}}
-									/>
-									<div
-										class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
-									>
-										<div class="truncate text-[10px] leading-tight font-semibold text-white">
-											{serieMeta?.name ?? serie}
-										</div>
-										<div class="truncate text-[9px] leading-tight text-white/75">
-											{t('search.paintsCount', { n: paints.length })}
-										</div>
-									</div>
-								</div>
-							{/each}
-						</div>
-					{/if}
-				{:else}
-					<div class="flex h-full items-center justify-center text-center text-xs text-gray-400">
-						{@html t('search.hoverBrandHint')}
-					</div>
-				{/if}
-			</div>
-		</div>
-	</Dropdown>
+		<ChevronDown class="h-3 w-3" />
+	</button>
+	{#if isMedia().sm}
+		<Dropdown
+			bind:isOpen={seriesOpen}
+			class="w-136 max-w-[calc(100vw-3rem)] overflow-hidden! p-0"
+			placement="bottom-start"
+		>
+			<SeriesPicker />
+		</Dropdown>
+	{/if}
 {/snippet}
 
 <div
@@ -697,79 +529,110 @@
 
 	<!-- sm+：容器为 flex-col 占满剩余高度（筛选行固定，结果区 flex-1 接管剩余）；<sm：px-6 原样 -->
 	<div class={isMedia().sm ? 'mx-auto flex min-h-0 w-full flex-1 flex-col px-6' : 'px-6'}>
-		<div class="flex shrink-0 flex-row gap-2 border-y border-gray-200 py-2 dark:border-gray-700">
-			<div class="flex flex-auto flex-wrap items-center gap-2">
-				{@render selectSeries()}
-
-				<MultiSelect
-					tooltip={t('search.surfaceTooltip')}
-					class="w-48 text-xs"
-					options={{
-						G: t('search.surface.G'),
-						SG: t('search.surface.SG'),
-						M: t('search.surface.M'),
-						ME: t('search.surface.ME'),
-						C: t('search.surface.C'),
-						PA: t('search.surface.PA'),
-						FL: t('search.surface.FL'),
-						W: t('search.surface.W')
-					}}
-					title={t('search.surfaceTitle')}
-					bind:value={store.surfaceTypes}
-				/>
-
-				<MultiSelect
-					tooltip={t('search.baseTooltip')}
-					class="w-28 text-xs"
-					options={{
-						0: t('search.lacquer'),
-						1: t('search.alcohol'),
-						2: t('search.enamel'),
-						3: t('search.water')
-					}}
-					title={t('search.baseTitle')}
-					bind:value={store.baseTypes}
-				/>
-
-				<Select
-					tooltip={t('search.scopeTooltip')}
-					class="w-28 text-xs"
-					options={[t('search.market'), t('search.myStock')]}
-					bind:value={store.searchScope}
-				/>
-
-				<Select
-					tooltip={t('search.mixTooltip')}
-					class="w-28 text-xs"
-					options={[t('search.mixOff'), t('search.mix1'), t('search.mix2')]}
-					bind:value={store.mixingLimit}
-					disabled={store.searchScope != 1}
-					disabledValue={0}
-					disabledTooltip={t('search.mixScopeRequired')}
-				/>
-
-				{#if !isDefaultFilter}
-					<button
-						type="button"
-						class="text-xs whitespace-nowrap text-primary-500 hover:underline dark:text-primary-400"
-						onclick={() => {
-							resetFilter();
-						}}
-					>
-						{t('search.resetFilter')}
-					</button>
-				{/if}
-			</div>
-		</div>
-
 		<div class={isMedia().sm ? 'flex min-h-0 flex-1 overflow-hidden pb-4' : 'flex gap-6 pb-4'}>
-			<div
-				class={isMedia().sm ? 'min-w-0 flex-1 overflow-y-auto pt-4 pr-4' : 'mt-4 min-w-0 flex-1'}
-			>
+			<div class={isMedia().sm ? 'min-w-0 flex-1 overflow-y-auto' : 'min-w-0 flex-1'}>
+				<div class="mb-4 border-y border-gray-200 py-2 dark:border-gray-700">
+					<div class="grid grid-flow-row gap-2">
+						<div class="flex flex-auto flex-wrap items-center gap-2">
+							<TagButtonGroup
+								options={{ '0': t('search.market'), '1': t('search.myStock') }}
+								value={String(store.searchScope)}
+								onchange={(v) => (store.searchScope = Number(v))}
+								class="py-1!"
+							/>
+
+							{@render selectSeries()}
+
+							<Button
+								color="secondary"
+								disabled={isDefaultFilter}
+								class="cursor-pointer p-0"
+								onclick={resetFilter}
+							>
+								<Tag intereactive class="py-1!">
+									<RotateCcwClock class="size-3" />
+									{t('search.resetFilter')}
+								</Tag>
+							</Button>
+						</div>
+
+						<div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2">
+							<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
+								<Palette class="inline-block size-3" />
+								{t('search.mixTitle')}
+							</span>
+							<div class="flex items-center gap-1">
+								<TagButtonGroup
+									disabled={store.searchScope != 1}
+									options={{
+										'0': t('search.mixOff'),
+										'1': t('search.mix1'),
+										'2': t('search.mix2')
+									}}
+									value={String(store.mixingLimit)}
+									onchange={(v) => (store.mixingLimit = Number(v))}
+								/>
+								{#if store.searchScope != 1}
+									<Tooltip placement="right" class="p-1 text-xs"
+										>{t('search.mixScopeRequired')}</Tooltip
+									>
+								{/if}
+							</div>
+
+							<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
+								<Eclipse class="inline-block size-3" />
+								{t('search.surfaceTitle')}
+							</span>
+							<TagSelect
+								options={{
+									G: t('search.surface.G'),
+									SG: t('search.surface.SG'),
+									M: t('search.surface.M'),
+									ME: t('search.surface.ME'),
+									C: t('search.surface.C'),
+									PA: t('search.surface.PA'),
+									FL: t('search.surface.FL'),
+									W: t('search.surface.W')
+								}}
+								bind:value={store.surfaceTypes}
+							/>
+
+							<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
+								<FlaskConical class="inline-block size-3" />
+								{t('search.baseTitle')}
+							</span>
+							<TagSelect
+								options={{
+									0: t('search.lacquer'),
+									1: t('search.alcohol'),
+									2: t('search.enamel'),
+									3: t('search.water')
+								}}
+								bind:value={store.baseTypes}
+							/>
+
+							<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
+								<Paintbrush class="inline-block size-3" />
+								{t('search.mediumTitle')}
+							</span>
+							<TagSelect
+								options={{
+									Airbrush: t('search.medium.Airbrush'),
+									Spray: t('search.medium.Spray'),
+									Brush: t('search.medium.Brush'),
+									Marker: t('search.medium.Marker'),
+									Other: t('search.medium.Other')
+								}}
+								bind:value={store.mediumTypes}
+							/>
+						</div>
+					</div>
+				</div>
+
 				<h3 class="mb-2 text-sm font-semibold">
 					{t('search.results', { n: rt.results.length })}
 				</h3>
-				<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
+				<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3 sm:pr-4">
 					{#if rt.searching}
 						{#each Array(8) as _}
 							<div
@@ -845,12 +708,14 @@
 			{#if isMedia().sm}
 				<!-- 右栏：详情面板（flex 交叉轴 stretch 撑满结果区高度，独立滚动） -->
 				<aside
-					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-gray-200 dark:border-gray-700"
+					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-t border-l border-gray-200 dark:border-gray-700"
 				>
 					{#if selectedPaint}
 						{@const paint = selectedPaint}
 						{#key paint.id}
-							<PaintDetail {paint} isStockPage={false} />
+							<div class="p-4">
+								<PaintDetail {paint} isStockPage={false} />
+							</div>
 						{/key}
 					{:else}
 						<DetailEmpty hint={t('search.selectPaintHint')} />

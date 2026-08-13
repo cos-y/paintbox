@@ -6,7 +6,7 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 
-li = [['brand', 'serie', 'code', 'color', 'base', 'prop']]
+li = [['brand', 'serie', 'code', 'color', 'base', 'surface', 'medium']]
 
 raw = {}
 
@@ -14,7 +14,7 @@ with open(os.path.join(SCRIPT_DIR, "gunze.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     raw['gunze'] = tr = {}
-    for base, serie, code, color, desc, prop, _ in reader:
+    for base, serie, code, color, desc, surface, _, medium in reader:
         tr[code] = desc
         li.append((
             'gunze',
@@ -22,7 +22,8 @@ with open(os.path.join(SCRIPT_DIR, "gunze.csv"), "r", encoding='utf-8') as f:
             code,
             int(color[1:], 16),
             1 << int(base),
-            prop,
+            surface,
+            medium,
         ))
 
 
@@ -31,7 +32,7 @@ with open(os.path.join(SCRIPT_DIR, "tamiya.csv"), "r", encoding='utf-8') as f:
     next(reader)
     tamiya = []
     raw['tamiya'] = tr = {}
-    for color, serie, code, desc, prop, base in reader:
+    for color, serie, code, desc, surface, base, medium in reader:
         tr[code] = desc
         tamiya.append((
             'tamiya',
@@ -39,7 +40,8 @@ with open(os.path.join(SCRIPT_DIR, "tamiya.csv"), "r", encoding='utf-8') as f:
             code,
             int(color[1:], 16),
             base,
-            prop,
+            surface,
+            medium,
         ))
 
     def f(x):
@@ -60,6 +62,7 @@ with open(os.path.join(SCRIPT_DIR, "ak.csv"), "r", encoding='utf-8') as f:
     for row in reader:
         code, serie, desc, color = row[0:4]
         code = code[2:]
+        medium = row[-1]
         tr[code] = desc
         ak.append((
             'ak',
@@ -71,6 +74,7 @@ with open(os.path.join(SCRIPT_DIR, "ak.csv"), "r", encoding='utf-8') as f:
             'C' if desc.startswith('Clear ') else \
             'FL' if desc.startswith('Fluorescent ') else \
             'M',
+            medium,
         ))
 
     ak.sort(key=lambda x:int(x[2][2:]))
@@ -82,7 +86,7 @@ with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
     next(reader)
     av = []
     raw['av'] = tr = {}
-    for prop, serie, ref, desc, color in reader:
+    for surface, serie, ref, desc, color, medium in reader:
         tr[ref] = desc
         av.append((
             'av',
@@ -90,7 +94,8 @@ with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
             ref,
             int(color[1:], 16),
             1 << 1 if serie == 'LM' else 1 << 3,
-            prop,
+            surface,
+            medium,
         ))
 
     av.sort(key=lambda x:float(x[2]))

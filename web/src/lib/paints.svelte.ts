@@ -9,8 +9,9 @@ export interface PaintInfo {
 	serie: string;
 	serie_code: string;
 	rgb: number;
-	base: number;
-	prop: number;
+	bases: number;
+	surfaces: number;
+	mediums: number;
 	// js specific
 	hsl: [number, number, number];
 	id: string;
@@ -28,6 +29,16 @@ export const SURFACE_BITS: Record<string, number> = {
 	FL: 1 << 6,
 	W: 1 << 7,
 	U: 1 << 8
+};
+
+// MediumType 位定义，与 wasm 端 bitflags 对齐
+// prettier-ignore
+export const MEDIUM_BITS: Record<string, number> = {
+	Airbrush: 1 << 0,
+	Spray: 1 << 1,
+	Brush: 1 << 2,
+	Marker: 1 << 3,
+	Other: 1 << 7
 };
 
 export const paintId = (paint: { brand: string; code: string }) => `${paint.brand}:${paint.code}`;
@@ -56,6 +67,8 @@ export interface FilterOptions {
 	/** 漆面类型 bitmask；缺省/0 = 不限制 */
 	surfaces?: number;
 	bases?: number;
+	/** 介质类型 bitmask；缺省/0 = 不限制 */
+	mediums?: number;
 	mix?: number;
 	limit?: number;
 }
@@ -67,7 +80,8 @@ export const colorDiff = (rgbA: number, rgbB: number): number => color_diff(rgbA
 export const findDirectEquivalences = (index: number): PaintInfo[] => [];
 
 export const searchNearest = (rgb: number, opts: FilterOptions = {}): SearchResult[] => {
-	return (search(rgb, opts) as SearchResult[]) ?? [];
+	// 显式传 mediums: 0（不限制），避免 wasm 端 serde default（Airbrush）误过滤
+	return (search(rgb, { mediums: 0, ...opts }) as SearchResult[]) ?? [];
 };
 
 export interface PaintCatalog {
