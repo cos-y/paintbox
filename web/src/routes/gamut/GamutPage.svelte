@@ -564,7 +564,6 @@
 			data-grip
 			class="absolute top-0 bottom-0 left-0 z-10 flex w-8 cursor-grab touch-none items-center justify-center rounded-l-lg text-gray-400 transition-colors hover:bg-gray-200/60 hover:text-gray-600 dark:hover:bg-gray-700/60 dark:hover:text-gray-300"
 			class:cursor-grabbing={src.id === dragId}
-			aria-label={t('gamut.drag')}
 			onpointerdown={(e) => startDrag(e, src)}
 		>
 			<GripVertical class="h-4 w-4" />
@@ -580,7 +579,6 @@
 					type="button"
 					class="cursor-pointer rounded p-0.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
 					tabindex="-1"
-					aria-label={t('gamut.delete')}
 					onclick={() => removeSource(src.id)}><X class="h-4 w-4" /></button
 				>
 			{/if}
@@ -588,7 +586,6 @@
 				type="button"
 				class="cursor-pointer rounded p-0.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
 				tabindex="-1"
-				title={src.hidden ? t('gamut.show') : t('gamut.hide')}
 				onclick={() => (src.hidden = !src.hidden)}
 			>
 				{#if src.hidden}

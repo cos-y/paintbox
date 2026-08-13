@@ -13,9 +13,13 @@ raw = {}
 with open(os.path.join(SCRIPT_DIR, "gunze.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
-    raw['gunze'] = tr = {}
-    for base, serie, code, color, desc, surface, _, medium in reader:
-        tr[code] = desc
+    ja = raw.setdefault('ja', {})['gunze'] = {}
+    en = raw.setdefault('en', {})['gunze'] = {}
+    for base, serie, code, color, desc_ja, desc_en, surface, _, medium in reader:
+        if desc_ja != "":
+            ja[code] = desc_ja
+        if desc_en != "":
+            en[code] = desc_en
         li.append((
             'gunze',
             serie,
@@ -31,9 +35,10 @@ with open(os.path.join(SCRIPT_DIR, "tamiya.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     tamiya = []
-    raw['tamiya'] = tr = {}
-    for color, serie, code, desc, surface, base, medium in reader:
-        tr[code] = desc
+    ja = raw.setdefault('ja', {})['tamiya'] = {}
+    en = raw.setdefault('en', {})['tamiya'] = {}
+    for color, serie, code, desc_ja, surface, base, medium in reader:
+        ja[code] = desc_ja
         tamiya.append((
             'tamiya',
             serie,
@@ -58,12 +63,13 @@ with open(os.path.join(SCRIPT_DIR, "ak.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     ak = []
-    raw['ak'] = tr = {}
+    es = raw.setdefault('es', {})['ak'] = {}
+    en = raw.setdefault('en', {})['ak'] = {}
     for row in reader:
         code, serie, desc, color = row[0:4]
         code = code[2:]
         medium = row[-1]
-        tr[code] = desc
+        en[code] = desc
         ak.append((
             'ak',
             serie,
@@ -85,9 +91,13 @@ with open(os.path.join(SCRIPT_DIR, "av.csv"), "r", encoding='utf-8') as f:
     reader = csv.reader(f.readlines())
     next(reader)
     av = []
-    raw['av'] = tr = {}
-    for surface, serie, ref, desc, color, medium in reader:
-        tr[ref] = desc
+    es = raw.setdefault('es', {})['av'] = {}
+    en = raw.setdefault('en', {})['av'] = {}
+    for surface, serie, ref, desc_en, desc_es, color, medium in reader:
+        if desc_en != "":
+            en[ref] = desc_en
+        if desc_es != "":
+            es[ref] = desc_es
         av.append((
             'av',
             serie,

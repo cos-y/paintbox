@@ -12,7 +12,7 @@
 		<ArrowDownWideNarrow class="inline-block size-3" />
 		{t('stock.sortTitle')}
 	</span>
-	<div class="min-w-0 [scrollbar-width:none] overflow-x-auto [&::-webkit-scrollbar]:hidden">
+	<div class="min-w-0 scrollbar-none overflow-x-auto [&::-webkit-scrollbar]:hidden">
 		<TagButtonGroup
 			options={{
 				0: t('stock.sortCode'),
@@ -28,47 +28,47 @@
 
 	<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
 		<Eclipse class="inline-block size-3" />
-		{t('search.surfaceTitle')}
+		{t('surface.title')}
 	</span>
 	<TagSelect
 		options={{
-			G: t('search.surface.G'),
-			SG: t('search.surface.SG'),
-			M: t('search.surface.M'),
-			ME: t('search.surface.ME'),
-			C: t('search.surface.C'),
-			PA: t('search.surface.PA'),
-			FL: t('search.surface.FL'),
-			W: t('search.surface.W')
+			G: t('surface.G'),
+			SG: t('surface.SG'),
+			M: t('surface.M'),
+			ME: t('surface.ME'),
+			C: t('surface.C'),
+			PA: t('surface.PA'),
+			FL: t('surface.FL'),
+			W: t('surface.W')
 		}}
 		bind:value={stockNav.surfSel}
 	/>
 
 	<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
 		<FlaskConical class="inline-block size-3" />
-		{t('search.baseTitle')}
+		{t('base.title')}
 	</span>
 	<TagSelect
 		options={{
-			0: t('search.lacquer'),
-			1: t('search.alcohol'),
-			2: t('search.enamel'),
-			3: t('search.water')
+			0: t('base.lacquer'),
+			1: t('base.alcohol'),
+			2: t('base.enamel'),
+			3: t('base.water')
 		}}
 		bind:value={stockNav.baseSel}
 	/>
 
 	<span class="shrink-0 py-0.5 text-xs text-black dark:text-white">
 		<Paintbrush class="inline-block size-3" />
-		{t('search.mediumTitle')}
+		{t('medium.title')}
 	</span>
 	<TagSelect
 		options={{
-			Airbrush: t('search.medium.Airbrush'),
-			Spray: t('search.medium.Spray'),
-			Brush: t('search.medium.Brush'),
-			Marker: t('search.medium.Marker')
-			// Other: t('search.medium.Other')
+			Airbrush: t('medium.Airbrush'),
+			Spray: t('medium.Spray'),
+			Brush: t('medium.Brush'),
+			Marker: t('medium.Marker')
+			// Other: t('medium.Other')
 		}}
 		bind:value={stockNav.mediumSel}
 	/>

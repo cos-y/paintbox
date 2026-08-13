@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { Package, Search, Info, Eclipse } from '@lucide/svelte';
+	import { Package, Search, Eclipse, Settings } from '@lucide/svelte';
 	import { Tooltip } from 'flowbite-svelte';
 	import { page } from '$app/state';
 	import { goto, beforeNavigate } from '$app/navigation';
@@ -29,7 +29,7 @@
 		{ key: 'nav.stock', route: '/stock', svg: Package },
 		{ key: 'nav.search', route: '/search', svg: Search },
 		{ key: 'nav.gamut', route: '/gamut', svg: Eclipse },
-		{ key: 'nav.about', route: '/about', svg: Info }
+		{ key: 'nav.settings', route: '/settings', svg: Settings }
 	];
 
 	const isActive = (route: string) => page.url.pathname.startsWith(route);

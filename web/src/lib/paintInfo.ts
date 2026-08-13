@@ -1,23 +1,18 @@
 import { SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
 import { t } from '$lib/i18n.svelte';
 
-const BASE_KEYS = ['search.lacquer', 'search.alcohol', 'search.enamel', 'search.water'] as const;
-const MEDIUM_KEYS = [
-	'search.medium.Airbrush',
-	'search.medium.Spray',
-	'search.medium.Brush',
-	'search.medium.Marker'
-] as const;
+const BASE_KEYS = ['base.lacquer', 'base.alcohol', 'base.enamel', 'base.water'] as const;
+const MEDIUM_KEYS = ['medium.Airbrush', 'medium.Spray', 'medium.Brush', 'medium.Marker'] as const;
 const SURFACE_KEYS = [
-	['G', 'search.surface.G'],
-	['SG', 'search.surface.SG'],
-	['M', 'search.surface.M'],
-	['ME', 'search.surface.ME'],
-	['C', 'search.surface.C'],
-	['PA', 'search.surface.PA'],
-	['FL', 'search.surface.FL'],
-	['W', 'search.surface.W'],
-	['U', 'search.surface.U']
+	['G', 'surface.G'],
+	['SG', 'surface.SG'],
+	['M', 'surface.M'],
+	['ME', 'surface.ME'],
+	['C', 'surface.C'],
+	['PA', 'surface.PA'],
+	['FL', 'surface.FL'],
+	['W', 'surface.W'],
+	['U', 'surface.U']
 ] as const;
 
 /** 溶剂标签：base 位拆解（枚举位 → i18n 文案） */

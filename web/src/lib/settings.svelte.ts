@@ -1,0 +1,44 @@
+import { z } from 'zod';
+import { loadData } from './utils.svelte';
+
+const STORAGE_KEY = 'paintbox:settings';
+
+// 持久化格式：扁平对象。逐字段 catch 兜底（一个脏字段不连坐整个配置），
+// 整体非对象 / 损坏 JSON → {} 重置为全默认。
+const SettingsSchema = z
+	.object({
+		/** 油漆色名用源语言显示（不经本地化翻译字典） */
+		displayRaw: z.boolean().catch(false),
+		/** 深色模式（预留字段：目前仅存储，未实际应用主题） */
+		theme: z.enum(['dark', 'light']).catch('dark')
+	})
+	.catch({ displayRaw: false, theme: 'dark' });
+
+const initial = loadData(STORAGE_KEY, SettingsSchema);
+
+class SettingsStore {
+	displayRaw = $state(initial.displayRaw);
+	theme = $state<'dark' | 'light'>(initial.theme);
+
+	setDisplayRaw(v: boolean) {
+		if (this.displayRaw === v) return;
+		this.displayRaw = v;
+		this.persist();
+	}
+
+	/** 深色模式切换（预留）：存储值但不应用主题 */
+	setTheme(v: 'dark' | 'light') {
+		if (this.theme === v) return;
+		this.theme = v;
+		this.persist();
+	}
+
+	private persist() {
+		localStorage.setItem(
+			STORAGE_KEY,
+			JSON.stringify({ displayRaw: this.displayRaw, theme: this.theme })
+		);
+	}
+}
+
+export const settings = new SettingsStore();

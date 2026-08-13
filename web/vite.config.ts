@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { minifyStaticJson } from './plugins/minifyStaticJson';
 import { version } from './package.json' with { type: 'json' };
 
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
 		__CHANNEL__: JSON.stringify(process.env.CHANNEL ?? '')
 	},
 	plugins: [
+		minifyStaticJson(),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {
