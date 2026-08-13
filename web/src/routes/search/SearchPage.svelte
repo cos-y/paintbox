@@ -620,8 +620,8 @@
 									Airbrush: t('search.medium.Airbrush'),
 									Spray: t('search.medium.Spray'),
 									Brush: t('search.medium.Brush'),
-									Marker: t('search.medium.Marker'),
-									Other: t('search.medium.Other')
+									Marker: t('search.medium.Marker')
+									// Other: t('search.medium.Other')
 								}}
 								bind:value={store.mediumTypes}
 							/>

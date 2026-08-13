@@ -12,7 +12,7 @@
 		<ArrowDownWideNarrow class="inline-block size-3" />
 		{t('stock.sortTitle')}
 	</span>
-	<div class="min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+	<div class="min-w-0 [scrollbar-width:none] overflow-x-auto [&::-webkit-scrollbar]:hidden">
 		<TagButtonGroup
 			options={{
 				0: t('stock.sortCode'),
@@ -67,8 +67,8 @@
 			Airbrush: t('search.medium.Airbrush'),
 			Spray: t('search.medium.Spray'),
 			Brush: t('search.medium.Brush'),
-			Marker: t('search.medium.Marker'),
-			Other: t('search.medium.Other')
+			Marker: t('search.medium.Marker')
+			// Other: t('search.medium.Other')
 		}}
 		bind:value={stockNav.mediumSel}
 	/>
