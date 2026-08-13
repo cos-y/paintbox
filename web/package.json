@@ -45,7 +45,7 @@
 		"@tauri-apps/plugin-opener": "^2.5.4",
 		"@threlte/core": "^8.5.16",
 		"@threlte/extras": "^9.21.0",
-		"@types/three": "^0.185.1",
+		"@types/three": "^0.185.4",
 		"culori": "^4.0.2",
 		"three": "^0.185.1",
 		"zod": "^4.4.3"
