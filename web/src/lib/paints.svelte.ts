@@ -55,7 +55,7 @@ export interface FilterOptions {
 	all?: number[];
 	/** 漆面类型 bitmask；缺省/0 = 不限制 */
 	surfaces?: number;
-	bases?: number[];
+	bases?: number;
 	mix?: number;
 	limit?: number;
 }

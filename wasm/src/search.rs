@@ -1,4 +1,4 @@
-use std::{cmp::Reverse, collections::HashSet, fmt, num::NonZero};
+use std::{cmp::Reverse, collections::HashSet, fmt, marker::PhantomData, num::NonZero};
 
 use bitflags::bitflags;
 use empfindung::cie00;
@@ -22,11 +22,19 @@ pub struct PaintInfo {
     pub serie: String,
     pub code: String,
     pub rgb: u32,
-    pub base: u8,
-    pub prop: SurfaceType,
+    pub bases: BaseType,
+    pub surfaces: SurfaceType,
 }
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct BaseType: u16 {
+        const Laquer = 1 << 0;
+        const Alcohol = 1 << 1;
+        const Enamel = 1 << 2;
+        const Water = 1 << 3;
+    }
+
     /// 漆面类型，每个变体占一个 bit；`prop` 字段是单 bit 值，过滤时是多个 bit 的 mask
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct SurfaceType: u16 {
@@ -40,64 +48,129 @@ bitflags! {
         const W = 1 << 7;
         const U = 1 << 8;
     }
-}
 
-impl Default for SurfaceType {
-    fn default() -> Self {
-        SurfaceType::empty()
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct MediaType: u16 {
+        const Airbrush = 1 << 0;
+        const Spray = 1 << 1;
+        const Brush = 1 << 2;
+        const Marker = 1 << 3;
+        const Other = 1 << 7;
     }
 }
 
-/// 序列化输出整数（bit值/mask，紧凑、快）；反序列化兼容：
-/// - 字符串名（"G"、"SG"…，csv / 旧数据）
-/// - 整数（单bit值或mask，JS 传入）
-/// - 数组（旧 Web 端传入的 ["G","SG"] 或 [1,2]），自动 OR 成 mask
+fn bitflags_coerce<T>(e: T) -> T
+where
+    T: bitflags::Flags<Bits = u16>,
+{
+    if e.is_empty() { T::all() } else { e }
+}
+
+/// 序列化为 u16 bitmask（两类型共用）
+fn serialize_flags<S, F>(flags: &F, s: S) -> Result<S::Ok, S::Error>
+where
+    S: serde::Serializer,
+    F: bitflags::Flags<Bits = u16>,
+{
+    s.serialize_u16(flags.bits())
+}
+
+/// 反序列化：兼容字符串名 / 整数 / 数组（两类型共用）
+fn deserialize_flags<'de, D, F>(d: D) -> Result<F, D::Error>
+where
+    D: serde::Deserializer<'de>,
+    F: bitflags::Flags<Bits = u16> + serde::de::Deserialize<'de>,
+{
+    struct V<F>(PhantomData<F>);
+
+    impl<'de, F: bitflags::Flags<Bits = u16> + serde::de::Deserialize<'de>> serde::de::Visitor<'de>
+        for V<F>
+    {
+        type Value = F;
+        fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            write!(f, "a flag type name, bitmask integer, or an array of them")
+        }
+        fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<Self::Value, E> {
+            F::from_name(v).ok_or_else(|| E::custom(format!("unknown flag type: {v}")))
+        }
+        fn visit_u64<E: serde::de::Error>(self, v: u64) -> Result<Self::Value, E> {
+            Ok(F::from_bits_retain(v as u16))
+        }
+        fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
+            Ok(F::from_bits_retain(v as u16))
+        }
+        fn visit_f64<E: serde::de::Error>(self, v: f64) -> Result<Self::Value, E> {
+            if v.fract() == 0.0 {
+                Ok(F::from_bits_retain(v as u16))
+            } else {
+                Err(E::custom(format!("non-integer bitmask: {v}")))
+            }
+        }
+        fn visit_seq<A: serde::de::SeqAccess<'de>>(
+            self,
+            mut seq: A,
+        ) -> Result<Self::Value, A::Error> {
+            let mut acc = 0u16;
+            while let Some(x) = seq.next_element::<F>()? {
+                acc |= x.bits();
+            }
+            Ok(F::from_bits_retain(acc))
+        }
+    }
+    d.deserialize_any(V(PhantomData))
+}
+
+impl Serialize for BaseType {
+    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        serialize_flags(self, s)
+    }
+}
+
+impl<'de> Deserialize<'de> for BaseType {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+        deserialize_flags(d)
+    }
+}
+
+impl Default for BaseType {
+    fn default() -> Self {
+        BaseType::all()
+    }
+}
+
 impl Serialize for SurfaceType {
     fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
-        s.serialize_u16(self.bits())
+        serialize_flags(self, s)
     }
 }
 
 impl<'de> Deserialize<'de> for SurfaceType {
     fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
-        struct V;
-        impl<'de> serde::de::Visitor<'de> for V {
-            type Value = SurfaceType;
-            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                write!(
-                    f,
-                    "a surface type name, bitmask integer, or an array of them"
-                )
-            }
-            fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<Self::Value, E> {
-                SurfaceType::from_name(v)
-                    .ok_or_else(|| E::custom(format!("unknown surface type: {v}")))
-            }
-            fn visit_u64<E: serde::de::Error>(self, v: u64) -> Result<Self::Value, E> {
-                Ok(SurfaceType::from_bits_retain(v as u16))
-            }
-            fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
-                Ok(SurfaceType::from_bits_retain(v as u16))
-            }
-            fn visit_f64<E: serde::de::Error>(self, v: f64) -> Result<Self::Value, E> {
-                if v.fract() == 0.0 {
-                    Ok(SurfaceType::from_bits_retain(v as u16))
-                } else {
-                    Err(E::custom(format!("non-integer surface bitmask: {v}")))
-                }
-            }
-            fn visit_seq<A: serde::de::SeqAccess<'de>>(
-                self,
-                mut seq: A,
-            ) -> Result<Self::Value, A::Error> {
-                let mut acc = 0u16;
-                while let Some(x) = seq.next_element::<SurfaceType>()? {
-                    acc |= x.bits();
-                }
-                Ok(SurfaceType::from_bits_retain(acc))
-            }
-        }
-        d.deserialize_any(V)
+        deserialize_flags(d)
+    }
+}
+
+impl Default for SurfaceType {
+    fn default() -> Self {
+        SurfaceType::all()
+    }
+}
+
+impl Serialize for MediaType {
+    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        serialize_flags(self, s)
+    }
+}
+
+impl<'de> Deserialize<'de> for MediaType {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+        deserialize_flags(d)
+    }
+}
+
+impl Default for MediaType {
+    fn default() -> Self {
+        MediaType::all()
     }
 }
 
@@ -116,7 +189,10 @@ pub struct FilterOptions {
     pub surfaces: SurfaceType,
 
     #[serde(default)]
-    pub bases: Vec<u8>,
+    pub medias: MediaType,
+
+    #[serde(default)]
+    pub bases: BaseType,
 
     #[serde(default)]
     pub mix: u32,
@@ -253,19 +329,17 @@ impl Searcher {
         };
         let all_filter: Option<HashSet<usize>> =
             opts.all.as_ref().map(|ids| ids.iter().copied().collect());
-        let prop_mask = opts.surfaces;
-        let base_filter: u8 = if opts.bases.is_empty() {
-            u8::MAX
-        } else {
-            opts.bases.iter().fold(0, |acc, e| acc | (1 << e))
-        };
+
+        let surfaces = bitflags_coerce(opts.surfaces);
+        let bases = bitflags_coerce(opts.bases);
+        let medias = bitflags_coerce(opts.medias);
 
         let mut candidates = FixedBitSet::with_capacity(self.majors.len());
         for (i, maj) in self.majors.iter().enumerate() {
             // base + idxs + prop + serie
-            if (maj.base & base_filter) != 0
+            if bases.intersects(maj.bases)
+                && surfaces.intersects(maj.surfaces)
                 && all_filter.as_ref().is_none_or(|s| s.contains(&i))
-                && (prop_mask.is_empty() || prop_mask.intersects(maj.prop))
                 && series_filter
                     .as_ref()
                     .is_none_or(|s| s.contains(&(maj.brand.as_str(), maj.serie.as_str())))
@@ -339,13 +413,14 @@ impl Searcher {
         let li1: Vec<_> = li.iter().map(|x| x.i).collect();
 
         for rem in 1..=max_mix {
+            // 这里无需限制bases，因为只会从candidates里选择，而candidates已经在前面过滤过了
             results.append(&mut self.search_mix(
                 ctx,
                 rgb_out,
                 li1.as_slice(),
                 rem,
                 ctx.limit * 3,
-                u8::MAX,
+                BaseType::all(),
             ));
         }
 
@@ -360,10 +435,11 @@ impl Searcher {
         is: &[usize],
         rem: u32,
         limit: usize,
-        base: u8,
+        bases: BaseType,
     ) -> Vec<SearchMix> {
+        // base限制当前搜索分支允许的溶剂种类，为空表示可剪枝
         let mut results: Vec<SearchMix> = vec![];
-        if base == 0 {
+        if bases.is_empty() {
             return results;
         }
 
@@ -374,8 +450,8 @@ impl Searcher {
 
         for i in is.iter() {
             ctx.candidates.set(*i, false);
-            let mix_base = base & self.majors[*i].base;
-            if mix_base == 0 {
+            let mix_bases = bases.intersection(self.majors[*i].bases);
+            if mix_bases.is_empty() {
                 continue;
             }
 
@@ -383,7 +459,7 @@ impl Searcher {
                 0 => vec![],
                 1 => self.do_search_mix(ctx, rgb_out, *i, &|ctx, rgb| {
                     let lab = rgb_to_lab(rgb);
-                    self.search_mix_target(ctx, lab, mix_base)
+                    self.search_mix_target(ctx, lab, mix_bases)
                         .map(|MeasuredItem { i, delta_e }| SearchMix {
                             portions: smallvec![Portion { i, t: 1f32 }],
                             latent: self.latents[i],
@@ -396,7 +472,7 @@ impl Searcher {
                     let li: Vec<_> = ctx
                         .candidates
                         .ones()
-                        .filter(|i| (self.majors[*i].base & mix_base) != 0)
+                        .filter(|i| mix_bases.intersects(self.majors[*i].bases))
                         .collect();
                     self.search_mix(
                         ctx,
@@ -404,7 +480,7 @@ impl Searcher {
                         li.as_slice(),
                         rem - 1,
                         limit * 3 / is.len(),
-                        mix_base,
+                        mix_bases,
                     )
                 }),
             };
@@ -566,12 +642,17 @@ impl Searcher {
         results
     }
 
-    fn search_mix_target(&self, ctx: &SearchContext, lab: Lab, base: u8) -> Option<MeasuredItem> {
+    fn search_mix_target(
+        &self,
+        ctx: &SearchContext,
+        lab: Lab,
+        bases: BaseType,
+    ) -> Option<MeasuredItem> {
         let mut mini = None;
         let mut mind = f32::MAX;
         for i in ctx.candidates.ones() {
             // cannot mix paint of different base
-            if (self.majors[i].base & base) != 0 {
+            if bases.intersects(self.majors[i].bases) {
                 let d = cie00::diff(lab, self.labs[i]);
                 if d < mind {
                     mini = Some(i);

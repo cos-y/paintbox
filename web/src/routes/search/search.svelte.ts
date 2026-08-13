@@ -112,7 +112,7 @@ class SearchRuntime {
 			series,
 			all,
 			surfaces: store.surfaceTypes.reduce((m, k) => m | SURFACE_BITS[k], 0),
-			bases: store.baseTypes.map((x) => +x),
+			bases: store.baseTypes.reduce((m, x) => m | (1 << +x), 0),
 			mix: store.mixingLimit,
 			limit: 12
 		};
