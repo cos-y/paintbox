@@ -67,6 +67,12 @@
   },
   {
     "brand": "gunze",
+    "serie": "M",
+    "name": "Markers",
+    "desc": "Marker pens"
+  },
+  {
+    "brand": "gunze",
     "serie": "V",
     "name": "Various",
     "desc": "Paints from various ranges"
