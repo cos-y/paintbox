@@ -722,10 +722,10 @@
 					tooltip={t('search.baseTooltip')}
 					class="w-28 text-xs"
 					options={{
-						0: t('search.base.0'),
-						1: t('search.base.1'),
-						2: t('search.base.2'),
-						3: t('search.base.3')
+						0: t('search.lacquer'),
+						1: t('search.alcohol'),
+						2: t('search.enamel'),
+						3: t('search.water')
 					}}
 					title={t('search.baseTitle')}
 					bind:value={store.baseTypes}

@@ -212,10 +212,10 @@
 				<div class="space-y-0.5">
 					<StockFilterRow
 						options={{
-							0: t('search.base.0'),
-							1: t('search.base.1'),
-							2: t('search.base.2'),
-							3: t('search.base.3')
+							0: t('search.lacquer'),
+							1: t('search.alcohol'),
+							2: t('search.enamel'),
+							3: t('search.water')
 						}}
 						bind:values={stockNav.baseSel}
 					>

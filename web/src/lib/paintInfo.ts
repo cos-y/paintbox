@@ -1,7 +1,7 @@
 import { SURFACE_BITS, type PaintInfo } from '$lib/paints.svelte';
 import { t } from '$lib/i18n.svelte';
 
-const BASE_KEYS = ['search.base.0', 'search.base.1', 'search.base.2', 'search.base.3'] as const;
+const BASE_KEYS = ['search.lacquer', 'search.alcohol', 'search.enamel', 'search.water'] as const;
 const SURFACE_KEYS = [
 	['G', 'search.surface.G'],
 	['SG', 'search.surface.SG'],
