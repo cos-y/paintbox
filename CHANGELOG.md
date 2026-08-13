@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.6] - 2026-08-14
+
+### Added
+
+- Gunze Gundam Marker catalog (series M): 123 marker paints covering the coating range (GM04-19), the EX series (XGM01-08/100/301/302 and hologram XGM201-205), panel line pens (GM01-03, GM20/21, GM301-313), Real Touch markers (GM400-410) and the 30MM / Plano-saurus ranges (TM, PSM), each with a swatch color sampled from the official catalog plus English/Chinese names.
+- Medium filter: every paint is now tagged by application medium (airbrush, spray, brush, marker); the search and stock filters can restrict results to specific media.
+- Tag-style filter controls: multi-select and single-select filters on the search and stock pages render as compact tag pills, and the series picker opens in the global bottom drawer on mobile.
+
+### Changed
+
+- Base type labels renamed to Lacquer / Alcohol / Enamel / Water, with an airbrush icon for the spray source.
+
 ## [0.3.5] - 2026-08-12
 
 ### Fixed
@@ -235,6 +247,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.6]: https://github.com/cos-y/paintbox/releases/tag/v0.3.6
 [0.3.1]: https://github.com/cos-y/paintbox/releases/tag/v0.3.1
 [0.3.0]: https://github.com/cos-y/paintbox/releases/tag/v0.3.0
 [0.2.11]: https://github.com/cos-y/paintbox/releases/tag/v0.2.11
