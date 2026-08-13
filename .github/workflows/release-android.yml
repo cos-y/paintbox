@@ -159,7 +159,7 @@ jobs:
 
       # release body = CHANGELOG.md 里该版本的文本（不再用 GitHub 自动生成的 commit 列表）
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             dist/paintbox.apk
