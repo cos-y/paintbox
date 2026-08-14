@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.9] - 2026-08-14
+
+### Added
+
+- Data backup & restore (Settings → Data): export your full paint library and preferences (stock, display-language preference, theme, interface language) to a JSON file — saved natively via a file dialog in the desktop app, downloaded as a file on web.
+- Data import with validation: pick a backup file (native file dialog on desktop, file picker on web), the format is validated before anything is applied, and you choose the import scope — stock only, stock & settings, or settings only — plus, when stock is included, whether to append (deduplicated merge) or replace the entire stock (danger).
+- The settings page now shows the Android-style numeric version code next to the semantic version (e.g. Version 0.3.9 (3009)), aligned with the Android build's versionCode.
+
+### Changed
+
+- Settings page layout: data backup & restore moved into its own section below the settings column.
+
 ## [0.3.8] - 2026-08-14
 
 ### Added
@@ -276,6 +288,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.9]: https://github.com/cos-y/paintbox/releases/tag/v0.3.9
 [0.3.8]: https://github.com/cos-y/paintbox/releases/tag/v0.3.8
 [0.3.7]: https://github.com/cos-y/paintbox/releases/tag/v0.3.7
 [0.3.6]: https://github.com/cos-y/paintbox/releases/tag/v0.3.6
