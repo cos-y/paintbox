@@ -22,7 +22,7 @@
 	import { Button, ButtonGroup, Toggle } from 'flowbite-svelte';
 	import { slide } from 'svelte/transition';
 	import favicon from '$lib/assets/favicon.svg';
-	import { i18n, t, type Locale } from '$lib/i18n.svelte';
+	import { i18n, t, type Locale, type MessageKey, type Params } from '$lib/i18n.svelte';
 	import { settings } from '$lib/settings.svelte';
 	import { updater } from '$lib/update.svelte';
 	import Select from '$lib/components/Select.svelte';
@@ -70,6 +70,11 @@
 		const l = LOCALES[localeSel];
 		if (l?.available && l.code !== i18n.locale) i18n.set(l.code as Locale);
 	});
+	// i18n.locale 外部变化（如备份恢复语言）→ 同步下拉选中，避免上方的 effect 把语言拉回去
+	$effect(() => {
+		const idx = LOCALES.findIndex((l) => l.code === i18n.locale);
+		if (idx !== -1 && idx !== localeSel) localeSel = idx;
+	});
 
 	// 手机端声明区折叠（单选，默认全收起）
 	type LegalKey = 'privacy' | 'disclaimer' | 'contribution';
@@ -78,8 +83,8 @@
 	// ---- 数据备份 / 恢复 ----
 	let importMode = $state<ImportMode>('merge');
 	let importScope = $state<ImportScope>('both');
-	let importMsg = $state<{ kind: 'ok' | 'error'; text: string } | null>(null);
-	let exportMsg = $state<string | null>(null);
+	let importMsg = $state<{ kind: 'ok' | 'error'; key: MessageKey; params?: Params } | null>(null);
+	let exportMsg = $state<{ kind: 'ok' | 'error'; key: MessageKey } | null>(null);
 	let fileInput = $state<HTMLInputElement | undefined>(undefined);
 
 	const stamp = () => {
@@ -100,7 +105,7 @@
 				});
 				if (!path) return; // 用户取消
 				await writeTextFile(path, json);
-				exportMsg = t('data.exportDone');
+				exportMsg = { kind: 'ok', key: 'data.exportDone' };
 			} else {
 				const blob = new Blob([json], { type: 'application/json' });
 				const url = URL.createObjectURL(blob);
@@ -111,7 +116,7 @@
 				URL.revokeObjectURL(url);
 			}
 		} catch {
-			exportMsg = t('data.readFailed');
+			exportMsg = { kind: 'error', key: 'data.readFailed' };
 		}
 	};
 
@@ -144,19 +149,19 @@
 				text = await file.text();
 			}
 		} catch {
-			importMsg = { kind: 'error', text: t('data.readFailed') };
+			importMsg = { kind: 'error', key: 'data.readFailed' };
 			return;
 		}
 		const res = parseBackup(text);
 		if (!res.ok || !res.data) {
 			importMsg = {
 				kind: 'error',
-				text: t(res.error === 'invalidJson' ? 'data.invalidJson' : 'data.invalidSchema')
+				key: res.error === 'invalidJson' ? 'data.invalidJson' : 'data.invalidSchema'
 			};
 			return;
 		}
 		const r = applyBackup(res.data, importScope, importMode);
-		importMsg = { kind: 'ok', text: t('data.importDone', { added: r.added, total: r.total }) };
+		importMsg = { kind: 'ok', key: 'data.importDone', params: { added: r.added, total: r.total } };
 	};
 </script>
 
@@ -364,8 +369,10 @@
 							<Download class="size-4" />
 							{t('data.downloadBackup')}
 						</button>
-						{#if exportMsg}
-							<p class="mt-1.5 text-[11px] text-green-600 dark:text-green-400">{exportMsg}</p>
+						{#if exportMsg?.kind === 'error'}
+							<p class="mt-1.5 text-[11px] text-red-600 dark:text-red-400">{t(exportMsg.key)}</p>
+						{:else if exportMsg}
+							<p class="mt-1.5 text-[11px] text-green-600 dark:text-green-400">{t(exportMsg.key)}</p>
 						{/if}
 
 						<div class="mt-3 border-t border-gray-200 pt-3 dark:border-gray-800">
@@ -446,7 +453,7 @@
 										? 'text-green-600 dark:text-green-400'
 										: 'text-red-600 dark:text-red-400'}"
 								>
-									{importMsg.text}
+									{t(importMsg.key, importMsg.params)}
 								</p>
 							{/if}
 						</div>

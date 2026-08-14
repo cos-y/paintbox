@@ -146,14 +146,12 @@ const en = {
 	'data.title': 'Data',
 	'data.exportDesc':
 		'Back up all data (stock and preferences) to a JSON file. The file contains your full paint library and settings.',
-	'data.downloadBackup': 'Download backup file',
+	'data.downloadBackup': 'Save backup file',
 	'data.exportDone': 'Backup file saved',
-	'data.importDesc':
-		'Restore from a backup file. The data format is validated before applying.',
+	'data.importDesc': 'Restore from a backup file. The data format is validated before applying.',
 	'data.importModeTitle': 'Import mode',
 	'data.modeMerge': 'Append to current stock',
-	'data.modeMergeDesc':
-		'Backup paints are merged into your existing stock (duplicates removed).',
+	'data.modeMergeDesc': 'Backup paints are merged into your existing stock (duplicates removed).',
 	'data.modeReplace': 'Replace all stock (danger)',
 	'data.modeReplaceDesc': 'Your entire stock is replaced with the backup content.',
 	'data.scopeTitle': 'Import scope',
@@ -311,7 +309,7 @@ const zh = {
 	// ---- data backup ----
 	'data.title': '数据',
 	'data.exportDesc': '将所有数据（库存和偏好设置）备份到 JSON 文件。文件包含你的完整油漆库和设置。',
-	'data.downloadBackup': '下载备份文件',
+	'data.downloadBackup': '保存备份文件',
 	'data.exportDone': '备份文件已保存',
 	'data.importDesc': '从备份文件恢复。应用前会先校验数据格式。',
 	'data.importModeTitle': '导入方式',
@@ -470,18 +468,19 @@ const ja = {
 
 	// ---- data backup ----
 	'data.title': 'データ',
-	'data.exportDesc': 'すべてのデータ（在庫と設定）を JSON ファイルにバックアップします。ファイルには完全な塗料ライブラリと設定が含まれます。',
-	'data.downloadBackup': 'バックアップをダウンロード',
+	'data.exportDesc':
+		'すべてのデータ（手持ちと設定）を JSON ファイルにバックアップします。手持ちの塗料一覧と設定がすべて含まれます。',
+	'data.downloadBackup': 'バックアップを保存',
 	'data.exportDone': 'バックアップを保存しました',
 	'data.importDesc': 'バックアップファイルから復元します。適用前にデータ形式を検証します。',
 	'data.importModeTitle': 'インポート方法',
-	'data.modeMerge': '現在の在庫に追加',
-	'data.modeMergeDesc': 'バックアップの塗料を現在の在庫にマージします（重複は除去）。',
-	'data.modeReplace': 'すべての在庫を置き換え（危険）',
-	'data.modeReplaceDesc': '在庫全体がバックアップの内容に置き換えられます。',
+	'data.modeMerge': '手持ちに追加',
+	'data.modeMergeDesc': 'バックアップの塗料を手持ちにマージします（重複は除去）。',
+	'data.modeReplace': '手持ちをすべて置き換え（危険）',
+	'data.modeReplaceDesc': '手持ちがバックアップの内容にすべて置き換えられます。',
 	'data.scopeTitle': 'インポート範囲',
-	'data.scopeStock': '在庫のみ',
-	'data.scopeBoth': '在庫と設定',
+	'data.scopeStock': '手持ちのみ',
+	'data.scopeBoth': '手持ちと設定',
 	'data.scopeSettings': '設定のみ',
 	'data.importButton': 'バックアップファイルを選択',
 	'data.invalidJson': '有効な JSON ファイルではありません',
@@ -633,7 +632,7 @@ const es = {
 	'data.title': 'Datos',
 	'data.exportDesc':
 		'Haz una copia de seguridad de todos los datos (stock y preferencias) en un archivo JSON. El archivo contiene tu biblioteca completa de pinturas y la configuración.',
-	'data.downloadBackup': 'Descargar copia de seguridad',
+	'data.downloadBackup': 'Guardar copia de seguridad',
 	'data.exportDone': 'Copia de seguridad guardada',
 	'data.importDesc':
 		'Restaura desde un archivo de copia de seguridad. El formato de datos se valida antes de aplicarlo.',
@@ -642,8 +641,7 @@ const es = {
 	'data.modeMergeDesc':
 		'Las pinturas de la copia se fusionan con tu stock actual (sin duplicados).',
 	'data.modeReplace': 'Reemplazar todo el stock (peligro)',
-	'data.modeReplaceDesc':
-		'Todo el stock se reemplaza con el contenido de la copia.',
+	'data.modeReplaceDesc': 'Todo el stock se reemplaza con el contenido de la copia.',
 	'data.scopeTitle': 'Alcance de importación',
 	'data.scopeStock': 'Solo stock',
 	'data.scopeBoth': 'Stock y configuración',
