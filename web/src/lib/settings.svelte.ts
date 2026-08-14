@@ -33,6 +33,17 @@ class SettingsStore {
 		this.persist();
 	}
 
+	/** 批量替换（备份导入用）；缺省字段保留当前值 */
+	replaceAll(v: { displayRaw?: boolean; theme?: 'system' | 'dark' | 'light' }) {
+		if (v.displayRaw !== undefined && v.displayRaw !== this.displayRaw) {
+			this.displayRaw = v.displayRaw;
+		}
+		if (v.theme !== undefined && v.theme !== this.theme) {
+			this.theme = v.theme;
+		}
+		this.persist();
+	}
+
 	private persist() {
 		localStorage.setItem(
 			STORAGE_KEY,

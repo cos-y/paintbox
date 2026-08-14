@@ -41,6 +41,8 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.31.0",
+		"@tauri-apps/plugin-dialog": "^2.7.2",
+		"@tauri-apps/plugin-fs": "^2.5.1",
 		"@tauri-apps/plugin-http": "^2.5.9",
 		"@tauri-apps/plugin-opener": "^2.5.4",
 		"@threlte/core": "^8.5.16",

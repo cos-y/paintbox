@@ -142,6 +142,30 @@ const en = {
 	'settings.about': 'About',
 	'settings.legal': 'Terms of Use',
 
+	// ---- data backup ----
+	'data.title': 'Data',
+	'data.exportDesc':
+		'Back up all data (stock and preferences) to a JSON file. The file contains your full paint library and settings.',
+	'data.downloadBackup': 'Download backup file',
+	'data.exportDone': 'Backup file saved',
+	'data.importDesc':
+		'Restore from a backup file. The data format is validated before applying.',
+	'data.importModeTitle': 'Import mode',
+	'data.modeMerge': 'Append to current stock',
+	'data.modeMergeDesc':
+		'Backup paints are merged into your existing stock (duplicates removed).',
+	'data.modeReplace': 'Replace all stock (danger)',
+	'data.modeReplaceDesc': 'Your entire stock is replaced with the backup content.',
+	'data.scopeTitle': 'Import scope',
+	'data.scopeStock': 'Stock only',
+	'data.scopeBoth': 'Stock & settings',
+	'data.scopeSettings': 'Settings only',
+	'data.importButton': 'Select backup file',
+	'data.invalidJson': 'Not a valid JSON file',
+	'data.invalidSchema': 'Not a valid paintbox backup file',
+	'data.readFailed': 'Failed to read the file',
+	'data.importDone': (p: Params) => `Imported: +${p.added} paints, ${p.total} in total`,
+
 	// ---- shared components ----
 	'camera.accessError': 'Cannot access the camera (permission denied or device unavailable)',
 	'camera.launching': 'Launching Camera...',
@@ -284,6 +308,27 @@ const zh = {
 	'settings.about': '关于',
 	'settings.legal': '使用须知',
 
+	// ---- data backup ----
+	'data.title': '数据',
+	'data.exportDesc': '将所有数据（库存和偏好设置）备份到 JSON 文件。文件包含你的完整油漆库和设置。',
+	'data.downloadBackup': '下载备份文件',
+	'data.exportDone': '备份文件已保存',
+	'data.importDesc': '从备份文件恢复。应用前会先校验数据格式。',
+	'data.importModeTitle': '导入方式',
+	'data.modeMerge': '追加到当前库存',
+	'data.modeMergeDesc': '备份中的油漆合并进现有库存（自动去重）。',
+	'data.modeReplace': '替换所有库存（危险）',
+	'data.modeReplaceDesc': '整个库存将被备份内容替换。',
+	'data.scopeTitle': '导入范围',
+	'data.scopeStock': '仅库存',
+	'data.scopeBoth': '库存和设置',
+	'data.scopeSettings': '仅设置',
+	'data.importButton': '选择备份文件',
+	'data.invalidJson': '不是有效的 JSON 文件',
+	'data.invalidSchema': '不是有效的 paintbox 备份文件',
+	'data.readFailed': '读取文件失败',
+	'data.importDone': (p: Params) => `导入完成：新增 ${p.added} 支，共 ${p.total} 支`,
+
 	'camera.accessError': '无法访问摄像头（未授权或设备不可用）',
 	'camera.launching': '正在启动摄像头...',
 	'camera.captureColor': '拍照取色',
@@ -422,6 +467,27 @@ const ja = {
 	'settings.themeSystem': 'システム',
 	'settings.about': 'について',
 	'settings.legal': 'ご利用にあたって',
+
+	// ---- data backup ----
+	'data.title': 'データ',
+	'data.exportDesc': 'すべてのデータ（在庫と設定）を JSON ファイルにバックアップします。ファイルには完全な塗料ライブラリと設定が含まれます。',
+	'data.downloadBackup': 'バックアップをダウンロード',
+	'data.exportDone': 'バックアップを保存しました',
+	'data.importDesc': 'バックアップファイルから復元します。適用前にデータ形式を検証します。',
+	'data.importModeTitle': 'インポート方法',
+	'data.modeMerge': '現在の在庫に追加',
+	'data.modeMergeDesc': 'バックアップの塗料を現在の在庫にマージします（重複は除去）。',
+	'data.modeReplace': 'すべての在庫を置き換え（危険）',
+	'data.modeReplaceDesc': '在庫全体がバックアップの内容に置き換えられます。',
+	'data.scopeTitle': 'インポート範囲',
+	'data.scopeStock': '在庫のみ',
+	'data.scopeBoth': '在庫と設定',
+	'data.scopeSettings': '設定のみ',
+	'data.importButton': 'バックアップファイルを選択',
+	'data.invalidJson': '有効な JSON ファイルではありません',
+	'data.invalidSchema': '有効な paintbox バックアップファイルではありません',
+	'data.readFailed': 'ファイルを読み込めませんでした',
+	'data.importDone': (p: Params) => `インポート完了: +${p.added} 色、合計 ${p.total} 色`,
 
 	'camera.accessError': 'カメラにアクセスできません（権限がないか、デバイスが利用できません）',
 	'camera.launching': 'カメラ起動中...',
@@ -562,6 +628,31 @@ const es = {
 	'settings.themeSystem': 'Sistema',
 	'settings.about': 'Acerca de',
 	'settings.legal': 'Instrucciones',
+
+	// ---- data backup ----
+	'data.title': 'Datos',
+	'data.exportDesc':
+		'Haz una copia de seguridad de todos los datos (stock y preferencias) en un archivo JSON. El archivo contiene tu biblioteca completa de pinturas y la configuración.',
+	'data.downloadBackup': 'Descargar copia de seguridad',
+	'data.exportDone': 'Copia de seguridad guardada',
+	'data.importDesc':
+		'Restaura desde un archivo de copia de seguridad. El formato de datos se valida antes de aplicarlo.',
+	'data.importModeTitle': 'Modo de importación',
+	'data.modeMerge': 'Añadir al stock actual',
+	'data.modeMergeDesc':
+		'Las pinturas de la copia se fusionan con tu stock actual (sin duplicados).',
+	'data.modeReplace': 'Reemplazar todo el stock (peligro)',
+	'data.modeReplaceDesc':
+		'Todo el stock se reemplaza con el contenido de la copia.',
+	'data.scopeTitle': 'Alcance de importación',
+	'data.scopeStock': 'Solo stock',
+	'data.scopeBoth': 'Stock y configuración',
+	'data.scopeSettings': 'Solo configuración',
+	'data.importButton': 'Seleccionar archivo de copia',
+	'data.invalidJson': 'No es un archivo JSON válido',
+	'data.invalidSchema': 'No es un archivo de copia de paintbox válido',
+	'data.readFailed': 'No se pudo leer el archivo',
+	'data.importDone': (p: Params) => `Importado: +${p.added} pinturas, ${p.total} en total`,
 
 	'camera.accessError':
 		'No se puede acceder a la cámara (permiso denegado o dispositivo no disponible)',

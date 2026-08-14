@@ -14,7 +14,10 @@
 		Sun,
 		ChevronDown,
 		Settings as SettingsIcon,
-		MonitorCog
+		MonitorCog,
+		Database,
+		Download,
+		Upload
 	} from '@lucide/svelte';
 	import { Button, ButtonGroup, Toggle } from 'flowbite-svelte';
 	import { slide } from 'svelte/transition';
@@ -25,13 +28,28 @@
 	import Select from '$lib/components/Select.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 	import { isMedia, openExternal } from '$lib/utils.svelte';
+	import {
+		exportBackup,
+		parseBackup,
+		applyBackup,
+		type ImportMode,
+		type ImportScope
+	} from '$lib/backup.svelte';
+	import { save, open } from '@tauri-apps/plugin-dialog';
+	import { writeTextFile, readTextFile } from '@tauri-apps/plugin-fs';
+	import { Radio } from 'flowbite-svelte';
 
 	const githubUrl = 'https://github.com/cos-y/paintbox';
 	const discordUrl = 'https://discord.gg/QG2ZdVRkxN'; // TODO: 替换为实际邀请链接
 	const qqUrl = isTauri()
 		? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=963504621'
 		: 'https://qm.qq.com/q/3bWtHScQUo';
-	const donateUrl = 'https://afdian.com/a/cos_y';
+	const donateUrl =
+		'https://checkout.dodopayments.com/buy/pdt_0NkjxzuTH5BrL86pYuKnT?quantity=1&minimalAddress=true&fullName=[Anonymous]';
+
+	// 安卓样式数字版本号：minor*1000 + patch（0.3.7 → 3007），与 tauri.properties versionCode 对齐
+	const VERSION_PARTS = __APP_VERSION__.split('.').map(Number);
+	const versionCode = (VERSION_PARTS[1] ?? 0) * 1000 + (VERSION_PARTS[2] ?? 0);
 
 	// 语言选项：所有语言字典已就绪
 	const LOCALES = [
@@ -56,6 +74,90 @@
 	// 手机端声明区折叠（单选，默认全收起）
 	type LegalKey = 'privacy' | 'disclaimer' | 'contribution';
 	let openLegal = $state<LegalKey | null>(null);
+
+	// ---- 数据备份 / 恢复 ----
+	let importMode = $state<ImportMode>('merge');
+	let importScope = $state<ImportScope>('both');
+	let importMsg = $state<{ kind: 'ok' | 'error'; text: string } | null>(null);
+	let exportMsg = $state<string | null>(null);
+	let fileInput = $state<HTMLInputElement | undefined>(undefined);
+
+	const stamp = () => {
+		const d = new Date();
+		const p = (n: number) => String(n).padStart(2, '0');
+		return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`;
+	};
+
+	const downloadBackup = async () => {
+		const json = exportBackup();
+		const fname = `paintbox-backup-${stamp()}.json`;
+		try {
+			if (isTauri()) {
+				const path = await save({
+					title: t('data.downloadBackup'),
+					defaultPath: fname,
+					filters: [{ name: 'JSON', extensions: ['json'] }]
+				});
+				if (!path) return; // 用户取消
+				await writeTextFile(path, json);
+				exportMsg = t('data.exportDone');
+			} else {
+				const blob = new Blob([json], { type: 'application/json' });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = fname;
+				a.click();
+				URL.revokeObjectURL(url);
+			}
+		} catch {
+			exportMsg = t('data.readFailed');
+		}
+	};
+
+	const pickFile = () =>
+		new Promise<File | null>((resolve) => {
+			const input = fileInput;
+			if (!input) return resolve(null);
+			input.onchange = () => {
+				const f = input.files?.[0] ?? null;
+				input.value = '';
+				resolve(f);
+			};
+			input.click();
+		});
+
+	const importBackup = async () => {
+		let text: string;
+		try {
+			if (isTauri()) {
+				const path = await open({
+					multiple: false,
+					directory: false,
+					filters: [{ name: 'JSON', extensions: ['json'] }]
+				});
+				if (!path) return; // 用户取消
+				text = await readTextFile(path as string);
+			} else {
+				const file = await pickFile();
+				if (!file) return; // 用户取消
+				text = await file.text();
+			}
+		} catch {
+			importMsg = { kind: 'error', text: t('data.readFailed') };
+			return;
+		}
+		const res = parseBackup(text);
+		if (!res.ok || !res.data) {
+			importMsg = {
+				kind: 'error',
+				text: t(res.error === 'invalidJson' ? 'data.invalidJson' : 'data.invalidSchema')
+			};
+			return;
+		}
+		const r = applyBackup(res.data, importScope, importMode);
+		importMsg = { kind: 'ok', text: t('data.importDone', { added: r.added, total: r.total }) };
+	};
 </script>
 
 {#snippet privacyBody()}
@@ -102,6 +204,7 @@
 <div
 	class="relative mx-auto flex h-full w-full max-w-3xl flex-col text-gray-900 select-none dark:text-gray-200"
 >
+	<input type="file" accept=".json,application/json" bind:this={fileInput} class="hidden" />
 	<!-- 头部标题 -->
 	<header class="border-theme mx-6 flex shrink-0 items-center gap-3 border-b py-6">
 		<img src={favicon} alt="PaintBox" class="h-10 w-10 shrink-0 object-contain" />
@@ -110,7 +213,7 @@
 			<p
 				class="mt-0.5 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-500 dark:text-gray-400"
 			>
-				<span>Version {__APP_VERSION__}</span>
+				<span>Version {__APP_VERSION__} ({versionCode})</span>
 				{#if isTauri() && updater}
 					<button
 						type="button"
@@ -162,8 +265,10 @@
 	<!-- 可滚动内容区：设置 + 隐私与法律 两个同级分组 -->
 	<div class="min-h-0 flex-1 overflow-y-auto px-6 py-4">
 		<div class="flex flex-col gap-5 sm:flex-row">
+			<!-- 左列：设置 + 数据 -->
+		<div class="flex flex-col gap-5 sm:w-72 sm:shrink-0">
 			<!-- 1. 设置 -->
-			<section class="sm:w-72 sm:shrink-0">
+			<section>
 				<div class="mb-2 flex items-center gap-2 text-primary-600 dark:text-primary-400">
 					<SettingsIcon class="h-5 w-5" />
 					<h2 class="text-lg font-semibold">{t('settings.title')}</h2>
@@ -237,8 +342,117 @@
 							</Button>
 						</ButtonGroup>
 					</div>
+
 				</div>
 			</section>
+
+			<!-- 2. 数据备份 / 恢复 -->
+			<section>
+				<div class="mb-2 flex items-center gap-2 text-primary-600 dark:text-primary-400">
+					<Database class="h-5 w-5" />
+					<h2 class="text-lg font-semibold">{t('data.title')}</h2>
+				</div>
+				<div>
+					<p class="text-[10px] text-gray-500 dark:text-gray-400">
+							{t('data.exportDesc')}
+						</p>
+						<button
+							type="button"
+							onclick={downloadBackup}
+							class="border-theme mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+						>
+							<Download class="size-4" />
+							{t('data.downloadBackup')}
+						</button>
+						{#if exportMsg}
+							<p class="mt-1.5 text-[11px] text-green-600 dark:text-green-400">{exportMsg}</p>
+						{/if}
+
+						<div class="mt-3 border-t border-gray-200 pt-3 dark:border-gray-800">
+							<h4 class="text-xs font-medium text-gray-900 dark:text-white">
+								{t('data.scopeTitle')}
+							</h4>
+							<div class="mt-1.5 space-y-1.5">
+								<label class="flex cursor-pointer items-center gap-2">
+									<Radio name="importScope" value="stock" bind:group={importScope} class="mt-0.5" />
+									<span class="text-xs font-medium text-gray-900 dark:text-white">
+										{t('data.scopeStock')}
+									</span>
+								</label>
+								<label class="flex cursor-pointer items-center gap-2">
+									<Radio name="importScope" value="both" bind:group={importScope} class="mt-0.5" />
+									<span class="text-xs font-medium text-gray-900 dark:text-white">
+										{t('data.scopeBoth')}
+									</span>
+								</label>
+								<label class="flex cursor-pointer items-center gap-2">
+									<Radio
+										name="importScope"
+										value="settings"
+										bind:group={importScope}
+										class="mt-0.5"
+									/>
+									<span class="text-xs font-medium text-gray-900 dark:text-white">
+										{t('data.scopeSettings')}
+									</span>
+								</label>
+							</div>
+
+							{#if importScope === 'stock' || importScope === 'both'}
+								<h4 class="mt-3 text-xs font-medium text-gray-900 dark:text-white">
+									{t('data.importModeTitle')}
+								</h4>
+								<div class="mt-1.5 space-y-1.5">
+									<label class="flex cursor-pointer items-start gap-2">
+										<Radio name="importMode" value="merge" bind:group={importMode} class="mt-0.5" />
+										<div class="min-w-0">
+											<span class="text-xs font-medium text-gray-900 dark:text-white">
+												{t('data.modeMerge')}
+											</span>
+											<p class="text-[10px] text-gray-500 dark:text-gray-400">
+												{t('data.modeMergeDesc')}
+											</p>
+										</div>
+									</label>
+									<label class="flex cursor-pointer items-start gap-2">
+										<Radio
+											name="importMode"
+											value="replace"
+											bind:group={importMode}
+											class="mt-0.5"
+										/>
+										<div class="min-w-0">
+											<span class="text-xs font-medium text-red-600 dark:text-red-400">
+												{t('data.modeReplace')}
+											</span>
+											<p class="text-[10px] text-gray-500 dark:text-gray-400">
+												{t('data.modeReplaceDesc')}
+											</p>
+										</div>
+									</label>
+								</div>
+							{/if}
+							<button
+								type="button"
+								class="border-theme mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+								onclick={importBackup}
+							>
+								<Upload class="size-4" />
+								{t('data.importButton')}
+							</button>
+							{#if importMsg}
+								<p
+									class="mt-1.5 text-[11px] {importMsg.kind === 'ok'
+										? 'text-green-600 dark:text-green-400'
+										: 'text-red-600 dark:text-red-400'}"
+								>
+									{importMsg.text}
+								</p>
+							{/if}
+						</div>
+				</div>
+			</section>
+		</div>
 
 			<!-- 2. 隐私与法律（手机折叠 / sm+ 侧边直接显示） -->
 			<div class="min-w-0 flex-1">

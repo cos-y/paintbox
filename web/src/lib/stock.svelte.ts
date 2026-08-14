@@ -49,6 +49,20 @@ class StockStore {
 	}
 
 	/**
+	 * 整体替换库存（备份导入用）：
+	 * 相同内容时跳过，避免无谓的持久化写入
+	 */
+	replaceAll(ids: Iterable<string>) {
+		const next = new Set(ids);
+		const same =
+			next.size === this.values.size && [...next].every((v) => this.values.has(v));
+		if (same) return;
+		this.values = next;
+		this.persist();
+		this.version += 1;
+	}
+
+	/**
 	 * 遍历所有库存条目（index 从数据源实时解析；
 	 * 数据源中已不存在的条目自动跳过，由 prune() 负责持久化清理）
 	 */

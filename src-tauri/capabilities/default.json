@@ -10,6 +10,29 @@
     "opener:default",
     "app-update:allow-check",
     "app-update:allow-start-update",
+    "dialog:default",
+    {
+      "identifier": "fs:allow-read-text-file",
+      "allow": [
+        {
+          "path": "$HOME/**"
+        },
+        {
+          "path": "$DOWNLOAD/**"
+        }
+      ]
+    },
+    {
+      "identifier": "fs:allow-write-text-file",
+      "allow": [
+        {
+          "path": "$HOME/**"
+        },
+        {
+          "path": "$DOWNLOAD/**"
+        }
+      ]
+    },
     {
       "identifier": "http:default",
       "allow": [
