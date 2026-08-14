@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.8] - 2026-08-14
+
+### Added
+
+- Spanish localization: the full UI (navigation, settings, search, stock, gamut) is translated into Spanish, and the paint catalog gained a Spanish name dictionary covering all 2,291 paints — Vallejo keeps its official Spanish names (e.g. Cam. Marrón Medio) while AK Interactive, Gunze and Tamiya names are translated with proper Spanish word order (Dark Green → Verde Oscuro) and title-case formatting. The language is auto-detected for Spanish locales and selectable in Settings.
+- Paint code, name, series and brand text on the paint-detail card (stock page) and the source-paint card (search page) can now be selected and copied in the Tauri desktop app, where text selection is otherwise disabled by default.
+
+### Changed
+
+- Spanish UI labels trimmed to well-known abbreviations where they were overly long: sort conditions (Sat., Lum.) and finish tags (SG, Transp., FL, Envej.).
+
 ## [0.3.7] - 2026-08-14
 
 ### Added
@@ -265,6 +276,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.8]: https://github.com/cos-y/paintbox/releases/tag/v0.3.8
 [0.3.7]: https://github.com/cos-y/paintbox/releases/tag/v0.3.7
 [0.3.6]: https://github.com/cos-y/paintbox/releases/tag/v0.3.6
 [0.3.1]: https://github.com/cos-y/paintbox/releases/tag/v0.3.1
