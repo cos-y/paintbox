@@ -10,16 +10,8 @@
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white)
 
-搜索与指定颜色最相似的油漆配方。
+English / 中文 / 日本語 / Español
 
-## Color Search
+PaintBox is a color search & mixing toolbox designed for scale modelers.
 
-<img src="./pics/1.jpg" width="256px">
-
-## Gamut Visualization
-
-<img src="./pics/2.jpg" width="256px">
-
-## Stock Management
-
-<img src="./pics/3.jpg" width="256px">
+![](./pics/1.jpg)
