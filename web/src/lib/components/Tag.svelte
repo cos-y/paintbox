@@ -11,14 +11,14 @@
 	const { children, intereactive, active, class: clz }: Props = $props();
 
 	const activeClasses = $derived(
-		`bg-primary-500 dark:bg-primary-500 dark:text-white ${
+		`bg-primary-500 text-white dark:bg-primary-500 dark:text-white ${
 			intereactive ? 'hover:bg-primary-500 dark:hover:bg-primary-500' : ''
 		}`
 	);
 
 	const inactiveClasses = $derived(
-		`bg-gray-800 dark:bg-gray-800 dark:text-gray-300 ${
-			intereactive ? 'hover:bg-gray-100 dark:hover:bg-gray-700' : ''
+		`bg-gray-100 dark:bg-gray-800 dark:text-gray-300 ${
+			intereactive ? 'hover:bg-gray-200 dark:hover:bg-gray-700' : ''
 		}`
 	);
 </script>

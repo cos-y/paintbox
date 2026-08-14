@@ -278,7 +278,7 @@
 
 {#snippet colorSwatch()}
 	<div
-		class="relative h-24 overflow-hidden rounded-xl border border-gray-700 bg-(--picker-color-srgb)"
+		class="border-theme relative h-24 overflow-hidden rounded-xl border bg-(--picker-color-srgb)"
 	>
 		{#if store.source === 'paint' && paintColor}
 			<img
@@ -308,7 +308,7 @@
 		{@const surfaces = surfaceLabels(p)}
 		{@const mediums = mediumLabels(p)}
 		<div class="relative">
-			<div class="rounded-xl border border-gray-200 p-3 sm:p-2 dark:border-gray-700">
+			<div class="border-theme rounded-xl border p-3 sm:p-2">
 				<div class="flex items-start gap-3">
 					<div class="min-w-0 flex-1">
 						<div class="flex min-w-0 items-baseline gap-2">
@@ -317,7 +317,7 @@
 								{paintDesc(p)}
 							</PanText>
 						</div>
-						<PanText class="mt-0.5 text-xs text-gray-400">
+						<PanText class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
 							{getSerieMeta(p.brand, p.serie)?.name ?? p.serie} /
 							{getBrandMeta(p.brand)?.name ?? p.brand}
 						</PanText>
@@ -419,7 +419,7 @@
 					<span class="inline-flex items-center gap-1"><Box class="size-4" />RGB</span>
 				{/snippet}
 
-				<Select class="w-full" options={[hsl, rgb]} bind:value={store.model} />
+				<Select class="w-full border-gray-300" options={[hsl, rgb]} bind:value={store.model} />
 			</div>
 
 			<div class="min-w-45 sm:max-w-135">
@@ -455,7 +455,7 @@
 				{store.selectedSeries.size}
 			</span>
 		{:else}
-			<span class="text-gray-400 dark:text-gray-500">{t('search.any')}</span>
+			<span class="text-gray-500 dark:text-gray-400">{t('search.any')}</span>
 		{/if}
 		<ChevronDown class="h-3 w-3" />
 	</button>
@@ -499,7 +499,7 @@
 			<div
 				class="sticky top-0 z-20 shrink-0 bg-white px-6 pt-4 pb-4 shadow-sm dark:bg-gray-900 dark:shadow-black/30"
 			>
-				<div class="relative overflow-hidden rounded-xl border border-gray-700">
+				<div class="border-theme relative overflow-hidden rounded-xl border">
 					<CameraPicker
 						onsample={(r, g, b) => {
 							oklch = toOklch({ mode: 'rgb', r, g, b });
@@ -531,7 +531,7 @@
 	<div class={isMedia().sm ? 'mx-auto flex min-h-0 w-full flex-1 flex-col px-6' : 'px-6'}>
 		<div class={isMedia().sm ? 'flex min-h-0 flex-1 overflow-hidden pb-4' : 'flex gap-6 pb-4'}>
 			<div class={isMedia().sm ? 'min-w-0 flex-1 overflow-y-auto' : 'min-w-0 flex-1'}>
-				<div class="mb-4 border-y border-gray-200 py-2 dark:border-gray-700">
+				<div class="border-theme mb-4 border-y py-2">
 					<div class="grid grid-flow-row gap-2">
 						<div class="flex flex-auto flex-wrap items-center gap-2">
 							<TagButtonGroup
@@ -635,9 +635,7 @@
 				<div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3 sm:pr-4">
 					{#if rt.searching}
 						{#each Array(8) as _}
-							<div
-								class="animate-pulse overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-							>
+							<div class="border-theme animate-pulse overflow-hidden rounded-lg border shadow-xs">
 								<div class="h-16 w-full bg-gray-200 dark:bg-gray-700"></div>
 								<div class="space-y-1.5 p-2">
 									<div class="h-2.5 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
@@ -648,13 +646,11 @@
 					{:else}
 						{#each rt.results as r, i (i)}
 							{@const isMix = r.portions.length > 1}
-							<div
-								class="flex flex-col overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-							>
+							<div class="border-theme flex flex-col overflow-hidden rounded-lg border shadow-xs">
 								<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
 								{#if isMix}
 									<div
-										class="h-1.5 w-full border-t border-gray-200 dark:border-gray-700/50"
+										class="h-1.5 w-full border-t border-gray-200/40 dark:border-gray-700/40"
 										style="background: {mixGradient(r.portions)}"
 									></div>
 								{/if}
@@ -691,7 +687,7 @@
 										</div>
 									{/if}
 									<div
-										class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-400"
+										class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-500 dark:text-gray-400"
 									>
 										<span>ΔE {r.delta_e.toFixed(2)}</span>
 										<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
@@ -708,7 +704,7 @@
 			{#if isMedia().sm}
 				<!-- 右栏：详情面板（flex 交叉轴 stretch 撑满结果区高度，独立滚动） -->
 				<aside
-					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-t border-l border-gray-200 dark:border-gray-700"
+					class="border-theme w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-t border-l"
 				>
 					{#if selectedPaint}
 						{@const paint = selectedPaint}

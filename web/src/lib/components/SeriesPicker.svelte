@@ -75,11 +75,11 @@
 
 <div class="flex h-full flex-col overflow-hidden sm:h-96 sm:max-h-[55vh] sm:flex-row">
 	<!-- 品牌列表：手机为横向滚动 chip 条，桌面为纵向列表 -->
-	<div class="w-full shrink-0 sm:w-40 sm:border-r sm:border-gray-200 sm:dark:border-gray-700">
+	<div class="border-theme w-full shrink-0 sm:w-40 sm:border-r">
 		<div
 			bind:this={brandStrip}
 			onscroll={updateStrip}
-			class="fade-edge scrollbar-none mx-1 flex gap-1.5 overflow-x-auto px-2 py-2 sm:mx-0 sm:flex-col sm:gap-0 sm:overflow-y-auto sm:p-0"
+			class="fade-edge mx-1 flex scrollbar-none gap-1.5 overflow-x-auto px-2 py-2 sm:mx-0 sm:flex-col sm:gap-0 sm:overflow-y-auto sm:p-0"
 		>
 			{#each Object.entries(catalog) as [brand, series]}
 				{@const selectedCount = selectedCountInBrand(brand)}
@@ -92,7 +92,7 @@
 					class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs whitespace-nowrap sm:hidden {activeFilterBrand ===
 					brand
 						? 'border-primary-500 bg-primary-50 text-primary-700 ring-1 ring-primary-500 dark:border-primary-600 dark:bg-primary-900/50 dark:text-primary-200'
-						: 'border-gray-200 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
+						: 'border-theme bg-transparent text-gray-900 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
 				>
 					<img
 						src="/brands/{brand}.png"
@@ -142,7 +142,7 @@
 			{#if series}
 				{@const brand = activeFilterBrand}
 				<div class="mb-2 flex items-center justify-between">
-					<span class="text-xs text-gray-400"
+					<span class="text-xs text-gray-500 dark:text-gray-400"
 						>{t('search.seriesCount', { n: Object.keys(series).length })}</span
 					>
 					<button
@@ -190,7 +190,9 @@
 				</div>
 			{/if}
 		{:else}
-			<div class="flex h-full items-center justify-center text-center text-xs text-gray-400">
+			<div
+				class="flex h-full items-center justify-center text-center text-xs text-gray-500 dark:text-gray-400"
+			>
 				{@html t('search.hoverBrandHint')}
 			</div>
 		{/if}

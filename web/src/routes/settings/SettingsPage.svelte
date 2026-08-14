@@ -11,10 +11,12 @@
 		Coffee,
 		Handshake,
 		Moon,
+		Sun,
 		ChevronDown,
-		Settings as SettingsIcon
+		Settings as SettingsIcon,
+		MonitorCog
 	} from '@lucide/svelte';
-	import { Button, Toggle } from 'flowbite-svelte';
+	import { Button, ButtonGroup, Toggle } from 'flowbite-svelte';
 	import { slide } from 'svelte/transition';
 	import favicon from '$lib/assets/favicon.svg';
 	import { i18n, t, type Locale } from '$lib/i18n.svelte';
@@ -59,54 +61,62 @@
 {#snippet privacyBody()}
 	<div class="space-y-2">
 		<div class="flex gap-2">
-			<EyeOff class="mt-0.5 h-4 w-4 shrink-0 text-gray-400" />
+			<EyeOff class="mt-0.5 h-4 w-4 shrink-0 text-gray-500 dark:text-gray-400" />
 			<div class="min-w-0">
-				<h4 class="text-xs font-medium text-white">{t('about.zeroDataTitle')}</h4>
-				<p class="mt-0.5 text-xs leading-relaxed text-gray-400">
+				<h4 class="text-xs font-medium text-gray-900 dark:text-white">
+					{t('about.zeroDataTitle')}
+				</h4>
+				<p class="mt-0.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
 					{@html t('about.zeroDataDesc')}
 				</p>
 			</div>
 		</div>
 
 		<div class="flex gap-2">
-			<Info class="mt-0.5 h-4 w-4 shrink-0 text-gray-400" />
+			<Info class="mt-0.5 h-4 w-4 shrink-0 text-gray-500 dark:text-gray-400" />
 			<div class="min-w-0">
-				<h4 class="text-xs font-medium text-white">{t('about.localTitle')}</h4>
-				<p class="mt-0.5 text-xs leading-relaxed text-gray-400">{@html t('about.localDesc')}</p>
+				<h4 class="text-xs font-medium text-gray-900 dark:text-white">{t('about.localTitle')}</h4>
+				<p class="mt-0.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+					{@html t('about.localDesc')}
+				</p>
 			</div>
 		</div>
 	</div>
 {/snippet}
 
 {#snippet disclaimerBody()}
-	<div class="space-y-1.5 text-xs leading-relaxed font-light text-gray-400">
+	<div class="space-y-1.5 text-xs leading-relaxed font-light text-gray-500 dark:text-gray-400">
 		<p>{@html t('about.disclaimer1')}</p>
 		<p>{@html t('about.disclaimer2')}</p>
-		<p class="text-amber-500/80 italic">{@html t('about.disclaimer3')}</p>
+		<p class="text-amber-600/80 italic dark:text-amber-500/80">{@html t('about.disclaimer3')}</p>
 	</div>
 {/snippet}
 
 {#snippet contributionBody()}
-	<div class="space-y-1.5 text-xs leading-relaxed font-light text-gray-400">
+	<div class="space-y-1.5 text-xs leading-relaxed font-light text-gray-500 dark:text-gray-400">
 		<p>{@html t('about.contribution1')}</p>
 		<p>{@html t('about.contribution2')}</p>
 	</div>
 {/snippet}
 
-<div class="relative mx-auto flex h-full w-full max-w-3xl flex-col text-gray-200 select-none">
+<div
+	class="relative mx-auto flex h-full w-full max-w-3xl flex-col text-gray-900 select-none dark:text-gray-200"
+>
 	<!-- 头部标题 -->
-	<header class="flex shrink-0 items-center gap-3 border-b border-gray-800 p-6">
+	<header class="border-theme mx-6 flex shrink-0 items-center gap-3 border-b py-6">
 		<img src={favicon} alt="PaintBox" class="h-10 w-10 shrink-0 object-contain" />
 		<div class="min-w-0">
-			<h1 class="text-lg font-bold tracking-wide text-white">PaintBox</h1>
-			<p class="mt-0.5 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-400">
+			<h1 class="text-lg font-bold tracking-wide text-gray-900 dark:text-white">PaintBox</h1>
+			<p
+				class="mt-0.5 flex flex-wrap items-center gap-x-2 font-mono text-xs text-gray-500 dark:text-gray-400"
+			>
 				<span>Version {__APP_VERSION__}</span>
 				{#if isTauri() && updater}
 					<button
 						type="button"
 						onclick={() => updater!.check()}
 						disabled={updater.state.status === 'checking'}
-						class="cursor-pointer rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white disabled:cursor-default disabled:opacity-50"
+						class="border-theme cursor-pointer rounded border px-1.5 py-0.5 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 disabled:cursor-default disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
 					>
 						{updater.state.status === 'checking' ? t('about.checking') : t('about.checkUpdate')}
 					</button>
@@ -125,7 +135,7 @@
 									openExternal(updater!.channelUrl);
 								}
 							}}
-							class="inline-flex cursor-pointer items-center gap-1 rounded border border-gray-700 px-1.5 py-0.5 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+							class="border-theme inline-flex cursor-pointer items-center gap-1 rounded border px-1.5 py-0.5 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
 						>
 							{#if updater.channelId === 'sideload'}
 								<Github class="h-3 w-3" />
@@ -154,17 +164,19 @@
 		<div class="flex flex-col gap-5 sm:flex-row">
 			<!-- 1. 设置 -->
 			<section class="sm:w-72 sm:shrink-0">
-				<div class="mb-2 flex items-center gap-2 text-primary-400">
+				<div class="mb-2 flex items-center gap-2 text-primary-600 dark:text-primary-400">
 					<SettingsIcon class="h-5 w-5" />
 					<h2 class="text-lg font-semibold">{t('settings.title')}</h2>
 				</div>
 
-				<div class="divide-y divide-gray-800">
+				<div class="divide-y divide-gray-200 dark:divide-gray-800">
 					<!-- 语言 -->
 					<div class="flex items-center justify-between gap-3 py-2.5">
 						<div class="min-w-0">
-							<h3 class="text-sm font-medium text-white">{t('settings.lang')}</h3>
-							<p class="text-[10px] text-gray-400">{t('settings.langDesc')}</p>
+							<h3 class="text-sm font-medium text-gray-900 dark:text-white">
+								{t('settings.lang')}
+							</h3>
+							<p class="text-[10px] text-gray-500 dark:text-gray-400">{t('settings.langDesc')}</p>
 						</div>
 						<Select class="w-32" options={localeOptions} bind:value={localeSel} />
 					</div>
@@ -172,37 +184,65 @@
 					<!-- 源语言油漆名称 -->
 					<div class="flex items-center justify-between gap-3 py-2.5">
 						<div class="min-w-0">
-							<h3 class="text-sm font-medium text-white">{t('settings.displayRaw')}</h3>
-							<p class="text-[10px] text-gray-400">{t('settings.displayRawDesc')}</p>
+							<h3 class="text-sm font-medium text-gray-900 dark:text-white">
+								{t('settings.displayRaw')}
+							</h3>
+							<p class="text-[10px] text-gray-500 dark:text-gray-400">
+								{t('settings.displayRawDesc')}
+							</p>
 						</div>
 						<Toggle
 							checked={settings.displayRaw}
 							onchange={(e) => settings.setDisplayRaw(e.currentTarget.checked)}
-							classes={{ span: 'me-0!' }}
+							class="cursor-pointer"
+							classes={{ span: 'me-0! peer-checked:bg-primary-500!' }}
 						/>
 					</div>
 
-					<!-- 深色模式（预留） -->
+					<!-- 主题 -->
 					<div class="flex items-center justify-between gap-3 py-2.5">
 						<div class="min-w-0">
-							<h3 class="text-sm font-medium text-white">{t('settings.theme')}</h3>
-							<p class="text-[10px] text-gray-400">{t('settings.themeComingSoon')}</p>
+							<h3 class="text-sm font-medium text-gray-900 dark:text-white">
+								{t('settings.theme')}
+							</h3>
+							<p class="text-[10px] text-gray-500 dark:text-gray-400">{t('settings.themeDesc')}</p>
 						</div>
-						<Button
-							color="alternative"
-							disabled
-							title={t('settings.themeComingSoon')}
-							class="cursor-not-allowed! bg-gray-700/60!"
-						>
-							<Moon class="h-4 w-4" />
-						</Button>
+						<ButtonGroup size="sm" class="shrink-0">
+							<Button
+								onclick={() => settings.setTheme('system')}
+								class="cursor-pointer! {settings.theme === 'system'
+									? 'bg-primary-500! text-white!'
+									: ''}"
+								title={t('settings.themeSystem')}
+							>
+								<MonitorCog class="size-3.5" />
+							</Button>
+							<Button
+								onclick={() => settings.setTheme('light')}
+								class="cursor-pointer! {settings.theme === 'light'
+									? 'bg-primary-500! text-white!'
+									: ''}"
+								title={t('settings.themeLight')}
+							>
+								<Sun class="size-3.5" />
+							</Button>
+							<Button
+								onclick={() => settings.setTheme('dark')}
+								class="cursor-pointer! {settings.theme === 'dark'
+									? 'bg-primary-500! text-white!'
+									: ''}"
+								title={t('settings.themeDark')}
+							>
+								<Moon class="size-3.5" />
+							</Button>
+						</ButtonGroup>
 					</div>
 				</div>
 			</section>
 
 			<!-- 2. 隐私与法律（手机折叠 / sm+ 侧边直接显示） -->
 			<div class="min-w-0 flex-1">
-				<div class="mb-2 flex items-center gap-2 text-primary-400">
+				<div class="mb-2 flex items-center gap-2 text-primary-600 dark:text-primary-400">
 					<Info class="h-5 w-5" />
 					<h2 class="text-lg font-semibold">{t('settings.legal')}</h2>
 				</div>
@@ -221,7 +261,7 @@
 							<div
 								class="overflow-hidden rounded-lg border transition-colors {open
 									? toneCls
-									: 'border-gray-800 bg-gray-800/20'}"
+									: 'border-theme bg-gray-50 dark:bg-gray-800/20'}"
 							>
 								<button
 									type="button"
@@ -253,41 +293,47 @@
 							'privacy',
 							t('about.privacyTitle'),
 							ShieldCheck,
-							'border-primary-900 bg-primary-950/20'
+							'border-primary-200 bg-primary-50 dark:border-primary-900 dark:bg-primary-950/20'
 						)}
 						{@render legalFold(
 							'disclaimer',
 							t('about.disclaimerTitle'),
 							TriangleAlert,
-							'border-amber-900 bg-amber-950/20'
+							'border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/20'
 						)}
 						{@render legalFold(
 							'contribution',
 							t('about.contributionTitle'),
 							Handshake,
-							'border-teal-900 bg-teal-950/20'
+							'border-teal-200 bg-teal-50 dark:border-teal-900 dark:bg-teal-950/20'
 						)}
 					</div>
 				{:else}
 					<div class="space-y-3">
-						<div class="rounded-lg border border-primary-900 bg-primary-950/20 p-3">
-							<div class="flex items-center gap-1.5 text-primary-400">
+						<div
+							class="rounded-lg border border-primary-200 bg-primary-50 p-3 dark:border-primary-900 dark:bg-primary-950/20"
+						>
+							<div class="flex items-center gap-1.5 text-primary-600 dark:text-primary-400">
 								<ShieldCheck class="h-4 w-4" />
 								<h3 class="text-xs font-semibold">{t('about.privacyTitle')}</h3>
 							</div>
 							<div class="mt-2">{@render privacyBody()}</div>
 						</div>
 
-						<div class="rounded-lg border border-amber-900 bg-amber-950/20 p-3">
-							<div class="flex items-center gap-1.5 text-amber-500">
+						<div
+							class="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-900 dark:bg-amber-950/20"
+						>
+							<div class="flex items-center gap-1.5 text-amber-600 dark:text-amber-500">
 								<TriangleAlert class="h-4 w-4" />
 								<h3 class="text-xs font-semibold">{t('about.disclaimerTitle')}</h3>
 							</div>
 							<div class="mt-2">{@render disclaimerBody()}</div>
 						</div>
 
-						<div class="rounded-lg border border-teal-900 bg-teal-950/20 p-3">
-							<div class="flex items-center gap-1.5 text-teal-400">
+						<div
+							class="rounded-lg border border-teal-200 bg-teal-50 p-3 dark:border-teal-900 dark:bg-teal-950/20"
+						>
+							<div class="flex items-center gap-1.5 text-teal-600 dark:text-teal-400">
 								<Handshake class="h-4 w-4" />
 								<h3 class="text-xs font-semibold">{t('about.contributionTitle')}</h3>
 							</div>
@@ -300,10 +346,10 @@
 	</div>
 
 	<!-- 3. 链接与反馈（固定显示） -->
-	<footer class="shrink-0 border-t border-gray-800 px-6 py-3">
+	<footer class="border-theme mx-6 shrink-0 border-t py-3">
 		<div class="flex flex-row items-center justify-center gap-3">
 			<a
-				class="cursor-pointer text-white"
+				class="cursor-pointer text-gray-900 dark:text-white"
 				href={githubUrl}
 				target="_blank"
 				onclick={(e) => {

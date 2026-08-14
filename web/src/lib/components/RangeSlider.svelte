@@ -47,31 +47,31 @@
 	// 指针拖拽：pointerdown 时按指针离哪个 thumb 近决定拖哪个，之后只动它
 	let active: 'low' | 'high' = $state('low');
 	let trackEl = $state<HTMLElement | null>(null);
-	const slider = $derived(useSlider({
-		el: () => trackEl,
-		min,
-		max,
-		step,
-		start: (t) => {
-			const el = trackEl;
-			if (!el) return null;
-			const w = el.getBoundingClientRect().width;
-			const x = t * w;
-			const lowC = (lowPercent / 100) * w;
-			const highC = (highPercent / 100) * w;
-			active = Math.abs(x - lowC) < Math.abs(x - highC) ? 'low' : 'high';
-			return min + t * (max - min);
-		},
-		move: (t) => min + t * (max - min),
-		oninput: (v) => (active === 'low' ? setLow(v) : setHigh(v))
-	}));
+	const slider = $derived(
+		useSlider({
+			el: () => trackEl,
+			min,
+			max,
+			step,
+			start: (t) => {
+				const el = trackEl;
+				if (!el) return null;
+				const w = el.getBoundingClientRect().width;
+				const x = t * w;
+				const lowC = (lowPercent / 100) * w;
+				const highC = (highPercent / 100) * w;
+				active = Math.abs(x - lowC) < Math.abs(x - highC) ? 'low' : 'high';
+				return min + t * (max - min);
+			},
+			move: (t) => min + t * (max - min),
+			oninput: (v) => (active === 'low' ? setLow(v) : setHigh(v))
+		})
+	);
 </script>
 
 <div
 	class="range-slider flex items-center gap-2"
 	style="
-	--picker-track-box-shadow: inset 0 1px 2px rgba(0,0,0,.35);
-	--picker-text-shadow: none;
 	--a: {lowPercent}%;
 	--b: {highPercent}%;
 	--color-a: {gradient[0]};
@@ -79,7 +79,7 @@
 >
 	<div class="relative h-9 w-full flex-1 sm:h-6">
 		<!-- track background -->
-		<div class="range-slider-track absolute inset-0 rounded-lg"></div>
+		<div class="range-slider-track border-theme absolute inset-0 rounded-lg"></div>
 
 		<!-- 交互层：接收指针事件；内部原生 input 仅保留键盘可达性，thumb 均 pointer-events: none -->
 		<div

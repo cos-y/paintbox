@@ -98,28 +98,28 @@ const en = {
 	'gamut.sources': 'Source Colors',
 	'gamut.colorsInGamut': (p: Params) => `${p.n} color${p.n == 1 ? '' : 's'} in gamut`,
 	'gamut.noSources': 'No source colors yet',
-	'gamut.clickAddHint': 'Click <span class="font-medium">Add</span> to start',
+	'gamut.clickAddHint': 'Click <span class="font-bold">Add</span> to start',
 
 	// ---- about page ----
 	'about.privacyTitle': 'Privacy & Security Commitment',
 	'about.zeroDataTitle': 'Zero Personal Data Collection',
 	'about.zeroDataDesc':
-		'We <strong class="font-medium text-gray-300">do not collect, upload, or store</strong> any of your personal data, stock configuration, or search history. Your privacy is absolutely safe.',
+		'We <strong class="font-bold">do not collect, upload, or store</strong> any of your personal data, stock configuration, or search history. Your privacy is absolutely safe.',
 	'about.localTitle': '100% Local Offline',
 	'about.localDesc':
 		'The core color-mixing algorithm and paint lookup run entirely locally in your browser (WebAssembly) — no network connection required.',
 	'about.disclaimerTitle': 'Color Mixing and Painting',
 	'about.disclaimer1':
-		'1. All mixing formulas and color difference results are simulated based on <a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">color science theory</a>; <strong class="font-medium text-gray-300">actual results are for reference only</strong>.',
+		'1. All mixing formulas and color difference results are simulated based on <a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">color science theory</a>; <strong class="font-bold">actual results are for reference only</strong>.',
 	'about.disclaimer2':
-		'2. Due to physical differences in chemical properties, pigment density, and coverage between manufacturers and series, <strong class="font-medium text-gray-300">always verify mixing feasibility with the paint properties published by the manufacturer</strong>.',
+		'2. Due to physical differences in chemical properties, pigment density, and coverage between manufacturers and series, <strong class="font-bold">always verify mixing feasibility with the paint properties published by the manufacturer</strong>.',
 	'about.disclaimer3':
 		'* Tip: always test-spray a small area before large-scale application to verify the actual color.',
 	'about.contributionTitle': 'Data Coverage & Contribution',
 	'about.contribution1':
-		'Some paint brands are not included here because no <strong class="font-medium text-gray-300">official color chart</strong> data has been published for them.',
+		'Some paint brands are not included here because no <strong class="font-bold">official color chart</strong> data has been published for them.',
 	'about.contribution2':
-		'If you have data for these brands and are willing to share, <strong class="font-medium text-gray-300">contributions are welcome</strong> — reach us via GitHub / QQ at the bottom of this page.',
+		'If you have data for these brands and are willing to share, <strong class="font-bold">contributions are welcome</strong> — reach us via GitHub / QQ at the bottom of this page.',
 	'about.buyMeCoffee': 'Buy me a coffee',
 	'about.checkUpdate': 'Check Update',
 	'about.checking': 'Checking…',
@@ -135,8 +135,11 @@ const en = {
 	'settings.displayRaw': 'Prefer metadata in original language',
 	'settings.displayRawDesc':
 		'Where available, paint names will be shown in their native language (and character-set).',
-	'settings.theme': 'Dark mode',
-	'settings.themeComingSoon': 'Light theme coming soon',
+	'settings.theme': 'Theme',
+	'settings.themeDesc': 'Follow system, light or dark',
+	'settings.themeLight': 'Light',
+	'settings.themeDark': 'Dark',
+	'settings.themeSystem': 'System',
 	'settings.about': 'About',
 	'settings.legal': 'Instructions',
 
@@ -240,26 +243,26 @@ const zh = {
 	'gamut.sources': '基础色',
 	'gamut.colorsInGamut': (p: Params) => `色域内 ${p.n} 个基础色`,
 	'gamut.noSources': '还没有基础色',
-	'gamut.clickAddHint': '点击 <span class="font-medium">添加</span> 开始',
+	'gamut.clickAddHint': '点击 <span class="font-bold">添加</span> 开始',
 
 	'about.privacyTitle': '隐私安全承诺',
 	'about.zeroDataTitle': '零个人数据收集',
 	'about.zeroDataDesc':
-		'我们<strong class="font-medium text-gray-300">不会收集、上传或存储</strong>您的任何个人数据、库存配置或检索历史。您的隐私绝对安全。',
+		'我们<strong class="font-bold">不会收集、上传或存储</strong>您的任何个人数据、库存配置或检索历史。您的隐私绝对安全。',
 	'about.localTitle': '100% 本地离线运行',
 	'about.localDesc':
 		'核心调色算法与漆号检索完全在您的浏览器本地（WebAssembly）编译执行，无需联网即可稳定使用。',
 	'about.disclaimerTitle': '实喷与调色提示',
 	'about.disclaimer1':
-		'1. 本工具所有的混色配方与色差计算结果均基于<a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">色彩科学理论</a>模拟得出，<strong class="font-medium text-gray-300">实际发色效果仅供参考</strong>。',
+		'1. 本工具所有的混色配方与色差计算结果均基于<a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">色彩科学理论</a>模拟得出，<strong class="font-bold">实际发色效果仅供参考</strong>。',
 	'about.disclaimer2':
-		'2. 由于不同厂商以及不同系列油漆的化学性质、颜料颗粒密度及遮盖力存在物理差异，<strong class="font-medium text-gray-300">具体混色可行性请务必结合厂商提供的涂料性质决定</strong>。',
+		'2. 由于不同厂商以及不同系列油漆的化学性质、颜料颗粒密度及遮盖力存在物理差异，<strong class="font-bold">具体混色可行性请务必结合厂商提供的涂料性质决定</strong>。',
 	'about.disclaimer3': '* 提示：在大面积喷涂前，请务必进行局部试喷以验证实际发色。',
 	'about.contributionTitle': '数据覆盖与贡献',
 	'about.contribution1':
-		'部分油漆品牌因未发布<strong class="font-medium text-gray-300">官方色卡</strong>数据，暂未收录于本工具中，故未在此列出。',
+		'部分油漆品牌因未发布<strong class="font-bold">官方色卡</strong>数据，暂未收录于本工具中，故未在此列出。',
 	'about.contribution2':
-		'如果您拥有相关品牌的数据并愿意共享，<strong class="font-medium text-gray-300">欢迎贡献数据</strong>，可通过页面底部的 GitHub / QQ 联系我们。',
+		'如果您拥有相关品牌的数据并愿意共享，<strong class="font-bold">欢迎贡献数据</strong>，可通过页面底部的 GitHub / QQ 联系我们。',
 	'about.buyMeCoffee': 'Buy me a coffee',
 	'about.checkUpdate': '检查更新',
 	'about.checking': '正在检查…',
@@ -275,8 +278,11 @@ const zh = {
 	'settings.displayRaw': '以原语言显示油漆信息',
 	'settings.displayRawDesc':
 		'如果可能，油漆名称将以原始语言显示（例如，GUNZE/C20-浅蓝将会显示为ライトブルー）。',
-	'settings.theme': '深色模式',
-	'settings.themeComingSoon': '浅色主题即将推出',
+	'settings.theme': '主题',
+	'settings.themeDesc': '跟随系统、浅色或深色',
+	'settings.themeLight': '浅色',
+	'settings.themeDark': '深色',
+	'settings.themeSystem': '跟随系统',
 	'settings.about': '关于',
 	'settings.legal': '使用须知',
 

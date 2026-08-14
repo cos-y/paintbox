@@ -93,8 +93,8 @@
 	/>
 	<div class="absolute top-1/2 right-0 flex -translate-y-1/2 font-mono">
 		<button
-			class="cursor-pointer px-2 py-2 text-gray-400 outline-offset-0
-				hover:text-gray-200 focus:rounded-lg focus:outline-2 focus:outline-primary-500"
+			class="cursor-pointer px-2 py-2 text-gray-500 outline-offset-0
+				hover:text-gray-700 focus:rounded-lg focus:outline-2 focus:outline-primary-500 dark:text-gray-400 dark:hover:text-gray-200"
 			onclick={handleCopy}
 			onmouseenter={handleMouseEnter}
 		>

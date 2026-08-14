@@ -180,7 +180,9 @@
 </script>
 
 {#snippet filterBar()}
-	<div class="max-h-[50dvh] shrink-0 overflow-y-auto border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+	<div
+		class="max-h-[50dvh] shrink-0 overflow-y-auto border-b border-theme px-4 py-3 dark:border-theme"
+	>
 		<StockFilterPanel />
 	</div>
 {/snippet}
@@ -209,7 +211,7 @@
 {#snippet seriesNav()}
 	{#if isMedia().xl}
 		<!-- 桌面侧栏：宽栏（图标 + 系列名/描述 + 库存） -->
-		<div class="w-56 shrink-0 overflow-y-auto border-r border-gray-200 dark:border-gray-700">
+		<div class="w-56 shrink-0 overflow-y-auto border-r border-theme dark:border-theme">
 			{#each visibleSeries as [serie, paints]}
 				{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 				{@const ownCount = ownedCountInSerie(paints)}
@@ -248,7 +250,7 @@
 		</div>
 	{:else}
 		<!-- 移动侧栏：极窄栏（第一行 图标 + 库存角标 + 型号总数，第二行 系列名小字） -->
-		<div class="w-24 shrink-0 overflow-y-auto border-r border-gray-200 dark:border-gray-700">
+		<div class="w-24 shrink-0 overflow-y-auto border-r border-theme dark:border-theme">
 			{#each visibleSeries as [serie, paints]}
 				{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 				{@const ownCount = ownedCountInSerie(paints)}
@@ -261,7 +263,7 @@
 						? 'bg-primary-50 dark:bg-gray-700'
 						: 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
 				>
-					<div class="relative aspect-square w-full overflow-hidden rounded-md shadow-sm">
+					<div class="relative aspect-square w-full overflow-hidden rounded-md shadow-md">
 						<img
 							src={serieThumb(selectedBrand, serie)}
 							alt=""
@@ -301,6 +303,7 @@
 		role="button"
 		tabindex={0}
 		size="md"
+		shadow="xs"
 		class="relative cursor-pointer p-3 hover:bg-gray-50 dark:hover:bg-gray-700"
 	>
 		{@const ownCount = ownedCountInBrand(series)}
@@ -323,7 +326,7 @@
 				{#if meta?.desc}
 					<div class="truncate text-xs text-gray-500 dark:text-gray-400">{meta.desc}</div>
 				{/if}
-				<div class="text-[11px] text-gray-400">
+				<div class="text-[11px] text-gray-500 dark:text-gray-400">
 					{t('stock.brandStats', {
 						series: Object.keys(series).length,
 						paints: totalModels(series)
@@ -341,7 +344,7 @@
 		tabindex="0"
 		onclick={() => selectPaint(paint)}
 		onkeydown={(e) => e.key === 'Enter' && selectPaint(paint)}
-		class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-sm transition-transform hover:scale-105 {inStock
+		class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-md transition-transform hover:scale-105 {inStock
 			? 'ring-[3px] ring-primary-500'
 			: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
 		style="background-color: {rgbToHex(paint.rgb)}"
@@ -384,7 +387,7 @@
 {/snippet}
 
 <div class="flex h-full flex-col">
-	<div class="shrink-0 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
+	<div class="shrink-0 border-b border-theme px-4 py-2 dark:border-theme">
 		<div class="flex min-h-13 items-center gap-2">
 			{#if level > 0}
 				<button
@@ -425,10 +428,10 @@
 						bind:value={stockNav.query}
 						placeholder={t('stock.searchPlaceholder')}
 						class="absolute top-1/2 left-0 h-9 w-full -translate-y-1/2
-							rounded-md border border-gray-200 bg-gray-100 px-2 py-1.5 text-sm
+							rounded-md border border-theme bg-gray-100 px-2 py-1.5 text-sm
 							placeholder:text-gray-500 focus:border-primary-500 focus:outline-none
 							sm:right-0 sm:left-auto sm:w-2/3
-							dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+							dark:border-theme dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
 					/>
 				{/if}
 			</div>
@@ -515,7 +518,7 @@
 			<!-- 右栏：详情面板（品牌层及以上常驻；根路由纯列表不加分栏） -->
 			{#if isMedia().sm && level > 0}
 				<aside
-					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-gray-200 dark:border-gray-700"
+					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-theme dark:border-theme"
 				>
 					{#if selectedPaint}
 						{@const paint = selectedPaint}

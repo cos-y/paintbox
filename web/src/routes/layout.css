@@ -54,9 +54,18 @@ body {
 }
 
 :root {
+  color-scheme: light;
+  scrollbar-color: var(--color-gray-400) var(--color-gray-100);
+  scrollbar-width: thin;
+}
+
+:root.dark {
   color-scheme: dark;
   scrollbar-color: var(--color-gray-600) var(--color-gray-900);
-  scrollbar-width: thin;
+}
+
+.border-theme {
+  @apply border-gray-200 dark:border-gray-700;
 }
 
 @theme {

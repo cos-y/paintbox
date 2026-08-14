@@ -42,11 +42,11 @@
 			aria-pressed={active}
 			{disabled}
 			onclick={() => select(key)}
-			class="flex items-center px-2 py-0.5 text-xs transition-colors {clz} {active
+			class="flex cursor-pointer items-center px-2 py-0.5 text-xs transition-colors {clz} {active
 				? 'bg-primary-500 text-white dark:bg-primary-500'
-				: 'bg-gray-800 text-gray-600 enabled:hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:enabled:hover:bg-gray-700'} {i >
+				: 'bg-gray-100 text-gray-600 enabled:hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:enabled:hover:bg-gray-700'} {i >
 			0
-				? 'border-l border-gray-200 dark:border-gray-700'
+				? 'border-theme border-l'
 				: ''}"
 		>
 			{desc}

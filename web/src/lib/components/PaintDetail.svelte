@@ -138,7 +138,7 @@
 					{paintDesc(paint)}
 				</PanText>
 			</div>
-			<PanText class="mt-0.5 text-xs text-gray-400">
+			<PanText class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
 				{getSerieMeta(paint.brand, paint.serie)?.name ?? paint.serie} /
 				{getBrandMeta(paint.brand)?.name ?? paint.brand}
 			</PanText>
@@ -184,7 +184,7 @@
 	{#if comparePaint}
 		<div class="flex w-full text-left">
 			{#if compareDeltaE !== null}
-				<div class="flex-1 text-xs text-gray-400">
+				<div class="flex-1 text-xs text-gray-500 dark:text-gray-400">
 					{t('stock.similarity', { n: similarity(compareDeltaE).toFixed(0) })}
 				</div>
 			{/if}
@@ -234,13 +234,13 @@
 					onclick={() => toggleCompare(p)}
 					class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === p.id
 						? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-						: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
+						: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 				>
 					<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
 					<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 				</button>
 			{:else}
-				<div class="text-xs text-gray-400">{t('stock.noDirectEquiv')}</div>
+				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noDirectEquiv')}</div>
 			{/each}
 		</div>
 	</div>
@@ -268,13 +268,13 @@
 					class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
 					p.id
 						? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-						: 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'}"
+						: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 				>
 					<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
 					<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 				</button>
 			{:else}
-				<div class="text-xs text-gray-400">{t('stock.noSimilar')}</div>
+				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noSimilar')}</div>
 			{/each}
 		</div>
 	</div>

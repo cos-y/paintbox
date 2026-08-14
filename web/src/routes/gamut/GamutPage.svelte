@@ -469,7 +469,7 @@
 			</div>
 			{#if paintResults[src.id]?.length}
 				<div
-					class="absolute z-20 mt-1 max-h-48 w-[calc(100%-2rem)] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"
+					class="border-theme absolute z-20 mt-1 max-h-48 w-[calc(100%-2rem)] overflow-y-auto rounded-md border bg-white shadow-lg dark:bg-gray-700"
 				>
 					{#each paintResults[src.id] as p, i}
 						{@const hl = (highlightedIdx[src.id] ?? -1) === i}
@@ -537,8 +537,8 @@
 				: 0}
 	<div
 		class="relative flex touch-pan-y items-center gap-2 rounded-lg border p-2 pl-8 select-none {valid
-			? 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
-			: 'border-dashed border-gray-300 bg-gray-100/70 dark:border-gray-600 dark:bg-gray-800/60'}"
+			? 'border-theme bg-gray-50 dark:bg-gray-800'
+			: 'border-theme border-dashed bg-gray-100/70 dark:border-gray-600 dark:bg-gray-800/60'}"
 		class:z-20={src.id === dragId}
 		class:shadow-lg={src.id === dragId}
 		class:ring-2={src.id === dragId}
@@ -600,7 +600,7 @@
 
 {#snippet addSourceBtn()}
 	{#snippet color()}<span
-			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-gradient-to-br from-red-400 via-green-400 to-blue-500"
+			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-linear-to-br from-red-400 via-green-400 to-blue-500"
 		></span>{t('gamut.color')}{/snippet}
 	{#snippet paint()}<Droplet class="h-3.5 w-3.5" />{t('gamut.paint')}{/snippet}
 	{#snippet stock()}<Package class="h-3.5 w-3.5" />{t('gamut.myStock')}{/snippet}
@@ -615,7 +615,7 @@
 {/snippet}
 
 <div class="flex h-full flex-col sm:flex-row">
-	<div class="relative h-80 min-w-0 bg-gray-950 sm:h-auto sm:flex-1">
+	<div class="relative h-80 min-w-0 bg-transparent sm:h-auto sm:flex-1">
 		{#await loadScene()}
 			<div class="flex h-full w-full items-center justify-center">
 				<div
@@ -630,7 +630,7 @@
 	</div>
 
 	<div
-		class="flex flex-1 flex-col overflow-hidden bg-white sm:w-[40%] sm:max-w-86 sm:flex-none sm:shrink-0 dark:bg-gray-900"
+		class="border-theme flex flex-1 flex-col overflow-hidden border-l bg-white sm:w-[40%] sm:max-w-86 sm:flex-none sm:shrink-0 dark:bg-gray-900"
 	>
 		<CollapseGroup
 			title={t('gamut.clipping')}
@@ -670,7 +670,9 @@
 			{#each sources as src (src.id)}
 				{@render sourceCard(src, cardContent)}
 			{:else}
-				<div class="flex flex-col items-center justify-center py-12 text-center text-gray-400">
+				<div
+					class="flex flex-col items-center justify-center py-12 text-center text-gray-500 dark:text-gray-400"
+				>
 					<div class="mb-2 text-sm">{t('gamut.noSources')}</div>
 					<div class="text-xs">{@html t('gamut.clickAddHint')}</div>
 				</div>
@@ -678,7 +680,7 @@
 		</CollapseGroup>
 
 		{#if selectedColor}
-			<div class="mt-auto border-t border-gray-200 px-2 py-2 dark:border-gray-700">
+			<div class="border-theme mt-auto border-t px-2 py-2">
 				<div class="flex items-center gap-2">
 					<div
 						class="h-7 w-7 shrink-0 rounded-md border border-black/10"

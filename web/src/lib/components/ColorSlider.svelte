@@ -89,7 +89,7 @@
 	>
 		<input
 			class="slider-input
-				rounded-lg border border-gray-600 disabled:opacity-50"
+				border-theme rounded-lg border disabled:opacity-50"
 			tabindex="-1"
 			type="range"
 			{min}

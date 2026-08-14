@@ -10,15 +10,15 @@ const SettingsSchema = z
 		/** 油漆色名用源语言显示（不经本地化翻译字典） */
 		displayRaw: z.boolean().catch(false),
 		/** 深色模式（预留字段：目前仅存储，未实际应用主题） */
-		theme: z.enum(['dark', 'light']).catch('dark')
+		theme: z.enum(['system', 'dark', 'light']).catch('system')
 	})
-	.catch({ displayRaw: false, theme: 'dark' });
+	.catch({ displayRaw: false, theme: 'system' });
 
 const initial = loadData(STORAGE_KEY, SettingsSchema);
 
 class SettingsStore {
 	displayRaw = $state(initial.displayRaw);
-	theme = $state<'dark' | 'light'>(initial.theme);
+	theme = $state<'system' | 'dark' | 'light'>(initial.theme);
 
 	setDisplayRaw(v: boolean) {
 		if (this.displayRaw === v) return;
@@ -26,8 +26,8 @@ class SettingsStore {
 		this.persist();
 	}
 
-	/** 深色模式切换（预留）：存储值但不应用主题 */
-	setTheme(v: 'dark' | 'light') {
+	/** 主题切换 */
+	setTheme(v: 'system' | 'dark' | 'light') {
 		if (this.theme === v) return;
 		this.theme = v;
 		this.persist();

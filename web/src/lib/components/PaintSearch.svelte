@@ -75,7 +75,7 @@
 	/>
 	<input
 		type="text"
-		class="h-9 w-full rounded-lg border border-gray-200 bg-gray-100 pr-2 pl-7 text-sm text-gray-900 outline-none placeholder:text-gray-500 focus:border-primary-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+		class="border-theme h-9 w-full rounded-lg border bg-gray-100 pr-2 pl-7 text-sm text-gray-900 outline-none placeholder:text-gray-500 focus:border-primary-500 focus:outline-none dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
 		placeholder={t('gamut.searchPlaceholder')}
 		value={text}
 		bind:this={inputEl}
@@ -90,7 +90,7 @@
 	/>
 	{#if results.length}
 		<div
-			class="absolute z-20 mt-1 max-h-48 w-full min-w-64 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"
+			class="border-theme absolute z-20 mt-1 max-h-48 w-full min-w-64 overflow-y-auto rounded-lg border bg-white shadow-lg dark:bg-gray-700"
 		>
 			{#each results as p, i}
 				{@const hl = highlighted === i}

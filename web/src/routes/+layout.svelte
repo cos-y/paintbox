@@ -11,6 +11,9 @@
 	import { drawer } from '$lib/drawer.svelte';
 	import Drawer from '$lib/components/Drawer.svelte';
 	import { isMedia } from '$lib/utils.svelte';
+	// 副作用：挂载即应用主题（html .dark class / color-scheme / theme-color），
+	// 并跟踪 settings.theme 与系统偏好变化
+	import '$lib/theme.svelte';
 
 	let { children } = $props();
 
@@ -103,32 +106,32 @@
 		{@render children()}
 	</main>
 
-	<!-- 全局视图栈：手机端底部卡片（桌面端用页面内常驻详情栏，不再有覆盖层） -->
 	{#if !isMedia().sm}
+		<!-- 全局视图栈：手机端底部卡片（桌面端用页面内常驻详情栏，不再有覆盖层） -->
 		<Drawer />
-	{/if}
 
-	<!-- mobile bottom nav -->
-	<nav
-		class="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] sm:hidden dark:border-gray-700 dark:bg-gray-900"
-	>
-		<div class="mx-auto flex h-14 max-w-lg items-center justify-around">
-			{#each navs as { key, route, svg: Icon }}
-				{@const active = isActive(route)}
-				<a
-					href={route}
-					class="flex flex-col items-center gap-0.5 px-3 py-1 transition-colors {active
-						? 'text-primary-600 dark:text-primary-400'
-						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}"
-					onclick={(e) => {
-						e.preventDefault();
-						goto(route, { replaceState: true, noScroll: true });
-					}}
-				>
-					<Icon class="size-5" />
-					<span class="text-[10px] leading-none font-medium">{t(key)}</span>
-				</a>
-			{/each}
-		</div>
-	</nav>
+		<!-- mobile bottom nav -->
+		<nav
+			class="border-theme fixed right-0 bottom-0 left-0 z-50 border-t bg-white pb-[env(safe-area-inset-bottom)] dark:bg-gray-900"
+		>
+			<div class="mx-auto flex h-14 max-w-lg items-center justify-around">
+				{#each navs as { key, route, svg: Icon }}
+					{@const active = isActive(route)}
+					<a
+						href={route}
+						class="flex flex-col items-center gap-0.5 px-3 py-1 transition-colors {active
+							? 'text-primary-600 dark:text-primary-400'
+							: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}"
+						onclick={(e) => {
+							e.preventDefault();
+							goto(route, { replaceState: true, noScroll: true });
+						}}
+					>
+						<Icon class="size-5" />
+						<span class="text-[10px] leading-none font-medium">{t(key)}</span>
+					</a>
+				{/each}
+			</div>
+		</nav>
+	{/if}
 </div>
