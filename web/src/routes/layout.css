@@ -36,6 +36,13 @@ body {
   -webkit-user-select: text;
 }
 
+/* 色卡详情页头部（色号/标题/系列名/品牌名）等可选中文本 */
+.tauri-no-select .text-selectable,
+.tauri-no-select .text-selectable * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 @layer base {
 
   input[type=number]::-webkit-inner-spin-button,

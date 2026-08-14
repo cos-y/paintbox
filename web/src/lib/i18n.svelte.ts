@@ -41,13 +41,13 @@ const en = {
 	'search.seriesCount': (p: Params) => `${p.n} series`,
 	'search.paintsCount': (p: Params) => `${p.n} paints`,
 	'search.hoverBrandHint': 'Select a brand<br />to view its series',
-	'search.market': 'Market',
+	'search.market': 'Catalog',
 	'search.myStock': 'My Stock',
 	'search.mixTitle': 'Mixing',
 	'search.mixOff': 'Off',
-	'search.mix1': 'Two Colors',
-	'search.mix2': 'Three Colors',
-	'search.mixScopeRequired': 'Only supported for `My Stock`',
+	'search.mix1': '2 Colors',
+	'search.mix2': '3 Colors',
+	'search.mixScopeRequired': 'requires `my stock`',
 	'search.resetFilter': 'Reset',
 	'search.results': (p: Params) => `${p.n} Result${p.n == 1 ? '' : 's'}`,
 	'search.similarity': (p: Params) => `${p.n}% similar`,
@@ -89,7 +89,6 @@ const en = {
 	// ---- gamut page ----
 	'gamut.change': 'Change',
 	'gamut.searchPlaceholder': 'search brand / code / name...',
-	'gamut.myStock': 'My Stock',
 	'gamut.stockCount': (p: Params) => `${p.n} paint${p.n == 1 ? '' : 's'}`,
 	'gamut.color': 'Color',
 	'gamut.paint': 'Paint',
@@ -105,7 +104,7 @@ const en = {
 	'about.zeroDataTitle': 'Zero Personal Data Collection',
 	'about.zeroDataDesc':
 		'We <strong class="font-bold">do not collect, upload, or store</strong> any of your personal data, stock configuration, or search history. Your privacy is absolutely safe.',
-	'about.localTitle': '100% Local Offline',
+	'about.localTitle': '100% Offline',
 	'about.localDesc':
 		'The core color-mixing algorithm and paint lookup run entirely locally in your browser (WebAssembly) — no network connection required.',
 	'about.disclaimerTitle': 'Color Mixing and Painting',
@@ -189,13 +188,13 @@ const zh = {
 	'search.seriesCount': (p: Params) => `${p.n} 个系列`,
 	'search.paintsCount': (p: Params) => `${p.n} 款油漆`,
 	'search.hoverBrandHint': '选择一个品牌<br />查看其系列',
-	'search.market': '市场',
+	'search.market': '图鉴',
 	'search.myStock': '库存',
 	'search.mixTitle': '混色',
 	'search.mixOff': '关闭',
 	'search.mix1': '双色',
 	'search.mix2': '三色',
-	'search.mixScopeRequired': '仅支持在库存中混色',
+	'search.mixScopeRequired': '混色需在库存中选择',
 	'search.resetFilter': '重置',
 	'search.results': (p: Params) => `${p.n} 条结果`,
 	'search.similarity': (p: Params) => `相似度 ${p.n}%`,
@@ -234,7 +233,6 @@ const zh = {
 
 	'gamut.change': '更换',
 	'gamut.searchPlaceholder': '搜索品牌 / 编号 / 名称...',
-	'gamut.myStock': '我的库存',
 	'gamut.stockCount': (p: Params) => `库存 ${p.n} 款`,
 	'gamut.color': '颜色',
 	'gamut.paint': '油漆',
@@ -294,7 +292,7 @@ const zh = {
 } satisfies Record<MessageKey, Message>;
 
 const ja = {
-	'nav.stock': '在庫',
+	'nav.stock': '塗料',
 	'nav.search': '検索',
 	'nav.gamut': '色域',
 	'nav.settings': '設定',
@@ -310,7 +308,7 @@ const ja = {
 	'surface.W': 'ウェザリング',
 	'surface.U': '不明',
 	'base.title': '溶剤',
-	'medium.title': 'メディウム',
+	'medium.title': '塗り方',
 	'medium.Airbrush': 'エアブラシ',
 	'medium.Spray': 'スプレー',
 	'medium.Brush': '筆塗り',
@@ -330,12 +328,12 @@ const ja = {
 	'search.paintsCount': (p: Params) => `${p.n} 色`,
 	'search.hoverBrandHint': 'ブランドを選択<br />シリーズを表示',
 	'search.market': '全塗料',
-	'search.myStock': 'マイ在庫',
+	'search.myStock': '手持ち',
 	'search.mixTitle': '混色',
 	'search.mixOff': 'オフ',
 	'search.mix1': '2色',
 	'search.mix2': '3色',
-	'search.mixScopeRequired': 'マイ在庫でのみ対応',
+	'search.mixScopeRequired': '手持ちでのみ対応',
 	'search.resetFilter': 'リセット',
 	'search.results': (p: Params) => `${p.n} 件`,
 	'search.similarity': (p: Params) => `類似度 ${p.n}%`,
@@ -346,8 +344,8 @@ const ja = {
 	'stock.back': '戻る',
 	'stock.brands': 'ブランド',
 	'stock.selectPaintHint': '左の塗料をクリックして詳細を表示',
-	'stock.addToStock': '在庫に追加',
-	'stock.removeFromStock': '在庫から削除',
+	'stock.addToStock': '手持ちに追加',
+	'stock.removeFromStock': '手持ちから削除',
 	'stock.brandStats': (p: Params) => `${p.series} シリーズ · ${p.paints} 色`,
 	'stock.directEquiv': '公式同等品',
 	'stock.noDirectEquiv': '同名の同等品なし',
@@ -362,7 +360,7 @@ const ja = {
 	'stock.sortHue': '色相',
 	'stock.sortSat': '彩度',
 	'stock.sortLight': '明度',
-	'stock.sortStock': '在庫',
+	'stock.sortStock': '手持ち',
 	'stock.sortTitle': '並び替え',
 	'stock.searchTitle': '検索',
 	'stock.closeSearch': '検索を閉じる',
@@ -374,8 +372,7 @@ const ja = {
 
 	'gamut.change': '変更',
 	'gamut.searchPlaceholder': 'ブランド / 番号 / 名前を検索...',
-	'gamut.myStock': 'マイ在庫',
-	'gamut.stockCount': (p: Params) => `在庫 ${p.n} 色`,
+	'gamut.stockCount': (p: Params) => `手持ち ${p.n} 色`,
 	'gamut.color': '色',
 	'gamut.paint': '塗料',
 	'gamut.add': '追加',
@@ -388,8 +385,8 @@ const ja = {
 	'about.privacyTitle': 'プライバシーとセキュリティ',
 	'about.zeroDataTitle': '個人データ収集ゼロ',
 	'about.zeroDataDesc':
-		'当ツールはお客様の個人データ、在庫設定、検索履歴を<strong class="font-bold">収集・アップロード・保存しません</strong>。プライバシーは完全に保護されます。',
-	'about.localTitle': '100% ローカルオフライン',
+		'本アプリは、個人データ、手持ちデータ、検索履歴を<strong class="font-bold">収集・送信・保存しません</strong>。プライバシーは完全保護されます。',
+	'about.localTitle': '100% オフライン',
 	'about.localDesc':
 		'色合わせアルゴリズムと塗料検索はすべてブラウザ内（WebAssembly）で動作します。ネットワーク接続は不要です。',
 	'about.disclaimerTitle': '調色と塗装について',
@@ -433,7 +430,148 @@ const ja = {
 	'colorCode.copy': 'クリップボードにコピー'
 } satisfies Record<MessageKey, Message>;
 
-export const messages = { en, zh, ja };
+const es = {
+	'nav.stock': 'Stock',
+	'nav.search': 'Buscar',
+	'nav.gamut': 'Gama',
+	'nav.settings': 'Ajustes',
+
+	'surface.title': 'Acabado',
+	'surface.G': 'Brillante',
+	'surface.SG': 'Satinado',
+	'surface.M': 'Mate',
+	'surface.ME': 'Metálico',
+	'surface.C': 'Transp.',
+	'surface.PA': 'Perla',
+	'surface.FL': 'Fluo.',
+	'surface.W': 'Envej.',
+	'surface.U': 'Desconocido',
+	'base.title': 'Disolvente',
+	'medium.title': 'Aplicación',
+	'medium.Airbrush': 'Aerógrafo',
+	'medium.Spray': 'Spray',
+	'medium.Brush': 'Pincel',
+	'medium.Marker': 'Rotulador',
+	'medium.Other': 'Otro',
+	'base.lacquer': 'Laca',
+	'base.alcohol': 'Alcohol',
+	'base.enamel': 'Esmalte',
+	'base.water': 'Al agua',
+
+	'search.sourcePalette': 'Paleta',
+	'search.sourceCamera': 'Cámara',
+	'search.series': 'Serie',
+	'search.any': 'Todas',
+	'search.selectAll': 'Seleccionar todo',
+	'search.seriesCount': (p: Params) => `${p.n} series`,
+	'search.paintsCount': (p: Params) => `${p.n} pinturas`,
+	'search.hoverBrandHint': 'Selecciona una marca<br />para ver sus series',
+	'search.market': 'Catálogo',
+	'search.myStock': 'Mi stock',
+	'search.mixTitle': 'Mezcla',
+	'search.mixOff': 'Off',
+	'search.mix1': 'Doble',
+	'search.mix2': 'Triple',
+	'search.mixScopeRequired': 'Solo disponible con «Mi stock»',
+	'search.resetFilter': 'Reset',
+	'search.results': (p: Params) => `${p.n} resultado${p.n == 1 ? '' : 's'}`,
+	'search.similarity': (p: Params) => `${p.n}% de similitud`,
+	'search.sourcePaint': 'Desde pintura',
+	'search.selectPaint': 'Seleccionar pintura',
+	'search.selectPaintHint': 'Selecciona un resultado a la izquierda para ver los detalles',
+
+	'stock.back': 'Atrás',
+	'stock.brands': 'Marcas',
+	'stock.selectPaintHint': 'Selecciona una pintura a la izquierda para ver los detalles',
+	'stock.addToStock': 'Añadir al stock',
+	'stock.removeFromStock': 'Quitar del stock',
+	'stock.brandStats': (p: Params) => `${p.series} series · ${p.paints} pinturas`,
+	'stock.directEquiv': 'Equivalentes directos',
+	'stock.noDirectEquiv': 'Sin equivalentes del mismo nombre',
+	'stock.similarColors': 'Colores similares',
+	'stock.noSimilar': 'No se encontraron pinturas similares',
+	'stock.similarity': (p: Params) => `${p.n}% similar`,
+	'stock.mixFromStock': 'Mezclar',
+	'stock.reportIssue': 'Reportar problema',
+	'stock.viewAllSimilar': 'Ver todos',
+	'stock.searchPlaceholder': 'Buscar por código o nombre',
+	'stock.sortCode': 'Código',
+	'stock.sortHue': 'Tono',
+	'stock.sortSat': 'Sat.',
+	'stock.sortLight': 'Lum.',
+	'stock.sortStock': 'Stock',
+	'stock.sortTitle': 'Ordenar',
+	'stock.searchTitle': 'Buscar',
+	'stock.closeSearch': 'Cerrar búsqueda',
+	'stock.noResults': 'Sin pinturas coincidentes',
+	'stock.filterTitle': 'Filtro',
+	'stock.filterClear': 'Limpiar',
+	'stock.surfaceTitle': 'Acabado',
+	'stock.baseTitle': 'Base',
+
+	'gamut.change': 'Cambiar',
+	'gamut.searchPlaceholder': 'buscar marca / código / nombre...',
+	'gamut.stockCount': (p: Params) => `${p.n} pinturas`,
+	'gamut.color': 'Color',
+	'gamut.paint': 'Pintura',
+	'gamut.add': 'Añadir',
+	'gamut.clipping': 'Recorte',
+	'gamut.sources': 'Colores fuente',
+	'gamut.colorsInGamut': (p: Params) => `${p.n} colores en gama`,
+	'gamut.noSources': 'Aún no hay colores fuente',
+	'gamut.clickAddHint': 'Haz clic en <span class="font-bold">Añadir</span> para empezar',
+
+	'about.privacyTitle': 'Compromiso de privacidad y seguridad',
+	'about.zeroDataTitle': 'Cero recopilación de datos',
+	'about.zeroDataDesc':
+		'No <strong class="font-bold">recopilamos, subimos ni almacenamos</strong> ningún dato personal, configuración de stock ni historial de búsqueda. Tu privacidad está totalmente protegida.',
+	'about.localTitle': '100% local y sin conexión',
+	'about.localDesc':
+		'El algoritmo de mezcla de colores y la búsqueda de pinturas funcionan íntegramente en tu navegador (WebAssembly), sin necesidad de conexión.',
+	'about.disclaimerTitle': 'Mezcla de colores y pintado',
+	'about.disclaimer1':
+		'1. Todas las fórmulas de mezcla y los resultados de diferencia de color se simulan según la <a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">teoría de la ciencia del color</a>; <strong class="font-bold">los resultados reales son solo orientativos</strong>.',
+	'about.disclaimer2':
+		'2. Debido a las diferencias físicas en propiedades químicas, densidad de pigmento y poder cubriente entre fabricantes y series, <strong class="font-bold">verifica siempre la viabilidad de la mezcla con las propiedades publicadas por el fabricante</strong>.',
+	'about.disclaimer3':
+		'* Consejo: prueba siempre la pulverización en una pequeña zona antes de aplicarla a gran escala.',
+	'about.contributionTitle': 'Cobertura de datos y contribución',
+	'about.contribution1':
+		'Algunas marcas no están incluidas porque no se han publicado <strong class="font-bold">cartas de color oficiales</strong> para ellas.',
+	'about.contribution2':
+		'Si tienes datos de estas marcas y quieres compartirlos, <strong class="font-bold">las contribuciones son bienvenidas</strong>: contáctanos por GitHub / QQ al final de esta página.',
+	'about.buyMeCoffee': 'Buy me a coffee',
+	'about.checkUpdate': 'Buscar actualizaciones',
+	'about.checking': 'Comprobando...',
+	'about.upToDate': 'Ya está actualizado',
+	'about.updateAvailable': 'Última versión: v{n}',
+	'about.viewUpdate': 'Ver actualización',
+	'about.checkFailed': 'No se pudo comprobar las actualizaciones',
+
+	// ---- settings page ----
+	'settings.title': 'Ajustes',
+	'settings.lang': 'Idioma',
+	'settings.langDesc': 'Idioma de la interfaz',
+	'settings.displayRaw': 'Mostrar información en el idioma original',
+	'settings.displayRawDesc':
+		'Cuando esté disponible, los nombres de las pinturas se mostrarán en su idioma original.',
+	'settings.theme': 'Tema',
+	'settings.themeDesc': 'Seguir sistema, claro u oscuro',
+	'settings.themeLight': 'Claro',
+	'settings.themeDark': 'Oscuro',
+	'settings.themeSystem': 'Sistema',
+	'settings.about': 'Acerca de',
+	'settings.legal': 'Instrucciones',
+
+	'camera.accessError':
+		'No se puede acceder a la cámara (permiso denegado o dispositivo no disponible)',
+	'camera.launching': 'Iniciando cámara...',
+	'camera.captureColor': 'capturar color',
+	'colorCode.copied': '¡copiado!',
+	'colorCode.copy': 'copiar al portapapeles'
+} satisfies Record<MessageKey, Message>;
+
+export const messages = { en, zh, ja, es };
 
 export type Locale = keyof typeof messages;
 
@@ -442,12 +580,13 @@ const STORAGE_KEY = 'paintbox:locale';
 const detect = (): Locale => {
 	if (typeof localStorage !== 'undefined') {
 		const saved = localStorage.getItem(STORAGE_KEY);
-		if (saved === 'en' || saved === 'zh' || saved === 'ja') return saved;
+		if (saved === 'en' || saved === 'zh' || saved === 'ja' || saved === 'es') return saved;
 	}
 	if (typeof navigator !== 'undefined') {
 		const lang = navigator.language.toLowerCase();
 		if (lang.startsWith('zh')) return 'zh';
 		if (lang.startsWith('ja')) return 'ja';
+		if (lang.startsWith('es')) return 'es';
 	}
 	return 'en';
 };

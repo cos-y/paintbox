@@ -312,12 +312,12 @@
 				<div class="flex items-start gap-3">
 					<div class="min-w-0 flex-1">
 						<div class="flex min-w-0 items-baseline gap-2">
-							<span class="shrink-0 text-2xl font-bold">{p.code}</span>
-							<PanText class="text-lg font-bold text-gray-500 dark:text-gray-400">
+							<span class="text-selectable shrink-0 text-2xl font-bold">{p.code}</span>
+							<PanText class="text-selectable text-lg font-bold text-gray-500 dark:text-gray-400">
 								{paintDesc(p)}
 							</PanText>
 						</div>
-						<PanText class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+						<PanText class="text-selectable mt-0.5 text-xs text-gray-500 dark:text-gray-400">
 							{getSerieMeta(p.brand, p.serie)?.name ?? p.serie} /
 							{getBrandMeta(p.brand)?.name ?? p.brand}
 						</PanText>

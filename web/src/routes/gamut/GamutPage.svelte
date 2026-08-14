@@ -503,7 +503,7 @@
 			<Package class="h-4 w-4" />
 		</div>
 		<div class="min-w-0 flex-1 text-xs">
-			<div class="font-semibold text-gray-700 dark:text-gray-200">{t('gamut.myStock')}</div>
+			<div class="font-semibold text-gray-700 dark:text-gray-200">{t('search.myStock')}</div>
 			<div class="text-gray-500 dark:text-gray-400">
 				{t('gamut.stockCount', { n: stockCount })}
 			</div>
@@ -603,7 +603,7 @@
 			class="h-3.5 w-3.5 rounded-full border border-black/15 bg-linear-to-br from-red-400 via-green-400 to-blue-500"
 		></span>{t('gamut.color')}{/snippet}
 	{#snippet paint()}<Droplet class="h-3.5 w-3.5" />{t('gamut.paint')}{/snippet}
-	{#snippet stock()}<Package class="h-3.5 w-3.5" />{t('gamut.myStock')}{/snippet}
+	{#snippet stock()}<Package class="h-3.5 w-3.5" />{t('search.myStock')}{/snippet}
 	{@const options = [
 		{ onclick: addColor, children: color },
 		{ onclick: addPaint, children: paint },

@@ -14,6 +14,7 @@ const FILES: Record<string, string> = {
 	zh: '/paints/zh.json',
 	en: '/paints/en.json',
 	ja: '/paints/ja.json',
+	es: '/paints/es.json',
 	raw: '/paints/raw.json'
 } as const;
 
