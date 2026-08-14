@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.7] - 2026-08-14
+
+### Added
+
+- Japanese localization: the full UI (navigation, settings, search, stock, gamut) is translated into Japanese, and the paint catalog gained a Japanese name dictionary covering all 2,291 paints — Gunze and Tamiya names keep their original Japanese forms (e.g. ホワイト（白）), while AK Interactive and Vallejo names are translated. The language is auto-detected for Japanese locales and selectable in Settings.
+- Dedicated Settings page (route /settings) replacing the old About page: language picker, "prefer metadata in original language" toggle, and a theme picker with three modes (follow system / light / dark, default follow system) applied instantly without flash-on-load.
+- Light theme: the entire UI was audited for light-mode readability — secondary helper text, tag pills, control borders and card edges all gained proper light-mode styling.
+
+### Changed
+
+- About page reworked into a proper Settings page; privacy, mixing-disclaimer and data-contribution sections are now collapsible.
+- Control borders unified into a single theme-aware class that adapts to light/dark, and card shadows standardized across the stock, search and gamut pages.
+
+### Fixed
+
+- Low-contrast text in light mode across search, stock, gamut, settings and paint-detail views.
+- Tag pill text was unreadable in light mode (dark background + dark text).
+
 ## [0.3.6] - 2026-08-14
 
 ### Added
@@ -247,6 +265,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.7]: https://github.com/cos-y/paintbox/releases/tag/v0.3.7
 [0.3.6]: https://github.com/cos-y/paintbox/releases/tag/v0.3.6
 [0.3.1]: https://github.com/cos-y/paintbox/releases/tag/v0.3.1
 [0.3.0]: https://github.com/cos-y/paintbox/releases/tag/v0.3.0
