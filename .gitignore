@@ -1,9 +1,10 @@
 *.smali
 
 .pi
+.dsh
 .claude
 CLAUDE.md
-AGENT.md
+AGENTS.md
 
 # Tauri
 src-tauri/target/
@@ -21,3 +22,4 @@ dist/
 
 # 根目录 node_modules（tauri 自动建的 package.json 需要提交，但 node_modules 不提交）
 node_modules/
+__pycache__
