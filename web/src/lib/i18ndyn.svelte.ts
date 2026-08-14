@@ -13,6 +13,7 @@ type PaintNames = Record<string, Record<string, string>>;
 const FILES: Record<string, string> = {
 	zh: '/paints/zh.json',
 	en: '/paints/en.json',
+	ja: '/paints/ja.json',
 	raw: '/paints/raw.json'
 } as const;
 
@@ -33,7 +34,6 @@ const loadFile = async (file: string, fetchFn: typeof fetch = fetch): Promise<an
 
 /** layout load 中调用：按当前语言预载字典（用 SvelteKit fetch，prerender 期可用） */
 export const preloadPaintNames = async (fetchFn: typeof fetch) => {
-	// FIXME: assumed en as default locale
 	dict = await loadFile(FILES[i18n.locale] ?? FILES.en, fetchFn);
 	return dict;
 };

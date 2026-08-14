@@ -33,11 +33,11 @@
 		: 'https://qm.qq.com/q/3bWtHScQUo';
 	const donateUrl = 'https://afdian.com/a/cos_y';
 
-	// 语言选项。ja/es 需要先在 i18n.svelte.ts 中补齐对应字典，再置 available: true
+	// 语言选项。es 需要先在 i18n.svelte.ts 中补齐对应字典，再置 available: true
 	const LOCALES = [
 		{ code: 'en', label: 'English', available: true },
 		{ code: 'zh', label: '中文', available: true },
-		{ code: 'ja', label: '日本語', available: false },
+		{ code: 'ja', label: '日本語', available: true },
 		{ code: 'es', label: 'Español', available: false }
 	] as const;
 

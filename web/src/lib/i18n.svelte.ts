@@ -141,7 +141,7 @@ const en = {
 	'settings.themeDark': 'Dark',
 	'settings.themeSystem': 'System',
 	'settings.about': 'About',
-	'settings.legal': 'Instructions',
+	'settings.legal': 'Terms of Use',
 
 	// ---- shared components ----
 	'camera.accessError': 'Cannot access the camera (permission denied or device unavailable)',
@@ -249,7 +249,7 @@ const zh = {
 	'about.zeroDataTitle': '零个人数据收集',
 	'about.zeroDataDesc':
 		'我们<strong class="font-bold">不会收集、上传或存储</strong>您的任何个人数据、库存配置或检索历史。您的隐私绝对安全。',
-	'about.localTitle': '100% 本地离线运行',
+	'about.localTitle': '100% 离线运行',
 	'about.localDesc':
 		'核心调色算法与漆号检索完全在您的浏览器本地（WebAssembly）编译执行，无需联网即可稳定使用。',
 	'about.disclaimerTitle': '实喷与调色提示',
@@ -293,7 +293,147 @@ const zh = {
 	'colorCode.copy': '复制到剪贴板'
 } satisfies Record<MessageKey, Message>;
 
-export const messages = { en, zh };
+const ja = {
+	'nav.stock': '在庫',
+	'nav.search': '検索',
+	'nav.gamut': '色域',
+	'nav.settings': '設定',
+
+	'surface.title': '仕上げ',
+	'surface.G': '光沢',
+	'surface.SG': '半光沢',
+	'surface.M': 'つや消し',
+	'surface.ME': 'メタリック',
+	'surface.C': 'クリア',
+	'surface.PA': 'パール',
+	'surface.FL': '蛍光',
+	'surface.W': 'ウェザリング',
+	'surface.U': '不明',
+	'base.title': '溶剤',
+	'medium.title': 'メディウム',
+	'medium.Airbrush': 'エアブラシ',
+	'medium.Spray': 'スプレー',
+	'medium.Brush': '筆塗り',
+	'medium.Marker': 'マーカー',
+	'medium.Other': 'その他',
+	'base.lacquer': 'ラッカー',
+	'base.alcohol': 'アルコール',
+	'base.enamel': 'エナメル',
+	'base.water': '水性',
+
+	'search.sourcePalette': 'パレット',
+	'search.sourceCamera': 'カメラ',
+	'search.series': 'シリーズ',
+	'search.any': 'すべて',
+	'search.selectAll': '全選択',
+	'search.seriesCount': (p: Params) => `${p.n} シリーズ`,
+	'search.paintsCount': (p: Params) => `${p.n} 色`,
+	'search.hoverBrandHint': 'ブランドを選択<br />シリーズを表示',
+	'search.market': '全塗料',
+	'search.myStock': 'マイ在庫',
+	'search.mixTitle': '混色',
+	'search.mixOff': 'オフ',
+	'search.mix1': '2色',
+	'search.mix2': '3色',
+	'search.mixScopeRequired': 'マイ在庫でのみ対応',
+	'search.resetFilter': 'リセット',
+	'search.results': (p: Params) => `${p.n} 件`,
+	'search.similarity': (p: Params) => `類似度 ${p.n}%`,
+	'search.sourcePaint': '塗料から',
+	'search.selectPaint': '塗料を選択',
+	'search.selectPaintHint': '左の結果をクリックして詳細を表示',
+
+	'stock.back': '戻る',
+	'stock.brands': 'ブランド',
+	'stock.selectPaintHint': '左の塗料をクリックして詳細を表示',
+	'stock.addToStock': '在庫に追加',
+	'stock.removeFromStock': '在庫から削除',
+	'stock.brandStats': (p: Params) => `${p.series} シリーズ · ${p.paints} 色`,
+	'stock.directEquiv': '公式同等品',
+	'stock.noDirectEquiv': '同名の同等品なし',
+	'stock.similarColors': '類似色',
+	'stock.noSimilar': '類似した塗料なし',
+	'stock.similarity': (p: Params) => `類似度 ${p.n}%`,
+	'stock.mixFromStock': '調色',
+	'stock.reportIssue': '問題を報告',
+	'stock.viewAllSimilar': 'すべて表示',
+	'stock.searchPlaceholder': '番号または名前で検索',
+	'stock.sortCode': '番号',
+	'stock.sortHue': '色相',
+	'stock.sortSat': '彩度',
+	'stock.sortLight': '明度',
+	'stock.sortStock': '在庫',
+	'stock.sortTitle': '並び替え',
+	'stock.searchTitle': '検索',
+	'stock.closeSearch': '検索を閉じる',
+	'stock.noResults': '一致する塗料なし',
+	'stock.filterTitle': 'フィルター',
+	'stock.filterClear': 'クリア',
+	'stock.surfaceTitle': '仕上げ',
+	'stock.baseTitle': '溶剤',
+
+	'gamut.change': '変更',
+	'gamut.searchPlaceholder': 'ブランド / 番号 / 名前を検索...',
+	'gamut.myStock': 'マイ在庫',
+	'gamut.stockCount': (p: Params) => `在庫 ${p.n} 色`,
+	'gamut.color': '色',
+	'gamut.paint': '塗料',
+	'gamut.add': '追加',
+	'gamut.clipping': 'クリッピング',
+	'gamut.sources': '基準色',
+	'gamut.colorsInGamut': (p: Params) => `色域内 ${p.n} 色`,
+	'gamut.noSources': 'まだ基準色がありません',
+	'gamut.clickAddHint': '<span class="font-bold">追加</span> をクリックして開始',
+
+	'about.privacyTitle': 'プライバシーとセキュリティ',
+	'about.zeroDataTitle': '個人データ収集ゼロ',
+	'about.zeroDataDesc':
+		'当ツールはお客様の個人データ、在庫設定、検索履歴を<strong class="font-bold">収集・アップロード・保存しません</strong>。プライバシーは完全に保護されます。',
+	'about.localTitle': '100% ローカルオフライン',
+	'about.localDesc':
+		'色合わせアルゴリズムと塗料検索はすべてブラウザ内（WebAssembly）で動作します。ネットワーク接続は不要です。',
+	'about.disclaimerTitle': '調色と塗装について',
+	'about.disclaimer1':
+		'1. すべての調色レシピと色差結果は<a class="underline" href="https://scrtwpns.com/mixbox.pdf" target="_blank" rel="noopener noreferrer">色彩科学理論</a>に基づくシミュレーションです。<strong class="font-bold">実際の発色は参考値としてお考えください</strong>。',
+	'about.disclaimer2':
+		'2. メーカーやシリーズごとに化学的性質、顔料密度、隠蔽力が異なるため、<strong class="font-bold">混色の可否はメーカー公表の塗料特性で必ずご確認ください</strong>。',
+	'about.disclaimer3':
+		'* ヒント：広範囲に塗装する前に、必ず小さな面積で試し吹きして実際の発色を確認してください。',
+	'about.contributionTitle': 'データカバレッジと貢献',
+	'about.contribution1':
+		'一部の塗料ブランドは<strong class="font-bold">公式カラーチャート</strong>が公開されていないため未収録です。',
+	'about.contribution2':
+		'データをお持ちで共有いただける方は、<strong class="font-bold">貢献大歓迎</strong>です。ページ下部の GitHub / QQ からご連絡ください。',
+	'about.buyMeCoffee': 'Buy me a coffee',
+	'about.checkUpdate': 'アップデートを確認',
+	'about.checking': '確認中...',
+	'about.upToDate': '最新版です',
+	'about.updateAvailable': '最新版: v{n}',
+	'about.viewUpdate': '更新を見る',
+	'about.checkFailed': 'アップデートを確認できません',
+
+	// ---- settings page ----
+	'settings.title': '設定',
+	'settings.lang': '言語',
+	'settings.langDesc': 'アプリの表示言語',
+	'settings.displayRaw': '塗料情報を原言語で表示',
+	'settings.displayRawDesc': '可能な場合、塗料名は元の言語（原表記）で表示されます。',
+	'settings.theme': 'テーマ',
+	'settings.themeDesc': 'システム / ライト / ダーク',
+	'settings.themeLight': 'ライト',
+	'settings.themeDark': 'ダーク',
+	'settings.themeSystem': 'システム',
+	'settings.about': 'について',
+	'settings.legal': 'ご利用にあたって',
+
+	'camera.accessError': 'カメラにアクセスできません（権限がないか、デバイスが利用できません）',
+	'camera.launching': 'カメラ起動中...',
+	'camera.captureColor': '色をキャプチャ',
+	'colorCode.copied': 'コピーしました!',
+	'colorCode.copy': 'クリップボードにコピー'
+} satisfies Record<MessageKey, Message>;
+
+export const messages = { en, zh, ja };
 
 export type Locale = keyof typeof messages;
 
@@ -302,10 +442,12 @@ const STORAGE_KEY = 'paintbox:locale';
 const detect = (): Locale => {
 	if (typeof localStorage !== 'undefined') {
 		const saved = localStorage.getItem(STORAGE_KEY);
-		if (saved === 'en' || saved === 'zh') return saved;
+		if (saved === 'en' || saved === 'zh' || saved === 'ja') return saved;
 	}
-	if (typeof navigator !== 'undefined' && navigator.language.toLowerCase().startsWith('zh')) {
-		return 'zh';
+	if (typeof navigator !== 'undefined') {
+		const lang = navigator.language.toLowerCase();
+		if (lang.startsWith('zh')) return 'zh';
+		if (lang.startsWith('ja')) return 'ja';
 	}
 	return 'en';
 };
