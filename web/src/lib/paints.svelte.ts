@@ -1,6 +1,7 @@
 import { list_paints, search, color_diff } from '../wasm-pkg/paintbox_wasm';
 import { paintDesc } from './i18ndyn.svelte';
 import { hexToRgb, toHsl } from './utils.svelte';
+import { decode } from '@msgpack/msgpack';
 
 export interface PaintInfo {
 	index: number;
@@ -15,6 +16,9 @@ export interface PaintInfo {
 	// js specific
 	hsl: [number, number, number];
 	id: string;
+	// 阶段3：来自 paints.bin 全列（wasm 不返回）
+	sources?: string[];
+	updated?: number;
 }
 
 // SurfaceType 位定义，与 wasm 端 bitflags 对齐
@@ -104,12 +108,49 @@ export const listPaints = (): PaintInfo[] => {
 				hsl: [h ?? 0, s, l],
 				id: paintId(info),
 				rgb,
-				...info
+				...info,
+				...paintExtrasOf(info.index)
 			} satisfies PaintInfo;
 		});
 	}
 	return paints!;
 };
+
+// ---- paints.bin 补充字段（sources/updated）：JS 直接解码，wasm 不返回 ----
+
+interface PaintExtras {
+	sources: string[][];
+	updated: number[];
+}
+
+let extras: PaintExtras | null = null;
+
+/** layout load 中调用（与 wasm init 并行）；同一文件浏览器缓存命中，无二次网络成本 */
+export const loadPaintExtras = async (fetchFn: typeof fetch = fetch): Promise<void> => {
+	if (extras) return;
+	const buf = await fetchFn('/paints.bin').then((r) => r.arrayBuffer());
+	const b = decode(new Uint8Array(buf)) as unknown[];
+	const dictSources = b[4] as string[];
+	const bitmaps = b[12] as number[];
+	extras = {
+		sources: bitmaps.map((mask) => {
+			const out: string[] = [];
+			for (let i = 0; i < dictSources.length; i++) {
+				if (mask & (1 << i)) out.push(dictSources[i]);
+			}
+			return out;
+		}),
+		updated: b[13] as number[]
+	};
+};
+
+const paintExtrasOf = (index: number) =>
+	extras
+		? {
+				sources: extras.sources[index],
+				updated: extras.updated[index]
+			}
+		: {};
 
 export const getPaintByIndex = (index: number): PaintInfo | null => {
 	const li = listPaints();

@@ -30,10 +30,10 @@ pub fn color_diff(a: u32, b: u32) -> f32 {
 }
 
 #[wasm_bindgen]
-pub fn init_searcher(blob: &[u8], equiv_blob: &[u8]) -> Result<(), JsError> {
+pub fn init_searcher(blob: &[u8]) -> Result<(), JsError> {
     let mut searcher = SEARCHER.lock()?;
     if let None = *searcher {
-        *searcher = Some(Searcher::load(blob, equiv_blob).map_err(to_jserr)?);
+        *searcher = Some(Searcher::load(blob).map_err(to_jserr)?);
     }
     Ok(())
 }

@@ -68,14 +68,11 @@ export function init_panic_hook() {
 
 /**
  * @param {Uint8Array} blob
- * @param {Uint8Array} equiv_blob
  */
-export function init_searcher(blob, equiv_blob) {
+export function init_searcher(blob) {
     const ptr0 = passArray8ToWasm0(blob, wasm.__wbindgen_malloc);
     const len0 = WASM_VECTOR_LEN;
-    const ptr1 = passArray8ToWasm0(equiv_blob, wasm.__wbindgen_malloc);
-    const len1 = WASM_VECTOR_LEN;
-    const ret = wasm.init_searcher(ptr0, len0, ptr1, len1);
+    const ret = wasm.init_searcher(ptr0, len0);
     if (ret[1]) {
         throw takeFromExternrefTable0(ret[0]);
     }

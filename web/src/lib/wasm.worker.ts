@@ -25,12 +25,11 @@ let ready: Promise<void> | null = null;
 const ensureReady = (): Promise<void> => {
 	if (!ready) {
 		ready = (async () => {
-			const [, buf, equivBuf] = await Promise.all([
+			const [, buf] = await Promise.all([
 				init(),
-				fetch('/colors.csv').then((r) => r.arrayBuffer()),
-				fetch('/equivalences.csv').then((r) => r.arrayBuffer())
+				fetch('/paints.bin').then((r) => r.arrayBuffer())
 			]);
-			wasm.init_searcher(new Uint8Array(buf), new Uint8Array(equivBuf));
+			wasm.init_searcher(new Uint8Array(buf));
 		})();
 	}
 	return ready;

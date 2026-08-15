@@ -1,4 +1,4 @@
-*.smali
+/raw/
 
 .pi
 .dsh
@@ -23,3 +23,4 @@ dist/
 # 根目录 node_modules（tauri 自动建的 package.json 需要提交，但 node_modules 不提交）
 node_modules/
 __pycache__
+*.egg-info

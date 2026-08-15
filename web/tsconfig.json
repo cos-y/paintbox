@@ -11,7 +11,9 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler"
-	}
+	},
+	// wasm-pack 生成的 glue（bg.js）不作为源码类型检查对象
+	"exclude": ["src/wasm-pkg"]
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
 	//

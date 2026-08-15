@@ -10,7 +10,6 @@ crate-type = ["cdylib", "rlib"]
 binary_serde = "1.0.25"
 bitflags = "2.9.0"
 console_error_panic_hook = "0.1.7"
-csv = "1.4.0"
 derivative = "2.2.0"
 empfindung = "0.2.6"
 fixedbitset = "0.5.7"
@@ -28,6 +27,7 @@ serde = { version = "1.0.228", features = ["derive"] }
 serde-wasm-bindgen = "0.6.5"
 smallvec = "1.15.2"
 tracing = { version = "0.1.44", features = ["max_level_off"] }
+rmp-serde = "1.3.0"
 wasm-bindgen = "0.2.126"
 web-sys = { version = "0.3.103", features = ["console"] }
 web-time = "1.1.0"

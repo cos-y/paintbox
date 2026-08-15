@@ -209,6 +209,28 @@ pub struct Searcher {
     kdtree: ImmutableKdTree<f32, 3>,
 }
 
+/// paints.bin（msgpack 列式，见 scripts/build_data.py）。
+/// tuple struct 字段顺序 = msgpack 数组位置；wasm 只用前 7 列，
+/// sources/updated 用 IgnoredAny 消费即弃（msgpack 数组无字段名，必须按序消费才能到达下一元素）。
+#[derive(Debug, serde::Deserialize)]
+#[allow(clippy::type_complexity)]
+struct PaintsBlob(
+    String,                // 0 schema
+    u32,                   // 1 n rows
+    Vec<String>,           // 2 dict_brands
+    Vec<String>,           // 3 dict_series
+    serde::de::IgnoredAny, // 4 dict_sources
+    Vec<u8>,               // 5 col brand_id
+    Vec<u8>,               // 6 col serie_id
+    Vec<String>,           // 7 col code
+    Vec<u32>,              // 8 col color
+    Vec<u16>,              // 9 col bases
+    Vec<u16>,              // 10 col surfaces
+    Vec<u16>,              // 11 col mediums
+    serde::de::IgnoredAny, // 12 col sources bitmap（JS 用）
+    serde::de::IgnoredAny, // 13 col updated（JS 用）
+);
+
 #[derive(Debug, Serialize)]
 pub struct SearchResultPortion {
     pub t: f32,
@@ -278,31 +300,46 @@ fn collect_mix_dedup(results: &mut Vec<SearchMix>, new: impl Iterator<Item = Sea
 }
 
 impl Searcher {
-    /// blob是colors.csv；equiv_blob是一份"a,b"两列下标的csv（下标对应majors/list()的index），
-    /// 代表两个型号互为直接等价（例如Gunze H9 <-> Gunze C9）
-    pub fn load(blob: &[u8], equiv_blob: &[u8]) -> Result<Self, BoxError> {
-        let s = std::str::from_utf8(blob)?;
+    /// blob 是 paints.bin（msgpack 列式）；wasm 只消费前 7 列（brand/serie/code/rgb/bases/surfaces/mediums）。
+    pub fn load(blob: &[u8]) -> Result<Self, BoxError> {
+        let b: PaintsBlob = rmp_serde::from_slice(blob)?;
+        if b.0 != "paintbox.paints.v2" {
+            return Err(format!("unknown paints schema: {}", b.0).into());
+        }
+        let n = b.1 as usize;
+        let lens = [
+            b.5.len(),
+            b.6.len(),
+            b.7.len(),
+            b.8.len(),
+            b.9.len(),
+            b.10.len(),
+            b.11.len(),
+        ];
+        if lens.iter().any(|&l| l != n) {
+            return Err(format!("paints.bin column length mismatch: n={n} lens={lens:?}").into());
+        }
 
-        let mut rdr = csv::ReaderBuilder::new()
-            .delimiter(b',')
-            .from_reader(s.as_bytes());
+        let mut majors = Vec::with_capacity(n);
+        for i in 0..n {
+            majors.push(PaintInfo {
+                index: i,
+                brand: b.2[b.5[i] as usize].clone(),
+                serie: b.3[b.6[i] as usize].clone(),
+                code: b.7[i].clone(),
+                rgb: b.8[i],
+                bases: BaseType::from_bits_retain(b.9[i]),
+                surfaces: SurfaceType::from_bits_retain(b.10[i]),
+                mediums: MediumType::from_bits_retain(b.11[i]),
+            });
+        }
 
-        let mut majors = vec![];
-        let mut labs = vec![];
-        let mut latents = vec![];
-
-        for v in rdr.records() {
-            let ref rec = v?;
-            let mut row: PaintInfo = rec.deserialize(None)?;
-            row.index = majors.len();
-
+        let mut labs = Vec::with_capacity(n);
+        let mut latents = Vec::with_capacity(n);
+        for row in &majors {
             let rgb = hex_to_rgb(row.rgb);
-            let lab = rgb_to_lab(rgb);
-            let latent = rgb_to_latent(rgb);
-
-            majors.push(row);
-            labs.push(lab);
-            latents.push(latent);
+            labs.push(rgb_to_lab(rgb));
+            latents.push(rgb_to_latent(rgb));
         }
 
         let points: Vec<[f32; 3]> = labs.iter().map(|x| [x.l, x.a, x.b]).collect();

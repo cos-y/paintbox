@@ -15,7 +15,7 @@ export function color_diff(a: number, b: number): number;
 
 export function init_panic_hook(): void;
 
-export function init_searcher(blob: Uint8Array, equiv_blob: Uint8Array): void;
+export function init_searcher(blob: Uint8Array): void;
 
 export function list_paints(): any;
 
@@ -34,7 +34,7 @@ export interface InitOutput {
     readonly gamut_insert_many: (a: number, b: number, c: number) => number;
     readonly gamut_matrices: (a: number) => any;
     readonly init_panic_hook: () => void;
-    readonly init_searcher: (a: number, b: number, c: number, d: number) => [number, number];
+    readonly init_searcher: (a: number, b: number) => [number, number];
     readonly list_paints: () => [number, number, number];
     readonly new_gamut: (a: number, b: number, c: number) => [number, number, number];
     readonly search: (a: number, b: any) => [number, number, number];
