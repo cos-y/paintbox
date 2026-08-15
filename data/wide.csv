@@ -652,11 +652,23 @@ av,LM,70.794,#C88F2B,2,8,5,av_cc329,,Red Gold,Oro Rojo,,
 av,LM,70.795,#867232,2,8,5,av_cc329,,Green Gold,Oro Verde,,
 av,LM,70.796,#D6D9DA,2,8,5,av_cc329,,White Gold,Oro Blanco,,
 av,LM,70.797,#98472A,2,8,5,av_cc329,,Copper,Cobre,,
-av,MC,70.730,#EAE851,8,64,4,av_cc070,,Yellow Fluo,Amarillo Fluo,,
-av,MC,70.733,#F06724,8,64,4,av_cc070,,Orange Fluo,Naranja Fluo,,
+av,MC,70.400,#FFFFFF,8,4,4,av_cc070,,Plastic Putty,Masilla Plástica,,
+av,MC,70.470,#FFFFFF,8,1,4,av_cc070,,Gloss Medium,Medium Brillante,,
+av,MC,70.510,#FFFFFF,8,1,4,av_cc070,,Gloss Varnish,Barniz Brillante,,gunze;H30;av_cc070|humbrol;35;av_cc070|revell;1;av_cc070|tamiya;X22;av_cc070|testor;1561;av_cc070
+av,MC,70.520,#FFFFFF,8,4,4,av_cc070,,Matt Varnish,Barniz Mate,,gunze;H20;av_cc070|humbrol;49;av_cc070|revell;2;av_cc070|tamiya;X21;av_cc070|testor;1560;av_cc070
+av,MC,70.521,#FFFFFF,8,8,4,av_cc070,,Metal Medium,Medium Metálico,,humbrol;27001;av_cc070|testor;1405;av_cc070
+av,MC,70.522,#FFFFFF,8,2,4,av_cc070,,Satin Varnish,Barniz Satinado,,humbrol;135;av_cc070
+av,MC,70.523,#FFFFFF,8,4,4,av_cc070,,Liquid Mask,Máscara Líquida,,
+av,MC,70.524,#FFFFFF,8,4,4,av_cc070,,Thinner,Diluyente,,
+av,MC,70.540,#FFFFFF,8,4,4,av_cc070,,Matt Medium,Medium Mate,,
+av,MC,70.596,#FFFFFF,8,4,4,av_cc070,,Glaze Medium,Medium Veladuras,,
+av,MC,70.597,#FFFFFF,8,4,4,av_cc070,,Retarder Medium,Retardante,,
+av,MC,70.598,#FFFFFF,8,4,4,av_cc070,,Crackle Medium,Medium Craquelar,,
+av,MC,70.730,#EAE851,8,64,4,av_cc070,,Yellow Fluo,Amarillo Fluo,,ral;1026;av_cc070
+av,MC,70.733,#F06724,8,64,4,av_cc070,,Orange Fluo,Naranja Fluo,,fs;38903;av_cc070|ral;2005;av_cc070
 av,MC,70.735,#EC4C9B,8,64,4,av_cc070,,Magenta Fluo,Magenta Fluo,,
 av,MC,70.736,#1274B8,8,64,4,av_cc070,,Blue Fluo,Azul Fluo,,
-av,MC,70.737,#9BCD67,8,64,4,av_cc070,,Green Fluo,Verde Fluo,,
+av,MC,70.737,#9BCD67,8,64,4,av_cc070,,Green Fluo,Verde Fluo,,fs;38901;av_cc070
 av,MC,70.740,#483B21,8,4,4,av_cc329,,Cam. Middle Brown,Cam. Marrón Medio,,
 av,MC,70.741,#2A2D28,8,4,4,av_cc329,,Cam. Black Green,Cam. Verde Negro,,
 av,MC,70.745,#785354,8,4,4,av_cc329,,Dark Rose,Rosa Oscuro,,
@@ -689,199 +701,204 @@ av,MC,70.771,#352024,8,4,4,av_cc329,,Dark Rust,Óxido Oscuro,,
 av,MC,70.772,#729B93,8,4,4,av_cc329,,Medium Grey Blue,Azul Gris Medio,,
 av,MC,70.773,#545758,8,4,4,av_cc329,,Violet Grey,Gris Violeta,,
 av,MC,70.774,#7D7273,8,4,4,av_cc329,,Lavender Grey,Gris Lavanda,,
-av,MC,70.800,#1B2332,8,8,4,av_cc329,,Gunmetal Blue,Metal Azul,,
-av,MC,70.801,#5F3C22,8,8,4,av_cc329,,Brass,Latón,,
+av,MC,70.800,#1B2332,8,8,4,av_cc329,,Gunmetal Blue,Metal Azul,,humbrol;27004;av_cc070
+av,MC,70.801,#5F3C22,8,8,4,av_cc329,,Brass,Latón,,humbrol;54;av_cc070|revell;92;av_cc070|testor;1582;av_cc070
 av,MC,70.802,#BE3355,8,4,4,av_cc329,,Sunset Red,Rojo Sunset,,
 av,MC,70.803,#976965,8,4,4,av_cc329,,Brown Rose,Rosa Marrón,,
-av,MC,70.804,#AC7153,8,4,4,av_cc329,,Beige Red,Rojo Beige,,
+av,MC,70.804,#AC7153,8,4,4,av_cc329,,Beige Red,Rojo Beige,,fs;31433;av_cc070|ral;3012;av_cc070
 av,MC,70.805,#B8685D,8,4,4,av_cc329,,German Orange,Naranja Alemán,,
 av,MC,70.806,#C5B266,8,4,4,av_cc329,,German Yellow,Amarillo Lasur,,
-av,MC,70.807,#3C3E5A,8,4,4,av_cc329,,Oxford Blue,Azul Oxford,,
+av,MC,70.807,#3C3E5A,8,4,4,av_cc329,,Oxford Blue,Azul Oxford,,humbrol;104;av_cc070|revell;350;av_cc070|tamiya;XF17;av_cc070
 av,MC,70.808,#097F8A,8,4,4,av_cc329,,Blue Green,Azul Verde,,
 av,MC,70.809,#154E87,8,4,4,av_cc329,,Royal Blue,Azul Real,,
 av,MC,70.810,#472544,8,4,4,av_cc329,,Royal Purple,Púrpura Real,,
 av,MC,70.811,#595086,8,4,4,av_cc329,,Blue Violet,Violeta Azul,,
 av,MC,70.812,#5D3642,8,4,4,av_cc329,,Violet Red,Rojo Violeta,,
-av,MC,70.814,#6E3D3F,8,4,4,av_cc329,,Burnt Red,Rojo Tostado,,
+av,MC,70.814,#6E3D3F,8,4,4,av_cc329,,Burnt Red,Rojo Tostado,,ral;8012;av_cc070
 av,MC,70.815,#E6A688,8,4,4,av_cc329,,Basic Skin Tone,Carne Base,,
 av,MC,70.816,#424551,8,4,4,av_cc329,,Luftwaffe Uniform,Uniforme Luftwaffe,,
-av,MC,70.817,#C04739,8,4,4,av_cc329,,Scarlet,Escarlata,,
-av,MC,70.818,#945C44,8,4,4,av_cc329,,Red Leather,Cuero Rojo,,
-av,MC,70.819,#AA8B5F,8,4,4,av_cc329,,Iraqi Sand,Arena Iraquí,,
-av,MC,70.820,#F0E7DF,8,4,4,av_cc329,,Off-White,Blanco Pergamino,,
-av,MC,70.821,#746B57,8,4,4,av_cc329,,Germ. Beige WWII,Beige Alem. WWII,,
-av,MC,70.822,#3C3336,8,4,4,av_cc329,,Cam. Black Brown,Cam. Pardo Negro,,
-av,MC,70.823,#303C24,8,4,4,av_cc329,,Luftwaffe Green,Verde Luftwaffe,,
-av,MC,70.824,#A78343,8,4,4,av_cc329,,Orange Ochre,Ocre Naranja,,
-av,MC,70.825,#9A8276,8,4,4,av_cc329,,Pale Brown,Pardo Claro,,
-av,MC,70.826,#53443C,8,4,4,av_cc329,,Medium Brown,Pardo Medio,,
-av,MC,70.827,#7B9644,8,4,4,av_cc329,,Lime Green,Verde Lima,,
-av,MC,70.828,#634845,8,16,4,av_cc329,,Mahogany Ink,Tinta Caoba,,
-av,MC,70.829,#D4583D,8,4,4,av_cc329,,Amaranth Red,Rojo Amaranth,,
-av,MC,70.830,#52513D,8,4,4,av_cc329,,Ger. Fieldgrey WWII,Verde Alemán WWII,,
+av,MC,70.817,#C04739,8,4,4,av_cc329,,Scarlet,Escarlata,,rlm;23;av_cc070|gunze;H23;av_cc070|humbrol;60;av_cc070|revell;36;av_cc070|testor;1705;av_cc070
+av,MC,70.818,#945C44,8,4,4,av_cc329,,Red Leather,Cuero Rojo,,humbrol;100;av_cc070
+av,MC,70.819,#AA8B5F,8,4,4,av_cc329,,Iraqi Sand,Arena Iraquí,,fs;30475;av_cc070|gunze;H313;av_cc070|humbrol;121;av_cc070|testor;1706;av_cc070
+av,MC,70.820,#F0E7DF,8,4,4,av_cc329,,Off-White,Blanco Pergamino,,gunze;H325;av_cc070|humbrol;129;av_cc070|revell;301;av_cc070|testor;1730;av_cc070
+av,MC,70.821,#746B57,8,4,4,av_cc329,,Germ. Beige WWII,Beige Alem. WWII,,humbrol;87;av_cc070|revell;57;av_cc070
+av,MC,70.822,#3C3336,8,4,4,av_cc329,,Cam. Black Brown,Cam. Pardo Negro,,rlm;61;av_cc070
+av,MC,70.823,#303C24,8,4,4,av_cc329,,Luftwaffe Green,Verde Luftwaffe,,fs;34095;av_cc070|ral;6020;av_cc070|rlm;82;av_cc070
+av,MC,70.824,#A78343,8,4,4,av_cc329,,Orange Ochre,Ocre Naranja,,fs;30266;av_cc070|ana;615;av_cc070
+av,MC,70.825,#9A8276,8,4,4,av_cc329,,Pale Brown,Pardo Claro,,gunze;H331;av_cc070|humbrol;110;av_cc070|tamiya;XF55;av_cc070
+av,MC,70.826,#53443C,8,4,4,av_cc329,,Medium Brown,Pardo Medio,,fs;30097;av_cc070
+av,MC,70.827,#7B9644,8,4,4,av_cc329,,Lime Green,Verde Lima,,gunze;H16;av_cc070|humbrol;38;av_cc070|revell;60;av_cc070|tamiya;X15;av_cc070
+av,MC,70.828,#634845,8,20,4,av_cc329,,Mahogany Ink,Tinta Caoba,,
+av,MC,70.829,#D4583D,8,4,4,av_cc329,,Amaranth Red,Rojo Amaranth,,fs;31400;av_cc070|gunze;H71;av_cc070|humbrol;84;av_cc070
+av,MC,70.830,#52513D,8,4,4,av_cc329,,Ger. Fieldgrey WWII,Verde Alemán WWII,,fs;34086;av_cc070|ral;7009;av_cc070|gunze;H70;av_cc070|humbrol;92;av_cc070|revell;79;av_cc070
 av,MC,70.831,#D09041,8,4,4,av_cc070,,Tan Glaze,Pátina Ocre,,
 av,MC,70.832,#89D0C8,8,4,4,av_cc070,,Verdigris Glaze,Pátina Verdín,,
-av,MC,70.833,#425838,8,4,4,av_cc329,,Fern Green,Verde Helecho,,
-av,MC,70.834,#E9A03E,8,16,4,av_cc070,,Natural Woodgrain,Madera Natural,,
+av,MC,70.833,#425838,8,4,4,av_cc329,,Fern Green,Verde Helecho,,ral;6025;av_cc070
+av,MC,70.834,#E9A03E,8,20,4,av_cc070,,Natural Woodgrain,Madera Natural,,
 av,MC,70.835,#E08C7B,8,4,4,av_cc329,,Salmon Rose,Rosa Salmón,,
-av,MC,70.836,#696969,8,4,4,av_cc329,,London Grey,Gris Londres,,
+av,MC,70.836,#696969,8,4,4,av_cc329,,London Grey,Gris Londres,,fs;36118;av_cc070|ana;603;av_cc070
 av,MC,70.837,#DEBC8A,8,4,4,av_cc329,,Pale Sand,Arena Clara,,
 av,MC,70.838,#00664F,8,4,4,av_cc329,,Emerald,Esmeralda,,
 av,MC,70.839,#345DA7,8,4,4,av_cc070,,Ultramarine,Azul Ultramar,,
 av,MC,70.840,#006C8B,8,4,4,av_cc329,,Light Turquoise,Turquesa Claro,,
-av,MC,70.841,#0074AE,8,4,4,av_cc329,,Andrea Blue,Azul Andrea,,
-av,MC,70.842,#EFEFEF,8,1,4,av_cc070,,Gloss White,Blanco Brillo,,
-av,MC,70.843,#9C7357,8,4,4,av_cc329,,Cork Brown,Marrón Corcho,,
+av,MC,70.841,#0074AE,8,4,4,av_cc329,,Andrea Blue,Azul Andrea,,ral;5012;av_cc070
+av,MC,70.842,#EFEFEF,8,1,4,av_cc070,,Gloss White,Blanco Brillo,,fs;17925;av_cc070|gunze;H1;av_cc070|humbrol;22;av_cc070|revell;4;av_cc070|tamiya;X2;av_cc070|testor;1745;av_cc070
+av,MC,70.843,#9C7357,8,4,4,av_cc329,,Cork Brown,Marrón Corcho,,gunze;H44;av_cc070|humbrol;62;av_cc070|revell;85;av_cc070|testor;1737;av_cc070
 av,MC,70.844,#4A95C1,8,4,4,av_cc329,,Deep Sky Blue,Azul Profundo,,
 av,MC,70.845,#EC964E,8,4,4,av_cc329,,Sunny Skin Tone,Carne Dorada,,
-av,MC,70.846,#785954,8,4,4,av_cc329,,Mahogany Brown,Marrón Caoba,,
-av,MC,70.847,#C4A26B,8,4,4,av_cc329,,Dark Sand,Arena Oscura,,
-av,MC,70.850,#3C4E34,8,4,4,av_cc329,,Medium Olive,Oliva Medio,,
+av,MC,70.846,#785954,8,4,4,av_cc329,,Mahogany Brown,Marrón Caoba,,ral;8002;av_cc070|gunze;H344;av_cc070|humbrol;113;av_cc070|revell;83;av_cc070|testor;1785;av_cc070
+av,MC,70.847,#C4A26B,8,4,4,av_cc329,,Dark Sand,Arena Oscura,,ral;1001;av_cc070|gunze;H36;av_cc070|humbrol;74;av_cc070
+av,MC,70.850,#3C4E34,8,4,4,av_cc329,,Medium Olive,Oliva Medio,,ana;611;av_cc070
 av,MC,70.851,#E1632E,8,4,4,av_cc329,,Bright Orange,Naranja Intenso,,
 av,MC,70.853,#EFEFF4,8,4,4,av_cc070,,White Glaze,Pátina Blanca,,
 av,MC,70.854,#493E3D,8,4,4,av_cc070,,Brown Glaze,Pátina Marrón,,
-av,MC,70.855,#333639,8,4,4,av_cc070,,Black Glaze,Pátina Negro,,
+av,MC,70.855,#333639,8,4,4,av_cc070,,Black Glaze,Pátina Negro,,humbrol;88;av_cc070|revell;48;av_cc070|tamiya;XF26;av_cc070|testor;1571;av_cc070
 av,MC,70.856,#A77C4A,8,4,4,av_cc329,,Ochre Brown,Ocre Marrón,,
 av,MC,70.857,#7B7F4E,8,4,4,av_cc070,,Golden Olive,Oliva Dorado,,
-av,MC,70.858,#E7CB74,8,4,4,av_cc329,,Ice Yellow,Amarillo Hielo,,
+av,MC,70.858,#E7CB74,8,4,4,av_cc329,,Ice Yellow,Amarillo Hielo,,humbrol;76;av_cc070
 av,MC,70.859,#502D2D,8,4,4,av_cc329,,Black Red,Rojo Negro,,
 av,MC,70.860,#AB7A49,8,4,4,av_cc329,,Med. Flesh Tone,Carne Medio,,
-av,MC,70.861,#1A161D,8,1,4,av_cc329,,Gloss Black,Negro Brillante,,
-av,MC,70.862,#27211F,8,4,4,av_cc329,,Black Grey,Gris Negro,,
-av,MC,70.863,#2B262D,8,8,4,av_cc329,,Gunmetal,Gris Metalizado,,
-av,MC,70.864,#51565D,8,8,4,av_cc329,,Natural Steel,Acero Natural,,
-av,MC,70.865,#454248,8,8,4,av_cc329,,Oily Steel,Acero Engrasado,,
-av,MC,70.866,#3D4040,8,4,4,av_cc329,,Grey Green,Gris Verde,,
-av,MC,70.867,#3C4246,8,4,4,av_cc329,,Dark Blue Grey,Azul Gris Oscuro,,
+av,MC,70.861,#1A161D,8,1,4,av_cc329,,Gloss Black,Negro Brillante,,fs;17038;av_cc070|gunze;H2;av_cc070|humbrol;21;av_cc070|revell;7;av_cc070|tamiya;X1;av_cc070|testor;1747;av_cc070
+av,MC,70.862,#27211F,8,4,4,av_cc329,,Black Grey,Gris Negro,,ral;7021;av_cc070
+av,MC,70.863,#2B262D,8,8,4,av_cc329,,Gunmetal,Gris Metalizado,,gunze;H76;av_cc070|humbrol;53;av_cc070|tamiya;X10;av_cc070|testor;1795;av_cc070
+av,MC,70.864,#51565D,8,8,4,av_cc329,,Natural Steel,Acero Natural,,humbrol;56;av_cc070|revell;99;av_cc070|tamiya;XF56;av_cc070|testor;1781;av_cc070
+av,MC,70.865,#454248,8,8,4,av_cc329,,Oily Steel,Acero Engrasado,,humbrol;27002;av_cc070|testor;1401;av_cc070
+av,MC,70.866,#3D4040,8,4,4,av_cc329,,Grey Green,Gris Verde,,rlm;66;av_cc070|gunze;H333;av_cc070|humbrol;123;av_cc070|tamiya;XF24;av_cc070
+av,MC,70.867,#3C4246,8,4,4,av_cc329,,Dark Blue Grey,Azul Gris Oscuro,,rlm;74;av_cc070|gunze;H58;av_cc070|humbrol;81;av_cc070|tamiya;XF4;av_cc070|testor;1584;av_cc070
 av,MC,70.868,#444345,8,4,4,av_cc329,,Dark Sea Green,Verde Marina Osc.,,
-av,MC,70.869,#5A5C61,8,4,4,av_cc329,,Basalt Grey,Gris Basalto,,
-av,MC,70.870,#7A7D7D,8,4,4,av_cc329,,Medium Sea Grey,Gris Marina Medio,,
-av,MC,70.871,#534338,8,4,4,av_cc329,,Leather Brown,Cuero Oscuro,,
-av,MC,70.872,#564541,8,4,4,av_cc329,,Chocolate Brown,Marrón Chocolate,,
+av,MC,70.869,#5A5C61,8,4,4,av_cc329,,Basalt Grey,Gris Basalto,,fs;36152;av_cc070|ral;7012;av_cc070|rlm;75;av_cc070|humbrol;106;av_cc070|revell;47;av_cc070|tamiya;XF66;av_cc070
+av,MC,70.870,#7A7D7D,8,4,4,av_cc329,,Medium Sea Grey,Gris Marina Medio,,fs;36270;av_cc070|gunze;H306;av_cc070|humbrol;64;av_cc070|revell;75;av_cc070|tamiya;XF12;av_cc070|testor;1725;av_cc070
+av,MC,70.871,#534338,8,4,4,av_cc329,,Leather Brown,Cuero Oscuro,,fs;30051;av_cc070|ral;8027;av_cc070
+av,MC,70.872,#564541,8,4,4,av_cc329,,Chocolate Brown,Marrón Chocolate,,fs;30099;av_cc070|humbrol;98;av_cc070|tamiya;XF10;av_cc070|testor;1540;av_cc070
 av,MC,70.873,#79654A,8,4,4,av_cc329,,US Field Drab,Tierra,,
-av,MC,70.874,#8F725B,8,4,4,av_cc329,,Tan Earth,Tierra Oscura,,
+av,MC,70.874,#8F725B,8,4,4,av_cc329,,Tan Earth,Tierra Oscura,,fs;30219;av_cc070|ana;628;av_cc070|gunze;H310;av_cc070|humbrol;119;av_cc070
 av,MC,70.875,#7A5F48,8,4,4,av_cc329,,Beige Brown,Marrón Beige,,
-av,MC,70.876,#8C634B,8,4,4,av_cc329,,Brown Sand,Arena Marrón,,
-av,MC,70.877,#BA8748,8,4,4,av_cc329,,Gold Brown,Marrón Dorado,,
-av,MC,70.878,#4E361F,8,8,4,av_cc329,,Old Gold,Oro Viejo,,
-av,MC,70.879,#7A6A38,8,4,4,av_cc329,,Green Brown,Marrón Verde,,
+av,MC,70.876,#8C634B,8,4,4,av_cc329,,Brown Sand,Arena Marrón,,rlm;79;av_cc070|gunze;H310;av_cc070|humbrol;118;av_cc070|revell;382;av_cc070|testor;1742;av_cc070
+av,MC,70.877,#BA8748,8,12,4,av_cc329,,Gold Brown,Marrón Dorado,,
+av,MC,70.878,#4E361F,8,8,4,av_cc329,,Old Gold,Oro Viejo,,fs;27043;av_cc070
+av,MC,70.879,#7A6A38,8,4,4,av_cc329,,Green Brown,Marrón Verde,,ral;8000;av_cc070|gunze;H81;av_cc070|humbrol;26;av_cc070|revell;86;av_cc070|tamiya;XF49;av_cc070
 av,MC,70.880,#7B6742,8,4,4,av_cc329,,Khaki Grey,Gris Caqui,,
 av,MC,70.881,#706B46,8,4,4,av_cc329,,Green Yellow,Verde Amarillo,,
 av,MC,70.882,#897A46,8,4,4,av_cc329,,Middle Stone,Amarillo Piedra,,
-av,MC,70.883,#CDC6BC,8,4,4,av_cc329,,Silver Grey,Gris Plateado,,
-av,MC,70.884,#867E6A,8,4,4,av_cc329,,Stone Grey,Gris Piedra,,
-av,MC,70.885,#8A9270,8,4,4,av_cc329,,Pastel Green,Verde Pastel,,
-av,MC,70.886,#656756,8,4,4,av_cc329,,Green Grey,Gris Verdoso,,
-av,MC,70.887,#565441,8,4,4,av_cc329,,US Olive Drab,Verde Oliva,,
-av,MC,70.888,#3A3D2C,8,4,4,av_cc329,,Olive Grey,Gris Oliva,,
-av,MC,70.889,#372C25,8,4,4,av_cc329,,Olive Brown,Pardo Oliva,,
-av,MC,70.890,#3F4735,8,4,4,av_cc329,,Refractive Green,Verde Refractario,,
-av,MC,70.891,#4F6848,8,4,4,av_cc329,,Intermediate Green,Verde Medio,,
-av,MC,70.892,#303830,8,4,4,av_cc329,,Yellow Olive,Oliva Amarillo,,
-av,MC,70.893,#444739,8,4,4,av_cc329,,US Dark Green,Verde Americano,,
-av,MC,70.894,#35392E,8,4,4,av_cc329,,Cam. Olive Green,Cam. Verde Oliva,,
-av,MC,70.895,#465542,8,4,4,av_cc329,,Gunship Green,Verde Acorazado,,
+av,MC,70.883,#CDC6BC,8,4,4,av_cc329,,Silver Grey,Gris Plateado,,fs;37150;av_cc070|ral;9002;av_cc070|gunze;H311;av_cc070|humbrol;28;av_cc070|testor;1733;av_cc070
+av,MC,70.884,#867E6A,8,4,4,av_cc329,,Stone Grey,Gris Piedra,,fs;36357;av_cc070
+av,MC,70.885,#8A9270,8,4,4,av_cc329,,Pastel Green,Verde Pastel,,gunze;H74;av_cc070|humbrol;23;av_cc070
+av,MC,70.886,#656756,8,4,4,av_cc329,,Green Grey,Gris Verdoso,,rlm;2;av_cc070|gunze;H301;av_cc070|humbrol;32;av_cc070|revell;339;av_cc070|testor;1749;av_cc070
+av,MC,70.887,#565441,8,4,4,av_cc329,,US Olive Drab,Verde Oliva,,fs;34088;av_cc070|ana;613;av_cc070|gunze;H52;av_cc070|humbrol;155;av_cc070|revell;66;av_cc070|testor;1711;av_cc070
+av,MC,70.888,#3A3D2C,8,4,4,av_cc329,,Olive Grey,Gris Oliva,,fs;34096;av_cc070|ral;6006;av_cc070
+av,MC,70.889,#372C25,8,4,4,av_cc329,,Olive Brown,Pardo Oliva,,fs;34084;av_cc070|gunze;H78;av_cc070|humbrol;66;av_cc070|revell;66;av_cc070|tamiya;XF62;av_cc070|testor;1711;av_cc070
+av,MC,70.890,#3F4735,8,4,4,av_cc329,,Refractive Green,Verde Refractario,,fs;34129;av_cc070|ral;6003;av_cc070|humbrol;102;av_cc070|revell;45;av_cc070|testor;1716;av_cc070
+av,MC,70.891,#4F6848,8,4,4,av_cc329,,Intermediate Green,Verde Medio,,humbrol;82;av_cc070
+av,MC,70.892,#303830,8,4,4,av_cc329,,Yellow Olive,Oliva Amarillo,,fs;34083;av_cc070|ral;6008;av_cc070
+av,MC,70.893,#444739,8,4,4,av_cc329,,US Dark Green,Verde Americano,,fs;34079;av_cc070|gunze;H64;av_cc070|humbrol;116;av_cc070|revell;67;av_cc070|tamiya;XF13;av_cc070|testor;1710;av_cc070
+av,MC,70.894,#35392E,8,4,4,av_cc329,,Cam. Olive Green,Cam. Verde Oliva,,rlm;80;av_cc070
+av,MC,70.895,#465542,8,4,4,av_cc329,,Gunship Green,Verde Acorazado,,fs;34092;av_cc070|gunze;H73;av_cc070|humbrol;30;av_cc070|tamiya;XF57;av_cc070
 av,MC,70.896,#22240D,8,4,4,av_cc329,,Extra Dark Green,Verde Extra Osc.,,
-av,MC,70.897,#283625,8,4,4,av_cc329,,Bronze Green,Verde Bronce,,
-av,MC,70.898,#1D2B38,8,4,4,av_cc329,,Dark Sea Blue,Azul Marina Osc.,,
-av,MC,70.899,#332443,8,4,4,av_cc329,,Dark Prussian Blue,Azul de Prusia Osc.,,
-av,MC,70.900,#5C6876,8,4,4,av_cc070,,French Mirage Blue,Azul Francés,,
-av,MC,70.901,#607C91,8,4,4,av_cc329,,Pastel Blue,Azul Pastel,,
-av,MC,70.902,#5A6F9F,8,4,4,av_cc329,,Azure,Azul Azur,,
-av,MC,70.903,#626C79,8,4,4,av_cc070,,Intermediate Blue,Azul Americano,,
-av,MC,70.904,#69828B,8,4,4,av_cc070,,Dark Blue Grey,Gris Azul Oscuro,,
-av,MC,70.905,#7D8487,8,4,4,av_cc329,,Blue Grey Pale,Gris Azul Claro,,
+av,MC,70.897,#283625,8,12,4,av_cc329,,Bronze Green,Verde Bronce,,ral;7022;av_cc070|rlm;70;av_cc070|gunze;H54;av_cc070|humbrol;77;av_cc070
+av,MC,70.898,#1D2B38,8,4,4,av_cc329,,Dark Sea Blue,Azul Marina Osc.,,fs;35042;av_cc070|ana;607;av_cc070|humbrol;79;av_cc070|revell;77;av_cc070
+av,MC,70.899,#332443,8,4,4,av_cc329,,Dark Prussian Blue,Azul de Prusia Osc.,,fs;35048;av_cc070|gunze;H5;av_cc070|humbrol;15;av_cc070|revell;54;av_cc070|tamiya;X3;av_cc070|testor;1511;av_cc070
+av,MC,70.900,#5C6876,8,4,4,av_cc070,,French Mirage Blue,Azul Francés,,fs;35164;av_cc070
+av,MC,70.901,#607C91,8,4,4,av_cc329,,Pastel Blue,Azul Pastel,,ral;5024;av_cc070|gunze;H79;av_cc070|humbrol;93;av_cc070
+av,MC,70.902,#5A6F9F,8,4,4,av_cc329,,Azure,Azul Azur,,fs;35231;av_cc070
+av,MC,70.903,#626C79,8,4,4,av_cc070,,Intermediate Blue,Azul Americano,,fs;36176;av_cc070|gunze;H42;av_cc070|humbrol;144;av_cc070|revell;79;av_cc070|testor;1720;av_cc070
+av,MC,70.904,#69828B,8,4,4,av_cc070,,Dark Blue Grey,Gris Azul Oscuro,,fs;35189;av_cc070|humbrol;157;av_cc070
+av,MC,70.905,#7D8487,8,4,4,av_cc329,,Blue Grey Pale,Gris Azul Claro,,fs;35237;av_cc070|gunze;H308;av_cc070|humbrol;127;av_cc070|testor;1728;av_cc070
 av,MC,70.906,#859DA1,8,4,4,av_cc329,,Pale Blue,Azul Pálido,,
 av,MC,70.907,#9EAFAF,8,4,4,av_cc329,,Pale Grey Blue,Azul Gris Claro,,
-av,MC,70.908,#952528,8,4,4,av_cc329,,Carmine Red,Rojo Carmín,,
-av,MC,70.909,#C63335,8,4,4,av_cc329,,Vermilion,Bermellón,,
-av,MC,70.910,#E14D25,8,4,4,av_cc070,,Orange Red,Rojo Claro,,
+av,MC,70.908,#952528,8,4,4,av_cc329,,Carmine Red,Rojo Carmín,,gunze;H3;av_cc070|humbrol;19;av_cc070|revell;31;av_cc070|tamiya;X7;av_cc070|testor;1503;av_cc070
+av,MC,70.909,#C63335,8,4,4,av_cc329,,Vermilion,Bermellón,,fs;31302;av_cc070|ral;3020;av_cc070|gunze;H3;av_cc070|humbrol;174;av_cc070|revell;330;av_cc070|testor;1503;av_cc070
+av,MC,70.910,#E14D25,8,4,4,av_cc070,,Orange Red,Rojo Claro,,humbrol;131;av_cc070
 av,MC,70.911,#F47932,8,4,4,av_cc329,,Light Orange,Naranja Claro,,
-av,MC,70.912,#B99571,8,4,4,av_cc070,,Tan Yellow,Marrón Amarillo,,
-av,MC,70.913,#DAA751,8,4,4,av_cc329,,Yellow Ochre,Ocre Amarillo,,
-av,MC,70.914,#9D8143,8,4,4,av_cc329,,Green Ochre,Ocre Verde,,
+av,MC,70.912,#B99571,8,4,4,av_cc070,,Tan Yellow,Marrón Amarillo,,fs;33245;av_cc070|ral;1011;av_cc070
+av,MC,70.913,#DAA751,8,4,4,av_cc329,,Yellow Ochre,Ocre Amarillo,,fs;33434;av_cc070|gunze;H66;av_cc070|humbrol;63;av_cc070|revell;89;av_cc070|tamiya;XF59;av_cc070|testor;1706;av_cc070
+av,MC,70.914,#9D8143,8,4,4,av_cc329,,Green Ochre,Ocre Verde,,gunze;H27;av_cc070|humbrol;94;av_cc070|revell;88;av_cc070
 av,MC,70.915,#EDC52A,8,4,4,av_cc329,,Deep Yellow,Amarillo Intenso,,
 av,MC,70.916,#E6BC5D,8,4,4,av_cc329,,Sand Yellow,Amarillo Arena,,
 av,MC,70.917,#DBB971,8,4,4,av_cc329,,Beige,Beige,,
-av,MC,70.918,#E4DCCA,8,4,4,av_cc329,,Ivory,Hueso,,
+av,MC,70.918,#E4DCCA,8,4,4,av_cc329,,Ivory,Hueso,,ral;9001;av_cc070|gunze;H21;av_cc070|humbrol;41;av_cc070|revell;10;av_cc070|testor;2709;av_cc070
 av,MC,70.919,#F2F1F6,8,4,4,av_cc329,,Cold White,Blanco Frío,,
-av,MC,70.920,#415046,8,4,4,av_cc329,,German Uniform,Uniforme Alemán,,
-av,MC,70.921,#6B5532,8,4,4,av_cc329,,English Uniform,Uniforme Inglés,,
+av,MC,70.920,#415046,8,4,4,av_cc329,,German Uniform,Uniforme Alemán,,humbrol;80;av_cc070|revell;360;av_cc070|tamiya;X28;av_cc070|testor;1734;av_cc070
+av,MC,70.921,#6B5532,8,4,4,av_cc329,,English Uniform,Uniforme Inglés,,gunze;H72;av_cc070|humbrol;29;av_cc070|revell;87;av_cc070|tamiya;XF52;av_cc070
 av,MC,70.922,#455433,8,4,4,av_cc329,,Uniform Green,Verde Uniforme,,
-av,MC,70.923,#987E37,8,4,4,av_cc329,,Japan. Unif. WWII,Unif. Japonés WWII,,
-av,MC,70.924,#515239,8,4,4,av_cc329,,Russian Unif. WWII,Unifor. Ruso WWII,,
-av,MC,70.925,#352E51,8,4,4,av_cc329,,Blue,Azul Intenso,,
-av,MC,70.926,#76292C,8,4,4,av_cc329,,Red,Rojo,,
-av,MC,70.927,#CF9246,8,4,4,av_cc329,,Dark Flesh,Carne Oscura,,
-av,MC,70.928,#F0CDB0,8,4,4,av_cc329,,Light Flesh,Carne Clara,,
+av,MC,70.923,#987E37,8,4,4,av_cc329,,Japan. Unif. WWII,Unif. Japonés WWII,,humbrol;83;av_cc070|tamiya;XF60;av_cc070
+av,MC,70.924,#515239,8,4,4,av_cc329,,Russian Unif. WWII,Unifor. Ruso WWII,,fs;34127;av_cc070|rlm;83;av_cc070|humbrol;159;av_cc070
+av,MC,70.925,#352E51,8,4,4,av_cc329,,Blue,Azul Intenso,,humbrol;25;av_cc070|revell;56;av_cc070|tamiya;XF8;av_cc070
+av,MC,70.926,#76292C,8,4,4,av_cc329,,Red,Rojo,,gunze;H43;av_cc070|humbrol;20;av_cc070|revell;32;av_cc070|testor;1501;av_cc070
+av,MC,70.927,#CF9246,8,4,4,av_cc329,,Dark Flesh,Carne Oscura,,gunze;H44;av_cc070|humbrol;61;av_cc070|revell;35;av_cc070|tamiya;XF15;av_cc070|testor;1516;av_cc070
+av,MC,70.928,#F0CDB0,8,4,4,av_cc329,,Light Flesh,Carne Clara,,fs;31670;av_cc070
 av,MC,70.929,#9D613C,8,4,4,av_cc329,,Light Brown,Marrón Claro,,
-av,MC,70.930,#253A69,8,4,4,av_cc329,,Dark Blue,Azul Oscuro,,
+av,MC,70.930,#253A69,8,4,4,av_cc329,,Dark Blue,Azul Oscuro,,fs;35095;av_cc070|gunze;H15;av_cc070|humbrol;14;av_cc070|revell;52;av_cc070|testor;2715;av_cc070
 av,MC,70.934,#B42D3E,8,16,4,av_cc070,,Transparent Red,Rojo Transparente,,
 av,MC,70.935,#F36B26,8,16,4,av_cc070,,Transparent Orange,Naranja Transparente,,
 av,MC,70.936,#018251,8,16,4,av_cc070,,Transparent Green,Verde Transparente,,
 av,MC,70.937,#FAA41A,8,16,4,av_cc070,,Transparent Yellow,Amarillo Transparente,,
 av,MC,70.938,#353F61,8,16,4,av_cc070,,Transparent Blue,Azul Transparente,,
-av,MC,70.939,#5A4B49,8,16,4,av_cc329,,Smoke Ink,Tinta Humo,,
-av,MC,70.940,#896A64,8,4,4,av_cc329,,Saddle Brown,Marrón Cuero,,
+av,MC,70.939,#5A4B49,8,20,4,av_cc329,,Smoke Ink,Tinta Humo,,
+av,MC,70.940,#896A64,8,4,4,av_cc329,,Saddle Brown,Marrón Cuero,,fs;30111;av_cc070
 av,MC,70.941,#48352E,8,4,4,av_cc329,,Burnt Umber,Sombra Tostada,,
 av,MC,70.942,#449A6B,8,4,4,av_cc070,,Light Green,Verde Claro,,
-av,MC,70.943,#5A7287,8,4,4,av_cc329,,Grey Blue,Azul Gris,,
-av,MC,70.944,#B87172,8,4,4,av_cc329,,Old Rose,Rosa Antiguo,,
-av,MC,70.945,#8D365D,8,4,4,av_cc329,,Magenta,Magenta,,
-av,MC,70.946,#622E28,8,4,4,av_cc329,,Dark Red,Rojo Oscuro,,
-av,MC,70.947,#B43132,8,4,4,av_cc329,,Dark Vermilion,Bermellón Oscuro,,
+av,MC,70.943,#5A7287,8,4,4,av_cc329,,Grey Blue,Azul Gris,,fs;35177;av_cc070|humbrol;109;av_cc070
+av,MC,70.944,#B87172,8,4,4,av_cc329,,Old Rose,Rosa Antiguo,,gunze;H19;av_cc070|humbrol;200;av_cc070|tamiya;X17;av_cc070
+av,MC,70.945,#8D365D,8,4,4,av_cc329,,Magenta,Magenta,,ral;4006;av_cc070
+av,MC,70.946,#622E28,8,4,4,av_cc329,,Dark Red,Rojo Oscuro,,gunze;H87;av_cc070|humbrol;51;av_cc070|revell;96;av_cc070
+av,MC,70.947,#B43132,8,4,4,av_cc329,,Dark Vermilion,Bermellón Oscuro,,fs;31350;av_cc070|ral;3000;av_cc070
 av,MC,70.948,#FAA73F,8,4,4,av_cc329,,Golden Yellow,Amarillo Dorado,,
 av,MC,70.949,#F4D151,8,4,4,av_cc329,,Light Yellow,Amarillo Claro,,
-av,MC,70.950,#18131A,8,4,4,av_cc329,,Black,Negro,,
-av,MC,70.951,#FFFFFF,8,4,4,av_cc329,,White,Blanco,,
-av,MC,70.952,#E0D12E,8,4,4,av_cc329,,Lemon Yellow,Amarillo Limón,,
-av,MC,70.953,#F5B742,8,4,4,av_cc329,,Flat Yellow,Amarillo Mate,,
+av,MC,70.950,#18131A,8,4,4,av_cc329,,Black,Negro,,fs;37038;av_cc070|ral;9005;av_cc070|rlm;22;av_cc070|gunze;H12;av_cc070|humbrol;33;av_cc070|tamiya;XF1;av_cc070|testor;1583;av_cc070
+av,MC,70.951,#FFFFFF,8,4,4,av_cc329,,White,Blanco,,fs;37925;av_cc070|ral;9016;av_cc070|rlm;21;av_cc070|gunze;H11;av_cc070|humbrol;34;av_cc070|revell;5;av_cc070|tamiya;XF2;av_cc070|testor;1768;av_cc070
+av,MC,70.952,#E0D12E,8,4,4,av_cc329,,Lemon Yellow,Amarillo Limón,,ral;1018;av_cc070|humbrol;99;av_cc070|tamiya;XF3;av_cc070|testor;2717;av_cc070
+av,MC,70.953,#F5B742,8,4,4,av_cc329,,Flat Yellow,Amarillo Mate,,rlm;4;av_cc070|gunze;H4;av_cc070|humbrol;69;av_cc070|revell;12;av_cc070|tamiya;X8;av_cc070|testor;1514;av_cc070
 av,MC,70.954,#D6E040,8,4,4,av_cc329,,Yellow Green,Amarillo Verde,,
 av,MC,70.955,#DC975F,8,4,4,av_cc329,,Flat Flesh,Carne Mate,,
-av,MC,70.956,#CE5133,8,16,4,av_cc329,,Clear Orange,Naranja,,
-av,MC,70.957,#A03132,8,4,4,av_cc329,,Flat Red,Rojo Mate,,
+av,MC,70.956,#CE5133,8,16,4,av_cc329,,Clear Orange,Naranja,,fs;32246;av_cc070|gunze;H327;av_cc070|humbrol;153;av_cc070|tamiya;XF7;av_cc070|testor;1705;av_cc070
+av,MC,70.957,#A03132,8,4,4,av_cc329,,Flat Red,Rojo Mate,,ana;619;av_cc070
 av,MC,70.958,#AD5581,8,4,4,av_cc329,,Pink,Rosa,,
-av,MC,70.959,#523559,8,4,4,av_cc329,,Purple,Púrpura,,
+av,MC,70.959,#523559,8,4,4,av_cc329,,Purple,Púrpura,,gunze;H39;av_cc070|humbrol;68;av_cc070|revell;53;av_cc070|tamiya;X16;av_cc070
 av,MC,70.960,#392D50,8,4,4,av_cc329,,Violet,Violeta,,
-av,MC,70.961,#67B3CA,8,4,4,av_cc329,,Sky Blue,Azul Cielo,,
+av,MC,70.961,#67B3CA,8,4,4,av_cc329,,Sky Blue,Azul Cielo,,gunze;H45;av_cc070|humbrol;47;av_cc070|revell;50;av_cc070|testor;1508;av_cc070
 av,MC,70.962,#3F527C,8,4,4,av_cc329,,Flat Blue,Azul Mate,,
-av,MC,70.963,#104974,8,4,4,av_cc329,,Medium Blue,Azul Medio,,
-av,MC,70.964,#4C575D,8,4,4,av_cc329,,Field Blue,Azul Militar,,
-av,MC,70.965,#374863,8,4,4,av_cc329,,Prussian Blue,Azul de Prusia,,
+av,MC,70.963,#104974,8,4,4,av_cc329,,Medium Blue,Azul Medio,,ral;5019;av_cc070|rlm;24;av_cc070|gunze;H88;av_cc070|humbrol;52;av_cc070|revell;98;av_cc070|tamiya;X13;av_cc070|testor;2702;av_cc070
+av,MC,70.964,#4C575D,8,4,4,av_cc329,,Field Blue,Azul Militar,,humbrol;96;av_cc070|revell;79;av_cc070|tamiya;XF18;av_cc070
+av,MC,70.965,#374863,8,4,4,av_cc329,,Prussian Blue,Azul de Prusia,,ral;5000;av_cc070|humbrol;230;av_cc070
 av,MC,70.966,#08475F,8,4,4,av_cc329,,Turquoise,Turquesa,,
 av,MC,70.967,#4E633D,8,4,4,av_cc329,,Olive Green,Verde Oliva,,
-av,MC,70.968,#324D30,8,4,4,av_cc329,,Flat Green,Verde Oliva Osc.,,
-av,MC,70.969,#1D6851,8,4,4,av_cc329,,Park Green Flat,Verde,,
-av,MC,70.970,#114C30,8,4,4,av_cc329,,Deep Green,Verde Oscuro,,
-av,MC,70.971,#ABAFA6,8,4,4,av_cc329,,Light Green Grey,Verde Gris Pálido,,
-av,MC,70.972,#81948D,8,4,4,av_cc329,,Light Green Blue,Verde Azul Pálido,,
-av,MC,70.973,#97ACB0,8,4,4,av_cc070,,Light Sea Grey,Gris Medio,,
-av,MC,70.974,#708D67,8,4,4,av_cc329,,Green Sky,Verde Azul,,
-av,MC,70.975,#3B3E32,8,4,4,av_cc329,,Military Green,Verde Militar,,
-av,MC,70.976,#D0AD58,8,4,4,av_cc329,,Buff,Amarillo Caqui,,
-av,MC,70.977,#B08551,8,4,4,av_cc329,,Desert Yellow,Amarillo Desierto,,
-av,MC,70.978,#8B8745,8,4,4,av_cc329,,Dark Yellow,Amarillo Camuflaje,,
-av,MC,70.979,#1C2D20,8,4,4,av_cc329,,Cam. Dark Green,Cam. Verde Osc.,,
+av,MC,70.968,#324D30,8,4,4,av_cc329,,Flat Green,Verde Oliva Osc.,,gunze;H316;av_cc070|humbrol;130;av_cc070|testor;1596;av_cc070
+av,MC,70.969,#1D6851,8,4,4,av_cc329,,Park Green Flat,Verde,,gunze;H89;av_cc070|humbrol;50;av_cc070|revell;97;av_cc070
+av,MC,70.970,#114C30,8,4,4,av_cc329,,Deep Green,Verde Oscuro,,fs;34090;av_cc070|gunze;H26;av_cc070|humbrol;2;av_cc070|revell;61;av_cc070|testor;1524;av_cc070
+av,MC,70.971,#ABAFA6,8,4,4,av_cc329,,Light Green Grey,Verde Gris Pálido,,gunze;H67;av_cc070|humbrol;65;av_cc070|revell;55;av_cc070|tamiya;XF21;av_cc070
+av,MC,70.972,#81948D,8,4,4,av_cc329,,Light Green Blue,Verde Azul Pálido,,rlm;78;av_cc070
+av,MC,70.973,#97ACB0,8,4,4,av_cc070,,Light Sea Grey,Gris Medio,,humbrol;89;av_cc070|testor;1562;av_cc070
+av,MC,70.974,#708D67,8,4,4,av_cc329,,Green Sky,Verde Azul,,gunze;H312;av_cc070|humbrol;120;av_cc070|testor;1716;av_cc070
+av,MC,70.975,#3B3E32,8,4,4,av_cc329,,Military Green,Verde Militar,,humbrol;195;av_cc070|revell;363;av_cc070
+av,MC,70.976,#D0AD58,8,4,4,av_cc329,,Buff,Amarillo Caqui,,gunze;H34;av_cc070|humbrol;103;av_cc070
+av,MC,70.977,#B08551,8,4,4,av_cc329,,Desert Yellow,Amarillo Desierto,,fs;30257;av_cc070
+av,MC,70.978,#8B8745,8,4,4,av_cc329,,Dark Yellow,Amarillo Camuflaje,,ral;7028;av_cc070
+av,MC,70.979,#1C2D20,8,4,4,av_cc329,,Cam. Dark Green,Cam. Verde Osc.,,fs;34052;av_cc070|ral;6007;av_cc070
 av,MC,70.980,#20342B,8,4,4,av_cc329,,Black Green,Verde Negro,,
-av,MC,70.981,#AA6946,8,4,4,av_cc329,,Orange Brown,Marrón Naranja,,
-av,MC,70.982,#814940,8,4,4,av_cc329,,Cavalry Brown,Marrón Rojo,,
-av,MC,70.983,#60432C,8,4,4,av_cc329,,Flat Earth,Tierra Mate,,
-av,MC,70.984,#6C443E,8,4,4,av_cc329,,Flat Brown,Marrón Mate,,
-av,MC,70.985,#553638,8,4,4,av_cc329,,Hull Red,Marrón Rojizo,,
-av,MC,70.986,#A29E8E,8,4,4,av_cc329,,Deck Tan,Marrón Cubierta,,
-av,MC,70.987,#7E705C,8,4,4,av_cc329,,Medium Grey,Gris Medio,,
-av,MC,70.988,#6C6041,8,4,4,av_cc329,,Khaki,Marrón Caqui,,
-av,MC,70.989,#9FA4A7,8,4,4,av_cc329,,Sky Grey,Gris Cielo,,
-av,MC,70.990,#848B8E,8,4,4,av_cc329,,Light Grey,Gris Pálido,,
-av,MC,70.991,#656868,8,4,4,av_cc329,,Dark Sea Grey,Gris Marina,,
-av,MC,70.992,#5F6363,8,4,4,av_cc329,,Neutral Grey,Gris Neutral,,
+av,MC,70.981,#AA6946,8,4,4,av_cc329,,Orange Brown,Marrón Naranja,,ral;8023;av_cc070|gunze;H27;av_cc070|humbrol;9;av_cc070|revell;80;av_cc070
+av,MC,70.982,#814940,8,4,4,av_cc329,,Cavalry Brown,Marrón Rojo,,fs;30109;av_cc070|gunze;H13;av_cc070|humbrol;73;av_cc070|revell;331;av_cc070|tamiya;XF9;av_cc070
+av,MC,70.983,#60432C,8,4,4,av_cc329,,Flat Earth,Tierra Mate,,fs;30145;av_cc070|humbrol;186;av_cc070|revell;381;av_cc070|testor;1701;av_cc070
+av,MC,70.984,#6C443E,8,4,4,av_cc329,,Flat Brown,Marrón Mate,,fs;30108;av_cc070|ral;8011;av_cc070|gunze;H47;av_cc070|humbrol;160;av_cc070|revell;383;av_cc070|tamiya;XF64;av_cc070
+av,MC,70.985,#553638,8,4,4,av_cc329,,Hull Red,Marrón Rojizo,,ral;8017;av_cc070
+av,MC,70.986,#A29E8E,8,4,4,av_cc329,,Deck Tan,Marrón Cubierta,,fs;36440;av_cc070|gunze;H53;av_cc070|humbrol;128;av_cc070|revell;374;av_cc070|tamiya;XF53;av_cc070|testor;1741;av_cc070
+av,MC,70.987,#7E705C,8,4,4,av_cc329,,Medium Grey,Gris Medio,,gunze;H331;av_cc070|humbrol;164;av_cc070
+av,MC,70.988,#6C6041,8,4,4,av_cc329,,Khaki,Marrón Caqui,,fs;30277;av_cc070|gunze;H336;av_cc070|humbrol;187;av_cc070|testor;1704;av_cc070
+av,MC,70.989,#9FA4A7,8,4,4,av_cc329,,Sky Grey,Gris Cielo,,humbrol;196;av_cc070|revell;371;av_cc070
+av,MC,70.990,#848B8E,8,4,4,av_cc329,,Light Grey,Gris Pálido,,fs;36375;av_cc070|ral;7001;av_cc070
+av,MC,70.991,#656868,8,4,4,av_cc329,,Dark Sea Grey,Gris Marina,,fs;36231;av_cc070|humbrol;40;av_cc070|revell;70;av_cc070|testor;1729;av_cc070
+av,MC,70.992,#5F6363,8,4,4,av_cc329,,Neutral Grey,Gris Neutral,,fs;36173;av_cc070|gunze;H68;av_cc070|humbrol;27;av_cc070
 av,MC,70.993,#DCD7D6,8,4,4,av_cc329,,White Grey,Gris Blanco,,
-av,MC,70.994,#2A2B34,8,4,4,av_cc329,,Dark Grey,Gris Oscuro,,
-av,MC,70.995,#252929,8,4,4,av_cc329,,German Grey,Gris Alemán,,
-av,MC,70.996,#936A34,8,8,4,av_cc329,,Gold,Oro,,
-av,MC,70.997,#8C8F8F,8,8,4,av_cc329,,Silver,Plata,,
-av,MC,70.998,#4D3A21,8,8,4,av_cc329,,Bronze,Bronce,,
-av,MC,70.999,#7B372E,8,8,4,av_cc329,,Copper,Cobre,,
+av,MC,70.994,#2A2B34,8,4,4,av_cc329,,Dark Grey,Gris Oscuro,,fs;36076;av_cc070|gunze;H335;av_cc070|humbrol;85;av_cc070|revell;302;av_cc070|tamiya;X18;av_cc070|testor;1579;av_cc070
+av,MC,70.995,#252929,8,4,4,av_cc329,,German Grey,Gris Alemán,,ral;7016;av_cc070|gunze;H32;av_cc070|humbrol;67;av_cc070|revell;78;av_cc070|tamiya;XF63;av_cc070|testor;1592;av_cc070
+av,MC,70.996,#936A34,8,8,4,av_cc329,,Gold,Oro,,gunze;H9;av_cc070|humbrol;16;av_cc070|revell;94;av_cc070|tamiya;X12;av_cc070|testor;1744;av_cc070
+av,MC,70.997,#8C8F8F,8,8,4,av_cc329,,Silver,Plata,,gunze;H8;av_cc070|humbrol;11;av_cc070|revell;90;av_cc070|tamiya;X11;av_cc070|testor;1790;av_cc070
+av,MC,70.998,#4D3A21,8,8,4,av_cc329,,Bronze,Bronce,,humbrol;55;av_cc070|revell;95;av_cc070
+av,MC,70.999,#7B372E,8,8,4,av_cc329,,Copper,Cobre,,gunze;H10;av_cc070|humbrol;12;av_cc070|revell;93;av_cc070|tamiya;XF6;av_cc070|testor;1551;av_cc070
+av,MC,71.261,#FFFFFF,8,4,4,av_cc070,,Airbrush Thinner,Diluyente Aerógrafo,,
+av,MC,71.262,#FFFFFF,8,4,4,av_cc070,,Flow Improver,Flow Improver,,
+av,MC,73.212,#FFFFFF,8,4,4,av_cc070,,Decal Softener,Ablandador Calcas,,
+av,MC,73.213,#FFFFFF,8,4,4,av_cc070,,Decal Fix,Fijador Calcas,,
+av,MC,73.214,#FFFFFF,8,4,4,av_cc070,,Chipping Medium,Medium de Desgaste,,
 gunze,C,C1,#FFFFFF,1,1,1,gunze24_25,,WHITE,,ホワイト（白）,gunze;H1;gunze26|gunze;N1;gunze26
 gunze,C,C10,#CD733A,1,8,1,gunze24_25,,COPPER,,カッパー（銅）,gunze;H10;gunze26|gunze;N10;gunze26
 gunze,C,C100,#AF2A3D,1,1,1,gunze24_25,,WINE RED,,マルーン（ワインレッド）,gunze;H43;gunze26|gunze;N43;gunze26
