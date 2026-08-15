@@ -214,5 +214,23 @@
     "serie": "MET",
     "name": "Metal Color [77.x]",
     "desc": "Acrylic airbrush metal colors"
+  },
+  {
+    "brand": "av",
+    "serie": "MW",
+    "name": "Model Wash [76.x]",
+    "desc": "Weathering effects"
+  },
+  {
+    "brand": "av",
+    "serie": "PC",
+    "name": "Premium Color [62.x]",
+    "desc": "Acrylic polyurethane airbrush colors"
+  },
+  {
+    "brand": "av",
+    "serie": "TMM",
+    "name": "True Metallic Metal [77.x]",
+    "desc": "Realistic metallic paints"
   }
 ]

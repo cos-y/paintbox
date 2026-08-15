@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-15T23:31:40.307002+00:00",
+ "generatedAt": "2026-08-15T23:47:35.201577+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -79,6 +79,18 @@
    "url": "https://acrylicosvallejo.com/wp-content/uploads/2021/09/CC095-Model_Wash-Rev17-baja.pdf",
    "title": "MODEL WASH",
    "publishTs": "2021-05-18T18:25:59+08:00"
+  },
+  "av_cc081": {
+   "id": "av_cc081",
+   "url": "https://acrylicosvallejo.com/wp-content/uploads/2021/09/CC081-Premium_Color-Rev08-baja.pdf",
+   "title": "Premium Airbrush Color",
+   "publishTs": "2020-03-17T16:18:44+08:00"
+  },
+  "av_cc339": {
+   "id": "av_cc339",
+   "url": "https://acrylicosvallejo.com/wp-content/uploads/2026/06/CC339-True_Metallic_Metal.pdf",
+   "title": "TRUE METALLIC METAL COLOR CHART",
+   "publishTs": "2026-06-15T16:25:04+08:00"
   }
  }
 }
