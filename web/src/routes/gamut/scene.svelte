@@ -1,20 +1,28 @@
 <script lang="ts">
 	import { Gizmo, OrbitControls, interactivity } from '@threlte/extras';
 	import { T, useThrelte } from '@threlte/core';
-	import * as THREE from 'three';
+	import {
+		Vector3,
+		Plane,
+		ShaderMaterial,
+		LineBasicMaterial,
+		InstancedMesh,
+		PerspectiveCamera,
+		NoToneMapping
+	} from 'three';
 	import { clamp, linearToSrgb } from '$lib/utils.svelte';
 	import { sceneProps } from './gamut.svelte';
 
 	const { toneMapping, invalidate, renderer } = useThrelte();
-	toneMapping.set(THREE.NoToneMapping);
+	toneMapping.set(NoToneMapping);
 	renderer.localClippingEnabled = true;
 
 	interface Props {
 		ndiv: number;
 		matrices: Float32Array;
 		colors: Float32Array;
-		clip: THREE.Vector3[];
-		range: THREE.Vector3[];
+		clip: Vector3[];
+		range: Vector3[];
 		onselect?: (rgb: [number, number, number], hex: string) => void;
 	}
 
@@ -26,7 +34,7 @@
 		a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
 	const syncCamera = () => {
 		if (!orbitControls) return;
-		const cam = orbitControls.object as THREE.PerspectiveCamera;
+		const cam = orbitControls.object as PerspectiveCamera;
 		const pos: [number, number, number] = [cam.position.x, cam.position.y, cam.position.z];
 		const tgt: [number, number, number] = [
 			orbitControls.target.x,
@@ -57,17 +65,17 @@
 		}
 	});
 
-	let mesh: THREE.InstancedMesh | undefined = $state();
+	let mesh: InstancedMesh | undefined = $state();
 	let hoveredId = -1;
 
 	const nvoxels = $derived(colors.length / 3);
 	const scale = $derived(1 / (ndiv - 1));
 
-	const gridLineMaterial = new THREE.LineBasicMaterial({
+	const gridLineMaterial = new LineBasicMaterial({
 		color: 0x888888,
 		clippingPlanes: [
-			new THREE.Plane(new THREE.Vector3(1, 0, 0), 0.5)
-			// new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)
+			new Plane(new Vector3(1, 0, 0), 0.5)
+			// new Plane(new Vector3(1, 0, 0), 0)
 		]
 	});
 
@@ -77,13 +85,13 @@
 	$effect(() => {
 		const eps = 1e-3;
 		gridLineMaterial.clippingPlanes = [
-			new THREE.Plane(new THREE.Vector3(1, 0, 0), -1 * (clipLow.x * scale - 0.5) + eps),
-			new THREE.Plane(new THREE.Vector3(0, 1, 0), -1 * (clipLow.y * scale) + eps),
-			new THREE.Plane(new THREE.Vector3(0, 0, 1), -1 * (clipLow.z * scale) + eps),
+			new Plane(new Vector3(1, 0, 0), -1 * (clipLow.x * scale - 0.5) + eps),
+			new Plane(new Vector3(0, 1, 0), -1 * (clipLow.y * scale) + eps),
+			new Plane(new Vector3(0, 0, 1), -1 * (clipLow.z * scale) + eps),
 
-			new THREE.Plane(new THREE.Vector3(-1, 0, 0), 1 * (clipHigh.x * scale - 0.5) + eps),
-			new THREE.Plane(new THREE.Vector3(0, -1, 0), 1 * (clipHigh.y * scale) + eps),
-			new THREE.Plane(new THREE.Vector3(0, 0, -1), 1 * (clipHigh.z * scale) + eps)
+			new Plane(new Vector3(-1, 0, 0), 1 * (clipHigh.x * scale - 0.5) + eps),
+			new Plane(new Vector3(0, -1, 0), 1 * (clipHigh.y * scale) + eps),
+			new Plane(new Vector3(0, 0, -1), 1 * (clipHigh.z * scale) + eps)
 		];
 		gridLineMaterial.needsUpdate = true;
 		invalidate();
@@ -91,7 +99,7 @@
 
 	$effect(() => {
 		if (!mesh) return;
-		const mat = mesh.material as THREE.ShaderMaterial;
+		const mat = mesh.material as ShaderMaterial;
 		if (!mat.uniforms) return;
 		mat.uniforms.uClipLow.value.copy(clipLow);
 		mat.uniforms.uClipHigh.value.copy(clipHigh);
@@ -165,8 +173,8 @@
 		<T.BoxGeometry args={[1, 1, 1]} />
 		<T.ShaderMaterial
 			uniforms={{
-				uClipLow: { value: new THREE.Vector3() },
-				uClipHigh: { value: new THREE.Vector3() }
+				uClipLow: { value: new Vector3() },
+				uClipHigh: { value: new Vector3() }
 			}}
 			fragmentShader={`
 					#include <common>
@@ -207,17 +215,11 @@
 	</T.InstancedMesh>
 	<!-- {/key} -->
 
-	<T.ArrowHelper
-		args={[new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 1.25, 0xff3653, 0.15]}
-	/>
-	<T.ArrowHelper
-		args={[new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0x8adb00, 0.15]}
-	/>
-	<T.ArrowHelper
-		args={[new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 1, 0x2c8fff, 0.15]}
-	/>
-	<T.ArrowHelper args={[new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, 0), 1, 0x8adb00, 0]} />
-	<T.ArrowHelper args={[new THREE.Vector3(0, 0, -1), new THREE.Vector3(0, 0, 0), 1, 0x2c8fff, 0]} />
+	<T.ArrowHelper args={[new Vector3(1, 0, 0), new Vector3(0, 0, 0), 1.25, 0xff3653, 0.15]} />
+	<T.ArrowHelper args={[new Vector3(0, 1, 0), new Vector3(0, 0, 0), 1, 0x8adb00, 0.15]} />
+	<T.ArrowHelper args={[new Vector3(0, 0, 1), new Vector3(0, 0, 0), 1, 0x2c8fff, 0.15]} />
+	<T.ArrowHelper args={[new Vector3(0, -1, 0), new Vector3(0, 0, 0), 1, 0x8adb00, 0]} />
+	<T.ArrowHelper args={[new Vector3(0, 0, -1), new Vector3(0, 0, 0), 1, 0x2c8fff, 0]} />
 
 	{@const ngrid = 2 * ndiv + 1}
 	{#each [clip[0].x, clip[1].x] as v, i}

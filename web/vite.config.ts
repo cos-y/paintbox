@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { minifyStaticJson } from './plugins/minifyStaticJson.ts';
 import { version } from './package.json' with { type: 'json' };
@@ -10,6 +11,12 @@ export default defineConfig({
 		__APP_VERSION__: JSON.stringify(version),
 		// 渠道标识：CI 打包时通过 CHANNEL 环境变量注入（play / 空=sideload / 未来 huawei 等）
 		__CHANNEL__: JSON.stringify(process.env.CHANNEL ?? '')
+	},
+	resolve: {
+		alias: {
+			// 只导出本项目用到的符号，避免 extras barrel 连带 GLTF/DRACOLoader
+			'@threlte/extras': resolve(__dirname, 'src/lib/threlte-extras-shim.ts')
+		}
 	},
 	plugins: [
 		tailwindcss(),

@@ -1,5 +1,5 @@
 import { untrack } from 'svelte';
-import * as THREE from 'three';
+import { Vector3 } from 'three';
 import { clamp, isMedia, loadData } from '$lib/utils.svelte';
 import { isTauri } from '@tauri-apps/api/core';
 import { callWasm } from '$lib/wasmClient';
@@ -86,12 +86,12 @@ class SceneProps {
 	clipB = $state<[number, number]>(store.clipB.map((x) => clamp(x, ...rangeB)) as [number, number]);
 
 	clip = $derived([
-		new THREE.Vector3(this.clipL[0], this.clipA[0], this.clipB[0]),
-		new THREE.Vector3(this.clipL[1], this.clipA[1], this.clipB[1])
+		new Vector3(this.clipL[0], this.clipA[0], this.clipB[0]),
+		new Vector3(this.clipL[1], this.clipA[1], this.clipB[1])
 	]);
 	range = $derived([
-		new THREE.Vector3(rangeL[0], rangeA[0], rangeB[0]),
-		new THREE.Vector3(rangeL[1], rangeA[1], rangeB[1])
+		new Vector3(rangeL[0], rangeA[0], rangeB[0]),
+		new Vector3(rangeL[1], rangeA[1], rangeB[1])
 	]);
 
 	/** 相机位置 / 朝向目标（scene 视角；OrbitControls 双向同步，运行时状态） */
