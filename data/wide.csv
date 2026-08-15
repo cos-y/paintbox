@@ -469,11 +469,6 @@ ak,S,11215,#6C4A25,8,16,5,ak_equiv21,,Clear Smoke,,,av;70.939;ak_equiv21|gunze;H
 ak,S,11216,#17A24A,8,16,5,ak_equiv21,,Clear Green,,,av;70.936;ak_equiv21|gunze;H94;ak_equiv21
 ak,S,11217,#F89624,8,16,5,ak_equiv21,,Clear Yellow,,,av;70.937;ak_equiv21|gunze;H91;ak_equiv21|real;RC507;ak_equiv21
 ak,S,11218,#F26721,8,16,5,ak_equiv21,,Clear Orange,,,av;70.935;ak_equiv21|gunze;H92;ak_equiv21
-av,GA,70.625,#36426F,8,2,5,av_cc298,,Ultramarine Blue,Azul Ultramar,,
-av,GA,70.629,#FAA222,8,2,5,av_cc298,,Sun Yellow,Amarillo Soleado,,
-av,GA,70.630,#7591A0,8,2,5,av_cc298,,Steel Grey,Gris Acero,,
-av,GA,70.631,#8B939B,8,2,5,av_cc298,,Chainmail Silver,Malla de Acero,,
-av,GA,70.632,#D9282A,8,2,5,av_cc298,,Bloody Red,Rojo Sanguina,,
 av,GA,76.001,#FFFFFF,8,2,5,av_cc298,,Dead White,Blanco Calavera,,av;72.001;av_cc298|av;70.600;av_cc298
 av,GA,76.003,#DD9C7A,8,2,5,av_cc298,,Pale Flesh,Carne Pálida,,av;72.003;av_cc298|av;28.024;av_cc298
 av,GA,76.004,#D1844E,8,2,5,av_cc298,,Elf Skin Tone,Piel de Elfos,,av;72.004;av_cc298
@@ -1263,6 +1258,25 @@ av,MEC,70.641,#B9BFC1,8,4,5,av_cc064,,Grey,,,av;70.601;av_cc064
 av,MEC,70.642,#000000,8,4,5,av_cc064,,Black,,,av;70.602;av_cc064
 av,MEC,70.643,#EAE7CD,8,4,5,av_cc064,,Ivory,,,av;70.918;av_cc064
 av,MEC,70.644,#CAB088,8,4,5,av_cc064,,Sand,,,av;70.613;av_cc064
+av,MET,77.657,#FFFFFF,8,1,5,av_cc069,,Gloss Metal Varnish,Barniz Metal Brillante,,
+av,MET,77.660,#57544B,8,1,5,av_cc069,,Gloss Black Primer,Imprimación Negro Brillante,,
+av,MET,77.701,#A9A9AE,8,8,5,av_cc069,,Aluminium,Aluminio,,
+av,MET,77.702,#9D9CA2,8,8,5,av_cc069,,Duraluminium,Duraluminio,,
+av,MET,77.703,#8D8C8F,8,8,5,av_cc069,,Dark Aluminium,Aluminio Oscuro,,
+av,MET,77.704,#A6A7A8,8,8,5,av_cc069,,Pale Burnt Metal,Metal Quemado,,
+av,MET,77.706,#B2B6BE,8,8,5,av_cc069,,White Aluminium,Aluminio Blanco,,
+av,MET,77.707,#AAA9A9,8,8,5,av_cc069,,Chrome,Cromo,,
+av,MET,77.710,#9D8275,8,8,5,av_cc069,,Copper,Cobre,,
+av,MET,77.711,#818082,8,8,5,av_cc069,,Magnesium,Magnesio,,
+av,MET,77.712,#6F706F,8,8,5,av_cc069,,Steel,Acero,,
+av,MET,77.713,#7C7775,8,8,5,av_cc069,,Jet Exhaust,Tobera Reactor,,
+av,MET,77.716,#BDBEC5,8,4,5,av_cc069,,Semi Matt Aluminium,Aluminio Satinado,,
+av,MET,77.717,#B8B8BD,8,4,5,av_cc069,,Dull Aluminium,Aluminio Mate,,
+av,MET,77.720,#6E6D6D,8,8,5,av_cc069,,Gunmetal Grey,Gris Metalizado,,
+av,MET,77.721,#7E7979,8,8,5,av_cc069,,Burnt Iron,Hierro Quemado,,
+av,MET,77.723,#7E7A74,8,8,5,av_cc069,,Exhaust Manifold,Colector Escape,,
+av,MET,77.724,#9C9BA0,8,8,5,av_cc069,,Silver,Plata,,
+av,MET,77.725,#B19B74,8,8,5,av_cc069,,Gold,Oro,,
 av,P,70.600,#F6F8F6,8,4,5,av_cc298|av_cc340,,White,Blanco,,
 av,P,70.601,#BBBEC2,8,4,5,av_cc340,,Grey,Gris,,
 av,P,70.602,#000000,8,4,5,av_cc298|av_cc340,,Black,Negro,,
@@ -1279,6 +1293,11 @@ av,P,70.612,#455345,8,4,5,av_cc340,,NATO Green,Verde OTAN,,
 av,P,70.613,#D3BE93,8,4,5,av_cc340,,Desert Tan,Arena Desierto,,
 av,P,70.614,#80776E,8,4,5,av_cc340,,IDF Isr. Sand Grey (61-73),IDF Gris Arena Isr.,,
 av,P,70.615,#929CA7,8,4,5,av_cc340,,USN Light Ghost Grey,USN Gris Claro,,
+av,P,70.625,#36426F,8,4,5,av_cc298,,Ultramarine Blue,Azul Ultramar,,
+av,P,70.629,#FAA222,8,4,5,av_cc298,,Sun Yellow,Amarillo Soleado,,
+av,P,70.630,#7591A0,8,4,5,av_cc298,,Steel Grey,Gris Acero,,
+av,P,70.631,#8B939B,8,4,5,av_cc298,,Chainmail Silver,Malla de Acero,,
+av,P,70.632,#D9282A,8,4,5,av_cc298,,Bloody Red,Rojo Sanguina,,
 gunze,C,C1,#FFFFFF,1,1,1,gunze24_25,,WHITE,,ホワイト（白）,gunze;H1;gunze26|gunze;N1;gunze26
 gunze,C,C10,#CD733A,1,8,1,gunze24_25,,COPPER,,カッパー（銅）,gunze;H10;gunze26|gunze;N10;gunze26
 gunze,C,C100,#AF2A3D,1,1,1,gunze24_25,,WINE RED,,マルーン（ワインレッド）,gunze;H43;gunze26|gunze;N43;gunze26

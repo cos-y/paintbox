@@ -2714,6 +2714,25 @@
   "28.031": "Gunmetal",
   "28.530": "Gloss Varnish",
   "28.531": "Matt Varnish",
-  "28.532": "Satin Varnish"
+  "28.532": "Satin Varnish",
+  "77.657": "Gloss Metal Varnish",
+  "77.660": "Gloss Black Primer",
+  "77.701": "Aluminium",
+  "77.702": "Duraluminium",
+  "77.703": "Dark Aluminium",
+  "77.704": "Pale Burnt Metal",
+  "77.706": "White Aluminium",
+  "77.707": "Chrome",
+  "77.710": "Copper",
+  "77.711": "Magnesium",
+  "77.712": "Steel",
+  "77.713": "Jet Exhaust",
+  "77.716": "Semi Matt Aluminium",
+  "77.717": "Dull Aluminium",
+  "77.720": "Gunmetal Grey",
+  "77.721": "Burnt Iron",
+  "77.723": "Exhaust Manifold",
+  "77.724": "Silver",
+  "77.725": "Gold"
  }
 }

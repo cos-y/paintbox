@@ -164,55 +164,55 @@
   {
     "brand": "av",
     "serie": "MC",
-    "name": "Model Color",
+    "name": "Model Color [70.x]",
     "desc": "Quick dry acrylic paints for brush"
   },
   {
     "brand": "av",
     "serie": "LM",
-    "name": "Liquid Metal",
+    "name": "Liquid Metal [70.x]",
     "desc": "Alcohol-based quick dry metallic paints"
   },
   {
     "brand": "av",
     "serie": "GC",
-    "name": "Game Color",
+    "name": "Game Color [72.x]",
     "desc": "Acrylic colors for fantasy and wargame figures"
   },
   {
     "brand": "av",
     "serie": "GA",
-    "name": "Game Air",
+    "name": "Game Air [76.x]",
     "desc": "Versatile paints for brush or airbrush"
   },
   {
     "brand": "av",
     "serie": "MA",
-    "name": "Model Air",
+    "name": "Model Air [71.x]",
     "desc": "Versatile paints for brush or airbrush"
   },
   {
     "brand": "av",
     "serie": "P",
-    "name": "Primers",
+    "name": "Primers [70.x]",
     "desc": "Base layer"
   },
   {
     "brand": "av",
     "serie": "MEC",
-    "name": "Mecha Color",
+    "name": "Mecha Color [69.x]",
     "desc": "Acrylic airbrush colors for painting mecha's"
   },
   {
     "brand": "av",
     "serie": "HP",
-    "name": "Hobby Paint",
+    "name": "Hobby Paint [28.x]",
     "desc": "Spray paint for metal, plastic and resin miniatures"
   },
   {
     "brand": "av",
     "serie": "MET",
-    "name": "Metal Color",
+    "name": "Metal Color [77.x]",
     "desc": "Acrylic airbrush metal colors"
   }
 ]
