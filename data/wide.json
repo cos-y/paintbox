@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-15T21:47:49.709734+00:00",
+ "generatedAt": "2026-08-15T21:57:16.192351+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -49,6 +49,12 @@
    "url": "https://www.vallejoacrylics.com/wp-content/uploads/2022/11/Colores-GC-2022.pdf",
    "title": "GAME COLOR & XPRESS COLOR COLOR CHARTS",
    "publishTs": "2023-01-26T21:42:24+08:00"
+  },
+  "av_cc340": {
+   "id": "av_cc340",
+   "url": "https://acrylicosvallejo.com/wp-content/uploads/2025/12/CC340-R00-Model-Air-2026.pdf",
+   "title": "MODEL AIR & PRIMERS COLOR CHARTS",
+   "publishTs": "2025-11-19T20:31:42+08:00"
   }
  }
 }

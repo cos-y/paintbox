@@ -34,7 +34,7 @@ def natural_key(s: str) -> list:
 
 
 # 全大写英文名 sanitize 时的保留缩写（系列/色卡/军队标识，长度 >= 3 才需要列出）
-_EN_KEEP = {"RLM", "IJA", "IJN", "IDF", "GGX", "SEED", "WW", "JASDF", "JMSDF", "RAF", "USMC", "ADC", "PRU", "AII", "AMT", "NATO", "LAF", "SLA", "CARC", "MERDC", "RAL"}
+_EN_KEEP = {"RLM", "IJA", "IJN", "IDF", "GGX", "SEED", "WW", "JASDF", "JMSDF", "RAF", "USMC", "ADC", "PRU", "AII", "AMT", "NATO", "LAF", "SLA", "CARC", "MERDC", "RAL", "USAF", "USAAF", "USN"}
 
 
 def sanitize_en(name: str) -> str:
