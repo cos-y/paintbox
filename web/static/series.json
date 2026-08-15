@@ -196,5 +196,17 @@
     "serie": "P",
     "name": "Primers",
     "desc": "Base layer"
+  },
+  {
+    "brand": "av",
+    "serie": "MEC",
+    "name": "Mecha Color",
+    "desc": "Acrylic airbrush colors for painting mecha's"
+  },
+  {
+    "brand": "av",
+    "serie": "HP",
+    "name": "Hobby Paint",
+    "desc": "Spray paint for metal, plastic and resin miniatures"
   }
 ]

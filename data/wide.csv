@@ -1153,6 +1153,82 @@ av,MC,71.262,#FFFFFF,8,16,4,av_cc070,,Flow Improver,Flow Improver,,
 av,MC,73.212,#FFFFFF,8,16,4,av_cc070,,Decal Softener,Ablandador Calcas,,
 av,MC,73.213,#FFFFFF,8,16,4,av_cc070,,Decal Fix,Fijador Calcas,,
 av,MC,73.214,#FFFFFF,8,16,4,av_cc070|av_cc340,,Chipping Medium,Medium Desgaste,,
+av,MEC,69.001,#FFFFFF,8,4,5,av_cc064,,Pure White,,,av;70.951;av_cc064
+av,MEC,69.002,#C5C8BE,8,4,5,av_cc064,,White Grey,,,av;70.313;av_cc064|gunze;UG01;av_cc064
+av,MEC,69.003,#E1DDD0,8,4,5,av_cc064,,Off-White,,,av;70.820;av_cc064|gunze;C69;av_cc064
+av,MEC,69.004,#E49F2C,8,4,5,av_cc064,,Yellow,,,av;70.953;av_cc064|gunze;UG03;av_cc064
+av,MEC,69.005,#F8C9A0,8,4,5,av_cc064,,Light Flesh,,,av;70.928;av_cc064
+av,MEC,69.006,#E28F79,8,4,5,av_cc064,,Pink,,,av;70.805;av_cc064|gunze;UG10;av_cc064
+av,MEC,69.007,#F36E32,8,4,5,av_cc064,,Orange,,,av;70.851;av_cc064
+av,MEC,69.008,#C82A32,8,4,5,av_cc064,,Red,,,av;70.817;av_cc064|gunze;UG04;av_cc064
+av,MEC,69.009,#B73C45,8,4,5,av_cc064,,SZ Red,,,av;70.947;av_cc064|gunze;UG12;av_cc064
+av,MEC,69.010,#AA4381,8,4,5,av_cc064,,Magenta,,,av;70.945;av_cc064
+av,MEC,69.011,#872D42,8,4,5,av_cc064,,Dark Red,,,av;70.926;av_cc064|gunze;UG11;av_cc064
+av,MEC,69.012,#9D97CA,8,4,5,av_cc064,,Purple,,,gunze;UG08;av_cc064
+av,MEC,69.013,#2F4864,8,4,5,av_cc064,,Titan Blue,,,av;70.807;av_cc064|gunze;UG17;av_cc064
+av,MEC,69.014,#637F84,8,4,5,av_cc064,,Grey Green,,,av;70.904;av_cc064|gunze;C337;av_cc064
+av,MEC,69.015,#6D8DA1,8,4,5,av_cc064,,Blue Grey,,,av;70.901;av_cc064|gunze;C74;av_cc064
+av,MEC,69.016,#668CB8,8,4,5,av_cc064,,Light Blue,,,av;70.902;av_cc064|gunze;UG14;av_cc064
+av,MEC,69.017,#5FC3E8,8,4,5,av_cc064,,Sky Blue,,,av;70.961;av_cc064|gunze;C323;av_cc064
+av,MEC,69.018,#1299C6,8,4,5,av_cc064,,Deep Blue,,,av;70.841;av_cc064|gunze;C72;av_cc064
+av,MEC,69.019,#26598C,8,4,5,av_cc064,,Blue,,,av;70.962;av_cc064|gunze;UG02;av_cc064
+av,MEC,69.020,#265B8D,8,4,5,av_cc064,,Electric Blue,,,av;70.736;av_cc064|gunze;UG13;av_cc064
+av,MEC,69.021,#3B5C75,8,4,5,av_cc064,,Dark Blue,,,av;70.965;av_cc064|gunze;C322;av_cc064
+av,MEC,69.022,#39444A,8,4,5,av_cc064,,Titan Dark Blue,,,av;70.898;av_cc064|gunze;UG16;av_cc064
+av,MEC,69.023,#00A7A5,8,4,5,av_cc064,,Turquoise,,,av;70.966;av_cc064|gunze;C72*;av_cc064
+av,MEC,69.024,#93A7A8,8,4,5,av_cc064,,Stone Grey,,,av;70.973;av_cc064|gunze;C308;av_cc064
+av,MEC,69.025,#BCC7B8,8,4,5,av_cc064,,Light Green,,,av;70.832;av_cc064|gunze;C314;av_cc064
+av,MEC,69.026,#8A9883,8,4,5,av_cc064,,Green,,,av;70.885;av_cc064|gunze;UG06;av_cc064
+av,MEC,69.027,#7E9B7D,8,4,5,av_cc064,,Green Blue,,,av;70.974;av_cc064|gunze;CG24;av_cc064
+av,MEC,69.028,#5A694B,8,4,5,av_cc064,,Olive Green,,,av;70.967;av_cc064|gunze;C304;av_cc064
+av,MEC,69.029,#748370,8,4,5,av_cc064,,Deep Green,,,av;70.330;av_cc064|gunze;UG07;av_cc064
+av,MEC,69.030,#4C544A,8,4,5,av_cc064,,Dark Green,,,av;70.894;av_cc064|gunze;CG23;av_cc064
+av,MEC,69.031,#968F7D,8,4,5,av_cc064,,Grey Sand,,,av;70.821;av_cc064
+av,MEC,69.032,#D8903B,8,4,5,av_cc064,,Yellow Ochre,,,av;70.834;av_cc064|gunze;C109;av_cc064
+av,MEC,69.033,#F0BF75,8,4,5,av_cc064,,Sand Yellow,,,av;70.916;av_cc064|gunze;C39;av_cc064
+av,MEC,69.034,#77624C,8,4,5,av_cc064,,Brown,,,av;70.873;av_cc064|gunze;C310;av_cc064
+av,MEC,69.035,#413D3C,8,4,5,av_cc064,,Chipping Brown,,,av;70.822;av_cc064
+av,MEC,69.036,#8A9A9F,8,4,5,av_cc064,,Light Grey,,,av;70.989;av_cc064|gunze;C338*;av_cc064
+av,MEC,69.037,#80939D,8,4,5,av_cc064,,Grey,,,av;71.120;av_cc064
+av,MEC,69.038,#717980,8,4,5,av_cc064,,Medium Grey,,,av;70.870;av_cc064|gunze;C335;av_cc064
+av,MEC,69.039,#707679,8,4,5,av_cc064,,Grey Z,,,av;70.991;av_cc064|gunze;UG09;av_cc064
+av,MEC,69.040,#4F575F,8,4,5,av_cc064,,Phantom Grey,,,av;70.868;av_cc064|gunze;UG15;av_cc064
+av,MEC,69.041,#484E50,8,4,5,av_cc064,,Dark Grey Green,,,av;70.862;av_cc064|gunze;CG100;av_cc064
+av,MEC,69.042,#231F20,8,4,5,av_cc064,,Pure Black,,,av;70.950;av_cc064|gunze;92;av_cc064
+av,MEC,69.054,#EAE851,8,64,5,av_cc064,,Yellow Fluorescent,,,
+av,MEC,69.055,#F06724,8,64,5,av_cc064,,Orange Fluorescent,,,
+av,MEC,69.056,#EC4C9B,8,64,5,av_cc064,,Magenta Fluorescent,,,
+av,MEC,69.057,#9BCD67,8,64,5,av_cc064,,Green Fluorescent,,,
+av,MEC,69.058,#666E72,8,8,5,av_cc064,,Gunmetal,,,av;72.054;av_cc064|gunze;UG05;av_cc064
+av,MEC,69.059,#AD9362,8,8,5,av_cc064,,Gold,,,av;70.793;av_cc064
+av,MEC,69.060,#8C7651,8,8,5,av_cc064,,Old Gold,,,av;70.878;av_cc064
+av,MEC,69.061,#956352,8,8,5,av_cc064,,Copper,,,av;70.999;av_cc064
+av,MEC,69.062,#726444,8,8,5,av_cc064,,Bronze,,,av;70.998;av_cc064
+av,MEC,69.063,#838486,8,8,5,av_cc064,,Steel,,,av;70.864;av_cc064
+av,MEC,69.064,#99A1A6,8,8,5,av_cc064,,Light Steel,,,av;70.997;av_cc064
+av,MEC,69.065,#6A6C6D,8,8,5,av_cc064,,Dark Steel,,,av;70.865;av_cc064
+av,MEC,69.066,#B3596A,8,8,5,av_cc064,,Metallic Red,,,av;71.070;av_cc064
+av,MEC,69.067,#436685,8,8,5,av_cc064,,Metallic Blue,,,av;71.071;av_cc064
+av,MEC,69.068,#55AE8D,8,8,5,av_cc064,,Metallic Green,,,
+av,MEC,69.505,#F07C28,8,128,5,av_cc064,,Light Rust Wash,,,av;76.505;av_cc064
+av,MEC,69.507,#E66020,8,128,5,av_cc064,,Dark Rust Wash,,,av;76.507;av_cc064
+av,MEC,69.515,#BEC0BF,8,128,5,av_cc064,,Light Grey Wash,,,av;76.515;av_cc064
+av,MEC,69.518,#231F20,8,128,5,av_cc064,,Black Wash,,,av;76.518;av_cc064
+av,MEC,69.521,#6C554A,8,128,5,av_cc064,,Oiled Earth Wash,,,av;76.521;av_cc064
+av,MEC,69.522,#D2B478,8,128,5,av_cc064,,Desert Dust Wash,,,av;76.522;av_cc064
+av,MEC,69.701,#FFFFFF,8,1,5,av_cc064,,Mecha Gloss Varnish,,,
+av,MEC,69.702,#FFFFFF,8,4,5,av_cc064,,Mecha Matt Varnish,,,
+av,MEC,69.703,#FFFFFF,8,2,5,av_cc064,,Mecha Satin Varnish,,,
+av,MEC,69.813,#6B4F1D,8,1,5,av_cc064,,Oil Stains (Gloss),,,av;73.813;av_cc064
+av,MEC,69.814,#996122,8,1,5,av_cc064,,Fuel Stains (Gloss),,,av;73.814;av_cc064
+av,MEC,69.817,#0B151C,8,1,5,av_cc064,,Petrol Spills (Gloss),,,av;73.817;av_cc064
+av,MEC,69.818,#58311C,8,4,5,av_cc064,,Brown Eng. Soot (Matt),,,av;73.818;av_cc064
+av,MEC,69.821,#622F28,8,4,5,av_cc064,,Rust Texture (Matt),,,av;73.821;av_cc064
+av,MEC,70.640,#FFFFFF,8,4,5,av_cc064,,White,,,av;70.600;av_cc064
+av,MEC,70.641,#B9BFC1,8,4,5,av_cc064,,Grey,,,av;70.601;av_cc064
+av,MEC,70.642,#000000,8,4,5,av_cc064,,Black,,,av;70.602;av_cc064
+av,MEC,70.643,#EAE7CD,8,4,5,av_cc064,,Ivory,,,av;70.918;av_cc064
+av,MEC,70.644,#CAB088,8,4,5,av_cc064,,Sand,,,av;70.613;av_cc064
 av,P,70.600,#F6F8F6,8,4,5,av_cc298|av_cc340,,White,Blanco,,
 av,P,70.601,#BBBEC2,8,4,5,av_cc340,,Grey,Gris,,
 av,P,70.602,#000000,8,4,5,av_cc298|av_cc340,,Black,Negro,,
