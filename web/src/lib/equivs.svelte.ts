@@ -39,9 +39,5 @@ export const initEquivs = (buf: ArrayBuffer): void => {
 	equivMap = m;
 };
 
-/** 与指定油漆（内部下标）直接等价的其它油漆下标列表（双向，不含传递） */
-export const findEquivIndices = (index: number): number[] =>
-	equivMap?.get(index)?.map((e) => e.idx) ?? [];
-
 /** 直接等价（双向，带声明来源） */
-export const findEquivs = (index: number): EquivRef[] => equivMap?.get(index) ?? [];
+export const getEquivs = (index: number): EquivRef[] => equivMap?.get(index) ?? [];

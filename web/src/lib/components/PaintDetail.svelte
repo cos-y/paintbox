@@ -26,10 +26,10 @@
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import PanText from '$lib/components/PanText.svelte';
-	import { findEquivIndices } from '$lib/equivs.svelte';
+	import { getEquivs } from '$lib/equivs.svelte';
 	import { Button } from 'flowbite-svelte';
 	import Tag from './Tag.svelte';
-	import { paintSources } from '$lib/paintSources';
+	import { getSourceMeta } from '$lib/paintSources';
 
 	const FEEDBACK_EMAIL = 'zack.studios.15@gmail.com';
 
@@ -43,18 +43,14 @@
 	const inStock = $derived(stock.has(paint.id));
 
 	// ---- 官标等价（数据源品牌对照表，如 Gunze H9 <-> Gunze C9） ----
-	const directEquivalences = $derived(
-		findEquivIndices(paint.index)
-			.map((i) => getPaintByIndex(i))
-			.filter((p): p is PaintInfo => !!p)
-	);
+	const directEquivalences = $derived(getEquivs(paint.index));
 
 	// ---- 相近同色漆：按颜色距离查询，名字不一定相关；已官标等价的条目不再重复展示 ----
-	const directIds = $derived(new Set(directEquivalences.map((p) => p.id)));
+	const directIds = $derived(new Set(directEquivalences.map((p) => p.idx)));
 	const colorEquivalences = $derived.by(() =>
 		searchNearest(paint.rgb, { mix: 0, limit: 16 })
 			.map((r) => getPaintById(paintId(r.portions[0])))
-			.filter((p): p is PaintInfo => !!p && p.id !== paint.id && !directIds.has(p.id))
+			.filter((p): p is PaintInfo => !!p && p.id !== paint.id && !directIds.has(p.index))
 			.slice(0, 8)
 	);
 
@@ -194,18 +190,9 @@
 		</div>
 
 		<!-- 官方来源角标：单源直接打开，多源下拉（功能低频，低调样式避免误点） -->
-		{#snippet sourceBadge()}
-			{@const srcs = paintSources(paint)}
-			{#if srcs.length === 1}
-				<button
-					type="button"
-					onclick={() => openExternal(srcs[0].url)}
-					title={srcs[0].title}
-					class="absolute top-1.5 right-1.5 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-black/30 text-white/90 backdrop-blur-[2px] transition-colors hover:bg-black/50"
-				>
-					<ExternalLink class="h-3.5 w-3.5" />
-				</button>
-			{:else if srcs.length > 1}
+		{#snippet sourceBadges()}
+			{@const srcs = paint.sources?.map(getSourceMeta).filter((x) => !!x) ?? []}
+			{#if srcs.length > 0}
 				<div class="absolute top-1.5 right-1.5 flex gap-1">
 					{#each srcs as s (s.url)}
 						<button
@@ -220,7 +207,7 @@
 				</div>
 			{/if}
 		{/snippet}
-		{@render sourceBadge()}
+		{@render sourceBadges()}
 	</div>
 
 	{#if comparePaint}
@@ -270,31 +257,37 @@
 			{t('stock.directEquiv')}
 		</h3>
 		<div class="flex flex-wrap gap-2">
-			{#each directEquivalences as p (p.id)}
-				{@const srcs = paintSources(p)}
-				<div class="relative">
-					<button
-						type="button"
-						onclick={() => toggleCompare(p)}
-						class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
-						p.id
-							? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-							: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
-					>
-						<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
-						<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-					</button>
-					{#if srcs.length}
+			{#each directEquivalences as equiv (equiv.idx)}
+				{@const p = getPaintByIndex(equiv.idx)}
+				{#if p}
+					<div class="relative">
 						<button
 							type="button"
-							onclick={() => openExternal(srcs[0].url)}
-							title={srcs[0].title}
-							class="absolute -top-1.5 -right-1.5 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-gray-800/80 text-white shadow-sm transition-colors hover:bg-gray-800 dark:bg-gray-700/90 dark:hover:bg-gray-700"
+							onclick={() => toggleCompare(p)}
+							class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+							p.id
+								? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
+								: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 						>
-							<ExternalLink class="size-2.5" />
+							<div
+								class="h-5 w-5 shrink-0 rounded"
+								style="background-color: {rgbToHex(p.rgb)}"
+							></div>
+							<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 						</button>
-					{/if}
-				</div>
+						{const src = getSourceMeta(equiv.source)}
+						{#if src}
+							<button
+								type="button"
+								onclick={() => openExternal(src.url)}
+								title={src.title}
+								class="absolute -top-1.5 -right-1.5 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-gray-800/80 text-white shadow-sm transition-colors hover:bg-gray-800 dark:bg-gray-700/90 dark:hover:bg-gray-700"
+							>
+								<ExternalLink class="size-2.5" />
+							</button>
+						{/if}
+					</div>
+				{/if}
 			{:else}
 				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noDirectEquiv')}</div>
 			{/each}

@@ -12,12 +12,10 @@ export interface SourceMeta {
 let sourceMap = new Map<string, SourceMeta>();
 
 export const loadSourceMeta = async (fetchFn: typeof fetch) => {
-	const json = await fetchFn('/sources.json').then((r) => r.json() as Promise<Record<string, SourceMeta>>);
+	const json = await fetchFn('/sources.json').then(
+		(r) => r.json() as Promise<Record<string, SourceMeta>>
+	);
 	sourceMap = new Map(Object.entries(json));
 };
 
-export const sourceMetaOf = (id: string): SourceMeta | undefined => sourceMap.get(id);
-
-/** 某油漆的全部来源元信息（paint.sources 标识 -> 官方 PDF 链接/标题） */
-export const paintSources = (paint: PaintInfo): SourceMeta[] =>
-	(paint.sources ?? []).map((id) => sourceMap.get(id)).filter((s): s is SourceMeta => !!s);
+export const getSourceMeta = (id: string): SourceMeta | undefined => sourceMap.get(id);
