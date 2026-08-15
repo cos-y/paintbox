@@ -31,7 +31,7 @@ SURFACE_TAGS: list[tuple[int, tuple[str, ...]]] = [
     (16, ("clear", "transparent", "transparente", "クリアー")),        # C
     (32, ("pearl", "nacar", "perla", "真珠")),                         # PA
     (64, ("fluo", "fluorescent", "fluorescente", "蛍光")),             # FL
-    (128, ("weathering",)),                                            # W
+    (128, ("weathering", "wash")),                                            # W
 ]
 
 # 系列默认 (bases, surfaces, mediums)，归纳自现有 data/wide.csv：

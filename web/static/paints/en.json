@@ -2571,6 +2571,27 @@
   "70.612": "NATO Green",
   "70.613": "Desert Tan",
   "70.614": "IDF Isr. Sand Grey (61-73)",
-  "70.615": "USN Light Ghost Grey"
+  "70.615": "USN Light Ghost Grey",
+  "72.401": "Templar White",
+  "72.402": "Dwarf Skin",
+  "72.403": "Imperial Yellow",
+  "72.404": "Nuclear Yellow",
+  "72.405": "Martian Orange",
+  "72.406": "Plasma Red",
+  "72.407": "Velvet Red",
+  "72.408": "Cardinal Purple",
+  "72.409": "Deep Purple",
+  "72.410": "Gloomy Violet",
+  "72.411": "Mystic Blue",
+  "72.412": "Storm Blue",
+  "72.413": "Omega Blue",
+  "72.414": "Caribbean",
+  "72.415": "Orc Skin",
+  "72.416": "Troll Green",
+  "72.417": "Snake Green",
+  "72.418": "Lizard Green",
+  "72.609": "Rust",
+  "72.610": "Galvanic Corrosion",
+  "72.611": "Moss and Lichen"
  }
 }
