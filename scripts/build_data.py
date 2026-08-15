@@ -126,6 +126,16 @@ def main() -> None:
     print(f"paints.bin: {len(msgpack.packb(blob, use_bin_type=False))} bytes, {n} rows, "
           f"brands={dict(stats)}")
 
+    # sources.json：来源元信息（官方 PDF 溯源链接），前端 PaintDetail 展示用
+    src_meta = {
+        s: {k: wide["sources"][s][k] for k in ("url", "title")}
+        for s in sources_all
+        if s in wide.get("sources", {}) and "url" in wide["sources"][s]
+    }
+    (OUT / "sources.json").write_text(
+        json.dumps(src_meta, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"sources.json: {len(src_meta)} sources")
+
     # equivs.bin：单向对（仅源声明方向），每条带声明来源 source id
     # 格式：[n_pairs, dict_sources, src_idx[], dst_idx[], source_id[]]
     # 双向由前端 JS 解析时补充（反向继承 source）；不做传递闭包

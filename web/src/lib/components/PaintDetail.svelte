@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { Check, Plus, Mail, Palette, FlaskConical, ArrowRight } from '@lucide/svelte';
+	import {
+		Check,
+		Plus,
+		Mail,
+		Palette,
+		FlaskConical,
+		ArrowRight,
+		ExternalLink
+	} from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import {
 		paintId,
@@ -21,6 +29,7 @@
 	import { findEquivIndices } from '$lib/equivs.svelte';
 	import { Button } from 'flowbite-svelte';
 	import Tag from './Tag.svelte';
+	import { paintSources } from '$lib/paintSources';
 
 	const FEEDBACK_EMAIL = 'zack.studios.15@gmail.com';
 
@@ -40,11 +49,13 @@
 			.filter((p): p is PaintInfo => !!p)
 	);
 
-	// ---- 相近同色漆：按颜色距离查询，名字不一定相关 ----
+	// ---- 相近同色漆：按颜色距离查询，名字不一定相关；已官标等价的条目不再重复展示 ----
+	const directIds = $derived(new Set(directEquivalences.map((p) => p.id)));
 	const colorEquivalences = $derived.by(() =>
-		searchNearest(paint.rgb, { mix: 0, limit: 8 })
+		searchNearest(paint.rgb, { mix: 0, limit: 16 })
 			.map((r) => getPaintById(paintId(r.portions[0])))
-			.filter((p): p is PaintInfo => !!p && p.id !== paint.id)
+			.filter((p): p is PaintInfo => !!p && p.id !== paint.id && !directIds.has(p.id))
+			.slice(0, 8)
 	);
 
 	// ---- 对比：点击等价/相近色方块，在原色下方拼接对比条（单选，再点一次取消） ----
@@ -153,32 +164,63 @@
 		</button>
 	</div>
 
-	<!-- 色卡 + 对比条 -->
-	<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
-		<div
-			class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}"
-			style="background-color: {rgbToHex(paint.rgb)}"
-		>
-			<img
-				src="/brands/{paint.brand}.png"
-				alt=""
-				class="absolute top-1.5 left-1.5 h-8 w-8 object-contain drop-shadow"
-			/>
-		</div>
-		{#if comparePaint}
-			<button
-				type="button"
-				onclick={() => toggleCompare(comparePaint)}
-				class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
-				style="background-color: {rgbToHex(comparePaint.rgb)}"
+	<!-- 色卡 + 对比条（外层 relative 定位容器不裁剪，供多源来源下拉弹出） -->
+	<div class="relative">
+		<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
+			<div
+				class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}"
+				style="background-color: {rgbToHex(paint.rgb)}"
 			>
 				<img
-					src="/brands/{comparePaint.brand}.png"
+					src="/brands/{paint.brand}.png"
 					alt=""
-					class="absolute right-1.5 bottom-1.5 h-8 w-8 object-contain drop-shadow"
+					class="absolute top-1.5 left-1.5 h-8 w-8 object-contain drop-shadow"
 				/>
-			</button>
-		{/if}
+			</div>
+			{#if comparePaint}
+				<button
+					type="button"
+					onclick={() => toggleCompare(comparePaint)}
+					class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
+					style="background-color: {rgbToHex(comparePaint.rgb)}"
+				>
+					<img
+						src="/brands/{comparePaint.brand}.png"
+						alt=""
+						class="absolute right-1.5 bottom-1.5 h-8 w-8 object-contain drop-shadow"
+					/>
+				</button>
+			{/if}
+		</div>
+
+		<!-- 官方来源角标：单源直接打开，多源下拉（功能低频，低调样式避免误点） -->
+		{#snippet sourceBadge()}
+			{@const srcs = paintSources(paint)}
+			{#if srcs.length === 1}
+				<button
+					type="button"
+					onclick={() => openExternal(srcs[0].url)}
+					title={srcs[0].title}
+					class="absolute top-1.5 right-1.5 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-black/30 text-white/90 backdrop-blur-[2px] transition-colors hover:bg-black/50"
+				>
+					<ExternalLink class="h-3.5 w-3.5" />
+				</button>
+			{:else if srcs.length > 1}
+				<div class="absolute top-1.5 right-1.5 flex gap-1">
+					{#each srcs as s (s.url)}
+						<button
+							type="button"
+							onclick={() => openExternal(s.url)}
+							title={s.title}
+							class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-black/30 text-white/90 backdrop-blur-[2px] transition-colors hover:bg-black/50"
+						>
+							<ExternalLink class="h-3.5 w-3.5" />
+						</button>
+					{/each}
+				</div>
+			{/if}
+		{/snippet}
+		{@render sourceBadge()}
 	</div>
 
 	{#if comparePaint}
@@ -229,16 +271,30 @@
 		</h3>
 		<div class="flex flex-wrap gap-2">
 			{#each directEquivalences as p (p.id)}
-				<button
-					type="button"
-					onclick={() => toggleCompare(p)}
-					class="flex items-center gap-2 rounded-lg border px-2 py-1 {compareCode === p.id
-						? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-						: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
-				>
-					<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
-					<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-				</button>
+				{@const srcs = paintSources(p)}
+				<div class="relative">
+					<button
+						type="button"
+						onclick={() => toggleCompare(p)}
+						class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+						p.id
+							? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
+							: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
+					>
+						<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
+						<span class="text-xs uppercase">{p.brand}/{p.code}</span>
+					</button>
+					{#if srcs.length}
+						<button
+							type="button"
+							onclick={() => openExternal(srcs[0].url)}
+							title={srcs[0].title}
+							class="absolute -top-1.5 -right-1.5 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-gray-800/80 text-white shadow-sm transition-colors hover:bg-gray-800 dark:bg-gray-700/90 dark:hover:bg-gray-700"
+						>
+							<ExternalLink class="size-2.5" />
+						</button>
+					{/if}
+				</div>
 			{:else}
 				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noDirectEquiv')}</div>
 			{/each}

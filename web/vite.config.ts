@@ -15,7 +15,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			// 只导出本项目用到的符号，避免 extras barrel 连带 GLTF/DRACOLoader
-			'@threlte/extras': resolve(__dirname, 'src/lib/threlte-extras-shim.ts')
+			'@threlte/extras': resolve(import.meta.dirname, 'src/lib/threlte-extras-shim.ts')
 		}
 	},
 	plugins: [
