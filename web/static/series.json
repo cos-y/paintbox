@@ -183,6 +183,18 @@
     "brand": "av",
     "serie": "GA",
     "name": "Game Air",
-    "desc": "Acrylic colors for fantasy and wargame figures"
+    "desc": "Versatile paints for brush or airbrush"
+  },
+  {
+    "brand": "av",
+    "serie": "MA",
+    "name": "Model Air",
+    "desc": "Versatile paints for brush or airbrush"
+  },
+  {
+    "brand": "av",
+    "serie": "P",
+    "name": "Primers",
+    "desc": "Base layer"
   }
 ]

@@ -728,6 +728,18 @@ av,MA,71.054,#464C54,8,4,5,av_cc340,,Dark Grey Blue,Gris Azul Oscuro,,ral;7024;a
 av,MA,71.055,#4B5355,8,4,5,av_cc340,,Black Grey RLM66,RLM66 Schwarzgrau,,rlm;66;av_cc340|gunze;H416;av_cc340|testor;2079;av_cc340|gunze;C116;av_cc340
 av,MA,71.056,#404448,8,4,5,av_cc340,,Panzer Dark Grey,RAL7021 Dunkelgrau,,ral;7021;av_cc340|gunze;H401;av_cc340|testor;2094;av_cc340|gunze;C40;av_cc340
 av,MA,71.057,#292C30,8,4,5,av_cc340,,Black,Negro,,fs;37038;av_cc340|ral;9004;av_cc340|rlm;22;av_cc340|ana;604;av_cc340|bs;642;av_cc340|gunze;H12;av_cc340|tamiya;XF1;av_cc340|gunze;C33;av_cc340
+av,MA,71.062,#C9CAD1,8,8,5,av_cc340,,Aluminium,Aluminio,,gunze;H8;av_cc340|tamiya;XF16;av_cc340
+av,MA,71.063,#CACAD4,8,8,5,av_cc340,,Silver RLM01,RLM01 Silber,,rlm;1;av_cc340|gunze;C90;av_cc340
+av,MA,71.064,#C7C6CF,8,8,5,av_cc340,,Chrome,Cromo,,fs;17178;av_cc340|tamiya;XF56;av_cc340|gunze;C104;av_cc340
+av,MA,71.065,#D3D3DD,8,8,5,av_cc340,,Steel,Acero,,gunze;H18;av_cc340|gunze;C28;av_cc340
+av,MA,71.066,#C1AD92,8,8,5,av_cc340,,Gold,Oro,,fs;17043;av_cc340|gunze;C9;av_cc340
+av,MA,71.067,#C2B596,8,8,5,av_cc340,,Bright Brass,Latón,,
+av,MA,71.068,#B39285,8,8,5,av_cc340,,Copper,Cobre,,gunze;H10;av_cc340|tamiya;XF6;av_cc340|testor;2019;av_cc340|gunze;C10;av_cc340
+av,MA,71.069,#A48C7F,8,8,5,av_cc340,,Rust,Óxido,,
+av,MA,71.070,#DE98A4,8,8,5,av_cc340,,Signal Red,Rojo Señal,,gunze;C75;av_cc340
+av,MA,71.071,#7A7785,8,8,5,av_cc340,,Arctic Blue,Azul Ártico,,
+av,MA,71.072,#AAA8AE,8,8,5,av_cc340,,Gunmetal,Fusil,,fs;37200;av_cc340|gunze;H76;av_cc340|tamiya;X10;av_cc340
+av,MA,71.073,#99949E,8,8,5,av_cc340,,Black,Negro,,gunze;H28;av_cc340|gunze;C78;av_cc340
 av,MA,71.074,#E1C080,8,4,5,av_cc340,,Beige,Beige,,fs;33695;av_cc340
 av,MA,71.075,#B8A988,8,4,5,av_cc340,,Ivory,RAL1001 Elfenbein,,ral;1001;av_cc340|testor;2021;av_cc340
 av,MA,71.076,#F9BE8C,8,4,5,av_cc340,,Skin Tone,Color Piel,,gunze;C51;av_cc340
