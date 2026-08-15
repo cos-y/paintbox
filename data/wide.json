@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-15T23:02:38.375182+00:00",
+ "generatedAt": "2026-08-15T23:10:43.839473+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -61,6 +61,12 @@
    "url": "https://acrylicosvallejo.com/wp-content/uploads/2021/09/CC064-MechaColor-Rev03-baja.pdf",
    "title": "MECHA COLOR",
    "publishTs": "2021-07-29T19:11:29+08:00"
+  },
+  "av_cc063": {
+   "id": "av_cc063",
+   "url": "https://acrylicosvallejo.com/wp-content/uploads/2021/09/CC063-Hobby_Paint-Rev02-baja.pdf",
+   "title": "HOBBY PAINT",
+   "publishTs": "2021-02-10T20:48:28+08:00"
   }
  }
 }

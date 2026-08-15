@@ -208,5 +208,11 @@
     "serie": "HP",
     "name": "Hobby Paint",
     "desc": "Spray paint for metal, plastic and resin miniatures"
+  },
+  {
+    "brand": "av",
+    "serie": "MET",
+    "name": "Metal Color",
+    "desc": "Acrylic airbrush metal colors"
   }
 ]

@@ -663,6 +663,40 @@ av,GC,73.206,#D46388,8,128,4,av_cc266,,Red,Rojo,,
 av,GC,73.207,#0C72BA,8,128,4,av_cc266,,Blue,Azul,,
 av,GC,73.208,#D4DE24,8,128,4,av_cc266,,Yellow,Amarillo,,
 av,GC,73.209,#56368D,8,128,4,av_cc266,,Violet,Violeta,,
+av,HP,28.001,#95874F,8,4,2,av_cc063,,Panzer Yellow,Dunkelgelb,,av;70.978;av_cc063
+av,HP,28.002,#4C4D51,8,4,2,av_cc063,,Panzer Grey,Dunkelgrau,,av;70.862;av_cc063
+av,HP,28.003,#585647,8,4,2,av_cc063,,Russian Green 4BO,Cam. Verde Oliva,,av;70.894;av_cc063
+av,HP,28.004,#555656,8,4,2,av_cc063,,UK Bronze Green,Verde Bronce,,av;70.897;av_cc063
+av,HP,28.005,#635C4D,8,4,2,av_cc063,,US Olive Drab,US Verde Oliva,,av;70.887;av_cc063
+av,HP,28.006,#63625B,8,4,2,av_cc063,,German Field Grey,Feldgrau,,av;70.830;av_cc063
+av,HP,28.007,#6C6653,8,4,2,av_cc063,,Russian Uniform,Uniforme Ruso,,av;70.924;av_cc063
+av,HP,28.008,#756044,8,4,2,av_cc063,,English Uniform,Uniforme Inglés,,av;70.921;av_cc063
+av,HP,28.009,#877A60,8,4,2,av_cc063,,US Khaki,US Marrón Caqui,,av;70.988;av_cc063
+av,HP,28.010,#F6F4F3,8,4,2,av_cc063,,White,Blanco,,
+av,HP,28.011,#C7C7CC,8,4,2,av_cc063,,Grey,Gris,,
+av,HP,28.012,#060200,8,4,2,av_cc063,,Black,Negro,,
+av,HP,28.013,#D5C099,8,4,2,av_cc063,,Bone White,Blanco Hueso,,av;72.034;av_cc063|av;72.734;av_cc063
+av,HP,28.014,#88663E,8,4,2,av_cc063,,Leather Brown,Marrón Cuero,,av;72.040;av_cc063|av;72.740;av_cc063
+av,HP,28.015,#9E7E4B,8,4,2,av_cc063,,Desert Yellow,Amarillo Desierto,,av;72.063;av_cc063|av;72.763;av_cc063
+av,HP,28.016,#AB3A37,8,4,2,av_cc063,,Scarlet Red,Rojo Escarlata,,av;72.106;av_cc063
+av,HP,28.017,#4E5B92,8,4,2,av_cc063,,Ultramarine Blue,Azul Ultramar,,av;72.022;av_cc063
+av,HP,28.018,#F59E04,8,4,2,av_cc063,,Sun Yellow,Amarillo Soleado,,av;72.006;av_cc063
+av,HP,28.019,#7A5A42,8,4,2,av_cc063,,Beasty Brown,Marrón Bichos,,av;72.043;av_cc063|av;72.743;av_cc063
+av,HP,28.020,#B2C2D2,8,4,2,av_cc063,,Wolf Grey,Gris Lobo,,av;72.047;av_cc063|av;72.747;av_cc063
+av,HP,28.021,#A7ACB4,8,8,2,av_cc063,,Silver,Plata,,av;72.052;av_cc063|av;72.752;av_cc063
+av,HP,28.022,#B4A270,8,4,2,av_cc063,,Dead Flesh,Carne Muerta,,av;72.035;av_cc063|av;72.735;av_cc063
+av,HP,28.023,#C01D34,8,4,2,av_cc063,,Bloody Red,Rojo Sanguina,,av;72.010;av_cc063|av;72.710;av_cc063
+av,HP,28.024,#EEBFAB,8,4,2,av_cc063,,Pale Flesh,Carne Pálida,,av;72.003;av_cc063
+av,HP,28.025,#7162A9,8,4,2,av_cc063,,Alien Purple,Púrpura Alienígena,,av;70.811;av_cc063|av;72.776;av_cc063
+av,HP,28.026,#3D4840,8,4,2,av_cc063,,Dark Green,Verde Oscuro,,av;72.028;av_cc063
+av,HP,28.027,#6D7447,8,4,2,av_cc063,,Goblin Green,Verde Goblin,,av;72.030;av_cc063|av;72.730;av_cc063
+av,HP,28.028,#507156,8,4,2,av_cc063,,Sick Green,Verde Asqueroso,,av;72.029;av_cc063|av;72.729;av_cc063
+av,HP,28.029,#7A3E3F,8,4,2,av_cc063,,Gory Red,Rojo Visceral,,av;72.011;av_cc063|av;72.711;av_cc063
+av,HP,28.030,#136EB6,8,4,2,av_cc063,,Magic Blue,Azul Mágico,,av;72.021;av_cc063|av;72.721;av_cc063
+av,HP,28.031,#68666D,8,8,2,av_cc063,,Gunmetal,Gris Metalizado,,av;72.054;av_cc063|av;72.754;av_cc063
+av,HP,28.530,#FFFFFF,8,16,2,av_cc063,,Gloss Varnish,Barniz Brillante,,
+av,HP,28.531,#FFFFFF,8,16,2,av_cc063,,Matt Varnish,Barniz Mate,,
+av,HP,28.532,#FFFFFF,8,16,2,av_cc063,,Satin Varnish,Barniz Satinado,,
 av,LM,70.790,#C9D3D7,2,8,5,av_cc329,,Silver,Plata,,
 av,LM,70.791,#AB9A86,2,8,4,av_cc329,,Gold,Oro,,
 av,LM,70.792,#BEB137,2,8,5,av_cc329,,Old Gold,Oro Viejo,,
