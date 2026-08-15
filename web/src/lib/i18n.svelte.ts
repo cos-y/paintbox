@@ -26,7 +26,7 @@ const en = {
 	'medium.Brush': 'Brush',
 	'medium.Marker': 'Marker',
 	'medium.Other': 'Other',
-	'base.title': 'Solvent',
+	'base.title': 'Thinner',
 	'base.lacquer': 'Lacquer',
 	'base.alcohol': 'Alcohol',
 	'base.enamel': 'Enamel',

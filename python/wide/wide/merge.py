@@ -121,6 +121,56 @@ class MergeReport:
         self.diffs = self.diffs or []
 
 
+@dataclass
+class ConflictSummary:
+    """冲突分类统计（供 CLI 报告，纯函数 summarize_conflicts 产出）。"""
+
+    by_type: dict[str, int]  # serie / color / mutex -> 计数
+    color_delta: list[int]  # color 冲突的 delta（升序）
+    desc_diffs: list[tuple[str, str, str]]  # (行key, lang, kind)
+    samples: dict[str, list[str]]  # 每类最多 3 条原始 conflict
+
+    def __post_init__(self):
+        self.color_delta = sorted(self.color_delta)
+        self.desc_diffs = list(self.desc_diffs)
+
+
+def summarize_conflicts(report: MergeReport) -> ConflictSummary:
+    """把 report 的 conflicts 字符串与 diffs 的 desc 差异分类统计。
+
+    冲突字符串格式（merge_row 生成）：
+      "brand:code serie X -> Y" / "brand:code color #A -> #B (delta N)" /
+      "brand:code mutex GROUP"
+    desc 措辞差异不在 conflicts 里，而在 diffs[].fields 的 desc.<lang>
+    （overwrite=True 时 kind=updated 新覆盖，False 时 kind=rejected 保留）。
+    """
+    import re as _re
+
+    by_type: dict[str, int] = {"serie": 0, "color": 0, "mutex": 0}
+    deltas: list[int] = []
+    samples: dict[str, list[str]] = {"serie": [], "color": [], "mutex": []}
+    for c in report.conflicts:
+        parts = c.split()
+        t = parts[1] if len(parts) > 1 else "?"
+        if t not in by_type:
+            by_type[t] = 0
+        by_type[t] += 1
+        if t == "color":
+            m = _re.search(r"\(delta (\d+)", c)
+            if m:
+                deltas.append(int(m.group(1)))
+        if len(samples.setdefault(t, [])) < 3:
+            samples[t].append(c)
+
+    desc_diffs: list[tuple[str, str, str]] = []
+    for d in report.diffs:
+        for f in d.fields or []:
+            if f.field.startswith("desc.") and f.kind in ("updated", "rejected"):
+                desc_diffs.append((f"{d.brand}:{d.code}", f.field[len("desc."):], f.kind))
+    return ConflictSummary(by_type=by_type, color_delta=deltas,
+                           desc_diffs=desc_diffs, samples=samples)
+
+
 def _channel_delta(a: int, b: int) -> int:
     return sum(abs(((a >> s) & 0xFF) - ((b >> s) & 0xFF)) for s in (16, 8, 0))
 

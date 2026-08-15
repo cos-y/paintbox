@@ -31,6 +31,7 @@ from .merge import (
     merge_wide,
     missing_fields,
     partial_data,
+    summarize_conflicts,
 )
 from .schema import Wide
 
@@ -127,11 +128,35 @@ def print_report(report: MergeReport, *, show_diffs: bool = True) -> None:
     print(f"new: {report.new_rows}   updated: {report.updated_rows}   "
           f"unchanged: {report.unchanged_rows}")
     if report.conflicts:
-        print(f"\n[conflicts] {len(report.conflicts)}")
-        for c in report.conflicts[:30]:
-            print(f"  ! {c}")
-        if len(report.conflicts) > 30:
-            print(f"  ... and {len(report.conflicts) - 30} more")
+        from collections import Counter
+        import statistics
+
+        s = summarize_conflicts(report)
+        print(f"\n[conflicts] {len(report.conflicts)}  "
+              f"(serie {s.by_type.get('serie', 0)} / color {s.by_type.get('color', 0)}"
+              f" / mutex {s.by_type.get('mutex', 0)})")
+        if s.color_delta:
+            ds = s.color_delta
+            print(f"  color delta: min {ds[0]} / median "
+                  f"{statistics.median(ds):.0f} / max {ds[-1]} "
+                  f"({len(ds)} 处)")
+        if s.desc_diffs:
+            langs = Counter(lang for _, lang, _ in s.desc_diffs)
+            kinds = Counter(kind for _, _, kind in s.desc_diffs)
+            print(f"  desc 措辞差异: {len(s.desc_diffs)} 处 "
+                  f"(langs {dict(langs)}, {dict(kinds)})")
+            for key, lang, kind in s.desc_diffs[:3]:
+                mark = "覆盖" if kind == "updated" else "保留(旧)"
+                print(f"    ~ {key} desc.{lang} {mark}")
+        # 推荐动作：color 冲突多且 delta 大（疑似版本差异）→ 建议 --keep
+        if s.by_type.get("color", 0) > 5 and (not s.color_delta or s.color_delta[-1] > 30):
+            print("  建议: color 冲突多且 delta 大(疑似版本差异)，"
+                  "可用 --keep 保留现有值，新源只补缺")
+        for t in ("serie", "color", "mutex"):
+            for c in s.samples.get(t, [])[:3]:
+                print(f"  ! {c}")
+        if len(report.conflicts) > 9:
+            print(f"  ... and {len(report.conflicts) - 9} more (see diffs below)")
     if show_diffs:
         for d in report.diffs:
             if d.kind == "unchanged":
