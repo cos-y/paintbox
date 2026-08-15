@@ -1,13 +1,17 @@
 """wide CLI：小宽表 merge 进大宽表。
 
 用法：
-  wide merge raw/gunze/01ksp_2026/wide.json [--source raw/gunze/01ksp_2026/source.json] \
-        [--priority ksp2026=10,...] [--apply]
+  wide merge raw/gunze/gunze26/wide.csv [--source raw/gunze/gunze26/source.json] \
+        [--keep] [--apply]
 
-第一个参数是小宽表路径（相对项目根）。
---source 指定该源的 meta（默认小宽表同目录 source.json），注册进大宽表顶层 sources。
-默认 dry-run（打印报告不写文件）；--apply 才写大宽表（默认 raw/wide.json）。
-优先级：--priority 指定（source_id=数字），未指定的 source 优先级为 0。
+第一个参数是小宽表 CSV 路径（相对项目根），也接受目录（自动找 wide.csv）。
+--source 指定该源的 meta（默认小宽表同目录 source.json），注册进大宽表 sources。
+默认 dry-run（打印报告不写文件）；--apply 才写大宽表（默认 data/wide.json meta + data/wide.csv）。
+冲突语义：默认新数据覆盖同名冲突列（color/bases/serie/desc 同语言）；
+  --keep 改为保留旧列（只补缺，surfaces/mediums/equivs/sources 始终 union）。
+格式：两个宽表都是 CSV（data/wide.csv / raw/<brand>/<source>/wide.csv），
+  meta 分开（大宽表 data/wide.json 存 schema/generatedAt/sources 注册表；
+  小宽表用同目录 source.json）。分隔符：列表 |、字段 ;。
 """
 
 from __future__ import annotations
@@ -18,7 +22,16 @@ import sys
 import time
 from pathlib import Path
 
-from .merge import DanglingResult, MergeReport, check_dangling, merge_wide
+from .csvio import load_wide, read_paints_csv, save_wide
+from .merge import (
+    DanglingResult,
+    REQUIRED_FIELDS,
+    MergeReport,
+    check_dangling,
+    merge_wide,
+    missing_fields,
+    partial_data,
+)
 from .schema import Wide
 
 def _project_root() -> Path:
@@ -30,30 +43,13 @@ DEFAULT_WIDE = ROOT / "data" / "wide.json"
 
 
 def _load_wide(path: Path) -> Wide | None:
-    if not path.exists():
-        return None
-    return Wide.model_validate_json(path.read_text(encoding="utf-8"))
-
-
-def _format_wide(wide: Wide) -> str:
-    """头部（schema/generatedAt/sources）pretty，paints 每条记录一行。
-
-    git diff 时一行 = 一条记录（可审计），行数 ~= 记录数而非记录×20。
-    """
-    data = json.loads(wide.model_dump_json(by_alias=True))
-    head = {k: v for k, v in data.items() if k != "paints"}
-    head_str = json.dumps(head, ensure_ascii=False, indent=1)
-    paints_str = ",\n".join(
-        json.dumps(p, ensure_ascii=False, separators=(",", ":"))
-        for p in data["paints"])
-    return "{\n" + head_str[1:-1] + ",\n  \"paints\": [\n" + paints_str + "\n  ]\n}"
+    return load_wide(path)
 
 
 def _save_wide(wide: Wide, path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(_format_wide(wide), encoding="utf-8")
-    # 自校验：写出的文件必须能被 schema 读回
-    Wide.model_validate_json(path.read_text(encoding="utf-8"))
+    save_wide(wide, path)
+    # 自校验：写出的 meta + CSV 必须能读回
+    load_wide(path)
 
 
 def check_equivs(wide) -> list[tuple[tuple[str, str], str, str]]:
@@ -114,7 +110,6 @@ def _rename_source(wide: Wide, old_id: str, new_id: str) -> Wide:
                 e.model_copy(update={"source": new_id}) if e.source == old_id else e
                 for e in r.equivs]
         if update:
-            update["update_ts"] = int(time.time())
             r = r.model_copy(update=update)
         paints.append(r)
     return wide.model_copy(update={"paints": paints})
@@ -191,7 +186,7 @@ def _resolve_dangling(dangling) -> str:
     for brand, n in by_brand.most_common():
         print(f"  {brand}: {n}")
     for (bk, bc), tb, tc in dangling[:10]:
-        print(f"    {bk[0]}:{bk[1]} -> {tb}:{tc}")
+        print(f"    {bk}:{bc} -> {tb}:{tc}")
     if len(dangling) > 10:
         print(f"    ... and {len(dangling) - 10} more")
     while True:
@@ -212,7 +207,8 @@ def main() -> None:
     p_merge.add_argument("--source", default="", help="source meta JSON (default: beside new wide)")
     p_merge.add_argument("--source-mode", choices=["append", "replace"], default=None,
                          help="source id conflict resolution (required when id changes)")
-    p_merge.add_argument("--priority", default="", help="comma list src=num, e.g. ksp2026=10")
+    p_merge.add_argument("--keep", action="store_true",
+                         help="on conflicts keep existing columns (default: new data overwrites)")
     p_merge.add_argument("--apply", action="store_true", help="write back the wide table")
     p_merge.add_argument("--wide", default=str(DEFAULT_WIDE), help="target wide JSON path")
 
@@ -220,9 +216,6 @@ def main() -> None:
     p_check.add_argument("wide", nargs="?", default=str(DEFAULT_WIDE), help="wide JSON path")
     p_check.add_argument("--brand", default="",
                          help="list all dangling equivs targeting this brand")
-
-    p_format = sub.add_parser("format", help="reformat wide JSON (header pretty, one paint per line)")
-    p_format.add_argument("wide", nargs="?", default=str(DEFAULT_WIDE), help="wide JSON path")
 
     args = ap.parse_args()
     if args.cmd == "check":
@@ -234,34 +227,37 @@ def main() -> None:
         print_equiv_audit(check_equivs(wide), args.brand or None)
         return
 
-    if args.cmd == "format":
-        path = Path(args.wide)
-        wide = _load_wide(path)
-        if wide is None:
-            print(f"wide not found: {args.wide}")
-            raise SystemExit(1)
-        _save_wide(wide, path)
-        print(f"formatted: {path}")
-        return
-
     # merge
     new_path = Path(args.new)
     if not new_path.is_absolute():
         new_path = ROOT / new_path
-
-    priority: dict[str, int] = {}
-    for kv in filter(None, args.priority.split(",")):
-        k, _, v = kv.partition("=")
-        priority[k.strip()] = int(v)
+    if new_path.is_dir():
+        new_path = new_path / "wide.csv"
 
     old = _load_wide(Path(args.wide))
-    new = _load_wide(new_path)
-    if new is None:
-        print(f"wide not found: {new_path}")
+    if not new_path.exists():
+        print(f"wide.csv not found: {new_path}")
+        raise SystemExit(1)
+    new_paints = read_paints_csv(new_path)
+
+    # 输入校验：数据半提供（color/bases/surfaces/mediums 部分有值）→ 拒绝整个 merge
+    bad = [(r, fs) for r in new_paints
+           for fs in (missing_fields(r),) if fs and partial_data(r)]
+    if bad:
+        from collections import Counter
+        by_field = Counter(f for _, fs in bad for f in fs)
+        print(f"[error] input has {len(bad)} rows with partial data (some of "
+              f"color/bases/surfaces/mediums provided, merge rejected):")
+        for f in REQUIRED_FIELDS:
+            n = by_field.get(f, 0)
+            if n:
+                samples = [f"{r.brand}:{r.code}" for r, fs in bad if f in fs][:3]
+                print(f"  - {f}: {n} rows  e.g. {', '.join(samples)}")
+        print("  fix the source build.py (or provide all four fields) first")
         raise SystemExit(1)
 
     # 源 meta 注册：小宽表自带 sources + cli --source（默认同目录 source.json）覆盖/补充
-    source_meta: dict = dict(new.sources) if new else {}
+    source_meta: dict = {}
     sid: str | None = None
     src_path = Path(args.source) if args.source else new_path.parent / "source.json"
     if src_path.exists():
@@ -290,7 +286,7 @@ def main() -> None:
             if args.source_mode == "replace":
                 renamed = (old_id, sid)
 
-    result = merge_wide(old, new, priority)
+    result = merge_wide(old, Wide(paints=new_paints), overwrite=not args.keep)
     if renamed:
         # 删除被替换的旧注册，行引用旧 id -> 新 id
         old_sources = {k: v for k, v in old_sources.items() if k != renamed[0]}
@@ -302,7 +298,7 @@ def main() -> None:
 
     # 引用校验：行 sources 应能在注册表（大宽表 + 本次）中找到
     known = set(result.wide.sources)
-    missing = sorted({s for row in new.paints for s in row.sources} - known)
+    missing = sorted({s for row in new_paints for s in row.sources} - known)
     if missing:
         print(f"[warn] rows reference unknown sources: {missing}")
 
@@ -324,8 +320,7 @@ def main() -> None:
                 for r in result.wide.paints:
                     if any((e.brand, e.code) in drop for e in r.equivs):
                         r = r.model_copy(update={
-                            "equivs": [e for e in r.equivs if (e.brand, e.code) not in drop],
-                            "update_ts": int(time.time())})
+                            "equivs": [e for e in r.equivs if (e.brand, e.code) not in drop]})
                     paints.append(r)
                 result.wide = result.wide.model_copy(update={"paints": paints})
                 print(f"[ok] dropped {len(drop)} dangling equivs")

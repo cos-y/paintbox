@@ -1,4 +1,9 @@
-import { MEDIUM_BITS, SURFACE_BITS, type FilterOptions, type SearchResult } from '$lib/paints.svelte';
+import {
+	MEDIUM_BITS,
+	SURFACE_BITS,
+	type FilterOptions,
+	type SearchResult
+} from '$lib/paints.svelte';
 import { stock } from '$lib/stock.svelte';
 import { loadData } from '$lib/utils.svelte';
 import { callWasm, WorkerCancelled } from '$lib/wasmClient';

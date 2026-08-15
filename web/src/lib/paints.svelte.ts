@@ -18,7 +18,6 @@ export interface PaintInfo {
 	id: string;
 	// 阶段3：来自 paints.bin 全列（wasm 不返回）
 	sources?: string[];
-	updated?: number;
 }
 
 // SurfaceType 位定义，与 wasm 端 bitflags 对齐
@@ -116,11 +115,10 @@ export const listPaints = (): PaintInfo[] => {
 	return paints!;
 };
 
-// ---- paints.bin 补充字段（sources/updated）：JS 直接解码，wasm 不返回 ----
+// ---- paints.bin 补充字段（sources）：JS 直接解码，wasm 不返回 ----
 
 interface PaintExtras {
 	sources: string[][];
-	updated: number[];
 }
 
 let extras: PaintExtras | null = null;
@@ -140,15 +138,13 @@ export const loadPaintExtras = async (fetchFn: typeof fetch = fetch): Promise<vo
 			}
 			return out;
 		}),
-		updated: b[13] as number[]
 	};
 };
 
 const paintExtrasOf = (index: number) =>
 	extras
 		? {
-				sources: extras.sources[index],
-				updated: extras.updated[index]
+				sources: extras.sources[index]
 			}
 		: {};
 

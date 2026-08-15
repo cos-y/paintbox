@@ -1,0 +1,2313 @@
+brand,serie,code,color,bases,surfaces,mediums,sources,note,desc_en,desc_es,desc_ja,equivs
+ak,AFV,11301,#4A3C2C,8,4,5,ak_equiv21,,WWI British Khaki Brown Base,,,ak;4042;ak_equiv21
+ak,AFV,11302,#907651,8,4,5,ak_equiv21,,WWI French Milky Coffee,,,av;70.71027;ak_equiv21|fs;FS23448;ak_equiv21|lifecolor;UA097;ak_equiv21|ak;4051;ak_equiv21
+ak,AFV,11303,#4F5B6A,8,4,5,ak_equiv21,,WWI French Artillery Grey,,,av;70.71257;ak_equiv21|fs;FS36176;ak_equiv21|ak;4052;ak_equiv21
+ak,AFV,11304,#462514,8,4,5,ak_equiv21,,WWI French Brown,,,fs;FS31090;ak_equiv21|ak;4053;ak_equiv21
+ak,AFV,11305,#2D3B2A,8,4,5,ak_equiv21,,WWI French Green 1,,,av;70.71006;ak_equiv21|fs;FS34097;ak_equiv21|ak;4054;ak_equiv21
+ak,AFV,11306,#222217,8,4,5,ak_equiv21,,WWI French Green 2,,,ak;4055;ak_equiv21
+ak,AFV,11307,#736737,8,4,5,ak_equiv21,,RAL 7009 Hellgrau,,,ral;RAL7009;ak_equiv21|real;54;ak_equiv21|hataka;233;ak_equiv21
+ak,AFV,11308,#3D6136,8,4,5,ak_equiv21,,RAL 6007 Grün,,,av;70.71019;ak_equiv21|ral;RAL6007;ak_equiv21|real;49;ak_equiv21|hataka;298;ak_equiv21
+ak,AFV,11309,#465025,8,4,5,ak_equiv21,,RAL 6003 Olivgrün opt.1,,,av;70.71092;ak_equiv21|gunze;H405;ak_equiv21|ral;RAL6003;ak_equiv21|real;47;ak_equiv21|lifecolor;UA206;ak_equiv21|hataka;169;ak_equiv21
+ak,AFV,11310,#333317,8,4,5,ak_equiv21,,RAL 6003 Olivgrün opt.2,,,ak;755;ak_equiv21
+ak,AFV,11311,#5B6B42,8,4,5,ak_equiv21,,RAL 6011 Resedagrün,,,ral;RAL6011;ak_equiv21|ak;715;ak_equiv21
+ak,AFV,11312,#526137,8,4,5,ak_equiv21,,RAL 6011B Resedagrün,,,ak;716;ak_equiv21
+ak,AFV,11313,#786C3A,8,4,5,ak_equiv21,,RAL 7008 Graugrün,,,av;70.71116;ak_equiv21|ral;RAL7008;ak_equiv21|real;53;ak_equiv21|lifecolor;UA212;ak_equiv21|hataka;304;ak_equiv21
+ak,AFV,11314,#65733E,8,4,5,ak_equiv21,,RAL 7008 Graugrün Opt 2,,,
+ak,AFV,11315,#46372B,8,4,5,ak_equiv21,,RAL 7017 Dunkelbraun,,,av;70.71248;ak_equiv21|ral;RAL7017;ak_equiv21|real;56;ak_equiv21|lifecolor;UA210;ak_equiv21
+ak,AFV,11316,#121A1B,8,4,5,ak_equiv21,,RAL 7021 Dunkelgrau,,,av;70.71056;ak_equiv21|ral;RAL7021;ak_equiv21|fs;FS34086;ak_equiv21|real;57;ak_equiv21|lifecolor;UA207;ak_equiv21|hataka;164;ak_equiv21
+ak,AFV,11317,#675E47,8,4,5,ak_equiv21,,RAL 7027 Grau,,,av;70.71118;ak_equiv21|ral;RAL7027;ak_equiv21|real;58;ak_equiv21|lifecolor;UA202;ak_equiv21|hataka;306;ak_equiv21
+ak,AFV,11318,#8F8356,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Initial),,,av;70.71025;ak_equiv21|gunze;H403;ak_equiv21|ral;RAL7028;ak_equiv21|fs;FS33434;ak_equiv21|real;60;ak_equiv21|lifecolor;UA204;ak_equiv21|hataka;244;ak_equiv21
+ak,AFV,11319,#AC9A74,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb Ausgabe 1944,,,ral;RAL7028;ak_equiv21|real;61;ak_equiv21|hataka;250;ak_equiv21
+ak,AFV,11320,#AA945C,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Variant),,,ral;RAL7028;ak_equiv21
+ak,AFV,11323,#5C5331,8,4,5,ak_equiv21,,RAL 6040 F9 Helloliv,,,av;70.71247;ak_equiv21|ral;RAL6040 F9;ak_equiv21|real;90;ak_equiv21|hataka;281;ak_equiv21
+ak,AFV,11325,#B39564,8,4,5,ak_equiv21,,RAL 1039 F9 Sandbeige,,,av;70.71244;ak_equiv21|ral;RAL1039 F9;ak_equiv21|real;88;ak_equiv21|hataka;278;ak_equiv21|ak;728;ak_equiv21
+ak,AFV,11326,#846138,8,4,5,ak_equiv21,,RAL 8031 F9 Sandbraun,,,av;70.71246;ak_equiv21|ral;RAL8031 F9;ak_equiv21|real;92;ak_equiv21|hataka;280;ak_equiv21|ak;727;ak_equiv21
+ak,AFV,11327,#7A643D,8,4,5,ak_equiv21,,RAL 8000 Gelbbraun,,,av;70.71272;ak_equiv21|ral;RAL8000;ak_equiv21|real;63;ak_equiv21|lifecolor;UA203;ak_equiv21|hataka;303;ak_equiv21|ak;702;ak_equiv21
+ak,AFV,11328,#671E15,8,4,5,ak_equiv21,,RAL 8012 Rotbraun,,,av;70.71271;ak_equiv21|ral;RAL8012;ak_equiv21|real;67;ak_equiv21|lifecolor;UA211;ak_equiv21|hataka;175;ak_equiv21|ak;717;ak_equiv21
+ak,AFV,11329,#4C0E0F,8,4,5,ak_equiv21,,RAL 8013 Rotbraun,,,ral;RAL8013;ak_equiv21|real;66;ak_equiv21|ak;731;ak_equiv21
+ak,AFV,11330,#35211A,8,4,5,ak_equiv21,,RAL 8017 Rotbraun,,,av;70.71041;ak_equiv21|gunze;H406;ak_equiv21|ral;RAL8017;ak_equiv21|real;68;ak_equiv21|lifecolor;UA205;ak_equiv21|hataka;147;ak_equiv21|ak;718;ak_equiv21
+ak,AFV,11331,#A37F59,8,4,5,ak_equiv21,,RAL 8020 Braun,,,av;70.71117;ak_equiv21|ral;RAL8020;ak_equiv21|real;69;ak_equiv21|lifecolor;UA201;ak_equiv21|hataka;35;ak_equiv21|ak;700;ak_equiv21
+ak,AFV,11333,#E1D8A8,8,4,5,ak_equiv21,,Cremeweiss,,,av;70.71075;ak_equiv21|ral;RAL1001;ak_equiv21|fs;FS23717;ak_equiv21|real;46;ak_equiv21|hataka;184;ak_equiv21|ak;092;ak_equiv21
+ak,AFV,11334,#4E502E,8,4,5,ak_equiv21,,Olive Drab Base,,,fs;FS24098;ak_equiv21
+ak,AFV,11335,#565E27,8,4,5,ak_equiv21,,Nº1 Light Green (FS34151),,,av;70.71137;ak_equiv21|fs;FS34151;ak_equiv21|real;28;ak_equiv21|hataka;211;ak_equiv21|ak;4214;ak_equiv21
+ak,AFV,11336,#473425,8,4,5,ak_equiv21,,Nº5 Earth Brown (FS30099),,,av;70.71290;ak_equiv21|fs;FS30099;ak_equiv21|lifecolor;UA087;ak_equiv21|hataka;256;ak_equiv21|ak;4221;ak_equiv21
+ak,AFV,11337,#9D703C,8,4,5,ak_equiv21,,Nº6 Earth Yellow (FS30257),,,av;70.71291;ak_equiv21|fs;FS30257;ak_equiv21|real;30;ak_equiv21|hataka;212;ak_equiv21|ak;4222;ak_equiv21
+ak,AFV,11338,#653926,8,4,5,ak_equiv21,,Nº8 Earth Red (FS30117),,,av;70.71293;ak_equiv21|fs;FS30117;ak_equiv21|ak;4223;ak_equiv21
+ak,AFV,11339,#343B22,8,4,5,ak_equiv21,,Nº9 Olive Drab (FS33070),,,fs;FS33070;ak_equiv21|ak;4211;ak_equiv21
+ak,AFV,11340,#9C7E61,8,4,5,ak_equiv21,,Nº13 Desert Sand (FS30279),,,av;70.71140;ak_equiv21|gunze;H346;ak_equiv21|fs;FS30279;ak_equiv21|lifecolor;UA089;ak_equiv21|hataka;68;ak_equiv21|ak;4224;ak_equiv21
+ak,AFV,11341,#485A68,8,4,5,ak_equiv21,,Ocean Gray (FS35164),,,fs;FS35164;ak_equiv21|ak;4225;ak_equiv21
+ak,AFV,11342,#2A381C,8,4,5,ak_equiv21,,Dark Green (FS34102),,,av;70.71289;ak_equiv21|fs;FS34102;ak_equiv21|real;83;ak_equiv21|lifecolor;UA002;ak_equiv21|hataka;21;ak_equiv21|ak;4231;ak_equiv21
+ak,AFV,11343,#7C694B,8,4,5,ak_equiv21,,MERDC Sand (FS30277),,,av;70.71138;ak_equiv21|fs;FS30277;ak_equiv21|real;84;ak_equiv21|lifecolor;UA019;ak_equiv21|hataka;187;ak_equiv21|ak;4233;ak_equiv21
+ak,AFV,11344,#4F3C1C,8,4,5,ak_equiv21,,Field Drab (FS30118),,,av;70.71139;ak_equiv21|fs;FS30118;ak_equiv21|real;85;ak_equiv21|lifecolor;UA016;ak_equiv21|hataka;209;ak_equiv21|ak;4234;ak_equiv21
+ak,AFV,11345,#BFC7A0,8,4,5,ak_equiv21,,APC Interior Light Green (FS24533),,,fs;FS24533;ak_equiv21|real;78;ak_equiv21|ak;4012;ak_equiv21
+ak,AFV,11346,#213118,8,4,5,ak_equiv21,,Forest Green (FS34079),,,av;70.71294;ak_equiv21|fs;FS34079;ak_equiv21|real;27;ak_equiv21|lifecolor;UA001;ak_equiv21|hataka;16;ak_equiv21
+ak,AFV,11347,#9E855A,8,4,5,ak_equiv21,,Australian Camouﬂage Brown,,,fs;FS30219;ak_equiv21|ak;4022;ak_equiv21
+ak,AFV,11348,#565E27,8,4,5,ak_equiv21,,Australian Camouﬂage Green,,,fs;FS34088;ak_equiv21|ak;4021;ak_equiv21
+ak,AFV,11349,#AD8C63,8,4,5,ak_equiv21,,CARC Tan 686A (FS33446),,,av;70.71122;ak_equiv21|gunze;H53;ak_equiv21|fs;FS33446;ak_equiv21|real;79;ak_equiv21
+ak,AFV,11350,#47532E,8,4,5,ak_equiv21,,Modern Spanish Green,,,
+ak,AFV,11351,#998E69,8,4,5,ak_equiv21,,Wood Base,,,fs;FS23564;ak_equiv21|ak;779;ak_equiv21
+ak,AFV,11352,#625330,8,4,5,ak_equiv21,,IDF Modern Grey,,,gunze;C530;ak_equiv21|real;94;ak_equiv21
+ak,AFV,11353,#6A5F3D,8,4,5,ak_equiv21,,IDF Sand Grey 1970s-1980s,,,av;70.71142;ak_equiv21|gunze;C529;ak_equiv21|testor;2138;ak_equiv21|real;95;ak_equiv21
+ak,AFV,11354,#86794E,8,4,5,ak_equiv21,,IDF Early Sand Yellow,,,av;70.71141;ak_equiv21|gunze;C528;ak_equiv21|real;96;ak_equiv21
+ak,AFV,11355,#29311B,8,4,5,ak_equiv21,,IDF Green,,,
+ak,AFV,11356,#3F5D5B,8,4,5,ak_equiv21,,SLA Blue,,,fs;FS34158;ak_equiv21|ak;794;ak_equiv21
+ak,AFV,11357,#272D21,8,4,5,ak_equiv21,,LAF Green,,,ak;795;ak_equiv21
+ak,AFV,11358,#223B24,8,4,5,ak_equiv21,,NATO Green,,,av;70.71250;ak_equiv21|ral;RAL6031 F9;ak_equiv21|real;80;ak_equiv21|lifecolor;UA303;ak_equiv21|hataka;152;ak_equiv21|ak;796;ak_equiv21
+ak,AFV,11359,#412F23,8,4,5,ak_equiv21,,NATO Brown,,,av;70.71249;ak_equiv21|ral;RAL8027 F9;ak_equiv21|real;81;ak_equiv21|lifecolor;UA302;ak_equiv21|hataka;188;ak_equiv21|ak;797;ak_equiv21
+ak,AFV,11360,#1B1D22,8,4,5,ak_equiv21,,NATO Black,,,av;70.71251;ak_equiv21|ral;RAL9021 F9;ak_equiv21|real;82;ak_equiv21|lifecolor;UA301;ak_equiv21|hataka;125;ak_equiv21|ak;799;ak_equiv21
+ak,AFV,11361,#D1B67E,8,4,5,ak_equiv21,,New Iraqi Army Sand,,,fs;FS23531;ak_equiv21|ak;725;ak_equiv21
+ak,AFV,11362,#DDA145,8,4,5,ak_equiv21,,British Sand Yellow,,,fs;FS33695;ak_equiv21|ak;726;ak_equiv21
+ak,AFV,11363,#CAA16F,8,4,5,ak_equiv21,,French Army Desert Sand,,,av;70.71064;ak_equiv21|fs;FS17178;ak_equiv21|ak;4081;ak_equiv21
+ak,AFV,11364,#45554C,8,4,5,ak_equiv21,,French Army Green,,,ak;4082;ak_equiv21
+ak,AFV,11365,#888B86,8,4,5,ak_equiv21,,French Army Grey-Blue,,,gunze;H417;ak_equiv21|ak;4083;ak_equiv21
+ak,AFV,11366,#C2943A,8,4,5,ak_equiv21,,Mustard Yellow,,,av;70.71033;ak_equiv21|fs;FS33637;ak_equiv21|ak;4132;ak_equiv21
+ak,AFV,11367,#2E3220,8,4,5,ak_equiv21,,Base Green Protective,,,
+ak,AFV,11368,#374929,8,4,5,ak_equiv21,,Russian Green 4BO,,,av;70.71017;ak_equiv21|gunze;H136;ak_equiv21|testor;2129;ak_equiv21|real;73;ak_equiv21
+ak,AFV,11369,#322A12,8,4,5,ak_equiv21,,Russian Dark Brown 6K,,,av;70.71282;ak_equiv21|testor;2126;ak_equiv21|real;74;ak_equiv21|hataka;317;ak_equiv21
+ak,AFV,11370,#7C5E30,8,4,5,ak_equiv21,,Russian Sand 7K,,,av;70.71283;ak_equiv21|real;75;ak_equiv21|lifecolor;UA242;ak_equiv21|hataka;318;ak_equiv21
+ak,AFV,11371,#1A331D,8,4,5,ak_equiv21,,Protective Green 1920s-1930s,,,real;76;ak_equiv21
+ak,AFV,11372,#FFFFFF,8,4,5,ak_equiv21,,Washable White Paint,,,ak;751;ak_equiv21
+ak,AFV,11373,#473E2F,8,4,5,ak_equiv21,,Khaki green No.3,,,av;70.71330;ak_equiv21|real;33;ak_equiv21|hataka;64;ak_equiv21|ak;4035;ak_equiv21
+ak,AFV,11374,#8F8F61,8,4,5,ak_equiv21,,Silver Grey No.28,,,av;70.71401;ak_equiv21|real;38;ak_equiv21|lifecolor;UA264;ak_equiv21|ak;4032;ak_equiv21
+ak,AFV,11375,#45472D,8,4,5,ak_equiv21,,Slate No.34,,,av;70.71012;ak_equiv21|gunze;H73;ak_equiv21|real;39;ak_equiv21|lifecolor;UA265;ak_equiv21|ak;4033;ak_equiv21
+ak,AFV,11377,#C79E4D,8,4,5,ak_equiv21,,Light Stone No.61,,,av;70.71143;ak_equiv21|real;40;ak_equiv21|lifecolor;UA266;ak_equiv21|ak;4034;ak_equiv21
+ak,AFV,11378,#E0BD88,8,4,5,ak_equiv21,,Portland Stone No.64,,,av;70.71288;ak_equiv21|real;41;ak_equiv21|lifecolor;UA267;ak_equiv21|ak;4031;ak_equiv21
+ak,AFV,11381,#41402E,8,4,5,ak_equiv21,,British Dark Olive Green PFI,,,real;42;ak_equiv21|lifecolor;UA269;ak_equiv21
+ak,AFV,11382,#F49063,8,4,5,ak_equiv21,,British Desert Pink ZI,,,av;70.71400;ak_equiv21|real;43;ak_equiv21|lifecolor;UA268;ak_equiv21
+ak,AFV,11383,#79794D,8,4,5,ak_equiv21,,British Light Mud,,,av;70.71284;ak_equiv21|real;44;ak_equiv21|lifecolor;UA272;ak_equiv21
+ak,AFV,11384,#39291F,8,4,5,ak_equiv21,,S.C.C. No.1A Very Dark Brown,,,av;70.71039;ak_equiv21|fs;FS30059;ak_equiv21|real;34;ak_equiv21|lifecolor;UA274;ak_equiv21|hataka;77;ak_equiv21
+ak,AFV,11385,#754C2D,8,4,5,ak_equiv21,,S.C.C. No.2 Brown,,,av;70.71038;ak_equiv21|fs;FS30097;ak_equiv21|real;35;ak_equiv21|lifecolor;UA273;ak_equiv21|hataka;76;ak_equiv21
+ak,AFV,11386,#393C28,8,4,5,ak_equiv21,,S.C.C. No.15 Olive Drab,,,av;70.71016;ak_equiv21|gunze;H309;ak_equiv21|real;37;ak_equiv21|lifecolor;UA270;ak_equiv21|hataka;110;ak_equiv21
+ak,AFV,11387,#13190D,8,4,5,ak_equiv21,,3B AU/ZB AU,,,av;70.71281;ak_equiv21|real;77;ak_equiv21|hataka;246;ak_equiv21
+ak,AIR,11801,#7A8C7C,8,4,5,ak_equiv21,,WWI German Fokker Grey,,,av;70.71033;ak_equiv21|ak;2271;ak_equiv21
+ak,AIR,11802,#769460,8,4,5,ak_equiv21,,WWI German Light Green,,,ak;2272;ak_equiv21
+ak,AIR,11803,#344731,8,4,5,ak_equiv21,,WWI German Dark Green,,,av;70.71017;ak_equiv21|ak;2273;ak_equiv21
+ak,AIR,11804,#826881,8,4,5,ak_equiv21,,WWI German Mauve,,,av;70.71282;ak_equiv21|ak;2274;ak_equiv21
+ak,AIR,11805,#673615,8,4,5,ak_equiv21,,WWI German Red Brown,,,av;70.71283;ak_equiv21|citadel;51040;ak_equiv21|ak;2275;ak_equiv21
+ak,AIR,11806,#C8DEEC,8,4,5,ak_equiv21,,WWI German Light Blue,,,ak;2276;ak_equiv21
+ak,AIR,11807,#B193AF,8,4,5,ak_equiv21,,WWI German Lilac,,,ak;2277;ak_equiv21
+ak,AIR,11808,#B7C4AA,8,4,5,ak_equiv21,,WWI German Grey-Green Primer,,,av;70.71330;ak_equiv21|ak;2278;ak_equiv21
+ak,AIR,11809,#3D422C,8,4,5,ak_equiv21,,PC10 Late,,,av;70.71401;ak_equiv21|ak;2282;ak_equiv21
+ak,AIR,11810,#40372E,8,4,5,ak_equiv21,,PC12,,,av;70.71012;ak_equiv21|ak;2283;ak_equiv21
+ak,AIR,11811,#979481,8,4,5,ak_equiv21,,RLM 02 RLM-Grau (1938),,,tamiya;XF20;ak_equiv21|humbrol;240;ak_equiv21|av;70.71044;ak_equiv21|gunze;C60;ak_equiv21|gunze;H70;ak_equiv21|real;265;ak_equiv21|lifecolor;UA504;ak_equiv21|hataka;23;ak_equiv21
+ak,AIR,11812,#80805E,8,4,5,ak_equiv21,,RLM 02 RLM-Grau (1941),,,real;266;ak_equiv21
+ak,AIR,11813,#F1A60D,8,4,5,ak_equiv21,,RLM 04,,,humbrol;154;ak_equiv21|av;70.71078;ak_equiv21|gunze;C113;ak_equiv21|gunze;H413;ak_equiv21|real;267;ak_equiv21|lifecolor;UA140;ak_equiv21|hataka;66;ak_equiv21|ak;2091;ak_equiv21
+ak,AIR,11814,#57524E,8,4,5,ak_equiv21,,RLM 61,,,av;70.71042;ak_equiv21|real;268;ak_equiv21|hataka;168;ak_equiv21
+ak,AIR,11815,#676A4F,8,4,5,ak_equiv21,,RLM 62,,,av;70.71104;ak_equiv21|real;269;ak_equiv21|hataka;169;ak_equiv21
+ak,AIR,11816,#7E7B6A,8,4,5,ak_equiv21,,RLM 63,,,av;70.71260;ak_equiv21|real;270;ak_equiv21|hataka;167;ak_equiv21
+ak,AIR,11817,#86A2A5,8,4,5,ak_equiv21,,RLM 65 (1938),,,humbrol;65;ak_equiv21|real;271;ak_equiv21
+ak,AIR,11818,#94A198,8,4,5,ak_equiv21,,RLM 65 (1941),,,tamiya;XF23;ak_equiv21|av;70.71255;ak_equiv21|gunze;C115;ak_equiv21|gunze;H67;ak_equiv21|real;272;ak_equiv21|lifecolor;UA503;ak_equiv21|hataka;29;ak_equiv21
+ak,AIR,11819,#363E40,8,4,5,ak_equiv21,,RLM 66 (1938),,,av;70.71055;ak_equiv21|gunze;C116;ak_equiv21|gunze;H416;ak_equiv21|real;339;ak_equiv21|lifecolor;UA133;ak_equiv21|hataka;40;ak_equiv21
+ak,AIR,11820,#53524D,8,4,5,ak_equiv21,,RLM 66 (1941),,,real;273;ak_equiv21
+ak,AIR,11821,#474A41,8,4,5,ak_equiv21,,RLM 70,,,tamiya;XF27;ak_equiv21|humbrol;241;ak_equiv21|av;70.71021;ak_equiv21|gunze;C18;ak_equiv21|gunze;H65;ak_equiv21|real;274;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA501;ak_equiv21|hataka;15;ak_equiv21
+ak,AIR,11822,#514F43,8,4,5,ak_equiv21,,RLM 71,,,humbrol;242;ak_equiv21|av;70.71015;ak_equiv21|gunze;C17;ak_equiv21|gunze;H64;ak_equiv21|real;275;ak_equiv21|lifecolor;UA502;ak_equiv21|hataka;17;ak_equiv21
+ak,AIR,11823,#464742,8,4,5,ak_equiv21,,RLM 72,,,humbrol;243;ak_equiv21|av;70.71263;ak_equiv21|real;276;ak_equiv21|hataka;311;ak_equiv21
+ak,AIR,11824,#424941,8,4,5,ak_equiv21,,RLM 73,,,humbrol;244;ak_equiv21|av;70.71256;ak_equiv21|real;277;ak_equiv21|hataka;312;ak_equiv21
+ak,AIR,11825,#5B5A55,8,4,5,ak_equiv21,,RLM 74,,,humbrol;245;ak_equiv21|av;70.71258;ak_equiv21|gunze;C36;ak_equiv21|gunze;H68;ak_equiv21|real;278;ak_equiv21|lifecolor;UA507;ak_equiv21|hataka;313;ak_equiv21
+ak,AIR,11826,#706F6D,8,4,5,ak_equiv21,,RLM 75,,,humbrol;246;ak_equiv21|av;70.71259;ak_equiv21|gunze;C37;ak_equiv21|gunze;H69;ak_equiv21|real;279;ak_equiv21|lifecolor;UA508;ak_equiv21|hataka;7;ak_equiv21
+ak,AIR,11827,#A9B6A5,8,4,5,ak_equiv21,,RLM 76 Version 1,,,real;320;ak_equiv21
+ak,AIR,11828,#ADBDBD,8,4,5,ak_equiv21,,RLM 76 Version 2,,,humbrol;247;ak_equiv21|av;70.71257;ak_equiv21|gunze;C117;ak_equiv21|gunze;H417;ak_equiv21|real;321;ak_equiv21|lifecolor;UA509;ak_equiv21|hataka;38;ak_equiv21
+ak,AIR,11829,#C1C19D,8,4,5,ak_equiv21,,RLM 76 Late War Variation,,,av;70.71103;ak_equiv21|real;322;ak_equiv21
+ak,AIR,11830,#80979F,8,4,5,ak_equiv21,,RLM 78 (1941),,,real;280;ak_equiv21
+ak,AIR,11831,#889D98,8,4,5,ak_equiv21,,RLM 78 (1942),,,humbrol;248;ak_equiv21|av;70.71101;ak_equiv21|gunze;C118;ak_equiv21|gunze;H418;ak_equiv21|real;281;ak_equiv21|lifecolor;UA512;ak_equiv21|hataka;314;ak_equiv21
+ak,AIR,11832,#E8A25A,8,4,5,ak_equiv21,,RLM 79 (1941),,,real;282;ak_equiv21|hataka;14;ak_equiv21
+ak,AIR,11833,#9C714E,8,4,5,ak_equiv21,,RLM 79 (1942),,,humbrol;249;ak_equiv21|av;70.71278;ak_equiv21|gunze;C119;ak_equiv21|gunze;H66;ak_equiv21|real;283;ak_equiv21|lifecolor;UA137;ak_equiv21
+ak,AIR,11834,#585745,8,4,5,ak_equiv21,,RLM 80,,,av;70.71265;ak_equiv21|gunze;C120;ak_equiv21|gunze;H420;ak_equiv21|real;284;ak_equiv21|lifecolor;UA138;ak_equiv21|hataka;53;ak_equiv21
+ak,AIR,11835,#585745,8,4,5,ak_equiv21,,RLM 81 Version 1,,,tamiya;XF51;ak_equiv21|humbrol;251;ak_equiv21|av;70.71264;ak_equiv21|gunze;C121;ak_equiv21|gunze;H421;ak_equiv21|real;323;ak_equiv21|lifecolor;UA510;ak_equiv21|hataka;8;ak_equiv21
+ak,AIR,11836,#474D3F,8,4,5,ak_equiv21,,RLM 81 Version 2,,,tamiya;XF74;ak_equiv21|humbrol;253;ak_equiv21|av;70.71011;ak_equiv21|gunze;C123;ak_equiv21|gunze;H423;ak_equiv21|real;324;ak_equiv21|lifecolor;UA132;ak_equiv21|hataka;22;ak_equiv21
+ak,AIR,11837,#5A5245,8,4,5,ak_equiv21,,RLM 81 Version 3,,,real;325;ak_equiv21
+ak,AIR,11838,#4F5C4B,8,4,5,ak_equiv21,,RLM 82,,,humbrol;252;ak_equiv21|av;70.71022;ak_equiv21|gunze;C122;ak_equiv21|gunze;H422;ak_equiv21|real;326;ak_equiv21|lifecolor;UA511;ak_equiv21|hataka;20;ak_equiv21
+ak,AIR,11839,#394555,8,4,5,ak_equiv21,,RLM 83,,,real;327;ak_equiv21
+ak,AIR,11840,#57574D,8,4,5,ak_equiv21,,RAF Dark Green,,,tamiya;XF81;ak_equiv21|humbrol;163;ak_equiv21|av;70.71324;ak_equiv21|gunze;C330;ak_equiv21|gunze;H330;ak_equiv21|ral;RALBS381C/ 241;ak_equiv21|real;286;ak_equiv21|lifecolor;UA546;ak_equiv21|hataka;143;ak_equiv21
+ak,AIR,11841,#72573C,8,4,5,ak_equiv21,,RAF Dark Earth,,,humbrol;29;ak_equiv21|av;70.71323;ak_equiv21|gunze;C369;ak_equiv21|gunze;H72;ak_equiv21|real;287;ak_equiv21|lifecolor;UA547;ak_equiv21|hataka;9;ak_equiv21
+ak,AIR,11842,#5D686A,8,4,5,ak_equiv21,,RAF Ocean Grey,,,tamiya;XF82;ak_equiv21|humbrol;106;ak_equiv21|av;70.71273;ak_equiv21|gunze;C362;ak_equiv21|real;288;ak_equiv21|lifecolor;UA093;ak_equiv21|hataka;32;ak_equiv21
+ak,AIR,11843,#818C92,8,4,5,ak_equiv21,,RAF Medium Sea Grey BS381C/637,,,tamiya;XF83;ak_equiv21|humbrol;165;ak_equiv21|av;70.71307;ak_equiv21|gunze;C335;ak_equiv21|gunze;H335;ak_equiv21|ral;RALBS381C/ 637;ak_equiv21|real;289;ak_equiv21|lifecolor;UA094;ak_equiv21|hataka;034/ 141;ak_equiv21
+ak,AIR,11844,#B3B7A0,8,4,5,ak_equiv21,,RAF Sky / FS 34424,,,av;70.71321;ak_equiv21|gunze;C368;ak_equiv21|fs;FS 34424;ak_equiv21|real;290;ak_equiv21|lifecolor;UA550;ak_equiv21|hataka;234;ak_equiv21
+ak,AIR,11845,#7D9DC4,8,4,5,ak_equiv21,,RAF Azure Blue,,,humbrol;157;ak_equiv21|av;70.71108;ak_equiv21|gunze;C370;ak_equiv21|real;291;ak_equiv21|citadel;51024;ak_equiv21|lifecolor;UA098;ak_equiv21|hataka;28;ak_equiv21
+ak,AIR,11846,#A57E39,8,4,5,ak_equiv21,,RAF Middle Stone,,,humbrol;225;ak_equiv21|av;70.71031;ak_equiv21|gunze;C21;ak_equiv21|gunze;H71;ak_equiv21|real;292;ak_equiv21|lifecolor;UA097;ak_equiv21|hataka;13;ak_equiv21
+ak,AIR,11847,#738168,8,4,5,ak_equiv21,,RAF Cockpit Grey-Green,,,tamiya;XF71;ak_equiv21|humbrol;78;ak_equiv21|av;70.71305;ak_equiv21|gunze;C364;ak_equiv21|real;293;ak_equiv21|lifecolor;UA551;ak_equiv21|hataka;25;ak_equiv21
+ak,AIR,11848,#A1A5A4,8,4,5,ak_equiv21,,RAF Sky Grey,,,av;70.71339;ak_equiv21|fs;FS 26373;ak_equiv21|real;285;ak_equiv21|lifecolor;UA036;ak_equiv21|hataka;302;ak_equiv21
+ak,AIR,11849,#5F5D51,8,4,5,ak_equiv21,,RAF Dark Slate Grey,,,humbrol;224;ak_equiv21|av;70.71309;ak_equiv21|real;294;ak_equiv21|hataka;202;ak_equiv21
+ak,AIR,11850,#4F565E,8,4,5,ak_equiv21,,RAF Extra Dark Sea Grey BS381C/640,,,tamiya;XF54;ak_equiv21|humbrol;123;ak_equiv21|av;70.71110;ak_equiv21|gunze;C333;ak_equiv21|gunze;H333;ak_equiv21|ral;RALBS381C/ 640;ak_equiv21|real;295;ak_equiv21|lifecolor;UA109;ak_equiv21|hataka;140;ak_equiv21
+ak,AIR,11851,#696C71,8,4,5,ak_equiv21,,RAF Dark Sea Grey BS381C/638,,,tamiya;XF77;ak_equiv21|humbrol;164;ak_equiv21|av;70.71405;ak_equiv21|gunze;C331;ak_equiv21|gunze;H331;ak_equiv21|ral;RALBS381C/ 638;ak_equiv21|real;296;ak_equiv21|citadel;51040;ak_equiv21|hataka;144;ak_equiv21
+ak,AIR,11852,#556B76,8,4,5,ak_equiv21,,RAF PRU Blue BS381C/636,,,tamiya;XF18;ak_equiv21|humbrol;230;ak_equiv21|av;70.71109;ak_equiv21|gunze;C72;ak_equiv21|gunze;H56;ak_equiv21|ral;RALBS381C/ 636;ak_equiv21|real;297;ak_equiv21|hataka;207;ak_equiv21
+ak,AIR,11853,#B1B2AA,8,4,5,ak_equiv21,,RAF Light Aircraft Grey BS381C/627,,,humbrol;166;ak_equiv21|gunze;C332;ak_equiv21|gunze;H332;ak_equiv21|ral;RALBS381C/ 627;ak_equiv21|real;298;ak_equiv21|hataka;217;ak_equiv21
+ak,AIR,11854,#979D9D,8,4,5,ak_equiv21,,RAF Camouﬂage (Barley) Grey BS381C/626,,,tamiya;XF80;ak_equiv21|humbrol;167;ak_equiv21|gunze;C334;ak_equiv21|gunze;H334;ak_equiv21|ral;RALBS381C/ 626;ak_equiv21|real;299;ak_equiv21|lifecolor;UA079;ak_equiv21|hataka;142;ak_equiv21
+ak,AIR,11855,#72797F,8,4,5,ak_equiv21,,RAF Dark Camouﬂage Grey BS381C/629,,,ral;RALBS381C/ 629;ak_equiv21|real;300;ak_equiv21|hataka;214;ak_equiv21
+ak,AIR,11856,#9D9580,8,4,5,ak_equiv21,,RAF Camouﬂage Beige (Hemp) BS381C/389,,,tamiya;XF57;ak_equiv21|humbrol;168;ak_equiv21|gunze;C336;ak_equiv21|gunze;H336;ak_equiv21|ral;RALBS381C/ 389;ak_equiv21|real;301;ak_equiv21|hataka;262;ak_equiv21
+ak,AIR,11857,#293625,8,4,5,ak_equiv21,,Bronze Green,,,real;264;ak_equiv21|ak;2205;ak_equiv21
+ak,AIR,11858,#E2D10F,8,4,5,ak_equiv21,,Zinc Chromate Yellow,,,av;70.71107;ak_equiv21|gunze;C352;ak_equiv21|real;263;ak_equiv21|ak;2207;ak_equiv21
+ak,AIR,11859,#848566,8,4,5,ak_equiv21,,US Interior Yellow Green,,,real;262;ak_equiv21|ak;2206;ak_equiv21
+ak,AIR,11860,#535041,8,4,5,ak_equiv21,,Dark Olive Drab 41,,,tamiya;XF62;ak_equiv21|av;70.71316;ak_equiv21|gunze;C38;ak_equiv21|gunze;H78;ak_equiv21|fs;FS 33070;ak_equiv21|real;259;ak_equiv21|lifecolor;UA005;ak_equiv21|hataka;4;ak_equiv21|ak;2201;ak_equiv21
+ak,AIR,11861,#47533F,8,4,5,ak_equiv21,,Medium Green 42,,,real;260;ak_equiv21|hataka;19;ak_equiv21|ak;2202;ak_equiv21
+ak,AIR,11862,#6C6D68,8,4,5,ak_equiv21,,Neutral Grey 43,,,av;70.71051;ak_equiv21|gunze;C13;ak_equiv21|gunze;H53;ak_equiv21|real;261;ak_equiv21|lifecolor;UA046;ak_equiv21|hataka;33;ak_equiv21|ak;2203;ak_equiv21
+ak,AIR,11863,#5B5849,8,4,5,ak_equiv21,,ANA 613 Olive Drab,,,ral;RAL 7013;ak_equiv21|ak;2204;ak_equiv21
+ak,AIR,11864,#37464D,8,4,5,ak_equiv21,,Deep Sea Blue,,,humbrol;181;ak_equiv21|av;70.71300;ak_equiv21|gunze;C365;ak_equiv21|fs;FS 35045;ak_equiv21|real;258;ak_equiv21|lifecolor;UA047;ak_equiv21|hataka;1;ak_equiv21|ak;2234;ak_equiv21
+ak,AIR,11865,#72858B,8,4,5,ak_equiv21,,M-485 Blue-Grey,,,av;70.71109;ak_equiv21|gunze;C367;ak_equiv21|fs;FS 35189;ak_equiv21|real;256;ak_equiv21|lifecolor;UA038;ak_equiv21|hataka;218;ak_equiv21|ak;2231;ak_equiv21
+ak,AIR,11866,#AFAFA5,8,4,5,ak_equiv21,,Light Gull Grey FS 16440,,,humbrol;129;ak_equiv21|av;70.71121;ak_equiv21|gunze;C315;ak_equiv21|gunze;H315;ak_equiv21|fs;FS 16440;ak_equiv21|real;220;ak_equiv21|lifecolor;UA025;ak_equiv21|hataka;48;ak_equiv21
+ak,AIR,11867,#9FAAA6,8,4,5,ak_equiv21,,ADC Grey FS 16473,,,av;70.71335;ak_equiv21|fs;FS 16473;ak_equiv21|real;221;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA041;ak_equiv21|hataka;45;ak_equiv21|ak;2146;ak_equiv21
+ak,AIR,11868,#E6E8DB,8,4,5,ak_equiv21,,Insignia White FS 17875,,,tamiya;X1;ak_equiv21|humbrol;22;ak_equiv21|av;70.72279;ak_equiv21|gunze;C316;ak_equiv21|gunze;H316;ak_equiv21|fs;FS 17875;ak_equiv21|real;222;ak_equiv21|lifecolor;UA148;ak_equiv21|hataka;49;ak_equiv21|ak;2052;ak_equiv21
+ak,AIR,11869,#C6B49E,8,4,5,ak_equiv21,,Sand FS 33531,,,tamiya;XF59;ak_equiv21|humbrol;121;ak_equiv21|av;70.71327;ak_equiv21|gunze;C313;ak_equiv21|gunze;H313;ak_equiv21|fs;FS 33531;ak_equiv21|real;226;ak_equiv21|hataka;90;ak_equiv21|ak;2151;ak_equiv21
+ak,AIR,11870,#E5C7A1,8,4,5,ak_equiv21,,Radome Tan FS 33613,,,humbrol;148;ak_equiv21|av;70.71074;ak_equiv21|gunze;C318;ak_equiv21|gunze;H318;ak_equiv21|fs;FS 33613;ak_equiv21|real;227;ak_equiv21|ak;2053;ak_equiv21
+ak,AIR,11871,#F9D193,8,4,5,ak_equiv21,,USMC Sand FS 33711,,,fs;FS 33711;ak_equiv21|real;228;ak_equiv21|lifecolor;UA090;ak_equiv21|hataka;60;ak_equiv21
+ak,AIR,11872,#474843,8,4,5,ak_equiv21,,US Army Helo Drab FS 34031,,,fs;FS 34031;ak_equiv21|real;229;ak_equiv21|hataka;67;ak_equiv21
+ak,AIR,11873,#4A5952,8,4,5,ak_equiv21,,Dull Dark Green FS 34092,,,tamiya;XF26;ak_equiv21|humbrol;149;ak_equiv21|av;70.71124;ak_equiv21|gunze;C302;ak_equiv21|gunze;H302;ak_equiv21|fs;FS 34092;ak_equiv21|real;230;ak_equiv21|lifecolor;UA008;ak_equiv21|hataka;56;ak_equiv21|ak;2106;ak_equiv21
+ak,AIR,11874,#585C1F,8,4,5,ak_equiv21,,USMC Green FS 34095,,,ral;RAL 6003;ak_equiv21|fs;FS 34095;ak_equiv21|real;209;ak_equiv21|hataka;59;ak_equiv21
+ak,AIR,11875,#696E2B,8,4,5,ak_equiv21,,Field Green FS 34097,,,gunze;C340;ak_equiv21|gunze;H340;ak_equiv21|fs;FS 34097;ak_equiv21|real;231;ak_equiv21
+ak,AIR,11876,#80825B,8,4,5,ak_equiv21,,Green FS 34258,,,av;70.71094;ak_equiv21|fs;FS 34258;ak_equiv21|real;233;ak_equiv21|lifecolor;UA115;ak_equiv21|hataka;93;ak_equiv21|ak;2153;ak_equiv21
+ak,AIR,11877,#3B6C70,8,4,5,ak_equiv21,,Aggressor Blue FS 35109,,,av;70.71111;ak_equiv21|fs;FS 35109;ak_equiv21|real;234;ak_equiv21|lifecolor;UA404;ak_equiv21|hataka;156;ak_equiv21
+ak,AIR,11878,#5C979F,8,4,5,ak_equiv21,,Blue FS 35190,,,av;70.70901;ak_equiv21|fs;FS 35190;ak_equiv21|real;236;ak_equiv21
+ak,AIR,11879,#8AB0C3,8,4,5,ak_equiv21,,Air Superiority Blue FS 35450,,,humbrol;47;ak_equiv21|av;70.71332;ak_equiv21|fs;FS 35450;ak_equiv21|real;239;ak_equiv21|lifecolor;UA037;ak_equiv21|hataka;155;ak_equiv21|ak;2145;ak_equiv21
+ak,AIR,11880,#C4D0C6,8,4,5,ak_equiv21,,Duck Egg Blue FS 35622,,,humbrol;122;ak_equiv21|av;70.71328;ak_equiv21|gunze;C314;ak_equiv21|gunze;H314;ak_equiv21|fs;FS 35622;ak_equiv21|real;241;ak_equiv21|lifecolor;UA139;ak_equiv21|hataka;92;ak_equiv21|ak;2154;ak_equiv21
+ak,AIR,11881,#5E626B,8,4,5,ak_equiv21,,Medium Gunship Grey FS 36118,,,tamiya;XF24;ak_equiv21|humbrol;125;ak_equiv21|av;70.71097;ak_equiv21|gunze;C305;ak_equiv21|gunze;H305;ak_equiv21|fs;FS 36118;ak_equiv21|real;244;ak_equiv21|lifecolor;UA022;ak_equiv21|hataka;31;ak_equiv21|ak;2144;ak_equiv21
+ak,AIR,11882,#706F6D,8,4,5,ak_equiv21,,Have Glass Grey FS 36170,,,fs;FS 36170;ak_equiv21|real;245;ak_equiv21|hataka;58;ak_equiv21
+ak,AIR,11883,#6F7982,8,4,5,ak_equiv21,,F-15 Dark Grey (Mod Eagle) FS 36176,,,humbrol;5;ak_equiv21|av;70.71273;ak_equiv21|fs;FS 36176;ak_equiv21|real;246;ak_equiv21|lifecolor;UA029;ak_equiv21|hataka;158;ak_equiv21|ak;2143;ak_equiv21
+ak,AIR,11884,#808487,8,4,5,ak_equiv21,,Dark Gull Grey FS 36231,,,humbrol;140;ak_equiv21|av;70.71277;ak_equiv21|gunze;C317;ak_equiv21|gunze;H317;ak_equiv21|fs;FS 36231;ak_equiv21|real;247;ak_equiv21|lifecolor;UA033;ak_equiv21|hataka;44;ak_equiv21
+ak,AIR,11885,#828385,8,4,5,ak_equiv21,,Aggressor Grey FS 36251,,,av;70.71274;ak_equiv21|fs;FS 36251;ak_equiv21|real;248;ak_equiv21|lifecolor;UA034;ak_equiv21|hataka;157;ak_equiv21|ak;2142;ak_equiv21
+ak,AIR,11886,#84898C,8,4,5,ak_equiv21,,Medium Grey FS 36270,,,humbrol;126;ak_equiv21|av;70.71275;ak_equiv21|gunze;C306;ak_equiv21|gunze;H306;ak_equiv21|fs;FS 36270;ak_equiv21|real;249;ak_equiv21|lifecolor;UA028;ak_equiv21|hataka;54;ak_equiv21|ak;2141;ak_equiv21
+ak,AIR,11887,#87949C,8,4,5,ak_equiv21,,Dark Ghost Grey FS 36320,,,humbrol;128;ak_equiv21|av;70.71120;ak_equiv21|gunze;C307;ak_equiv21|gunze;H307;ak_equiv21|fs;FS 36320;ak_equiv21|real;251;ak_equiv21|lifecolor;UA027;ak_equiv21|hataka;35;ak_equiv21
+ak,AIR,11888,#9DA6AB,8,4,5,ak_equiv21,,Light Ghost Grey FS 36375,,,humbrol;127;ak_equiv21|av;70.71615;ak_equiv21|gunze;C308;ak_equiv21|gunze;H308;ak_equiv21|fs;FS 36375;ak_equiv21|real;252;ak_equiv21|lifecolor;UA026;ak_equiv21|hataka;37;ak_equiv21
+ak,AIR,11889,#C4C8C7,8,4,5,ak_equiv21,,Light Grey FS 36495,,,humbrol;147;ak_equiv21|av;70.71276;ak_equiv21|gunze;C338;ak_equiv21|gunze;H338;ak_equiv21|fs;FS 36495;ak_equiv21|real;253;ak_equiv21|lifecolor;UA023;ak_equiv21|hataka;50;ak_equiv21
+ak,AIR,11890,#C2C0B3,8,4,5,ak_equiv21,,Camouﬂage Grey FS 36622,,,humbrol;28;ak_equiv21|av;70.71296;ak_equiv21|gunze;C311;ak_equiv21|gunze;H311;ak_equiv21|fs;FS 36622;ak_equiv21|real;254;ak_equiv21|lifecolor;UA021;ak_equiv21|hataka;39;ak_equiv21|ak;2104;ak_equiv21
+ak,AIR,11891,#909388,8,4,5,ak_equiv21,,IJN J3 Hai-iro (Grey),,,gunze;C35;ak_equiv21|gunze;H61;ak_equiv21|fs;FS 36307;ak_equiv21|real;302;ak_equiv21|citadel;51024;ak_equiv21|ak;2061;ak_equiv21
+ak,AIR,11892,#958F75,8,4,5,ak_equiv21,,IJN J3 SP (Amber Grey),,,av;70.71311;ak_equiv21|real;303;ak_equiv21|ak;2062;ak_equiv21
+ak,AIR,11893,#2A362C,8,4,5,ak_equiv21,,IJN D1 Deep Green Black,,,tamiya;XF11;ak_equiv21|av;70.71325;ak_equiv21|gunze;C15;ak_equiv21|gunze;H59;ak_equiv21|real;304;ak_equiv21|ak;2063;ak_equiv21
+ak,AIR,11894,#263731,8,4,5,ak_equiv21,,IJN D2 Green Black,,,av;70.71322;ak_equiv21|real;305;ak_equiv21|ak;2064;ak_equiv21
+ak,AIR,11895,#1B2325,8,4,5,ak_equiv21,,IJN Q1 Anti-Glare Blue-Black,,,gunze;C125;ak_equiv21|ak;2066;ak_equiv21
+ak,AIR,11896,#676333,8,4,5,ak_equiv21,,IJN M3 (M) Mitsubishi Interior Green,,,gunze;C126;ak_equiv21|real;306;ak_equiv21|ak;2067;ak_equiv21
+ak,AIR,11897,#504A2A,8,4,5,ak_equiv21,,IJN M3 (N) Nakajima Interior Green,,,gunze;C127;ak_equiv21|real;307;ak_equiv21|ak;2068;ak_equiv21
+ak,AIR,11898,#0C5E73,8,4,5,ak_equiv21,,IJN/IJA Aotake,,,av;70.71419;ak_equiv21|gunze;C57;ak_equiv21|gunze;H63;ak_equiv21
+ak,AIR,11899,#A7A896,8,4,5,ak_equiv21,,IJA #1 Hairyokushoku (Grey-Green),,,tamiya;XF12;ak_equiv21|av;70.71326;ak_equiv21|gunze;C56;ak_equiv21|gunze;H62;ak_equiv21|real;328;ak_equiv21|ak;2261;ak_equiv21
+ak,AIR,11900,#4A5D5B,8,4,5,ak_equiv21,,IJA #3 Hairanshoku Grey (Indigo),,,humbrol;77;ak_equiv21|real;329;ak_equiv21|ak;2262;ak_equiv21
+ak,AIR,11901,#504A2A,8,4,5,ak_equiv21,,IJA #7 Ohryuko Nana Go Shoku (Olive Brown),,,av;70.71286;ak_equiv21|real;330;ak_equiv21|ak;2263;ak_equiv21
+ak,AIR,11902,#31442E,8,4,5,ak_equiv21,,IJA #21 Midori iro (Green),,,real;331;ak_equiv21|ak;2264;ak_equiv21
+ak,AIR,11903,#0C372D,8,4,5,ak_equiv21,,IJA #27 Ao Midori iro (Blue-Green),,,real;332;ak_equiv21|citadel;51004;ak_equiv21|ak;2265;ak_equiv21
+ak,AIR,11904,#777125,8,4,5,ak_equiv21,,IJA #29 Ki Midori iro (Yellow-Green),,,real;333;ak_equiv21|ak;2266;ak_equiv21
+ak,AIR,11905,#867956,8,4,5,ak_equiv21,,IJA #30 Karekusa iro (Dry Grass),,,real;334;ak_equiv21|ak;2267;ak_equiv21
+ak,AIR,11906,#685247,8,4,5,ak_equiv21,,IJA #31 Cha Kasshoku (Tea Colour),,,real;335;ak_equiv21|ak;2268;ak_equiv21
+ak,AIR,11907,#9DB3A6,8,4,5,ak_equiv21,,Grey-Blue 1920s-1930s,,,
+ak,AIR,11908,#D4D5CD,8,4,5,ak_equiv21,,AE-9/AII Light Grey,,,av;70.71414;ak_equiv21|fs;FS 25630;ak_equiv21|real;308;ak_equiv21|hataka;127;ak_equiv21|ak;2251;ak_equiv21
+ak,AIR,11909,#313F1E,8,4,5,ak_equiv21,,AII Green,,,av;70.71410;ak_equiv21|real;309;ak_equiv21|hataka;128;ak_equiv21|ak;2252;ak_equiv21
+ak,AIR,11910,#7DA3AE,8,4,5,ak_equiv21,,AII Light Blue,,,av;70.71317;ak_equiv21|real;310;ak_equiv21|hataka;129;ak_equiv21|ak;2253;ak_equiv21
+ak,AIR,11911,#657376,8,4,5,ak_equiv21,,A-14 Interior Steel Grey,,,humbrol;5;ak_equiv21|av;70.71336;ak_equiv21|real;319;ak_equiv21|ak;2241;ak_equiv21
+ak,AIR,11912,#85A59A,8,4,5,ak_equiv21,,A-18f Light Grey-Blue,,,av;70.71413;ak_equiv21|real;311;ak_equiv21|ak;2254;ak_equiv21
+ak,AIR,11913,#53653D,8,4,5,ak_equiv21,,A-19f Grass Green,,,av;70.71411;ak_equiv21|real;312;ak_equiv21|ak;2255;ak_equiv21
+ak,AIR,11914,#8F8762,8,4,5,ak_equiv21,,A-21m Light Yellowish Brown,,,humbrol;72;ak_equiv21|av;70.71415;ak_equiv21|real;314;ak_equiv21|lifecolor;UA039;ak_equiv21|hataka;74;ak_equiv21|ak;2248;ak_equiv21
+ak,AIR,11915,#425223,8,4,5,ak_equiv21,,AMT-4 (A-24m) Green,,,av;70.71301;ak_equiv21|real;315;ak_equiv21|hataka;73;ak_equiv21|ak;2242;ak_equiv21
+ak,AIR,11916,#6790A4,8,4,5,ak_equiv21,,AMT-7 Light Blue,,,av;70.71318;ak_equiv21|real;316;ak_equiv21|hataka;72;ak_equiv21|ak;2244;ak_equiv21
+ak,AIR,11917,#475A61,8,4,5,ak_equiv21,,AMT-11 Blue-Grey,,,av;70.71304;ak_equiv21|real;317;ak_equiv21|hataka;71;ak_equiv21|ak;2245;ak_equiv21
+ak,AIR,11918,#2B3638,8,4,5,ak_equiv21,,AMT-12 Dark Grey,,,av;70.71308;ak_equiv21|real;318;ak_equiv21|hataka;70;ak_equiv21|ak;2246;ak_equiv21
+ak,AIR,11919,#2C652E,8,4,5,ak_equiv21,,Radome & Wheel Hub Green,,,gunze;C66;ak_equiv21|gunze;H26;ak_equiv21|ak;2302;ak_equiv21
+ak,AIR,11920,#BEBFBA,8,4,5,ak_equiv21,,MiG-25/MiG-31 Grey,,,real;336;ak_equiv21
+ak,FIG,11401,#784931,8,4,5,ak_equiv21,,Base Flesh,,,av;70.70341;ak_equiv21|fs;FS30233;ak_equiv21|ak;3011;ak_equiv21
+ak,FIG,11402,#CC9078,8,4,5,ak_equiv21,,Light Flesh,,,fs;FS31433;ak_equiv21|ak;3012;ak_equiv21
+ak,FIG,11403,#FDCB9E,8,4,5,ak_equiv21,,Highlight Flesh,,,av;70.70342;ak_equiv21|ak;3013;ak_equiv21
+ak,FIG,11404,#8B433F,8,4,5,ak_equiv21,,Shadow Flesh,,,fs;FS31136;ak_equiv21|ak;3014;ak_equiv21
+ak,FIG,11405,#542725,8,4,5,ak_equiv21,,Dark Shadow Flesh,,,humbrol;73;ak_equiv21|av;70.982;ak_equiv21|ak;3015;ak_equiv21
+ak,FIG,11406,#351C1F,8,4,5,ak_equiv21,,Reddish Black,,,fs;FS10049;ak_equiv21|ak;3016;ak_equiv21
+ak,FIG,11407,#020408,8,4,5,ak_equiv21,,Black Uniform Base,,,av;70.70306;ak_equiv21|gunze;C137;ak_equiv21|fs;FS26081;ak_equiv21|lifecolor;UA733;ak_equiv21|ak;3002;ak_equiv21
+ak,FIG,11408,#4B402F,8,4,5,ak_equiv21,,Dot44 Brown Base,,,ak;3021;ak_equiv21
+ak,FIG,11409,#C4884F,8,4,5,ak_equiv21,,Orange Tan,,,fs;FS32516;ak_equiv21|ak;3022;ak_equiv21
+ak,FIG,11410,#142A20,8,4,5,ak_equiv21,,Dark Green,,,ak;3023;ak_equiv21
+ak,FIG,11411,#708D4C,8,4,5,ak_equiv21,,Light Green,,,ak;3024;ak_equiv21
+ak,FIG,11412,#1F391E,8,4,5,ak_equiv21,,Medium Green,,,av;70.70348;ak_equiv21|gunze;H303;ak_equiv21|fs;FS34102;ak_equiv21|lifecolor;UA002;ak_equiv21|ak;3025;ak_equiv21
+ak,FIG,11413,#876647,8,4,5,ak_equiv21,,Denison Tan Base,,,av;70.70339;ak_equiv21|fs;FS30227;ak_equiv21|ak;3026;ak_equiv21
+ak,FIG,11414,#696647,8,4,5,ak_equiv21,,Splittermuster Base,,,av;70.70332;ak_equiv21|fs;FS33303;ak_equiv21|ak;3041;ak_equiv21
+ak,FIG,11415,#263A25,8,4,5,ak_equiv21,,Splittermuster Green Spots,,,fs;FS34095;ak_equiv21|ak;3043;ak_equiv21
+ak,FIG,11416,#42352C,8,4,5,ak_equiv21,,Waffen Brown Grey,,,ak;3051;ak_equiv21
+ak,FIG,11417,#5A3F26,8,4,5,ak_equiv21,,Waffen Brown,,,av;70.875;ak_equiv21|fs;FS30045;ak_equiv21|ak;3055;ak_equiv21
+ak,FIG,11418,#190B07,8,4,5,ak_equiv21,,Brown Black,,,av;70.70333;ak_equiv21|ak;3056;ak_equiv21
+ak,FIG,11419,#452922,8,4,5,ak_equiv21,,Waffen Red Brown,,,humbrol;160;ak_equiv21|av;70.984;ak_equiv21|ral;RAL8011;ak_equiv21|fs;FS30108;ak_equiv21|ak;3061;ak_equiv21
+ak,FIG,11420,#2A3C21,8,4,5,ak_equiv21,,Waffen Green,,,ak;3065;ak_equiv21
+ak,FIG,11421,#233217,8,4,5,ak_equiv21,,Dark Olive Green,,,fs;FS34094;ak_equiv21|ak;3071;ak_equiv21
+ak,FIG,11422,#998042,8,4,5,ak_equiv21,,Ocher Khaki,,,humbrol;93;ak_equiv21|av;70.824;ak_equiv21|fs;FS30266;ak_equiv21|ak;3072;ak_equiv21
+ak,FIG,11423,#393F34,8,4,5,ak_equiv21,,Field Grey Base #2 (Grey Uniform),,,humbrol;79;ak_equiv21|av;70.867;ak_equiv21|gunze;H68;ak_equiv21|fs;FS36099;ak_equiv21|ak;3142;ak_equiv21
+ak,FIG,11424,#918D55,8,4,5,ak_equiv21,,Grey Green,,,fs;FS34424;ak_equiv21|ak;3143;ak_equiv21
+ak,FIG,11425,#393923,8,4,5,ak_equiv21,,Field Grey Base #1 (Green uniform),,,humbrol;75;ak_equiv21|av;70.897;ak_equiv21|fs;FS34052;ak_equiv21
+ak,FIG,11426,#6A7374,8,4,5,ak_equiv21,,Grey Blue,,,av;70.70338;ak_equiv21|ak;3146;ak_equiv21
+ak,FIG,11427,#26341C,8,4,5,ak_equiv21,,Green Uniform Base,,,av;70.70335;ak_equiv21|fs;FS16165;ak_equiv21|ak;3114;ak_equiv21
+ak,FIG,11428,#4E5C30,8,4,5,ak_equiv21,,Light Green Uniform,,,av;70.70336;ak_equiv21|ak;3115;ak_equiv21
+ak,FIG,11429,#67712E,8,4,5,ak_equiv21,,Russian Uniform Lights,,,fs;FS34258;ak_equiv21|ak;3121;ak_equiv21
+ak,FIG,11430,#505A28,8,4,5,ak_equiv21,,Russian Uniform Base,,,av;70.70327;ak_equiv21|fs;FS34098;ak_equiv21|ak;3122;ak_equiv21
+ak,FIG,11431,#162434,8,4,5,ak_equiv21,,Russian Blue Lights,,,ak;3124;ak_equiv21
+ak,FIG,11432,#020A1D,8,4,5,ak_equiv21,,Russian Blue Base,,,av;70.70309;ak_equiv21|ak;3125;ak_equiv21
+ak,FIG,11433,#49471F,8,4,5,ak_equiv21,,US Olive Base Uniform,,,
+ak,FIG,11434,#713F32,8,4,5,ak_equiv21,,Red Brown,,,av;70.70343;ak_equiv21|ak;3073;ak_equiv21
+ak,FIG,11435,#745438,8,4,5,ak_equiv21,,Field Drab,,,av;70.873;ak_equiv21|ak;3075;ak_equiv21
+ak,FIG,11436,#484428,8,4,5,ak_equiv21,,Canvas Tone,,,av;70.988;ak_equiv21|ak;3076;ak_equiv21
+ak,FIG,11437,#664D30,8,4,5,ak_equiv21,,British Uniform Base,,,av;70.70317;ak_equiv21|fs;FS16160;ak_equiv21|ak;3081;ak_equiv21
+ak,FIG,11438,#836430,8,4,5,ak_equiv21,,British Uniform Lights,,,av;70.70321;ak_equiv21|fs;FS20475;ak_equiv21|ak;3082;ak_equiv21
+ak,FIG,11439,#3C4D53,8,4,5,ak_equiv21,,French Greyish Blue,,,fs;FS35109;ak_equiv21|ak;3101;ak_equiv21
+ak,FIG,11440,#936922,8,4,5,ak_equiv21,,Desert Uniform Base,,,ak;3111;ak_equiv21
+ak,IC,11001,#FFFFFF,8,4,5,ak_equiv21,,White,,,tamiya;XF2;ak_equiv21|av;70.951;ak_equiv21|gunze;H11;ak_equiv21|testor;1768;ak_equiv21|rlm;RLM21;ak_equiv21|ral;RAL9016;ak_equiv21|fs;FS37925;ak_equiv21|revell;5;ak_equiv21|real;RC004;ak_equiv21
+ak,IC,11029,#020403,8,4,5,ak_equiv21,,Black,,,tamiya;XF1;ak_equiv21|humbrol;33;ak_equiv21|av;70.950;ak_equiv21|gunze;H12;ak_equiv21|testor;1583;ak_equiv21|rlm;RLM22;ak_equiv21|ral;RAL9004;ak_equiv21|fs;FS37038;ak_equiv21|real;RC001;ak_equiv21
+ak,IC,11045,#FFC425,8,4,5,ak_equiv21,,Deep Yellow,,,av;70.915;ak_equiv21|gunze;H4;ak_equiv21|ral;RAL1023;ak_equiv21
+ak,IC,11065,#EE778F,8,4,5,ak_equiv21,,Intense Pink,,,av;70.958;ak_equiv21|citadel;51070;ak_equiv21
+ak,IC,11072,#6B536D,8,4,5,ak_equiv21,,Deep Violet,,,
+ak,IC,11074,#724B6A,8,4,5,ak_equiv21,,Deep Purple,,,
+ak,IC,11080,#F26931,8,4,5,ak_equiv21,,Deep Orange,,,humbrol;18;ak_equiv21|av;70.851;ak_equiv21|gunze;H14;ak_equiv21|ral;RAL2004;ak_equiv21|real;RC009;ak_equiv21
+ak,IC,11088,#E12D29,8,4,5,ak_equiv21,,Deep Red,,,tamiya;XF7;ak_equiv21|humbrol;153;ak_equiv21|gunze;H23;ak_equiv21
+ak,IC,11102,#7D492B,8,4,5,ak_equiv21,,Deep Brown,,,av;70.818;ak_equiv21|gunze;H453;ak_equiv21|fs;FS20100;ak_equiv21
+ak,IC,11142,#196533,8,4,5,ak_equiv21,,Deep Green,,,av;70.969;ak_equiv21|gunze;H26;ak_equiv21|fs;FS14115;ak_equiv21
+ak,IC,11182,#10456A,8,4,5,ak_equiv21,,Deep Blue,,,humbrol;14;ak_equiv21|av;70.930;ak_equiv21|gunze;H15;ak_equiv21|testor;2715;ak_equiv21|revell;52;ak_equiv21|real;RC010;ak_equiv21
+ak,INK,11219,#150101,8,4,5,ak_equiv21,,Sepia INK,,,
+ak,INK,11220,#005E5E,8,4,5,ak_equiv21,,Turquoise INK,,,
+ak,INK,11221,#8E3A20,8,4,5,ak_equiv21,,Skin INK,,,
+ak,INK,11222,#555747,8,4,5,ak_equiv21,,Sooty Black INK,,,
+ak,INK,11223,#010103,8,4,5,ak_equiv21,,Carbon Black INK,,,
+ak,INK,11224,#AA7785,8,4,5,ak_equiv21,,Purple INK,,,
+ak,INK,11225,#6EBE46,8,4,5,ak_equiv21,,Luminous Green INK,,,
+ak,INK,11226,#0A6945,8,4,5,ak_equiv21,,Dark Green INK,,,
+ak,INK,11227,#B3482F,8,4,5,ak_equiv21,,Penetrating Red INK,,,
+ak,INK,11228,#001525,8,4,5,ak_equiv21,,Night Blue INK,,,
+ak,INK,11229,#0E0803,8,4,5,ak_equiv21,,Burnt Umber INK,,,
+ak,INK,11230,#FFFFFF,8,4,5,ak_equiv21,,Titanium White INK,,,
+ak,M,11191,#A77F3D,8,8,5,ak_equiv21,,Gold,,,gunze;H9;ak_equiv21|fs;FS17043;ak_equiv21
+ak,M,11192,#AB994C,8,8,5,ak_equiv21,,Old Gold,,,
+ak,M,11193,#62562A,8,8,5,ak_equiv21,,Rusty Gold,,,
+ak,M,11194,#8E6426,8,8,5,ak_equiv21,,Brass,,,humbrol;54;ak_equiv21|av;70.801;ak_equiv21|testor;1582;ak_equiv21|revell;92;ak_equiv21|citadel;51066;ak_equiv21
+ak,M,11195,#8F5922,8,8,5,ak_equiv21,,Rusty Brass,,,
+ak,M,11196,#8B7827,8,8,5,ak_equiv21,,Bronze,,,humbrol;55;ak_equiv21|av;70.998;ak_equiv21|revell;95;ak_equiv21|citadel;51063;ak_equiv21
+ak,M,11197,#904C22,8,8,5,ak_equiv21,,Copper,,,tamiya;XF6;ak_equiv21|humbrol;12;ak_equiv21|av;70.999;ak_equiv21|gunze;H10;ak_equiv21|testor;1551;ak_equiv21|revell;93;ak_equiv21|citadel;51065;ak_equiv21
+ak,M,11198,#36200D,8,8,5,ak_equiv21,,Burnt Tin,,,tamiya;XF28;ak_equiv21|humbrol;171;ak_equiv21
+ak,M,11199,#478E95,8,8,5,ak_equiv21,,Metallic Blue,,,gunze;H88;ak_equiv21
+ak,M,11200,#44736E,8,8,5,ak_equiv21,,Astral Beryllium,,,gunze;H63;ak_equiv21
+ak,M,11201,#001F34,8,8,5,ak_equiv21,,Cobalt Blue,,,
+ak,M,11202,#917E8E,8,8,5,ak_equiv21,,Anodized Violet,,,
+ak,M,11203,#C43F3D,8,8,5,ak_equiv21,,Foundry Red,,,
+ak,M,11204,#1F7A42,8,8,5,ak_equiv21,,Emerald Metallic Green,,,
+ak,M,11205,#6E9757,8,8,5,ak_equiv21,,Metallic Green,,,gunze;H89;ak_equiv21
+ak,M,11206,#F7F4D5,8,8,5,ak_equiv21,,Pearl,,,
+ak,M,11207,#A0A4A5,8,8,5,ak_equiv21,,Aluminium,,,tamiya;XF16;ak_equiv21|fs;FS36628;ak_equiv21|real;RC020;ak_equiv21
+ak,M,11208,#6C6F71,8,8,5,ak_equiv21,,Dark Aluminium,,,
+ak,M,11209,#8B999D,8,8,5,ak_equiv21,,Silver,,,tamiya;X11;ak_equiv21|humbrol;11;ak_equiv21|av;70.997;ak_equiv21|gunze;H8;ak_equiv21|testor;1790;ak_equiv21|fs;FS17178;ak_equiv21|revell;90;ak_equiv21
+ak,M,11210,#979B96,8,8,5,ak_equiv21,,Natural Steel,,,tamiya;XF56;ak_equiv21|humbrol;56;ak_equiv21|av;70.864;ak_equiv21|testor;1781;ak_equiv21|revell;99;ak_equiv21|gunze;H18;ak_equiv21
+ak,M,11211,#999887,8,8,5,ak_equiv21,,Oily Steel,,,humbrol;27002;ak_equiv21|av;70.865;ak_equiv21|testor;1401;ak_equiv21|gunze;H38;ak_equiv21
+ak,M,11212,#424544,8,8,5,ak_equiv21,,Gun Metal,,,tamiya;X10;ak_equiv21|humbrol;53;ak_equiv21|av;70.863;ak_equiv21|gunze;H76;ak_equiv21|testor;1795;ak_equiv21
+ak,PC,11037,#FDD878,8,4,5,ak_equiv21,,Pastel Yellow,,,fs;FS33798;ak_equiv21
+ak,PC,11059,#FABCA2,8,4,5,ak_equiv21,,Pastel Pink,,,fs;FS31669;ak_equiv21
+ak,PC,11069,#FCE1ED,8,4,5,ak_equiv21,,Pastel Violet,,,
+ak,PC,11076,#F8995A,8,4,5,ak_equiv21,,Pastel Peach,,,
+ak,PC,11131,#9DD29A,8,4,5,ak_equiv21,,Pastel Green,,,
+ak,PC,11168,#AFDAB7,8,4,5,ak_equiv21,,Pastel Blue,,,gunze;H41;ak_equiv21
+ak,S,11002,#E6E5DA,8,4,5,ak_equiv21,,Offwhite,,,av;70.820;ak_equiv21|gunze;H316;ak_equiv21|ral;RAL9001;ak_equiv21|fs;FS27780;ak_equiv21|real;RC222;ak_equiv21
+ak,S,11003,#F0F1E8,8,4,5,ak_equiv21,,White Grey,,,av;70.993;ak_equiv21|gunze;H311;ak_equiv21
+ak,S,11004,#EDE9C0,8,4,5,ak_equiv21,,Ivory,,,humbrol;41;ak_equiv21|av;70.918;ak_equiv21|gunze;H21;ak_equiv21|testor;2709;ak_equiv21|fs;FS37855;ak_equiv21|revell;10;ak_equiv21
+ak,S,11005,#DCECC7,8,4,5,ak_equiv21,,Greenish White,,,humbrol;90;ak_equiv21|gunze;H31;ak_equiv21|fs;FS17773;ak_equiv21
+ak,S,11006,#DCD1B0,8,4,5,ak_equiv21,,Silver Grey,,,humbrol;28;ak_equiv21|av;70.883;ak_equiv21|gunze;H51;ak_equiv21|testor;1733;ak_equiv21|ral;RAL9002;ak_equiv21|fs;FS36622;ak_equiv21|citadel;51058;ak_equiv21
+ak,S,11007,#B5B090,8,4,5,ak_equiv21,,Rock Grey,,,humbrol;129;ak_equiv21|gunze;H57;ak_equiv21|testor;1730;ak_equiv21|fs;FS26440;ak_equiv21|revell;301;ak_equiv21
+ak,S,11008,#D8C394,8,4,5,ak_equiv21,,Grimy Grey,,,fs;FS33531;ak_equiv21|gunze;H313;ak_equiv21
+ak,S,11009,#A8A085,8,4,5,ak_equiv21,,Warm Grey,,,tamiya;XF20;ak_equiv21|gunze;H321;ak_equiv21
+ak,S,11010,#ABB29C,8,4,5,ak_equiv21,,Medium Grey,,,tamiya;XF25;ak_equiv21|av;70.907;ak_equiv21|gunze;H62;ak_equiv21|rlm;RLM76;ak_equiv21|fs;FS36473;ak_equiv21
+ak,S,11011,#BBC8C6,8,4,5,ak_equiv21,,Blue-Grey,,,tamiya;XF12;ak_equiv21|humbrol;89;ak_equiv21|av;70.973;ak_equiv21|gunze;H67;ak_equiv21|testor;1562;ak_equiv21|fs;FS25526;ak_equiv21
+ak,S,11012,#AEB1AD,8,4,5,ak_equiv21,,Sky Grey,,,tamiya;XF19;ak_equiv21|humbrol;196;ak_equiv21|av;70.989;ak_equiv21|gunze;H334;ak_equiv21|ral;RAL7004;ak_equiv21|fs;FS36463;ak_equiv21|revell;371;ak_equiv21
+ak,S,11013,#A3A8AD,8,4,5,ak_equiv21,,Pale Grey,,,tamiya;XF80;ak_equiv21|av;70.990;ak_equiv21|gunze;H53;ak_equiv21|testor;1728;ak_equiv21|ral;RAL7001;ak_equiv21|fs;FS36300;ak_equiv21
+ak,S,11014,#95937D,8,4,5,ak_equiv21,,Medium Sea Grey,,,gunze;H61;ak_equiv21|fs;FS36307;ak_equiv21
+ak,S,11015,#71726E,8,4,5,ak_equiv21,,Dark Sea Grey,,,tamiya;XF53;ak_equiv21|humbrol;140;ak_equiv21|av;70.991;ak_equiv21|gunze;H82;ak_equiv21|testor;1729;ak_equiv21|fs;FS36231;ak_equiv21|revell;70;ak_equiv21
+ak,S,11016,#757A64,8,4,5,ak_equiv21,,Grey-Green,,,tamiya;XF73;ak_equiv21|av;70.886;ak_equiv21|gunze;H70;ak_equiv21|rlm;RLM2;ak_equiv21|real;RC265;ak_equiv21
+ak,S,11017,#6F6451,8,4,5,ak_equiv21,,Reddish Grey,,,
+ak,S,11018,#5F6A65,8,4,5,ak_equiv21,,Neutral Grey,,,tamiya;XF66;ak_equiv21|humbrol;27;ak_equiv21|av;70.992;ak_equiv21|gunze;H68;ak_equiv21|testor;2160;ak_equiv21|fs;FS36173;ak_equiv21
+ak,S,11019,#63695E,8,4,5,ak_equiv21,,Graphite,,,tamiya;XF22;ak_equiv21|gunze;H22;ak_equiv21
+ak,S,11020,#646861,8,4,5,ak_equiv21,,English Grey,,,tamiya;XF54;ak_equiv21|av;70.836;ak_equiv21|gunze;H305;ak_equiv21|fs;FS36118;ak_equiv21
+ak,S,11021,#545C58,8,4,5,ak_equiv21,,Basalt Grey,,,tamiya;XF77;ak_equiv21|humbrol;106;ak_equiv21|av;70.869;ak_equiv21|gunze;H83;ak_equiv21|rlm;RLM75;ak_equiv21|ral;RAL7012;ak_equiv21|fs;FS36152;ak_equiv21|revell;47;ak_equiv21
+ak,S,11022,#414542,8,4,5,ak_equiv21,,Dark Grey,,,tamiya;XF24;ak_equiv21|humbrol;85;ak_equiv21|av;70.994;ak_equiv21|testor;1579;ak_equiv21|fs;FS26008;ak_equiv21|revell;302;ak_equiv21|gunze;H27;ak_equiv21
+ak,S,11023,#3D433F,8,4,5,ak_equiv21,,Lead Grey,,,ral;RAL7022;ak_equiv21|fs;FS34031;ak_equiv21|gunze;H333;ak_equiv21
+ak,S,11024,#3A3D36,8,4,5,ak_equiv21,,Ash Grey,,,humbrol;123;ak_equiv21|av;70.866;ak_equiv21|gunze;H68;ak_equiv21|rlm;RLM66;ak_equiv21|fs;FS26008;ak_equiv21
+ak,S,11025,#30332D,8,4,5,ak_equiv21,,German Grey,,,tamiya;XF63;ak_equiv21|humbrol;67;ak_equiv21|av;70.995;ak_equiv21|gunze;H404;ak_equiv21|testor;1592;ak_equiv21|ral;RAL7016;ak_equiv21|fs;FS26044;ak_equiv21|revell;78;ak_equiv21
+ak,S,11026,#28271D,8,4,5,ak_equiv21,,Tenebrous Grey,,,gunze;H452;ak_equiv21
+ak,S,11027,#202015,8,4,5,ak_equiv21,,Rubber Black,,,tamiya;XF85;ak_equiv21|gunze;H77;ak_equiv21
+ak,S,11028,#22261E,8,4,5,ak_equiv21,,Smoke Black,,,tamiya;XF69;ak_equiv21|av;70.862;ak_equiv21|gunze;H401;ak_equiv21|testor;4795;ak_equiv21|ral;RAL7021;ak_equiv21|fs;FS37031;ak_equiv21|revell;109;ak_equiv21
+ak,S,11030,#DDB553,8,4,5,ak_equiv21,,Beige,,,av;70.917;ak_equiv21|fs;FS23594;ak_equiv21
+ak,S,11031,#C9A762,8,4,5,ak_equiv21,,Buff,,,tamiya;XF57;ak_equiv21|humbrol;103;ak_equiv21|av;70.976;ak_equiv21|ral;RAL1001;ak_equiv21|fs;FS23578;ak_equiv21|citadel;51032;ak_equiv21
+ak,S,11032,#ECD283,8,4,5,ak_equiv21,,Pale Sand,,,av;70.837;ak_equiv21|fs;FS23722;ak_equiv21|real;RC018;ak_equiv21
+ak,S,11033,#E1B85E,8,4,5,ak_equiv21,,Dark Sand,,,tamiya;XF88;ak_equiv21|humbrol;74;ak_equiv21|av;70.847;ak_equiv21|gunze;H36;ak_equiv21
+ak,S,11034,#C3953E,8,4,5,ak_equiv21,,Medium Sand,,,av;70.977;ak_equiv21|gunze;H71;ak_equiv21|fs;FS30257;ak_equiv21|real;RC030;ak_equiv21
+ak,S,11035,#E4B945,8,4,5,ak_equiv21,,Sand Yellow,,,av;70.916;ak_equiv21|ral;RAL1002;ak_equiv21|fs;FS20260;ak_equiv21
+ak,S,11036,#FBF08E,8,4,5,ak_equiv21,,Ice Yellow,,,humbrol;76;ak_equiv21|av;70.858;ak_equiv21
+ak,S,11038,#FBDC60,8,4,5,ak_equiv21,,Pale Yellow,,,av;70.949;ak_equiv21|fs;FS33727;ak_equiv21
+ak,S,11039,#E7CF4A,8,4,5,ak_equiv21,,Purulent Yellow,,,av;70.806;ak_equiv21|rlm;RLM5;ak_equiv21
+ak,S,11040,#A98F29,8,4,5,ak_equiv21,,Sahara Yellow,,,
+ak,S,11041,#FBAF54,8,4,5,ak_equiv21,,Golden Yellow,,,av;70.948;ak_equiv21|ral;RAL1017;ak_equiv21
+ak,S,11042,#F39329,8,4,5,ak_equiv21,,Volcanic Yellow,,,gunze;H24;ak_equiv21|fs;FS13538;ak_equiv21
+ak,S,11043,#ECA630,8,4,5,ak_equiv21,,Dirty Yellow,,,gunze;H329;ak_equiv21
+ak,S,11044,#FCB52B,8,4,5,ak_equiv21,,Yellow,,,tamiya;X8;ak_equiv21|humbrol;69;ak_equiv21|av;70.953;ak_equiv21|gunze;H413;ak_equiv21|testor;1514;ak_equiv21|rlm;RLM4;ak_equiv21|ral;RAL1003;ak_equiv21|fs;FS23655;ak_equiv21|revell;12;ak_equiv21
+ak,S,11046,#FFD329,8,4,5,ak_equiv21,,Radiant Yellow,,,
+ak,S,11047,#FBE133,8,4,5,ak_equiv21,,Lemon Yellow,,,tamiya;XF3;ak_equiv21|humbrol;99;ak_equiv21|av;70.952;ak_equiv21|testor;2717;ak_equiv21|ral;RAL1018;ak_equiv21
+ak,S,11048,#EAE84B,8,4,5,ak_equiv21,,Laser Yellow,,,av;70.954;ak_equiv21
+ak,S,11049,#E8E73C,8,64,5,ak_equiv21,,Fluorescent Yellow,,,av;70.730;ak_equiv21|gunze;H97;ak_equiv21|ral;RAL1026;ak_equiv21|fs;FS38907;ak_equiv21
+ak,S,11050,#FED9AC,8,4,5,ak_equiv21,,Light Flesh,,,av;70.928;ak_equiv21|fs;FS31670;ak_equiv21
+ak,S,11051,#EBBC7F,8,4,5,ak_equiv21,,Luminous Flesh,,,gunze;H318;ak_equiv21|fs;FS21667;ak_equiv21
+ak,S,11052,#FAB07A,8,4,5,ak_equiv21,,Basic Skin Tone,,,av;70.815;ak_equiv21|fs;FS21670;ak_equiv21
+ak,S,11053,#FAAD5E,8,4,5,ak_equiv21,,Radiant Flesh,,,av;70.955;ak_equiv21|fs;FS22516;ak_equiv21
+ak,S,11054,#C4803A,8,4,5,ak_equiv21,,Medium Flesh Tone,,,av;70.860;ak_equiv21
+ak,S,11055,#F9A45A,8,4,5,ak_equiv21,,Sunny Skin Tone,,,tamiya;XF15;ak_equiv21|av;70.845;ak_equiv21
+ak,S,11056,#ECA344,8,4,5,ak_equiv21,,Dark Flesh,,,humbrol;61;ak_equiv21|av;70.927;ak_equiv21|gunze;H44;ak_equiv21|testor;1516;ak_equiv21|revell;35;ak_equiv21
+ak,S,11057,#C5B480,8,4,5,ak_equiv21,,Vampiric Flesh,,,gunze;H336;ak_equiv21|fs;FS13522;ak_equiv21
+ak,S,11058,#AF9C64,8,4,5,ak_equiv21,,Decomposed Flesh,,,tamiya;XF78;ak_equiv21|gunze;H85;ak_equiv21|fs;FS33510;ak_equiv21
+ak,S,11060,#F9AC8D,8,4,5,ak_equiv21,,Sickly Pink,,,fs;FS31638;ak_equiv21
+ak,S,11061,#F89E75,8,4,5,ak_equiv21,,Salmon,,,av;70.835;ak_equiv21
+ak,S,11062,#F6937B,8,4,5,ak_equiv21,,Old Rose,,,tamiya;X17;ak_equiv21|humbrol;200;ak_equiv21|av;70.944;ak_equiv21|gunze;H19;ak_equiv21
+ak,S,11063,#D58366,8,4,5,ak_equiv21,,Brown Rose,,,av;70.803;ak_equiv21
+ak,S,11064,#DB915F,8,4,5,ak_equiv21,,Beige Red,,,av;70.804;ak_equiv21|ral;RAL3012;ak_equiv21|fs;FS31433;ak_equiv21|citadel;51037;ak_equiv21
+ak,S,11066,#640231,8,4,5,ak_equiv21,,Laser Magenta,,,
+ak,S,11067,#AD3763,8,4,5,ak_equiv21,,Magenta,,,av;70.945;ak_equiv21|ral;RAL4006;ak_equiv21|citadel;50033;ak_equiv21
+ak,S,11068,#F0586F,8,64,5,ak_equiv21,,Fluorescent Magenta,,,av;70.735;ak_equiv21|gunze;H99;ak_equiv21
+ak,S,11070,#836EA5,8,4,5,ak_equiv21,,Blue Violet,,,av;70.811;ak_equiv21
+ak,S,11071,#5F5E71,8,4,5,ak_equiv21,,Lilac,,,gunze;H49;ak_equiv21
+ak,S,11073,#51424D,8,4,5,ak_equiv21,,Purple,,,tamiya;X16;ak_equiv21|humbrol;68;ak_equiv21|av;70.959;ak_equiv21|gunze;H39;ak_equiv21|fs;FS37100;ak_equiv21|revell;53;ak_equiv21
+ak,S,11075,#4F2F34,8,4,5,ak_equiv21,,Violet Red,,,av;70.812;ak_equiv21
+ak,S,11077,#F57F45,8,4,5,ak_equiv21,,Light Orange,,,av;70.911;ak_equiv21|ral;RAL2008;ak_equiv21|fs;FS32473;ak_equiv21
+ak,S,11078,#F3703E,8,4,5,ak_equiv21,,Medium Orange,,,
+ak,S,11079,#DD663A,8,4,5,ak_equiv21,,Burn Orange,,,tamiya;X6;ak_equiv21|av;70.805;ak_equiv21|ral;RAL2012;ak_equiv21
+ak,S,11081,#F2612C,8,64,5,ak_equiv21,,Fluorescent Orange,,,av;70.733;ak_equiv21|gunze;H98;ak_equiv21|testor;2041;ak_equiv21|ral;RAL2005;ak_equiv21|fs;FS38903;ak_equiv21|real;RC207;ak_equiv21
+ak,S,11082,#F68923,8,4,5,ak_equiv21,,Luminous Orange,,,
+ak,S,11083,#F05655,8,4,5,ak_equiv21,,Dead Red,,,gunze;H29;ak_equiv21
+ak,S,11084,#CF5251,8,4,5,ak_equiv21,,Ruby,,,av;70.802;ak_equiv21
+ak,S,11085,#F06338,8,4,5,ak_equiv21,,Cadmium Red,,,humbrol;131;ak_equiv21|av;70.910;ak_equiv21|fs;FS21400;ak_equiv21
+ak,S,11086,#D15833,8,4,5,ak_equiv21,,Amaranth Red,,,av;70.829;ak_equiv21|ral;RAL2001;ak_equiv21
+ak,S,11087,#D04634,8,4,5,ak_equiv21,,Scarlet Red,,,av;70.817;ak_equiv21|ral;RAL2002;ak_equiv21|fs;FS21310;ak_equiv21
+ak,S,11089,#C82E2A,8,4,5,ak_equiv21,,Blood Red,,,humbrol;174;ak_equiv21|av;70.909;ak_equiv21|ral;RAL3020;ak_equiv21|fs;FS31302;ak_equiv21|revell;330;ak_equiv21
+ak,S,11090,#C4553E,8,4,5,ak_equiv21,,Vermillion,,,humbrol;60;ak_equiv21|av;70.947;ak_equiv21|gunze;H86;ak_equiv21|ral;RAL3031;ak_equiv21|fs;FS31350;ak_equiv21|real;RC006;ak_equiv21
+ak,S,11091,#B8462F,8,4,5,ak_equiv21,,Carmine,,,tamiya;X7;ak_equiv21|humbrol;19;ak_equiv21|av;70.908;ak_equiv21|gunze;H3;ak_equiv21|testor;1503;ak_equiv21|ral;RAL3002;ak_equiv21|fs;FS21105;ak_equiv21|revell;31;ak_equiv21
+ak,S,11092,#B33A27,8,4,5,ak_equiv21,,Matt Red,,,av;70.957;ak_equiv21|gunze;H13;ak_equiv21|testor;4714;ak_equiv21|ral;RAL3013;ak_equiv21|fs;FS31136;ak_equiv21
+ak,S,11093,#994830,8,4,5,ak_equiv21,,Brick Red,,,av;70.946;ak_equiv21|gunze;H327;ak_equiv21|fs;FS11136;ak_equiv21
+ak,S,11094,#9D4038,8,4,5,ak_equiv21,,Bordeaux Red,,,gunze;H43;ak_equiv21
+ak,S,11095,#7A1515,8,4,5,ak_equiv21,,Dirty Red,,,humbrol;20;ak_equiv21|av;70.926;ak_equiv21|gunze;H33;ak_equiv21|testor;1501;ak_equiv21|ral;RAL3026;ak_equiv21|revell;32;ak_equiv21
+ak,S,11096,#630A0F,8,4,5,ak_equiv21,,Wine Red,,,gunze;H466;ak_equiv21
+ak,S,11097,#4B2C22,8,4,5,ak_equiv21,,Burnt Red,,,tamiya;XF9;ak_equiv21|av;70.814;ak_equiv21|gunze;H47;ak_equiv21|ral;RAL8012;ak_equiv21
+ak,S,11098,#3A211B,8,4,5,ak_equiv21,,Black Red,,,av;70.859;ak_equiv21|testor;2152;ak_equiv21|real;RC068;ak_equiv21
+ak,S,11099,#F9A464,8,4,5,ak_equiv21,,Ocher Orange,,,av;P;ak_equiv21
+ak,S,11100,#CB8043,8,4,5,ak_equiv21,,Light Brown,,,av;70.929;ak_equiv21
+ak,S,11101,#AD5C29,8,4,5,ak_equiv21,,Orange Brown,,,humbrol;9;ak_equiv21|av;70.981;ak_equiv21|ral;RAL8023;ak_equiv21|fs;FS30252;ak_equiv21|revell;80;ak_equiv21|real;RC031;ak_equiv21|citadel;51040;ak_equiv21
+ak,S,11103,#984D36,8,4,5,ak_equiv21,,Medium Rust,,,av;P;ak_equiv21|gunze;H7;ak_equiv21|real;RC081;ak_equiv21
+ak,S,11104,#61372C,8,4,5,ak_equiv21,,Saddle Brown,,,tamiya;XF79;ak_equiv21|av;70.940;ak_equiv21|fs;FS30111;ak_equiv21
+ak,S,11105,#DD6026,8,4,5,ak_equiv21,,Light Rust,,,
+ak,S,11106,#5B280D,8,4,5,ak_equiv21,,Mahogany Brown,,,humbrol;113;ak_equiv21|av;70.846;ak_equiv21|gunze;H344;ak_equiv21|testor;1785;ak_equiv21|ral;RAL8002;ak_equiv21|revell;83;ak_equiv21
+ak,S,11107,#4C210C,8,4,5,ak_equiv21,,Dark Rust,,,tamiya;XF68;ak_equiv21|gunze;H17;ak_equiv21
+ak,S,11108,#2D1107,8,4,5,ak_equiv21,,Hull Red,,,av;70.985;ak_equiv21|gunze;H84;ak_equiv21|ral;RAL8017;ak_equiv21|fs;FS30059;ak_equiv21
+ak,S,11109,#4A3414,8,4,5,ak_equiv21,,Dark Brown,,,tamiya;XF64;ak_equiv21|av;70.826;ak_equiv21|fs;FS30140;ak_equiv21
+ak,S,11110,#3D2C1A,8,4,5,ak_equiv21,,Leather Brown,,,av;70.871;ak_equiv21|gunze;H456;ak_equiv21|ral;RAL8027;ak_equiv21|fs;FS30051;ak_equiv21
+ak,S,11111,#211609,8,4,5,ak_equiv21,,Burnt Umber,,,tamiya;XF51;ak_equiv21|av;70.941;ak_equiv21|fs;FS30097;ak_equiv21|real;RC323;ak_equiv21
+ak,S,11112,#120904,8,4,5,ak_equiv21,,Grim Brown,,,av;70.822;ak_equiv21|gunze;H462;ak_equiv21|ral;RAL8019;ak_equiv21|fs;FS37056;ak_equiv21
+ak,S,11113,#291809,8,4,5,ak_equiv21,,Chocolate (Chipping),,,tamiya;XF10;ak_equiv21|humbrol;98;ak_equiv21|av;70.872;ak_equiv21|testor;1540;ak_equiv21|ral;RAL8017;ak_equiv21|fs;FS20062;ak_equiv21
+ak,S,11114,#C3BDA9,8,4,5,ak_equiv21,,Deck Tan,,,tamiya;XF55;ak_equiv21|humbrol;128;ak_equiv21|av;70.986;ak_equiv21|gunze;H53;ak_equiv21|testor;1741;ak_equiv21|ral;RAL7038;ak_equiv21|fs;FS26496;ak_equiv21|revell;374;ak_equiv21|real;RC019;ak_equiv21
+ak,S,11115,#C7AD7D,8,4,5,ak_equiv21,,Light Earth,,,av;70.819;ak_equiv21|gunze;H79;ak_equiv21|fs;FS22446;ak_equiv21
+ak,S,11116,#CC944F,8,4,5,ak_equiv21,,Tan Yellow,,,av;70.912;ak_equiv21|ral;RAL1011;ak_equiv21|fs;FS33245;ak_equiv21|gunze;H44;ak_equiv21
+ak,S,11117,#A47425,8,4,5,ak_equiv21,,Golden Brown,,,av;70.877;ak_equiv21|fs;FS33275;ak_equiv21|citadel;51004;ak_equiv21
+ak,S,11118,#C0903A,8,4,5,ak_equiv21,,Ochre,,,humbrol;63;ak_equiv21|av;70.913;ak_equiv21|gunze;H34;ak_equiv21|testor;1706;ak_equiv21|fs;FS33434;ak_equiv21|revell;89;ak_equiv21
+ak,S,11119,#98704A,8,4,5,ak_equiv21,,Cork,,,tamiya;XF52;ak_equiv21|humbrol;62;ak_equiv21|av;70.843;ak_equiv21|gunze;H66;ak_equiv21|testor;1737;ak_equiv21|rlm;RLM79;ak_equiv21|revell;85;ak_equiv21
+ak,S,11120,#654E31,8,4,5,ak_equiv21,,Mud Brown,,,av;70.825;ak_equiv21|gunze;H341;ak_equiv21|fs;FS30140;ak_equiv21
+ak,S,11121,#735534,8,4,5,ak_equiv21,,Tan Earth,,,tamiya;XF64;ak_equiv21|humbrol;119;ak_equiv21|av;70.874;ak_equiv21|gunze;H37;ak_equiv21|fs;FS30219;ak_equiv21
+ak,S,11122,#9C7D3E,8,4,5,ak_equiv21,,Green Ochre,,,tamiya;XF59;ak_equiv21|humbrol;94;ak_equiv21|av;70.914;ak_equiv21|gunze;H402;ak_equiv21|revell;88;ak_equiv21
+ak,S,11123,#8D6926,8,4,5,ak_equiv21,,Japanese Brown,,,humbrol;83;ak_equiv21|av;70.923;ak_equiv21|fs;FS30266;ak_equiv21
+ak,S,11124,#806B30,8,4,5,ak_equiv21,,Middle Stone,,,tamiya;XF60;ak_equiv21|av;70.882;ak_equiv21|gunze;H401;ak_equiv21|ral;RAL1027;ak_equiv21
+ak,S,11125,#65543B,8,4,5,ak_equiv21,,Grey-Brown,,,tamiya;XF72;ak_equiv21
+ak,S,11126,#655425,8,4,5,ak_equiv21,,Green-Brown,,,tamiya;XF49;ak_equiv21|humbrol;26;ak_equiv21|av;70.879;ak_equiv21|gunze;H81;ak_equiv21|ral;RAL8000;ak_equiv21|revell;86;ak_equiv21
+ak,S,11127,#5D4820,8,4,5,ak_equiv21,,British Khaki,,,humbrol;29;ak_equiv21|av;70.921;ak_equiv21|revell;87;ak_equiv21|gunze;H72;ak_equiv21
+ak,S,11128,#C2D954,8,4,5,ak_equiv21,,Luminous Green,,,
+ak,S,11129,#8FC740,8,64,5,ak_equiv21,,Fluorescent Green,,,gunze;H100;ak_equiv21|fs;FS38901;ak_equiv21
+ak,S,11130,#D5D13D,8,4,5,ak_equiv21,,Pistachio,,,
+ak,S,11132,#D5E0B8,8,4,5,ak_equiv21,,Green-Grey,,,tamiya;XF21;ak_equiv21|humbrol;65;ak_equiv21|av;70.971;ak_equiv21|gunze;H74;ak_equiv21|fs;FS34414;ak_equiv21|revell;55;ak_equiv21
+ak,S,11133,#324A3C,8,4,5,ak_equiv21,,Dark Green-Grey,,,humbrol;149;ak_equiv21|gunze;H302;ak_equiv21|testor;1764;ak_equiv21|fs;FS34092;ak_equiv21|real;RC230;ak_equiv21
+ak,S,11134,#80B086,8,4,5,ak_equiv21,,Green Sky,,,humbrol;120;ak_equiv21|av;70.974;ak_equiv21|gunze;H50;ak_equiv21|testor;1716;ak_equiv21|fs;FS24272;ak_equiv21
+ak,S,11135,#738571,8,4,5,ak_equiv21,,Faded Green,,,tamiya;XF76;ak_equiv21|gunze;H48;ak_equiv21
+ak,S,11136,#91BC3E,8,4,5,ak_equiv21,,Frog Green,,,
+ak,S,11137,#7E9F3D,8,4,5,ak_equiv21,,Lime Green,,,tamiya;X15;ak_equiv21|humbrol;38;ak_equiv21|av;70.827;ak_equiv21|gunze;H16;ak_equiv21|revell;60;ak_equiv21
+ak,S,11138,#A39F31,8,4,5,ak_equiv21,,Interior Yellow Green,,,tamiya;XF4;ak_equiv21|gunze;H58;ak_equiv21|fs;FS33481;ak_equiv21
+ak,S,11139,#6D7932,8,4,5,ak_equiv21,,Golden Olive,,,av;70.857;ak_equiv21
+ak,S,11140,#5F8339,8,4,5,ak_equiv21,,Grass Green,,,
+ak,S,11141,#5A9541,8,4,5,ak_equiv21,,Light Green,,,tamiya;X28;ak_equiv21|humbrol;80;ak_equiv21|av;70.942;ak_equiv21|fs;FS24190;ak_equiv21|citadel;51024;ak_equiv21
+ak,S,11143,#159269,8,4,5,ak_equiv21,,Mint Green,,,
+ak,S,11144,#0A6447,8,4,5,ak_equiv21,,Emerald,,,av;70.838;ak_equiv21|gunze;H46;ak_equiv21
+ak,S,11145,#125A35,8,4,5,ak_equiv21,,Lizard Green,,,
+ak,S,11146,#19441F,8,4,5,ak_equiv21,,Dark Green,,,humbrol;2;ak_equiv21|av;70.970;ak_equiv21|testor;1524;ak_equiv21|ral;RAL6029;ak_equiv21|fs;FS24108;ak_equiv21|revell;61;ak_equiv21
+ak,S,11147,#455E2A,8,4,5,ak_equiv21,,Olive Green,,,tamiya;XF5;ak_equiv21|av;70.967;ak_equiv21
+ak,S,11148,#374E23,8,4,5,ak_equiv21,,Medium Olive Green,,,av;70.850;ak_equiv21|gunze;H464;ak_equiv21|fs;FS34128;ak_equiv21
+ak,S,11149,#4D6E39,8,4,5,ak_equiv21,,Intermediate Green,,,humbrol;82;ak_equiv21|av;70.891;ak_equiv21|ral;RAL6011;ak_equiv21|fs;FS34138;ak_equiv21|gunze;H312;ak_equiv21
+ak,S,11150,#3F4F35,8,4,5,ak_equiv21,,Gunship Green,,,tamiya;XF26;ak_equiv21|humbrol;30;ak_equiv21|av;70.895;ak_equiv21|fs;FS34092;ak_equiv21|gunze;H6;ak_equiv21
+ak,S,11151,#4C4215,8,4,5,ak_equiv21,,Brownish Green,,,
+ak,S,11152,#4E5C27,8,4,5,ak_equiv21,,Alga Green,,,av;70.833;ak_equiv21|gunze;H422;ak_equiv21|ral;RAL6025;ak_equiv21
+ak,S,11153,#182D27,8,4,5,ak_equiv21,,Extra Dark Green,,,tamiya;XF27;ak_equiv21|humbrol;91;ak_equiv21|av;70.896;ak_equiv21|rlm;RLM73;ak_equiv21|ral;RAL6012;ak_equiv21
+ak,S,11154,#383923,8,4,5,ak_equiv21,,German Field Grey,,,tamiya;XF65;ak_equiv21|humbrol;92;ak_equiv21|av;70.830;ak_equiv21|gunze;H73;ak_equiv21|ral;RAL7009;ak_equiv21|fs;FS34086;ak_equiv21|revell;79;ak_equiv21
+ak,S,11155,#272A13,8,4,5,ak_equiv21,,Command Green,,,tamiya;XF67;ak_equiv21|av;70.888;ak_equiv21|gunze;H80;ak_equiv21|rlm;RLM71;ak_equiv21|ral;RAL6006;ak_equiv21|fs;FS24079;ak_equiv21
+ak,S,11156,#443C1B,8,4,5,ak_equiv21,,Camouﬂage Green,,,tamiya;XF81;ak_equiv21|av;70.887;ak_equiv21|gunze;H52;ak_equiv21|rlm;RLM81;ak_equiv21|fs;FS34087;ak_equiv21
+ak,S,11157,#3A3514,8,4,5,ak_equiv21,,US Dark Green,,,tamiya;XF13;ak_equiv21|humbrol;116;ak_equiv21|av;70.893;ak_equiv21|gunze;H64;ak_equiv21|testor;1710;ak_equiv21|fs;FS34079;ak_equiv21|revell;67;ak_equiv21
+ak,S,11158,#2D2A12,8,4,5,ak_equiv21,,Reﬂective Green,,,tamiya;XF58;ak_equiv21|humbrol;102;ak_equiv21|av;70.890;ak_equiv21|testor;1716;ak_equiv21|ral;RAL6003;ak_equiv21|fs;FS34082;ak_equiv21|revell;45;ak_equiv21|gunze;H320;ak_equiv21
+ak,S,11159,#1F2411,8,4,5,ak_equiv21,,Russian Green,,,tamiya;XF62;ak_equiv21|av;70.894;ak_equiv21|gunze;H420;ak_equiv21|rlm;RLM80;ak_equiv21|fs;FS34083;ak_equiv21
+ak,S,11160,#061A0E,8,4,5,ak_equiv21,,Black Green,,,tamiya;XF11;ak_equiv21|av;70.980;ak_equiv21|gunze;H59;ak_equiv21|real;RC034;ak_equiv21|citadel;50013;ak_equiv21
+ak,S,11161,#AABEB2,8,4,5,ak_equiv21,,Pale Blue,,,tamiya;XF23;ak_equiv21|av;70.906;ak_equiv21|gunze;H418;ak_equiv21|rlm;RLM65;ak_equiv21|fs;FS35352;ak_equiv21
+ak,S,11162,#A8B7B6,8,4,5,ak_equiv21,,Spectrum Blue,,,gunze;H67;ak_equiv21
+ak,S,11163,#5E6363,8,4,5,ak_equiv21,,Intermediate Blue,,,tamiya;XF25;ak_equiv21|humbrol;144;ak_equiv21|av;70.903;ak_equiv21|testor;1720;ak_equiv21|fs;FS35164;ak_equiv21|revell;79;ak_equiv21
+ak,S,11164,#435A51,8,4,5,ak_equiv21,,Dark Blue-Grey,,,humbrol;157;ak_equiv21|av;70.904;ak_equiv21|fs;FS35189;ak_equiv21
+ak,S,11165,#58646E,8,4,5,ak_equiv21,,Grey-Blue,,,humbrol;109;ak_equiv21|av;70.943;ak_equiv21|gunze;H42;ak_equiv21|fs;FS35177;ak_equiv21|real;RC256;ak_equiv21
+ak,S,11166,#4B5250,8,4,5,ak_equiv21,,French Blue,,,av;70.900;ak_equiv21|fs;FS36176;ak_equiv21|gunze;H305;ak_equiv21
+ak,S,11167,#0F262B,8,4,5,ak_equiv21,,Anthracite Grey,,,tamiya;XF18;ak_equiv21|real;RC297;ak_equiv21|gunze;H42;ak_equiv21
+ak,S,11169,#33867A,8,4,5,ak_equiv21,,Blue-Green,,,av;70.808;ak_equiv21|ral;RAL5018;ak_equiv21|fs;FS35275;ak_equiv21|citadel;51020;ak_equiv21
+ak,S,11170,#056659,8,4,5,ak_equiv21,,Aquatic Turquoise,,,av;70.840;ak_equiv21
+ak,S,11171,#02494C,8,4,5,ak_equiv21,,Turquoise,,,av;70.966;ak_equiv21
+ak,S,11172,#003639,8,4,5,ak_equiv21,,Archaic Turquoise,,,
+ak,S,11173,#123434,8,4,5,ak_equiv21,,Ocean Blue,,,tamiya;XF50;ak_equiv21
+ak,S,11174,#BBE0DB,8,4,5,ak_equiv21,,Snow Blue,,,
+ak,S,11175,#7AC0C8,8,4,5,ak_equiv21,,Sky Blue,,,humbrol;47;ak_equiv21|av;70.961;ak_equiv21|testor;1508;ak_equiv21|revell;50;ak_equiv21
+ak,S,11176,#61B4C3,8,4,5,ak_equiv21,,Deep Sky Blue,,,av;70.844;ak_equiv21|gunze;H323;ak_equiv21|fs;FS35250;ak_equiv21
+ak,S,11177,#3A889D,8,4,5,ak_equiv21,,Ducat Blue,,,av;70.841;ak_equiv21|ral;RAL5012;ak_equiv21|gunze;H25;ak_equiv21
+ak,S,11178,#014566,8,64,5,ak_equiv21,,Fluorescent Blue,,,av;70.736;ak_equiv21
+ak,S,11179,#21407E,8,4,5,ak_equiv21,,Ultramarine,,,av;70.839;ak_equiv21
+ak,S,11180,#1C2652,8,4,5,ak_equiv21,,Imperial Blue,,,gunze;H465;ak_equiv21
+ak,S,11181,#112E4D,8,4,5,ak_equiv21,,Dark Blue,,,humbrol;25;ak_equiv21|av;70.925;ak_equiv21|gunze;H5;ak_equiv21|fs;FS35095;ak_equiv21|revell;56;ak_equiv21|citadel;51015;ak_equiv21
+ak,S,11183,#2D2948,8,4,5,ak_equiv21,,Amethyst Blue,,,gunze;H35;ak_equiv21
+ak,S,11184,#083947,8,4,5,ak_equiv21,,Medium Blue,,,tamiya;X13;ak_equiv21|humbrol;52;ak_equiv21|av;70.963;ak_equiv21|gunze;H88;ak_equiv21|testor;2702;ak_equiv21|rlm;RLM24;ak_equiv21|ral;RAL5019;ak_equiv21|fs;FS25102;ak_equiv21|revell;98;ak_equiv21
+ak,S,11185,#044960,8,4,5,ak_equiv21,,Star Blue,,,gunze;H322;ak_equiv21
+ak,S,11186,#022737,8,4,5,ak_equiv21,,Light Prussian Blue,,,tamiya;XF8;ak_equiv21|humbrol;25;ak_equiv21|av;70.965;ak_equiv21|ral;RAL5000;ak_equiv21|fs;FS35052;ak_equiv21|revell;156;ak_equiv21
+ak,S,11187,#00081D,8,4,5,ak_equiv21,,Strong Dark Blue,,,gunze;H326;ak_equiv21|fs;FS35044;ak_equiv21
+ak,S,11188,#2D3540,8,4,5,ak_equiv21,,Oxford,,,humbrol;104;ak_equiv21|av;70.807;ak_equiv21|revell;350;ak_equiv21|real;RC257;ak_equiv21
+ak,S,11189,#000016,8,4,5,ak_equiv21,,Dark Prussian Blue,,,tamiya;X3;ak_equiv21|humbrol;15;ak_equiv21|av;70.899;ak_equiv21|gunze;H5;ak_equiv21|testor;1511;ak_equiv21|fs;FS35048;ak_equiv21|revell;54;ak_equiv21
+ak,S,11190,#010F0E,8,4,5,ak_equiv21,,Dark Sea Blue,,,tamiya;XF17;ak_equiv21|humbrol;79;ak_equiv21|av;70.898;ak_equiv21|ral;RAL5004;ak_equiv21|fs;FS35042;ak_equiv21|revell;77;ak_equiv21|gunze;H54;ak_equiv21
+ak,S,11213,#C92026,8,16,5,ak_equiv21,,Clear Red,,,av;70.934;ak_equiv21|gunze;H90;ak_equiv21
+ak,S,11214,#1C305B,8,16,5,ak_equiv21,,Clear Blue,,,av;70.938;ak_equiv21|gunze;H93;ak_equiv21
+ak,S,11215,#6C4A25,8,16,5,ak_equiv21,,Clear Smoke,,,av;70.939;ak_equiv21|gunze;H95;ak_equiv21
+ak,S,11216,#17A24A,8,16,5,ak_equiv21,,Clear Green,,,av;70.936;ak_equiv21|gunze;H94;ak_equiv21
+ak,S,11217,#F89624,8,16,5,ak_equiv21,,Clear Yellow,,,av;70.937;ak_equiv21|gunze;H91;ak_equiv21|real;RC507;ak_equiv21
+ak,S,11218,#F26721,8,16,5,ak_equiv21,,Clear Orange,,,av;70.935;ak_equiv21|gunze;H92;ak_equiv21
+av,GA,70.600,#FFFFFF,8,2,5,av_cc298,,White,Blanco,,
+av,GA,70.602,#231F20,8,2,5,av_cc298,,Black,Negro,,
+av,GA,70.625,#36426F,8,2,5,av_cc298,,Ultramarine Blue,Azul Ultramar,,
+av,GA,70.629,#FAA222,8,2,5,av_cc298,,Sun Yellow,Amarillo Soleado,,
+av,GA,70.630,#7591A0,8,2,5,av_cc298,,Steel Grey,Gris Acero,,
+av,GA,70.631,#8B939B,8,2,5,av_cc298,,Chainmail Silver,Malla de Acero,,
+av,GA,70.632,#D9282A,8,2,5,av_cc298,,Bloody Red,Rojo Sanguina,,
+av,GA,76.001,#FFFFFF,8,2,5,av_cc298,,Dead White,Blanco Calavera,,
+av,GA,76.003,#DD9C7A,8,2,5,av_cc298,,Pale Flesh,Carne Pálida,,
+av,GA,76.004,#D1844E,8,2,5,av_cc298,,Elf Skin Tone,Piel de Elfos,,
+av,GA,76.005,#EEA125,8,2,5,av_cc298,,Moon Yellow,Amarillo lunar,,
+av,GA,76.006,#F8971D,8,2,5,av_cc298,,Sun Yellow,Amarillo Soleado,,
+av,GA,76.007,#F47720,8,2,5,av_cc298,,Gold Yellow,Amarillo Dorado,,
+av,GA,76.008,#F15822,8,2,5,av_cc298,,Orange Fire,Naranja Fuego,,
+av,GA,76.010,#9C1F1E,8,2,5,av_cc298,,Bloody Red,Rojo Sanguina,,
+av,GA,76.012,#390108,8,2,5,av_cc298,,Scarlet Red,Rojo Escarlata,,
+av,GA,76.013,#B1639D,8,2,5,av_cc298,,Squid Pink,Rosa Pulpo,,
+av,GA,76.014,#570F3A,8,2,5,av_cc298,,Warlord Purple,Púrpura,,
+av,GA,76.016,#201634,8,2,5,av_cc298,,Royal Purple,Púrpura Real,,
+av,GA,76.019,#0E0F23,8,2,5,av_cc298,,Night Blue,Azul Negro,,
+av,GA,76.020,#091030,8,2,5,av_cc298,,Imperial Blue,Azul Imperial,,
+av,GA,76.021,#154B93,8,2,5,av_cc298,,Magic Blue,Azul Mágico,,
+av,GA,76.022,#191F42,8,2,5,av_cc298,,Ultramarine Blue,Azul Ultramar,,
+av,GA,76.023,#2B799F,8,2,5,av_cc298,,Electric Blue,Azul Eléctrico,,
+av,GA,76.024,#004F57,8,2,5,av_cc298,,Turquoise,Halcón Milenario,,
+av,GA,76.026,#006E56,8,2,5,av_cc298,,Jade Green,Verde Jade,,
+av,GA,76.027,#0D3A34,8,2,5,av_cc298,,Scurvy Green,Verde Casposo,,
+av,GA,76.028,#1A2A21,8,2,5,av_cc298,,Dark Green,Verde Oscuro,,
+av,GA,76.031,#746A36,8,2,5,av_cc298,,Camouflage Green,Verde Camuflaje,,
+av,GA,76.032,#568042,8,2,5,av_cc298,,Scorpy Green,Verde Escorpena,,
+av,GA,76.034,#CCC4A3,8,2,5,av_cc298,,Bone White,Blanco Hueso,,
+av,GA,76.035,#9C884D,8,2,5,av_cc298,,Dead Flesh,Carne Muerta,,
+av,GA,76.036,#AF6E32,8,2,5,av_cc298,,Bronze Brown,Marrón Bronceado,,
+av,GA,76.040,#563A1A,8,2,5,av_cc298,,Leather Brown,Marrón Cuero,,
+av,GA,76.042,#5F330D,8,2,5,av_cc298,,Parasite Brown,Piel de Parásitos,,
+av,GA,76.043,#412906,8,2,5,av_cc298,,Beasty Brown,Marrón Bichos,,
+av,GA,76.045,#261209,8,2,5,av_cc298,,Charred Brown,Marrón Carbonizado,,
+av,GA,76.047,#9CB4B8,8,2,5,av_cc298,,Wolf Grey,Gris Lobo,,
+av,GA,76.048,#2F3B42,8,2,5,av_cc298,,Sombre Grey,Gris Sombra,,
+av,GA,76.049,#67655F,8,2,5,av_cc298,,Stonewall Grey,Gris Muralla,,
+av,GA,76.050,#3F4345,8,2,5,av_cc298,,Neutral Grey,Gris Neutral,,
+av,GA,76.051,#000000,8,2,5,av_cc298,,Black,Negro,,
+av,GA,76.062,#3A2C15,8,2,5,av_cc298,,Earth,Tierra,,
+av,GA,76.063,#755B30,8,2,5,av_cc298,,Desert Yellow,Desierto,,
+av,GA,76.071,#755C3E,8,2,5,av_cc298,,Barbarian Skin,Piel de Bárbaro,,
+av,GA,76.076,#4E417F,8,2,5,av_cc298,,Alien Purple,Púrpura Alienígena,,
+av,GA,76.100,#E2745F,8,2,5,av_cc298,,Rosy Flesh,Carne Rosa,,
+av,GA,76.107,#AA574B,8,2,5,av_cc298,,Athena Skin,Piel de Atenea,,
+av,GA,76.109,#EAC143,8,2,5,av_cc298,,Toxic Yellow,Amarillo Tóxico,,
+av,GA,76.111,#26040B,8,2,5,av_cc298,,Nocturnal Red,Rojo Nocturno,,
+av,GA,76.114,#8268AD,8,2,5,av_cc298,,Lustful Purple,Púrpura Lujurioso,,
+av,GA,76.115,#5E3729,8,2,5,av_cc298,,Grunge Brown,Marrón Mugre,,
+av,GA,76.116,#060013,8,2,5,av_cc298,,Midnight Purple,Púrpura Medianoche,,
+av,GA,76.118,#49B0D1,8,2,5,av_cc298,,Sunrise Blue,Azul Amanecer,,
+av,GA,76.120,#052432,8,2,5,av_cc298,,Abyssal Turquoise,Turquesa Abisal,,
+av,GA,76.121,#4FB98B,8,2,5,av_cc298,,Ghost Green,Verde Espectral,,
+av,GA,76.122,#CDDC33,8,2,5,av_cc298,,Bile Green,Verde Bilioso,,
+av,GA,76.123,#172919,8,2,5,av_cc298,,Angel Green,Verde Angelical,,
+av,GC,72.001,#FFFFFF,8,2,4,av_gc22,,Dead White,Blanco Calavera,,
+av,GC,72.003,#C39E7E,8,2,4,av_gc22,,Pale Flesh,Carne Pálida,,
+av,GC,72.004,#C5895B,8,2,4,av_gc22,,Elf Skin Tone,Piel de Elfos,,
+av,GC,72.005,#EDB524,8,2,4,av_gc22,,Moon Yellow,Amarillo Lunar,,
+av,GC,72.006,#FAA222,8,2,4,av_gc22,,Sun Yellow,Amarillo Soleado,,
+av,GC,72.007,#D6792D,8,2,4,av_gc22,,Gold Yellow,Amarillo Dorado,,
+av,GC,72.008,#F2652A,8,2,4,av_gc22,,Orange Fire,Naranja Fuego,,
+av,GC,72.009,#E9462E,8,2,4,av_gc22,,Hot Orange,Naranja Tostado,,
+av,GC,72.010,#D9282A,8,2,4,av_gc22,,Bloody Red,Rojo Sanguina,,
+av,GC,72.011,#7A1E25,8,2,4,av_gc22,,Gory Red,Rojo Visceral,,
+av,GC,72.012,#721C23,8,2,4,av_gc22,,Scarlet Red,Rojo Escarlata,,
+av,GC,72.013,#C277A4,8,2,4,av_gc22,,Squid Pink,Rosa Pulpo,,
+av,GC,72.014,#832859,8,2,4,av_gc22,,Warlord Purple,Púrpura,,
+av,GC,72.015,#4B2A5B,8,2,4,av_gc22,,Hexed Lichen,Púrpura Hechicero,,
+av,GC,72.016,#271E39,8,2,4,av_gc22,,Royal Purple,Púrpura Real,,
+av,GC,72.019,#141F30,8,2,4,av_gc22,,Night Blue,Azul Negro,,
+av,GC,72.020,#1F2B4B,8,2,4,av_gc22,,Imperial Blue,Azul Imperial,,
+av,GC,72.021,#0071AB,8,2,4,av_gc22,,Magic Blue,Azul Mágico,,
+av,GC,72.022,#36426F,8,2,4,av_gc22,,Ultramarine Blue,Azul Ultramar,,
+av,GC,72.023,#439AB1,8,2,4,av_gc22,,Electric Blue,Azul Eléctrico,,
+av,GC,72.024,#036666,8,2,4,av_gc22,,Turquoise,Halcón Milenario,,
+av,GC,72.025,#00AA87,8,2,4,av_gc22,,Foul Green,Verde Malicioso,,
+av,GC,72.026,#007A5E,8,2,4,av_gc22,,Jade Green,Verde Jade,,
+av,GC,72.027,#164F46,8,2,4,av_gc22,,Scurvy Green,Verde Casposo,,
+av,GC,72.028,#133423,8,2,4,av_gc22,,Dark Green,Verde Oscuro,,
+av,GC,72.029,#3F643D,8,2,4,av_gc22,,Sick Green,Verde Asqueroso,,
+av,GC,72.030,#54623A,8,2,4,av_gc22,,Goblin Green,Verde Goblin,,
+av,GC,72.031,#8A7A40,8,2,4,av_gc22,,Camouflage Green,Verde Camuflaje,,
+av,GC,72.032,#538844,8,2,4,av_gc22,,Scorpy Green,Verde Escorpena,,
+av,GC,72.034,#B79F77,8,2,4,av_gc22,,Bone White,Blanco Hueso,,
+av,GC,72.035,#BBA758,8,2,4,av_gc22,,Dead Flesh,Carne Muerta,,
+av,GC,72.036,#AF6E32,8,2,4,av_gc22,,Bronze Brown,Marrón Bronceado,,
+av,GC,72.038,#A16929,8,2,4,av_gc22,,Scrofulous Brown,Marrón Escrofuloso,,
+av,GC,72.039,#A7743D,8,2,4,av_gc22,,Plague Brown,Marrón Peste,,
+av,GC,72.040,#896134,8,2,4,av_gc22,,Leather Brown,Marrón Cuero,,
+av,GC,72.042,#9D5F2A,8,2,4,av_gc22,,Parasite Brown,Piel de Parásitos,,
+av,GC,72.043,#75532A,8,2,4,av_gc22,,Beasty Brown,Marrón Bichos,,
+av,GC,72.044,#59362A,8,2,4,av_gc22,,Dark Fleshtone,Carne Oscura,,
+av,GC,72.045,#3C2826,8,2,4,av_gc22,,Charred Brown,Marrón Carboniz.,,
+av,GC,72.047,#B8CACA,8,2,4,av_gc22,,Wolf Grey,Gris Lobo,,
+av,GC,72.048,#54646F,8,2,4,av_gc22,,Sombre Grey,Gris Sombra,,
+av,GC,72.049,#969084,8,2,4,av_gc22,,Stonewall Grey,Gris Muralla,,
+av,GC,72.050,#6D6F66,8,2,4,av_gc22,,Neutral Grey,Gris Neutral,,
+av,GC,72.051,#000000,8,2,4,av_gc22,,Black,Negro,,
+av,GC,72.052,#A9B3B4,8,8,4,av_gc22,,Silver,Plata,,
+av,GC,72.053,#8B939B,8,8,4,av_gc22,,Chainmail,Malla de Acero,,
+av,GC,72.054,#696E73,8,8,4,av_gc22,,Dark Gunmetal,Gris Metaliz. Osc.,,
+av,GC,72.055,#E1B233,8,8,4,av_gc22,,Polished Gold,Dorado Pulido,,
+av,GC,72.056,#CF8C34,8,8,4,av_gc22,,Glorious Gold,Oro Glorioso,,
+av,GC,72.057,#9F5A18,8,8,4,av_gc22,,Bright Bronze,Bronce,,
+av,GC,72.058,#AA6B46,8,8,4,av_gc22,,Brassy Brass,Bronce Pulido,,
+av,GC,72.059,#724633,8,8,4,av_gc22,,Hammered Copper,Cobre Bruñido,,
+av,GC,72.060,#522B27,8,8,4,av_gc22,,Tinny Tin,Hojalata,,
+av,GC,72.061,#957D55,8,2,4,av_gc22,,Khaki,Caqui,,
+av,GC,72.062,#715735,8,2,4,av_gc22,,Earth,Tierra,,
+av,GC,72.063,#946B3D,8,2,4,av_gc22,,Desert Yellow,Desierto,,
+av,GC,72.066,#936758,8,2,4,av_gc22,,Tan,Carne Marrón,,
+av,GC,72.067,#55532E,8,2,4,av_gc22,,Cayman Green,Verde Caimán,,
+av,GC,72.071,#8D6849,8,2,4,av_gc22,,Barbarian Skin,Piel de Bárbaro,,
+av,GC,72.076,#6B66AE,8,2,4,av_gc22,,Alien Purple,Púrpura Alienígena,,
+av,GC,72.082,#FFFFFF,8,2,4,av_gc22,,White,Blanco,,
+av,GC,72.083,#A52C60,8,2,4,av_gc22,,Magenta Magenta,Magenta,,
+av,GC,72.084,#00748A,8,2,4,av_gc22,,Dark Turquoise,Turquesa Oscuro,,
+av,GC,72.085,#EBA72A,8,2,4,av_gc22,,Yellow,Amarillo,,
+av,GC,72.086,#D21F26,8,2,4,av_gc22,,Red,Rojo,,
+av,GC,72.087,#6F467B,8,2,4,av_gc22,,Violet,Violeta,,
+av,GC,72.088,#095C95,8,2,4,av_gc22,,Blue,Azul,,
+av,GC,72.089,#08743C,8,2,4,av_gc22,,Green,Verde,,
+av,GC,72.090,#3A644E,8,2,4,av_gc22,,Black Green,Verde Negro,,
+av,GC,72.091,#53412D,8,2,4,av_gc22,,Sepia,Sepia,,
+av,GC,72.093,#5A2D2A,8,2,4,av_gc22,,Skin,Piel,,
+av,GC,72.094,#000000,8,2,4,av_gc22,,Black,Negro,,
+av,GC,72.095,#BFD2EC,8,2,4,av_gc22,,Glacier Blue,Azul Glaciar,,
+av,GC,72.096,#7AC9AA,8,2,4,av_gc22,,Verdigris,Verdín,,
+av,GC,72.098,#E4D0B1,8,2,4,av_gc22,,Elfic Flesh,Carne Élfica,,
+av,GC,72.099,#E0A682,8,2,4,av_gc22,,Skin Tone,Piel,,
+av,GC,72.100,#E4896C,8,2,4,av_gc22,,Rosy Flesh,Carne Rosa,,
+av,GC,72.101,#FCEFD3,8,2,4,av_gc22,,Off-White,Blanco Sucio,,
+av,GC,72.102,#7591A0,8,2,4,av_gc22,,Steel Grey,Gris Acero,,
+av,GC,72.103,#EAE84B,8,64,4,av_gc22,,Fluorescent Yellow,Amarillo Fluoresc.,,
+av,GC,72.104,#6EBE44,8,64,4,av_gc22,,Fluorescent Green,Verde Fluorescente,,
+av,GC,72.106,#C62B30,8,2,4,av_gc22,,Scarlet Blood,Sangre Escarlata,,
+av,GC,72.107,#C7635B,8,2,4,av_gc22,,Anthea Skin,Piel de Atenea,,
+av,GC,72.108,#8E4550,8,2,4,av_gc22,,Succubus Skin,Piel de Súcubo,,
+av,GC,72.109,#E2D262,8,2,4,av_gc22,,Toxic Yellow,Amarillo Tóxico,,
+av,GC,72.110,#F89644,8,2,4,av_gc22,,Sunset Orange,Naranja Atardecer,,
+av,GC,72.111,#4F1624,8,2,4,av_gc22,,Nocturnal Red,Rojo Nocturno,,
+av,GC,72.112,#3F1826,8,2,4,av_gc22,,Evil Red,Rojo Maligno,,
+av,GC,72.113,#632748,8,2,4,av_gc22,,Deep Magenta,Magenta Profundo,,
+av,GC,72.114,#AE86BB,8,2,4,av_gc22,,Lustful Purple,Púrpura Lujurioso,,
+av,GC,72.115,#84482E,8,2,4,av_gc22,,Marrón Mugre,Grunge Brown,,
+av,GC,72.116,#271636,8,2,4,av_gc22,,Midnight Purple,Púrp. Medianoche,,
+av,GC,72.117,#506780,8,2,4,av_gc22,,Elfic Blue,Azul Élfico,,
+av,GC,72.118,#60C9E9,8,2,4,av_gc22,,Sunrise Blue,Azul Amanecer,,
+av,GC,72.119,#10827B,8,2,4,av_gc22,,Aquamarine,Aguamarina,,
+av,GC,72.120,#18445A,8,2,4,av_gc22,,Abyssal Turquoise,Turquesa Abisal,,
+av,GC,72.121,#78C396,8,2,4,av_gc22,,Ghost Green,Verde Espectral,,
+av,GC,72.122,#CDDC33,8,2,4,av_gc22,,Bile Green,Verde Bilioso,,
+av,GC,72.123,#304F31,8,2,4,av_gc22,,Angel Green,Verde Angelical,,
+av,GC,72.124,#552E26,8,2,4,av_gc22,,Gorgon Brown,Marrón Gorgona,,
+av,GC,72.145,#646138,8,2,4,av_gc22,,Dirty Grey,Gris Sucio,,
+av,GC,72.148,#AA9999,8,2,4,av_gc22,,Warm Grey,Gris Cálido,,
+av,GC,72.155,#313539,8,2,4,av_gc22,,Charcoal,Gris Carbón,,
+av,GC,72.156,#F15A22,8,64,4,av_gc22,,Fluorescent Orange,Naranja Fluoresc.,,
+av,GC,72.157,#E03A5B,8,64,4,av_gc22,,Fluorescent Red,Rojo Fluorescente,,
+av,GC,72.158,#EE4097,8,64,4,av_gc22,,Fluoresc. Magenta,Magenta Fluoresc.,,
+av,GC,72.159,#6F2C84,8,64,4,av_gc22,,Fluorescent Violet,Violeta Fluoresc.,,
+av,GC,72.160,#008CD1,8,64,4,av_gc22,,Fluorescent Blue,Azul Fluorescente,,
+av,GC,72.161,#007579,8,64,4,av_gc22,,Fluo. Cold Green,Verde Frío Fluores.,,
+av,GC,73.200,#835F30,8,128,4,av_gc22,,Sepia,Sepia,,
+av,GC,73.201,#2B2C33,8,128,4,av_gc22,,Black,Negro,,
+av,GC,73.203,#6A5C53,8,128,4,av_gc22,,Umber,Sombra,,
+av,GC,73.204,#AF7A75,8,128,4,av_gc22,,Flesh,Carne,,
+av,GC,73.206,#D46388,8,128,4,av_gc22,,Red,Rojo,,
+av,GC,73.207,#0C72BA,8,128,4,av_gc22,,Blue,Azul,,
+av,GC,73.208,#D4DE24,8,128,4,av_gc22,,Yellow,Amarillo,,
+av,GC,73.209,#56368D,8,128,4,av_gc22,,Violet,Violeta,,
+av,LM,70.790,#C9D3D7,2,8,5,av_cc329,,Silver,Plata,,
+av,LM,70.791,#AB9A86,2,8,4,av_cc329,,Gold,Oro,,
+av,LM,70.792,#BEB137,2,8,5,av_cc329,,Old Gold,Oro Viejo,,
+av,LM,70.793,#A48135,2,8,5,av_cc329,,Rich Gold,Oro Rico,,
+av,LM,70.794,#C88F2B,2,8,5,av_cc329,,Red Gold,Oro Rojo,,
+av,LM,70.795,#867232,2,8,5,av_cc329,,Green Gold,Oro Verde,,
+av,LM,70.796,#D6D9DA,2,8,5,av_cc329,,White Gold,Oro Blanco,,
+av,LM,70.797,#98472A,2,8,5,av_cc329,,Copper,Cobre,,
+av,MC,70.730,#EAE851,8,64,4,av_cc070,,Yellow Fluo,Amarillo Fluo,,
+av,MC,70.733,#F06724,8,64,4,av_cc070,,Orange Fluo,Naranja Fluo,,
+av,MC,70.735,#EC4C9B,8,64,4,av_cc070,,Magenta Fluo,Magenta Fluo,,
+av,MC,70.736,#1274B8,8,64,4,av_cc070,,Blue Fluo,Azul Fluo,,
+av,MC,70.737,#9BCD67,8,64,4,av_cc070,,Green Fluo,Verde Fluo,,
+av,MC,70.740,#483B21,8,4,4,av_cc329,,Cam. Middle Brown,Cam. Marrón Medio,,
+av,MC,70.741,#2A2D28,8,4,4,av_cc329,,Cam. Black Green,Cam. Verde Negro,,
+av,MC,70.745,#785354,8,4,4,av_cc329,,Dark Rose,Rosa Oscuro,,
+av,MC,70.746,#593E3B,8,4,4,av_cc329,,Chestnut Brown,Marrón Castaño,,
+av,MC,70.747,#B86058,8,4,4,av_cc329,,Faded Red,Rojo Desgastado,,
+av,MC,70.748,#DE8A9F,8,4,4,av_cc329,,Light Pink,Rosa Claro,,
+av,MC,70.749,#3F2335,8,4,4,av_cc329,,Dark Purple,Púrpura Oscuro,,
+av,MC,70.750,#9E8DB6,8,4,4,av_cc329,,Light Violet,Violeta Claro,,
+av,MC,70.751,#322732,8,4,4,av_cc329,,Black Violet,Violeta Negro,,
+av,MC,70.752,#1B1A2B,8,4,4,av_cc329,,Infantry Blue,Azul Infantería,,
+av,MC,70.753,#0E9CA6,8,4,4,av_cc329,,Light Blue Green,Azul Verde Claro,,
+av,MC,70.754,#1B1E2A,8,4,4,av_cc329,,Continental Blue,Azul Continental,,
+av,MC,70.755,#0E8279,8,4,4,av_cc329,,Light Emerald,Esmeralda Claro,,
+av,MC,70.756,#446747,8,4,4,av_cc329,,Splinter Green,Verde Splinter,,
+av,MC,70.757,#5A756B,8,4,4,av_cc329,,Pacific Green,Verde Pacífico,,
+av,MC,70.758,#6D8352,8,4,4,av_cc329,,Bright Green,Verde Claro,,
+av,MC,70.759,#4B483E,8,4,4,av_cc329,,German Tank Crew,Carrista Alemán,,
+av,MC,70.760,#797962,8,4,4,av_cc329,,Light Mud,Lodo Claro,,
+av,MC,70.761,#7C6D59,8,4,4,av_cc329,,Old Wood,Madera Vieja,,
+av,MC,70.762,#544725,8,4,4,av_cc329,,Grey Brown,Marrón Grisáceo,,
+av,MC,70.763,#423A1E,8,4,4,av_cc329,,Canvas,Lona,,
+av,MC,70.764,#8A7331,8,4,4,av_cc329,,Military Yellow,Amarillo Militar,,
+av,MC,70.765,#AD9E85,8,4,4,av_cc329,,Desert Tan,Arena Tostada,,
+av,MC,70.766,#DACABB,8,4,4,av_cc329,,Cream White,Blanco Crema,,
+av,MC,70.767,#A7845D,8,4,4,av_cc329,,Desert Brown,Marrón Desierto,,
+av,MC,70.768,#6D5540,8,4,4,av_cc329,,BC Dark Brown,Marrón Oscuro,,
+av,MC,70.769,#977150,8,4,4,av_cc329,,Mustard Brown,Marrón Mostaza,,
+av,MC,70.770,#826041,8,4,4,av_cc329,,New Wood,Madera Nueva,,
+av,MC,70.771,#352024,8,4,4,av_cc329,,Dark Rust,Óxido Oscuro,,
+av,MC,70.772,#729B93,8,4,4,av_cc329,,Medium Grey Blue,Azul Gris Medio,,
+av,MC,70.773,#545758,8,4,4,av_cc329,,Violet Grey,Gris Violeta,,
+av,MC,70.774,#7D7273,8,4,4,av_cc329,,Lavender Grey,Gris Lavanda,,
+av,MC,70.800,#1B2332,8,8,4,av_cc329,,Gunmetal Blue,Metal Azul,,
+av,MC,70.801,#5F3C22,8,8,4,av_cc329,,Brass,Latón,,
+av,MC,70.802,#BE3355,8,4,4,av_cc329,,Sunset Red,Rojo Sunset,,
+av,MC,70.803,#976965,8,4,4,av_cc329,,Brown Rose,Rosa Marrón,,
+av,MC,70.804,#AC7153,8,4,4,av_cc329,,Beige Red,Rojo Beige,,
+av,MC,70.805,#B8685D,8,4,4,av_cc329,,German Orange,Naranja Alemán,,
+av,MC,70.806,#C5B266,8,4,4,av_cc329,,German Yellow,Amarillo Lasur,,
+av,MC,70.807,#3C3E5A,8,4,4,av_cc329,,Oxford Blue,Azul Oxford,,
+av,MC,70.808,#097F8A,8,4,4,av_cc329,,Blue Green,Azul Verde,,
+av,MC,70.809,#154E87,8,4,4,av_cc329,,Royal Blue,Azul Real,,
+av,MC,70.810,#472544,8,4,4,av_cc329,,Royal Purple,Púrpura Real,,
+av,MC,70.811,#595086,8,4,4,av_cc329,,Blue Violet,Violeta Azul,,
+av,MC,70.812,#5D3642,8,4,4,av_cc329,,Violet Red,Rojo Violeta,,
+av,MC,70.814,#6E3D3F,8,4,4,av_cc329,,Burnt Red,Rojo Tostado,,
+av,MC,70.815,#E6A688,8,4,4,av_cc329,,Basic Skin Tone,Carne Base,,
+av,MC,70.816,#424551,8,4,4,av_cc329,,Luftwaffe Uniform,Uniforme Luftwaffe,,
+av,MC,70.817,#C04739,8,4,4,av_cc329,,Scarlet,Escarlata,,
+av,MC,70.818,#945C44,8,4,4,av_cc329,,Red Leather,Cuero Rojo,,
+av,MC,70.819,#AA8B5F,8,4,4,av_cc329,,Iraqi Sand,Arena Iraquí,,
+av,MC,70.820,#F0E7DF,8,4,4,av_cc329,,Off-White,Blanco Pergamino,,
+av,MC,70.821,#746B57,8,4,4,av_cc329,,Germ. Beige WWII,Beige Alem. WWII,,
+av,MC,70.822,#3C3336,8,4,4,av_cc329,,Cam. Black Brown,Cam. Pardo Negro,,
+av,MC,70.823,#303C24,8,4,4,av_cc329,,Luftwaffe Green,Verde Luftwaffe,,
+av,MC,70.824,#A78343,8,4,4,av_cc329,,Orange Ochre,Ocre Naranja,,
+av,MC,70.825,#9A8276,8,4,4,av_cc329,,Pale Brown,Pardo Claro,,
+av,MC,70.826,#53443C,8,4,4,av_cc329,,Medium Brown,Pardo Medio,,
+av,MC,70.827,#7B9644,8,4,4,av_cc329,,Lime Green,Verde Lima,,
+av,MC,70.828,#634845,8,16,4,av_cc329,,Mahogany Ink,Tinta Caoba,,
+av,MC,70.829,#D4583D,8,4,4,av_cc329,,Amaranth Red,Rojo Amaranth,,
+av,MC,70.830,#52513D,8,4,4,av_cc329,,Ger. Fieldgrey WWII,Verde Alemán WWII,,
+av,MC,70.831,#D09041,8,4,4,av_cc070,,Tan Glaze,Pátina Ocre,,
+av,MC,70.832,#89D0C8,8,4,4,av_cc070,,Verdigris Glaze,Pátina Verdín,,
+av,MC,70.833,#425838,8,4,4,av_cc329,,Fern Green,Verde Helecho,,
+av,MC,70.834,#E9A03E,8,16,4,av_cc070,,Natural Woodgrain,Madera Natural,,
+av,MC,70.835,#E08C7B,8,4,4,av_cc329,,Salmon Rose,Rosa Salmón,,
+av,MC,70.836,#696969,8,4,4,av_cc329,,London Grey,Gris Londres,,
+av,MC,70.837,#DEBC8A,8,4,4,av_cc329,,Pale Sand,Arena Clara,,
+av,MC,70.838,#00664F,8,4,4,av_cc329,,Emerald,Esmeralda,,
+av,MC,70.839,#345DA7,8,4,4,av_cc070,,Ultramarine,Azul Ultramar,,
+av,MC,70.840,#006C8B,8,4,4,av_cc329,,Light Turquoise,Turquesa Claro,,
+av,MC,70.841,#0074AE,8,4,4,av_cc329,,Andrea Blue,Azul Andrea,,
+av,MC,70.842,#EFEFEF,8,1,4,av_cc070,,Gloss White,Blanco Brillo,,
+av,MC,70.843,#9C7357,8,4,4,av_cc329,,Cork Brown,Marrón Corcho,,
+av,MC,70.844,#4A95C1,8,4,4,av_cc329,,Deep Sky Blue,Azul Profundo,,
+av,MC,70.845,#EC964E,8,4,4,av_cc329,,Sunny Skin Tone,Carne Dorada,,
+av,MC,70.846,#785954,8,4,4,av_cc329,,Mahogany Brown,Marrón Caoba,,
+av,MC,70.847,#C4A26B,8,4,4,av_cc329,,Dark Sand,Arena Oscura,,
+av,MC,70.850,#3C4E34,8,4,4,av_cc329,,Medium Olive,Oliva Medio,,
+av,MC,70.851,#E1632E,8,4,4,av_cc329,,Bright Orange,Naranja Intenso,,
+av,MC,70.853,#EFEFF4,8,4,4,av_cc070,,White Glaze,Pátina Blanca,,
+av,MC,70.854,#493E3D,8,4,4,av_cc070,,Brown Glaze,Pátina Marrón,,
+av,MC,70.855,#333639,8,4,4,av_cc070,,Black Glaze,Pátina Negro,,
+av,MC,70.856,#A77C4A,8,4,4,av_cc329,,Ochre Brown,Ocre Marrón,,
+av,MC,70.857,#7B7F4E,8,4,4,av_cc070,,Golden Olive,Oliva Dorado,,
+av,MC,70.858,#E7CB74,8,4,4,av_cc329,,Ice Yellow,Amarillo Hielo,,
+av,MC,70.859,#502D2D,8,4,4,av_cc329,,Black Red,Rojo Negro,,
+av,MC,70.860,#AB7A49,8,4,4,av_cc329,,Med. Flesh Tone,Carne Medio,,
+av,MC,70.861,#1A161D,8,1,4,av_cc329,,Gloss Black,Negro Brillante,,
+av,MC,70.862,#27211F,8,4,4,av_cc329,,Black Grey,Gris Negro,,
+av,MC,70.863,#2B262D,8,8,4,av_cc329,,Gunmetal,Gris Metalizado,,
+av,MC,70.864,#51565D,8,8,4,av_cc329,,Natural Steel,Acero Natural,,
+av,MC,70.865,#454248,8,8,4,av_cc329,,Oily Steel,Acero Engrasado,,
+av,MC,70.866,#3D4040,8,4,4,av_cc329,,Grey Green,Gris Verde,,
+av,MC,70.867,#3C4246,8,4,4,av_cc329,,Dark Blue Grey,Azul Gris Oscuro,,
+av,MC,70.868,#444345,8,4,4,av_cc329,,Dark Sea Green,Verde Marina Osc.,,
+av,MC,70.869,#5A5C61,8,4,4,av_cc329,,Basalt Grey,Gris Basalto,,
+av,MC,70.870,#7A7D7D,8,4,4,av_cc329,,Medium Sea Grey,Gris Marina Medio,,
+av,MC,70.871,#534338,8,4,4,av_cc329,,Leather Brown,Cuero Oscuro,,
+av,MC,70.872,#564541,8,4,4,av_cc329,,Chocolate Brown,Marrón Chocolate,,
+av,MC,70.873,#79654A,8,4,4,av_cc329,,US Field Drab,Tierra,,
+av,MC,70.874,#8F725B,8,4,4,av_cc329,,Tan Earth,Tierra Oscura,,
+av,MC,70.875,#7A5F48,8,4,4,av_cc329,,Beige Brown,Marrón Beige,,
+av,MC,70.876,#8C634B,8,4,4,av_cc329,,Brown Sand,Arena Marrón,,
+av,MC,70.877,#BA8748,8,4,4,av_cc329,,Gold Brown,Marrón Dorado,,
+av,MC,70.878,#4E361F,8,8,4,av_cc329,,Old Gold,Oro Viejo,,
+av,MC,70.879,#7A6A38,8,4,4,av_cc329,,Green Brown,Marrón Verde,,
+av,MC,70.880,#7B6742,8,4,4,av_cc329,,Khaki Grey,Gris Caqui,,
+av,MC,70.881,#706B46,8,4,4,av_cc329,,Green Yellow,Verde Amarillo,,
+av,MC,70.882,#897A46,8,4,4,av_cc329,,Middle Stone,Amarillo Piedra,,
+av,MC,70.883,#CDC6BC,8,4,4,av_cc329,,Silver Grey,Gris Plateado,,
+av,MC,70.884,#867E6A,8,4,4,av_cc329,,Stone Grey,Gris Piedra,,
+av,MC,70.885,#8A9270,8,4,4,av_cc329,,Pastel Green,Verde Pastel,,
+av,MC,70.886,#656756,8,4,4,av_cc329,,Green Grey,Gris Verdoso,,
+av,MC,70.887,#565441,8,4,4,av_cc329,,US Olive Drab,Verde Oliva,,
+av,MC,70.888,#3A3D2C,8,4,4,av_cc329,,Olive Grey,Gris Oliva,,
+av,MC,70.889,#372C25,8,4,4,av_cc329,,Olive Brown,Pardo Oliva,,
+av,MC,70.890,#3F4735,8,4,4,av_cc329,,Refractive Green,Verde Refractario,,
+av,MC,70.891,#4F6848,8,4,4,av_cc329,,Intermediate Green,Verde Medio,,
+av,MC,70.892,#303830,8,4,4,av_cc329,,Yellow Olive,Oliva Amarillo,,
+av,MC,70.893,#444739,8,4,4,av_cc329,,US Dark Green,Verde Americano,,
+av,MC,70.894,#35392E,8,4,4,av_cc329,,Cam. Olive Green,Cam. Verde Oliva,,
+av,MC,70.895,#465542,8,4,4,av_cc329,,Gunship Green,Verde Acorazado,,
+av,MC,70.896,#22240D,8,4,4,av_cc329,,Extra Dark Green,Verde Extra Osc.,,
+av,MC,70.897,#283625,8,4,4,av_cc329,,Bronze Green,Verde Bronce,,
+av,MC,70.898,#1D2B38,8,4,4,av_cc329,,Dark Sea Blue,Azul Marina Osc.,,
+av,MC,70.899,#332443,8,4,4,av_cc329,,Dark Prussian Blue,Azul de Prusia Osc.,,
+av,MC,70.900,#5C6876,8,4,4,av_cc070,,French Mirage Blue,Azul Francés,,
+av,MC,70.901,#607C91,8,4,4,av_cc329,,Pastel Blue,Azul Pastel,,
+av,MC,70.902,#5A6F9F,8,4,4,av_cc329,,Azure,Azul Azur,,
+av,MC,70.903,#626C79,8,4,4,av_cc070,,Intermediate Blue,Azul Americano,,
+av,MC,70.904,#69828B,8,4,4,av_cc070,,Dark Blue Grey,Gris Azul Oscuro,,
+av,MC,70.905,#7D8487,8,4,4,av_cc329,,Blue Grey Pale,Gris Azul Claro,,
+av,MC,70.906,#859DA1,8,4,4,av_cc329,,Pale Blue,Azul Pálido,,
+av,MC,70.907,#9EAFAF,8,4,4,av_cc329,,Pale Grey Blue,Azul Gris Claro,,
+av,MC,70.908,#952528,8,4,4,av_cc329,,Carmine Red,Rojo Carmín,,
+av,MC,70.909,#C63335,8,4,4,av_cc329,,Vermilion,Bermellón,,
+av,MC,70.910,#E14D25,8,4,4,av_cc070,,Orange Red,Rojo Claro,,
+av,MC,70.911,#F47932,8,4,4,av_cc329,,Light Orange,Naranja Claro,,
+av,MC,70.912,#B99571,8,4,4,av_cc070,,Tan Yellow,Marrón Amarillo,,
+av,MC,70.913,#DAA751,8,4,4,av_cc329,,Yellow Ochre,Ocre Amarillo,,
+av,MC,70.914,#9D8143,8,4,4,av_cc329,,Green Ochre,Ocre Verde,,
+av,MC,70.915,#EDC52A,8,4,4,av_cc329,,Deep Yellow,Amarillo Intenso,,
+av,MC,70.916,#E6BC5D,8,4,4,av_cc329,,Sand Yellow,Amarillo Arena,,
+av,MC,70.917,#DBB971,8,4,4,av_cc329,,Beige,Beige,,
+av,MC,70.918,#E4DCCA,8,4,4,av_cc329,,Ivory,Hueso,,
+av,MC,70.919,#F2F1F6,8,4,4,av_cc329,,Cold White,Blanco Frío,,
+av,MC,70.920,#415046,8,4,4,av_cc329,,German Uniform,Uniforme Alemán,,
+av,MC,70.921,#6B5532,8,4,4,av_cc329,,English Uniform,Uniforme Inglés,,
+av,MC,70.922,#455433,8,4,4,av_cc329,,Uniform Green,Verde Uniforme,,
+av,MC,70.923,#987E37,8,4,4,av_cc329,,Japan. Unif. WWII,Unif. Japonés WWII,,
+av,MC,70.924,#515239,8,4,4,av_cc329,,Russian Unif. WWII,Unifor. Ruso WWII,,
+av,MC,70.925,#352E51,8,4,4,av_cc329,,Blue,Azul Intenso,,
+av,MC,70.926,#76292C,8,4,4,av_cc329,,Red,Rojo,,
+av,MC,70.927,#CF9246,8,4,4,av_cc329,,Dark Flesh,Carne Oscura,,
+av,MC,70.928,#F0CDB0,8,4,4,av_cc329,,Light Flesh,Carne Clara,,
+av,MC,70.929,#9D613C,8,4,4,av_cc329,,Light Brown,Marrón Claro,,
+av,MC,70.930,#253A69,8,4,4,av_cc329,,Dark Blue,Azul Oscuro,,
+av,MC,70.934,#B42D3E,8,16,4,av_cc070,,Transparent Red,Rojo Transparente,,
+av,MC,70.935,#F36B26,8,16,4,av_cc070,,Transparent Orange,Naranja Transparente,,
+av,MC,70.936,#018251,8,16,4,av_cc070,,Transparent Green,Verde Transparente,,
+av,MC,70.937,#FAA41A,8,16,4,av_cc070,,Transparent Yellow,Amarillo Transparente,,
+av,MC,70.938,#353F61,8,16,4,av_cc070,,Transparent Blue,Azul Transparente,,
+av,MC,70.939,#5A4B49,8,16,4,av_cc329,,Smoke Ink,Tinta Humo,,
+av,MC,70.940,#896A64,8,4,4,av_cc329,,Saddle Brown,Marrón Cuero,,
+av,MC,70.941,#48352E,8,4,4,av_cc329,,Burnt Umber,Sombra Tostada,,
+av,MC,70.942,#449A6B,8,4,4,av_cc070,,Light Green,Verde Claro,,
+av,MC,70.943,#5A7287,8,4,4,av_cc329,,Grey Blue,Azul Gris,,
+av,MC,70.944,#B87172,8,4,4,av_cc329,,Old Rose,Rosa Antiguo,,
+av,MC,70.945,#8D365D,8,4,4,av_cc329,,Magenta,Magenta,,
+av,MC,70.946,#622E28,8,4,4,av_cc329,,Dark Red,Rojo Oscuro,,
+av,MC,70.947,#B43132,8,4,4,av_cc329,,Dark Vermilion,Bermellón Oscuro,,
+av,MC,70.948,#FAA73F,8,4,4,av_cc329,,Golden Yellow,Amarillo Dorado,,
+av,MC,70.949,#F4D151,8,4,4,av_cc329,,Light Yellow,Amarillo Claro,,
+av,MC,70.950,#18131A,8,4,4,av_cc329,,Black,Negro,,
+av,MC,70.951,#FFFFFF,8,4,4,av_cc329,,White,Blanco,,
+av,MC,70.952,#E0D12E,8,4,4,av_cc329,,Lemon Yellow,Amarillo Limón,,
+av,MC,70.953,#F5B742,8,4,4,av_cc329,,Flat Yellow,Amarillo Mate,,
+av,MC,70.954,#D6E040,8,4,4,av_cc329,,Yellow Green,Amarillo Verde,,
+av,MC,70.955,#DC975F,8,4,4,av_cc329,,Flat Flesh,Carne Mate,,
+av,MC,70.956,#CE5133,8,16,4,av_cc329,,Clear Orange,Naranja,,
+av,MC,70.957,#A03132,8,4,4,av_cc329,,Flat Red,Rojo Mate,,
+av,MC,70.958,#AD5581,8,4,4,av_cc329,,Pink,Rosa,,
+av,MC,70.959,#523559,8,4,4,av_cc329,,Purple,Púrpura,,
+av,MC,70.960,#392D50,8,4,4,av_cc329,,Violet,Violeta,,
+av,MC,70.961,#67B3CA,8,4,4,av_cc329,,Sky Blue,Azul Cielo,,
+av,MC,70.962,#3F527C,8,4,4,av_cc329,,Flat Blue,Azul Mate,,
+av,MC,70.963,#104974,8,4,4,av_cc329,,Medium Blue,Azul Medio,,
+av,MC,70.964,#4C575D,8,4,4,av_cc329,,Field Blue,Azul Militar,,
+av,MC,70.965,#374863,8,4,4,av_cc329,,Prussian Blue,Azul de Prusia,,
+av,MC,70.966,#08475F,8,4,4,av_cc329,,Turquoise,Turquesa,,
+av,MC,70.967,#4E633D,8,4,4,av_cc329,,Olive Green,Verde Oliva,,
+av,MC,70.968,#324D30,8,4,4,av_cc329,,Flat Green,Verde Oliva Osc.,,
+av,MC,70.969,#1D6851,8,4,4,av_cc329,,Park Green Flat,Verde,,
+av,MC,70.970,#114C30,8,4,4,av_cc329,,Deep Green,Verde Oscuro,,
+av,MC,70.971,#ABAFA6,8,4,4,av_cc329,,Light Green Grey,Verde Gris Pálido,,
+av,MC,70.972,#81948D,8,4,4,av_cc329,,Light Green Blue,Verde Azul Pálido,,
+av,MC,70.973,#97ACB0,8,4,4,av_cc070,,Light Sea Grey,Gris Medio,,
+av,MC,70.974,#708D67,8,4,4,av_cc329,,Green Sky,Verde Azul,,
+av,MC,70.975,#3B3E32,8,4,4,av_cc329,,Military Green,Verde Militar,,
+av,MC,70.976,#D0AD58,8,4,4,av_cc329,,Buff,Amarillo Caqui,,
+av,MC,70.977,#B08551,8,4,4,av_cc329,,Desert Yellow,Amarillo Desierto,,
+av,MC,70.978,#8B8745,8,4,4,av_cc329,,Dark Yellow,Amarillo Camuflaje,,
+av,MC,70.979,#1C2D20,8,4,4,av_cc329,,Cam. Dark Green,Cam. Verde Osc.,,
+av,MC,70.980,#20342B,8,4,4,av_cc329,,Black Green,Verde Negro,,
+av,MC,70.981,#AA6946,8,4,4,av_cc329,,Orange Brown,Marrón Naranja,,
+av,MC,70.982,#814940,8,4,4,av_cc329,,Cavalry Brown,Marrón Rojo,,
+av,MC,70.983,#60432C,8,4,4,av_cc329,,Flat Earth,Tierra Mate,,
+av,MC,70.984,#6C443E,8,4,4,av_cc329,,Flat Brown,Marrón Mate,,
+av,MC,70.985,#553638,8,4,4,av_cc329,,Hull Red,Marrón Rojizo,,
+av,MC,70.986,#A29E8E,8,4,4,av_cc329,,Deck Tan,Marrón Cubierta,,
+av,MC,70.987,#7E705C,8,4,4,av_cc329,,Medium Grey,Gris Medio,,
+av,MC,70.988,#6C6041,8,4,4,av_cc329,,Khaki,Marrón Caqui,,
+av,MC,70.989,#9FA4A7,8,4,4,av_cc329,,Sky Grey,Gris Cielo,,
+av,MC,70.990,#848B8E,8,4,4,av_cc329,,Light Grey,Gris Pálido,,
+av,MC,70.991,#656868,8,4,4,av_cc329,,Dark Sea Grey,Gris Marina,,
+av,MC,70.992,#5F6363,8,4,4,av_cc329,,Neutral Grey,Gris Neutral,,
+av,MC,70.993,#DCD7D6,8,4,4,av_cc329,,White Grey,Gris Blanco,,
+av,MC,70.994,#2A2B34,8,4,4,av_cc329,,Dark Grey,Gris Oscuro,,
+av,MC,70.995,#252929,8,4,4,av_cc329,,German Grey,Gris Alemán,,
+av,MC,70.996,#936A34,8,8,4,av_cc329,,Gold,Oro,,
+av,MC,70.997,#8C8F8F,8,8,4,av_cc329,,Silver,Plata,,
+av,MC,70.998,#4D3A21,8,8,4,av_cc329,,Bronze,Bronce,,
+av,MC,70.999,#7B372E,8,8,4,av_cc329,,Copper,Cobre,,
+gunze,C,C1,#FFFFFF,1,1,1,gunze24_25,,WHITE,,ホワイト（白）,gunze;H1;gunze26|gunze;N1;gunze26
+gunze,C,C10,#CD733A,1,8,1,gunze24_25,,COPPER,,カッパー（銅）,gunze;H10;gunze26|gunze;N10;gunze26
+gunze,C,C100,#AF2A3D,1,1,1,gunze24_25,,WINE RED,,マルーン（ワインレッド）,gunze;H43;gunze26|gunze;N43;gunze26
+gunze,C,C101,#3B2F20,1,1,1,gunze24_25,,SMOKE GRAY,,スモークグレー,gunze;H95;gunze26|gunze;N95;gunze26
+gunze,C,C104,#A8B8BF,1,8,1,gunze24_25,,GUN CHROME,,ガンクローム,
+gunze,C,C107,#F0F1EE,1,2,1,gunze24_25,,CHARACTER WHITE,,キャラクターホワイト,
+gunze,C,C108,#C9252B,1,2,1,gunze24_25,,CHARACTER RED,,キャラクターレッド,
+gunze,C,C109,#F5821F,1,2,1,gunze24_25,,CHARACTER YELLOW,,キャラクターイエロー,
+gunze,C,C11,#B4BBBF,1,2,1,gunze24_25,,LIGHT GULL GRAY,,ガルグレー,gunze;H51;gunze26|gunze;N51;gunze26
+gunze,C,C110,#074EA2,1,2,1,gunze24_25,,CHARACTER BLUE,,キャラクターブルー,
+gunze,C,C111,#FDDDCF,1,2,1,gunze24_25,,CHARACTER FLESH (1),,キャラクターフレッシュ（1）,
+gunze,C,C112,#F9B5B2,1,2,1,gunze24_25,,CHARACTER FLESH (2),,キャラクターフレッシュ（2）,
+gunze,C,C113,#FAA619,1,2,1,gunze24_25,,RLM04 YELLOW,,RLM04 イエロー,
+gunze,C,C114,#C9234A,1,2,1,gunze24_25,,RLM23 RED,,RLM23 レッド,
+gunze,C,C115,#6D92A0,1,2,1,gunze24_25,,RLM65 LIGHT BLUE,,RLM65 ライトブルー,gunze;H67;gunze26|gunze;N67;gunze26
+gunze,C,C116,#404041,1,2,1,gunze24_25,,RLM66 BLACK GRAY,,RLM66 ブラックグレー,
+gunze,C,C117,#AFCBC9,1,2,1,gunze24_25,,RLM76 LIGHT BLUE,,RLM76 ライトブルー,
+gunze,C,C118,#779FAE,1,2,1,gunze24_25,,RLM78 LIGHT BLUE,,RLM78 ライトブルー,
+gunze,C,C119,#92725F,1,2,1,gunze24_25,,RLM79 SAND YELLOW,,サンドイエロー,gunze;H66;gunze26|gunze;N66;gunze26
+gunze,C,C12,#6F5F3C,1,2,1,gunze24_25,,OLIVE DRAB (1),,オリーブドラブ（1）,gunze;H52;gunze26|gunze;N52;gunze26
+gunze,C,C120,#193F2C,1,2,1,gunze24_25,,RLM80 OLIVE GREEN,,オリーブグリーン,
+gunze,C,C121,#51544C,1,2,1,gunze24_25,,RLM81 BROWN VIOLET,,ブラウンバイオレット,
+gunze,C,C122,#64855B,1,2,1,gunze24_25,,RLM82 LIGHT GREEN,,RLM82 ライトグリーン,
+gunze,C,C123,#3C5C53,1,2,1,gunze24_25,,RLM83 DARK GREEN,,RLM83 ダークグリーン,
+gunze,C,C124,#034B24,1,2,1,gunze24_25,,DARK GREEN (MITSUBISHI),,暗緑色（三菱系）,
+gunze,C,C125,#000E23,1,2,1,gunze24_25,,COWLING COLOR,,カウリング色,
+gunze,C,C126,#546949,1,2,1,gunze24_25,,COCKPIT COLOR (MITSUBISHI),,コクピット色（三菱系）,
+gunze,C,C127,#A2B180,1,2,1,gunze24_25,,COCKPIT COLOR (NAKAJIMA),,コクピット色（中島系）,gunze;N127;gunze26
+gunze,C,C128,#A5ABA1,1,2,1,gunze24_25,,GRAY GREEN,,灰緑色,
+gunze,C,C129,#536955,1,2,1,gunze24_25,,DARK GREEN (NAKAJIMA),,濃緑色（中島系）,
+gunze,C,C13,#677A83,1,2,1,gunze24_25,,NEUTRAL GRAY,,ニュートラルグレー,gunze;H53;gunze26|gunze;N22;gunze26
+gunze,C,C130,#566348,1,2,1,gunze24_25,,DARK GREEN (KAWASAKI),,濃緑色（川崎系）,
+gunze,C,C131,#4B2014,1,2,1,gunze24_25,,RED BROWN Ⅱ,,赤褐色,
+gunze,C,C132,#6F5F3C,1,4,1,gunze24_25,,EARTH GREEN,,土草色,
+gunze,C,C135,#369954,1,4,1,gunze24_25,,RUSSIAN GREEN (1),,ロシアングリーン（1）,
+gunze,C,C136,#3A6149,1,4,1,gunze24_25,,RUSSIAN GREEN (2),,ロシアングリーン（2）,
+gunze,C,C137,#231F20,1,4,1,gunze24_25,,TIRE BLACK,,タイヤブラック,gunze;H77;gunze26|gunze;N77;gunze26
+gunze,C,C138,#00A650,1,16,1,gunze24_25,,CLEAR GREEN,,クリアーグリーン,gunze;H94;gunze26|gunze;N94;gunze26
+gunze,C,C14,#234F5B,1,2,1,gunze24_25,,NAVY BLUE,,ネイビーブルー,gunze;H54;gunze26|gunze;N54;gunze26
+gunze,C,C15,#003920,1,2,1,gunze24_25,,IJN GREEN (NAKAJIMA),,暗緑色（中島系）,gunze;H59;gunze26|gunze;N36;gunze26
+gunze,C,C151,#FFFFFF,1,32,1,gunze24_25,,WHITE PEARL,,ホワイトパール,
+gunze,C,C156,#FFFFFF,1,1,1,gunze24_25,,SUPER WHITE Ⅳ,,スーパーホワイト,
+gunze,C,C158,#DA2128,1,1,1,gunze24_25,,SUPER ITALIAN RED,,スーパーイタリアンレッド,
+gunze,C,C159,#D1D3D4,1,8,1,gunze24_25,,SUPER SILVER,,スーパーシルバー,
+gunze,C,C16,#22543F,1,2,1,gunze24_25,,IJA GREEN,,濃緑色,gunze;H60;gunze26|gunze;N60;gunze26
+gunze,C,C17,#51544C,1,2,1,gunze24_25,,RLM71 DARK GREEN,,ダークグリーン,gunze;H64;gunze26
+gunze,C,C171,#ED1C24,1,64,1,gunze24_25,,FLUORESCENT RED,,蛍光レッド,gunze;H101;gunze26|gunze;N101;gunze26
+gunze,C,C172,#FFF200,1,64,1,gunze24_25,,FLUORESCENT YELLOW,,蛍光イエロー,gunze;H97;gunze26|gunze;N97;gunze26
+gunze,C,C173,#EE3124,1,64,1,gunze24_25,,FLUORESCENT ORANGE,,蛍光オレンジ,gunze;H98;gunze26|gunze;N98;gunze26
+gunze,C,C174,#ED0972,1,64,1,gunze24_25,,FLUORESCENT PINK,,蛍光ピンク,gunze;H99;gunze26|gunze;N99;gunze26
+gunze,C,C175,#00A650,1,64,1,gunze24_25,,FLUORESCENT GREEN,,蛍光グリーン,gunze;H100;gunze26|gunze;N100;gunze26
+gunze,C,C18,#273C4D,1,2,1,gunze24_25,,RLM70 BLACK GREEN,,ブラックグリーン,gunze;H65;gunze26
+gunze,C,C181,#FFFFFF,1,16,1,gunze24_25,,SEMI-GLOSS SUPER CLEAR,,スーパークリア半光沢,gunze;H110;gunze26
+gunze,C,C182,#FFFFFF,1,16,1,gunze24_25,,FLAT CLEAR,,スーパークリアー,gunze;H20;gunze26|gunze;N20;gunze26
+gunze,C,C183,#EFF2F3,1,16,1,gunze24_25,,SUPER CLEAR GRAY TONE,,スーパークリアーグレートーン,
+gunze,C,C188,#FFFFFF,1,4,1,gunze24_25,,FLAT BASE ROUGH,,フラットベース,
+gunze,C,C189,#FFFFFF,1,4,1,gunze24_25,,FLAT BASE SMOOTH,,フラットベース,
+gunze,C,C19,#9D8145,1,2,1,gunze24_25,,SANDY BROWN,,サンディブラウン,
+gunze,C,C2,#231F20,1,1,1,gunze24_25,,BLACK,,ブラック（黒）,gunze;H2;gunze26|gunze;N2;gunze26
+gunze,C,C20,#4DBFA5,1,2,1,gunze24_25,,LIGHT BLUE,,ライトブルー,
+gunze,C,C21,#AA8A4B,1,2,1,gunze24_25,,MIDDLE STONE,,ミドルストーン,gunze;H71;gunze26|gunze;N71;gunze26
+gunze,C,C22,#5C5144,1,2,1,gunze24_25,,DARK EARTH,,ダークアース,gunze;H72;gunze26|gunze;N72;gunze26
+gunze,C,C23,#4B604D,1,2,1,gunze24_25,,DARK GREEN (2),,ダークグリーン（2）,gunze;H73;gunze26|gunze;N73;gunze26
+gunze,C,C25,#707863,1,2,1,gunze24_25,,DARK SEAGRAY,,ダークシーグレー,gunze;H75;gunze26
+gunze,C,C26,#CFDAAA,1,2,1,gunze24_25,,DUCK EGG GREEN,,ダックエッググリーン（スカイ）,gunze;H74;gunze26
+gunze,C,C27,#B2A335,1,2,1,gunze24_25,,INTERIOR GREEN,,機体内部色,gunze;H58;gunze26|gunze;N58;gunze26
+gunze,C,C28,#231F20,1,8,1,gunze24_25,,STEEL,,黒鉄色,gunze;H18;gunze26|gunze;N18;gunze26
+gunze,C,C29,#61343B,1,2,1,gunze24_25,,HULL RED,,艦底色（ココアブラウン）,gunze;H17;gunze26|gunze;N17;gunze26
+gunze,C,C3,#ED1C24,1,1,1,gunze24_25,,RED,,レッド（赤）,gunze;H3;gunze26|gunze;N3;gunze26
+gunze,C,C30,#FFFFFF,1,4,1,gunze24_25,,FLAT BASE,,フラットベース・スタンダード,gunze;H40;gunze26|gunze;N40;gunze26
+gunze,C,C301,#3C424C,1,2,1,gunze24_25,,GRAY FS36081,,グレー FS36081,gunze;H301;gunze26
+gunze,C,C302,#3B5C59,1,2,1,gunze24_25,,GREEN FS34092,,グリーン FS34092,gunze;H302;gunze26
+gunze,C,C303,#54645A,1,2,1,gunze24_25,,GREEN FS34102,,グリーン FS34102,gunze;H303;gunze26
+gunze,C,C304,#49433B,1,2,1,gunze24_25,,OLIVE DRAB FS34087,,オリーブドラブ FS34087,gunze;H304;gunze26
+gunze,C,C305,#4D7070,1,2,1,gunze24_25,,GRAY FS36118,,グレー FS36118,gunze;H305;gunze26
+gunze,C,C306,#6B888A,1,2,1,gunze24_25,,GRAY FS36270,,グレー FS36270,gunze;H306;gunze26
+gunze,C,C307,#6A8891,1,2,1,gunze24_25,,GRAY FS36320,,グレー FS36320,gunze;H307;gunze26
+gunze,C,C308,#7D9B9F,1,2,1,gunze24_25,,GRAY FS36375,,グレー FS36375,gunze;H308;gunze26
+gunze,C,C309,#3B5C59,1,2,1,gunze24_25,,GREEN FS34079,,グリーン FS34079,gunze;H309;gunze26
+gunze,C,C31,#848C8D,1,2,1,gunze24_25,,DARK GRAY (1),,軍艦色（1）,gunze;H82;gunze26|gunze;N82;gunze26
+gunze,C,C310,#766758,1,2,1,gunze24_25,,BROWN FS30219,,ブラウン FS30219,gunze;H310;gunze26
+gunze,C,C311,#E5E6CF,1,2,1,gunze24_25,,GRAY FS36622,,グレー FS36622,gunze;H311;gunze26
+gunze,C,C312,#418765,1,2,1,gunze24_25,,GREEN FS34227,,グリーン FS34227,gunze;H312;gunze26
+gunze,C,C313,#E4BE8A,1,2,1,gunze24_25,,YELLOW FS33531 I,,イエロー FS33531,gunze;H313;gunze26
+gunze,C,C314,#E3F2E7,1,2,1,gunze24_25,,BLUE FS35622,,ブルー FS35622,gunze;H314;gunze26
+gunze,C,C315,#94A8A3,1,1,1,gunze24_25,,GRAY FS16440,,グレー FS16440,gunze;H315;gunze26
+gunze,C,C316,#FFFFFF,1,1,1,gunze24_25,,WHITE FS17875,,ホワイト FS17875,gunze;H316;gunze26
+gunze,C,C317,#707A71,1,4,1,gunze24_25,,GRAY FS36231,,グレー FS36231,gunze;H317;gunze26
+gunze,C,C318,#FECF8D,1,2,1,gunze24_25,,RADOME,,レドーム,gunze;H318;gunze26
+gunze,C,C319,#247260,1,2,1,gunze24_25,,LIGHT GREEN,,薄松葉色,gunze;H319;gunze26
+gunze,C,C32,#485D64,1,2,1,gunze24_25,,DARK GRAY (2),,軍艦色（2）,gunze;H83;gunze26|gunze;N83;gunze26
+gunze,C,C320,#4B5D4D,1,2,1,gunze24_25,,DARK GREEN,,濃松葉色,gunze;H320;gunze26
+gunze,C,C321,#AE8D71,1,2,1,gunze24_25,,LIGHT BROWN,,黄土色,gunze;H321;gunze26
+gunze,C,C322,#313C5A,1,1,1,gunze24_25,,PHTHALO CYANNE BLUE,,フタロシアニンブルー,gunze;H322;gunze26
+gunze,C,C323,#00B9F2,1,1,1,gunze24_25,,LIGHT BLUE,,ライトブルー,gunze;H323;gunze26
+gunze,C,C324,#88A5A3,1,4,1,gunze24_25,,LIGHT GRAY,,ライトグレー,gunze;H324;gunze26
+gunze,C,C325,#9FABA3,1,2,1,gunze24_25,,GRAY FS26440,,グレー FS26440,gunze;H325;gunze26
+gunze,C,C326,#35354E,1,1,1,gunze24_25,,BLUE FS15044,,ブルー FS15044,gunze;H326;gunze26
+gunze,C,C327,#9E2D33,1,1,1,gunze24_25,,RED FS11136,,レッド FS11136,gunze;H327;gunze26
+gunze,C,C328,#313C5A,1,1,1,gunze24_25,,BLUE FS15050,,ブルー FS15050,gunze;H328;gunze26
+gunze,C,C329,#F99D1C,1,1,1,gunze24_25,,YELLOW FS13538,,イエロー FS13538,gunze;H329;gunze26
+gunze,C,C33,#231F20,1,4,1,gunze24_25,,FLAT BLACK,,つや消しブラック,gunze;H12;gunze26|gunze;N12;gunze26
+gunze,C,C330,#435050,1,2,1,gunze24_25,,DARK GREEN BS381C/641,,ダークグリーン BS381C/641,gunze;H330;gunze26
+gunze,C,C331,#555E63,1,2,1,gunze24_25,,DARK SEAGRAY BS381C/638,,ダークシーグレー BS381C/638,gunze;H331;gunze26
+gunze,C,C332,#8E988E,1,2,1,gunze24_25,,LIGHT AIRCRAFT GRAY BS381C/627,,ライトエアクラフトグレー BS381C/627,gunze;H332;gunze26
+gunze,C,C333,#334F5B,1,2,1,gunze24_25,,EXTRA DARK SEAGRAY BS381C/640,,エクストラダークシーグレー BS381C/640,gunze;H333;gunze26
+gunze,C,C334,#809494,1,2,1,gunze24_25,,BARLEY GRAY BS4800/18B21,,バーリーグレー BS4800/18B21,gunze;H334;gunze26
+gunze,C,C335,#63797D,1,2,1,gunze24_25,,MEDIUM SEAGRAY BS381C/637,,ミディアムシーグレー BS381C/637,gunze;H335;gunze26
+gunze,C,C336,#6C8E72,1,2,1,gunze24_25,,HEMP BS4800/10B21,,ヘンプ BS4800/10B21,gunze;H336;gunze26
+gunze,C,C337,#47767E,1,2,1,gunze24_25,,GRAYISH BLUE FS35237,,グレイッシュブルー FS35237,gunze;H337;gunze26
+gunze,C,C338,#B4BBBF,1,2,1,gunze24_25,,LIGHT GRAY FS36495,,ライトグレー FS36495,gunze;H338;gunze26
+gunze,C,C339,#334F5B,1,1,1,gunze24_25,,ENGINE GRAY FS16081,,エンジングレー FS16081,gunze;H339;gunze26
+gunze,C,C34,#0095DA,1,1,1,gunze24_25,,SKY BLUE,,スカイブルー,gunze;H25;gunze26|gunze;N25;gunze26
+gunze,C,C340,#3E5C43,1,2,1,gunze24_25,,FIELD GREEN FS34097,,フィールドグリーン FS34097,gunze;H340;gunze26
+gunze,C,C35,#94B0BE,1,2,1,gunze24_25,,IJN GRAY (MITSUBISHI),,明灰白色（三菱系）,gunze;H61;gunze26|gunze;N61;gunze26
+gunze,C,C351,#78774E,1,4,1,gunze24_25,,ZINC-CHROMATE TYPE I FS34151,,ジンク・クロメイト タイプI FS34151,
+gunze,C,C352,#B69E34,1,4,1,gunze24_25,,CHROMATE YELLOW PRIMER FS33481,,クロメイトイエロープライマー FS33481,
+gunze,C,C36,#264142,1,2,1,gunze24_25,,RLM74 GRAY GREEN,,グレーグリーン,gunze;H68;gunze26|gunze;N68;gunze26
+gunze,C,C361,#3A3F36,1,4,1,gunze24_25,,DARK GREEN BS641,,ダークグリーン BS641,gunze;BS641;gunze26
+gunze,C,C362,#5B676C,1,4,1,gunze24_25,,OCEAN GRAY,,オーシャングレー,
+gunze,C,C363,#768A91,1,4,1,gunze24_25,,MEDIUM SEAGRAY BS637,,ミディアムシーグレー BS637,gunze;BS637;gunze26
+gunze,C,C364,#6C8366,1,4,1,gunze24_25,,AIRCRAFT GRAY GREEN BS283,,エアクラフトグレーグリーン BS283,gunze;BS283;gunze26
+gunze,C,C365,#00001D,1,1,1,gunze24_25,,GLOSS SEABLUE FS15042,,グロスシーブルー FS15042,
+gunze,C,C366,#567082,1,4,1,gunze24_25,,INTERMEDIATE BLUE FS35164,,インターミディエートブルー FS35164,
+gunze,C,C367,#658890,1,4,1,gunze24_25,,BLUE GRAY FS35189,,ブルーグレー FS35189,
+gunze,C,C368,#A0B497,1,4,1,gunze24_25,,SKY BS381C/210,,スカイ BS381C/210,
+gunze,C,C369,#594E36,1,4,1,gunze24_25,,DARK EARTH BS381C/450,,ダークアース BS381C/450,
+gunze,C,C37,#546460,1,2,1,gunze24_25,,RLM75 GRAY VIOLET,,グレーバイオレット,gunze;H69;gunze26|gunze;N69;gunze26
+gunze,C,C370,#5583AC,1,4,1,gunze24_25,,AZURE BLUE,,エイザーブルー,
+gunze,C,C374,#507FA4,1,2,1,gunze24_25,,JASDF SHALLOW OCEAN BLUE,,シャロウオーシャンブルー,
+gunze,C,C375,#262D43,1,2,1,gunze24_25,,JASDF DEEP OCEAN BLUE,,ディープオーシャンブルー,
+gunze,C,C376,#B2BEBC,1,2,1,gunze24_25,,JASDF RADOME GRAY,,レドームグレー,
+gunze,C,C38,#44503D,1,4,1,gunze24_25,,OLIVE DRAB (2),,オリーブドラブ（2）,gunze;H78;gunze26|gunze;N78;gunze26
+gunze,C,C383,#274F42,1,2,1,gunze24_25,,DARK GREEN (KAWANISHI),,暗緑色（川西系）,
+gunze,C,C384,#7E7F49,1,2,1,gunze24_25,,COCKPIT COLOR (KAWANISHI),,コクピット色（川西系）,
+gunze,C,C385,#B1101A,1,2,1,gunze24_25,,RED (IJN AIRCRAFT MARKING),,紅色（日本海軍機用）,
+gunze,C,C39,#BA9765,1,4,1,gunze24_25,,DARK YELLOW (SANDY YELLOW),,ダークイエロー,gunze;H79;gunze26|gunze;N79;gunze26
+gunze,C,C391,#00AD92,1,2,1,gunze24_25,,INTERIOR TURQUOISE GREEN (SOVIET),,機体内部色 ターコイズグリーン（ソビエト）,
+gunze,C,C392,#1C9EBC,1,2,1,gunze24_25,,INTERIOR BLUE (SOVIET),,機体内部色 ブルー（ソビエト）,
+gunze,C,C393,#050005,1,2,1,gunze24_25,,RUSSIAN AIRCRAFT BLUE II,,ロシアンエアクラフトブルー（2）,
+gunze,C,C394,#50616D,1,2,1,gunze26,,,,ダークグレー FS36176,
+gunze,C,C395,#819296,1,2,1,gunze26,,,,ミディアムグレー FS36251,
+gunze,C,C4,#FFDD00,1,1,1,gunze24_25,,YELLOW,,イエロー（黄）,gunze;H4;gunze26|gunze;N4;gunze26
+gunze,C,C40,#2F4248,1,4,1,gunze24_25,,GERMAN GRAY,,ジャーマングレー,gunze;H32;gunze26|gunze;N32;gunze26
+gunze,C,C41,#573438,1,4,1,gunze24_25,,RED BROWN,,レッドブラウン,gunze;H47;gunze26|gunze;N47;gunze26
+gunze,C,C42,#4D3538,1,2,1,gunze24_25,,MAHOGANY,,マホガニー,gunze;H84;gunze26|gunze;N84;gunze26
+gunze,C,C43,#71513A,1,2,1,gunze24_25,,WOOD BROWN,,ウッドブラウン,gunze;H37;gunze26|gunze;N37;gunze26
+gunze,C,C44,#C4A26E,1,2,1,gunze24_25,,TAN,,タン（ライトブラウン）,gunze;H27;gunze26|gunze;N27;gunze26
+gunze,C,C45,#B9B084,1,2,1,gunze24_25,,SAIL COLOR,,セールカラー,gunze;H85;gunze26|gunze;N85;gunze26
+gunze,C,C46,#FFFFFF,1,16,1,gunze24_25,,CLEAR,,クリアー（透明）,gunze;H30;gunze26|gunze;N30;gunze26
+gunze,C,C47,#ED1C24,1,16,1,gunze24_25,,CLEAR RED,,クリアーレッド,gunze;H90;gunze26|gunze;N90;gunze26
+gunze,C,C48,#FFD401,1,16,1,gunze24_25,,CLEAR YELLOW,,クリアーイエロー,gunze;H91;gunze26|gunze;N91;gunze26
+gunze,C,C49,#F26522,1,16,1,gunze24_25,,CLEAR ORANGE,,クリアーオレンジ,gunze;H92;gunze26|gunze;N92;gunze26
+gunze,C,C5,#005AAA,1,1,1,gunze24_25,,BLUE,,ブルー（青）,gunze;H5;gunze26|gunze;N5;gunze26
+gunze,C,C50,#00AEEF,1,16,1,gunze24_25,,CLEAR BLUE,,クリアーブルー,gunze;H93;gunze26|gunze;N93;gunze26
+gunze,C,C51,#E3AC7C,1,2,1,gunze24_25,,FLESH,,薄茶色,gunze;H44;gunze26|gunze;N44;gunze26
+gunze,C,C511,#4D5E36,1,4,1,gunze24_25,,"RUSSIAN GREEN ""4BO""",,"ロシアングリーン""4BO""WWⅡ",gunze;H511;gunze26
+gunze,C,C512,#5F6237,1,4,1,gunze24_25,,"RUSSIAN GREEN ""4BO"" 1947-",,"ロシアングリーン""4BO""1947年以降",gunze;H512;gunze26
+gunze,C,C513,#3B4C5A,1,4,1,gunze24_25,,"DARK GRAY ""DUNKEL GRAU""",,ジャーマングレー/ドゥンケルグラウ,gunze;H513;gunze26
+gunze,C,C514,#4B6D79,1,4,1,gunze24_25,,"GRAY ""GRAU""",,ジャーマングレー/グラウ,gunze;H514;gunze26
+gunze,C,C515,#54767F,1,4,1,gunze24_25,,"FADED GRAY ""BLASSGRAU""",,ジャーマングレー/グラウ（退色）,gunze;H515;gunze26
+gunze,C,C516,#394537,1,4,1,gunze24_25,,DARK GREEN 3414,,濃緑色 3414,
+gunze,C,C517,#48392D,1,4,1,gunze24_25,,BROWN 3606,,茶色 3606,
+gunze,C,C518,#37331E,1,2,1,gunze24_25,,OLIVE DRAB 2314,,OD色 2314,
+gunze,C,C519,#404D3A,1,4,1,gunze24_25,,BRONZEGRUN,,ブロンセグリュン RAL6031,
+gunze,C,C52,#405651,1,4,1,gunze24_25,,FIELD GRAY (2),,フィールドグレー2（オリーブグレー）,gunze;H48;gunze26
+gunze,C,C520,#523B27,1,4,1,gunze24_25,,LEDERBRAUN,,レーダァブラオン RAL8027,
+gunze,C,C521,#24292B,1,4,1,gunze24_25,,TEER SCHWARZ,,テーアシュバルツ RAL9021,
+gunze,C,C522,#594F4E,1,4,1,gunze24_25,,GROUND COLOR,,土地色,
+gunze,C,C523,#58624E,1,4,1,gunze24_25,,GRASS COLOR,,草色,
+gunze,C,C524,#877A47,1,4,1,gunze24_25,,HAY COLOR,,枯草色,
+gunze,C,C525,#36503E,1,4,1,gunze24_25,,GREEN,,緑色,
+gunze,C,C526,#856654,1,4,1,gunze24_25,,BROWN,,茶色,
+gunze,C,C527,#9E7D5A,1,4,1,gunze24_25,,KHAKI,,陸軍カーキ,
+gunze,C,C528,#C3AC86,1,4,1,gunze24_25,,IDF GRAY1 (-1981 SINAI),,IDFグレー1（─1981シナイ半島）,
+gunze,C,C529,#867E70,1,4,1,gunze24_25,,IDF GRAY2 (-1981 GOLAN),,IDFグレー2（─1981ゴラン高原）,
+gunze,C,C530,#7E7562,1,4,1,gunze24_25,,IDF GRAY3 (MODERN),,IDFグレー3（現用）,
+gunze,C,C54,#3A4940,1,4,1,gunze24_25,,KHAKI GREEN,,カーキグリーン,gunze;H80;gunze26|gunze;N80;gunze26
+gunze,C,C55,#5B573D,1,4,1,gunze24_25,,KHAKI,,カーキ,gunze;H81;gunze26|gunze;N81;gunze26
+gunze,C,C56,#6F9F9B,1,2,1,gunze24_25,,IJN GRAY GREEN (NAKAJIMA),,明灰緑色（中島系）,gunze;N62;gunze26
+gunze,C,C57,#007B72,1,8,1,gunze24_25,,METALLIC BLUE GREEN,,青竹色,gunze;H63;gunze26|gunze;N63;gunze26
+gunze,C,C58,#F47920,1,2,1,gunze24_25,,ORANGE YELLOW,,黄橙色（オレンジイエロー）,gunze;H24;gunze26|gunze;N24;gunze26
+gunze,C,C59,#EF4023,1,1,1,gunze24_25,,ORANGE,,オレンジ（橙）,gunze;H14;gunze26|gunze;N14;gunze26
+gunze,C,C6,#006835,1,1,1,gunze24_25,,GREEN,,グリーン（緑）,gunze;H6;gunze26|gunze;N6;gunze26
+gunze,C,C60,#959480,1,2,1,gunze24_25,,RLM02 GRAY,,RLM02 グレー,gunze;H70;gunze26|gunze;N70;gunze26
+gunze,C,C601,#888B93,1,4,1,gunze24_25,,IJN HULL COLOR/KURE,,呉海軍工廠標準色,
+gunze,C,C602,#6F7272,1,4,1,gunze24_25,,IJN HULL COLOR/SASEBO,,佐世保海軍工廠標準色,
+gunze,C,C603,#989EAA,1,4,1,gunze24_25,,IJN HULL COLOR/MAIZURU,,舞鶴海軍工廠標準色,
+gunze,C,C604,#4E7744,1,4,1,gunze24_25,,IJN TYPE21 CAMOFLAGE COLOR,,外舷21号色,
+gunze,C,C605,#7CA972,1,4,1,gunze24_25,,IJN TYPE22 CAMOFLAGE COLOR,,外舷22号色,
+gunze,C,C606,#674B44,1,4,1,gunze24_25,,IJN LINOLEUM DECK COLOR,,リノリウム色,
+gunze,C,C607,#6E767B,1,2,1,gunze24_25,,JMSDF 2704 GRAY N5,,灰色2704（N5）,
+gunze,C,C608,#52595D,1,4,1,gunze24_25,,JMSDF 2705 DARK GRAY N4,,暗灰色2705（N4）,
+gunze,C,C609,#3E4347,1,4,1,gunze24_25,,JMSDF CLEATED DECK COLOR,,滑り止め塗装部色,
+gunze,C,C61,#58575C,1,8,1,gunze24_25,,BURNT IRON,,焼鉄色,gunze;H76;gunze26|gunze;N76;gunze26
+gunze,C,C62,#FFFFFF,1,4,1,gunze24_25,,FLAT WHITE,,つや消しホワイト,gunze;H11;gunze26|gunze;N11;gunze26
+gunze,C,C63,#F17298,1,1,1,gunze24_25,,PINK,,ピンク（桃）,gunze;H19;gunze26|gunze;N19;gunze26
+gunze,C,C64,#1EAA4A,1,1,1,gunze24_25,,YELLOW GREEN,,ルマングリーン（黄緑）,gunze;H16;gunze26|gunze;N16;gunze26
+gunze,C,C65,#074EA2,1,1,1,gunze24_25,,BRIGHT BLUE,,インディブルー,gunze;H15;gunze26|gunze;N15;gunze26
+gunze,C,C66,#00A650,1,1,1,gunze24_25,,BRIGHT GREEN,,デイトナグリーン,gunze;H26;gunze26|gunze;N26;gunze26
+gunze,C,C67,#483087,1,1,1,gunze24_25,,PURPLE,,パープル（紫）,gunze;H39;gunze26|gunze;N39;gunze26
+gunze,C,C68,#DA2128,1,1,1,gunze24_25,,MADDER RED,,モンザレッド,gunze;H86;gunze26|gunze;N86;gunze26
+gunze,C,C69,#F6F3EE,1,1,1,gunze24_25,,OFF WHITE,,グランプリホワイト,gunze;H21;gunze26|gunze;N21;gunze26
+gunze,C,C7,#CA4136,1,1,1,gunze24_25,,BROWN,,ブラウン（茶）,gunze;H7;gunze26|gunze;N7;gunze26
+gunze,C,C70,#3A4940,1,4,1,gunze24_25,,DARK GREEN,,ダークグリーン,
+gunze,C,C71,#38494E,1,1,1,gunze24_25,,MIDNIGHT BLUE,,ミッドナイトブルー,gunze;H55;gunze26|gunze;N55;gunze26
+gunze,C,C72,#2D5562,1,2,1,gunze24_25,,INTERMEDIATE BLUE,,ミディアムブルー,gunze;H56;gunze26|gunze;N56;gunze26
+gunze,C,C73,#729998,1,1,1,gunze24_25,,AIRCRAFT GRAY,,エアクラフトグレー,gunze;H57;gunze26|gunze;N57;gunze26
+gunze,C,C74,#1A737E,1,1,1,gunze24_25,,AIR SUPERIORITY BLUE,,エアスペリオリティーブルー,
+gunze,C,C75,#AF2A30,1,8,1,gunze24_25,,METALLIC RED,,メタリックレッド,gunze;H87;gunze26|gunze;N87;gunze26
+gunze,C,C76,#005AAA,1,8,1,gunze24_25,,METALLIC BLUE,,メタリックブルー,gunze;H88;gunze26|gunze;N88;gunze26
+gunze,C,C77,#009058,1,8,1,gunze24_25,,METALLIC GREEN,,メタリックグリーン,gunze;H89;gunze26|gunze;N89;gunze26
+gunze,C,C78,#231F20,1,8,1,gunze24_25,,METAL BLACK,,メタルブラック,gunze;H28;gunze26|gunze;N28;gunze26
+gunze,C,C79,#ED1C24,1,1,1,gunze24_25,,SHINE RED,,シャインレッド（朱色）,gunze;H23;gunze26|gunze;N23;gunze26
+gunze,C,C8,#D1D3D4,1,8,1,gunze24_25,,SILVER,,シルバー（銀）,gunze;H8;gunze26|gunze;N8;gunze26
+gunze,C,C80,#2E3092,1,2,1,gunze24_25,,COBALT BLUE,,コバルトブルー,gunze;H35;gunze26|gunze;N35;gunze26
+gunze,C,C81,#7C3139,1,1,1,gunze24_25,,RUSSET,,あずき色（赤２号）,gunze;H33;gunze26|gunze;N33;gunze26
+gunze,C,C9,#DCAF31,1,8,1,gunze24_25,,GOLD,,ゴールド（金）,gunze;H9;gunze26|gunze;N9;gunze26
+gunze,C,C90,#C7C8CA,1,8,1,gunze24_25,,SHINE SILVER,,シャインシルバー,
+gunze,C,C92,#231F20,1,2,1,gunze24_25,,SEMI GLOSS BLACK,,セミグロスブラック,
+gunze,C,C97,#AAB7AF,1,1,1,gunze24_25,,LIGHT GRAY,,灰色９号,
+gunze,C,CA01,#3A3B3D,1,1,1,gunze24_25,,GLAY TONE 1,,グレートーン1,
+gunze,C,CA02,#6E7073,1,1,1,gunze24_25,,GLAY TONE 2,,グレートーン2,
+gunze,C,CA03,#A1A2A6,1,1,1,gunze24_25,,GLAY TONE 3,,グレートーン3,
+gunze,C,CA04,#DDDDDE,1,1,1,gunze24_25,,GLAY TONE 4,,グレートーン4,
+gunze,C,CA05,#5B5354,1,2,1,gunze24_25,,CARBON GLAY,,カーボングレー,
+gunze,C,CKA01,#97C93C,1,2,1,gunze24_25,,,,Kawasakiライムグリーン,
+gunze,C,CMC01,#3F4A3F,1,4,1,gunze26,,,,ODハイライト1,
+gunze,C,CMC02,#4C5747,1,4,1,gunze26,,,,ODハイライト2,
+gunze,C,CMC03,#202520,1,4,1,gunze26,,,,ODシャドー,
+gunze,C,CMC04,#CE9B62,1,4,1,gunze26,,,,DYハイライト1,
+gunze,C,CMC05,#DAAF70,1,4,1,gunze26,,,,DYハイライト2,
+gunze,C,CMC06,#5E4A29,1,4,1,gunze26,,,,DYシャドー,
+gunze,C,CMC07,#394450,1,4,1,gunze26,,,,GGハイライト1,
+gunze,C,CMC08,#546065,1,4,1,gunze26,,,,GGハイライト2,
+gunze,C,CMC09,#121521,1,4,1,gunze26,,,,GGシャドー,
+gunze,C,CMC10,#344927,1,4,1,gunze26,,,,RG CMベース,
+gunze,C,CMC11,#445E35,1,4,1,gunze26,,,,RG ハイライト1,
+gunze,C,CMC12,#587947,1,4,1,gunze26,,,,RG ハイライト2,
+gunze,C,CMC13,#111B07,1,4,1,gunze26,,,,RG シャドー,
+gunze,C,CRE01,#6F2E32,1,32,1,gunze24_25,,CRANBERRY RED PEARL,,※クランベリーレッドパールは、,
+gunze,C,CRE02,#27BDBE,1,1,1,gunze24_25,,CERULEAN BLUE,,セルリアンブルー,
+gunze,C,CRE03,#374A3F,1,1,1,gunze24_25,,BRITISH GREEN,,ブリティッシュグリーン,
+gunze,C,CV01,#B04D40,1,8,1,gunze24_25,,VELVET RED,,ベルベットレッド,
+gunze,C,CV02,#1F5293,1,8,1,gunze24_25,,VELVET BLUE,,ベルベットブルー,
+gunze,C,CV03,#367C5F,1,8,1,gunze24_25,,VELVET GREEN,,ベルベットグリーン,
+gunze,C,CV04,#8E69AD,1,8,1,gunze24_25,,,,ベルベットパープル,
+gunze,C,CV05,#896039,1,8,1,gunze24_25,,,,ベルベットブラウン,
+gunze,C,CV06,#4D4B48,1,8,1,gunze24_25,,,,ベルベットブラック,
+gunze,C,CV07,#F9FBE9,1,8,1,gunze24_25,,,,ベルベットベージュ,
+gunze,C,LAC101,#231F20,1,2,1,gunze24_25,,ALUMITE BLACK,,アルマイトブラック,
+gunze,C,LAC102,#514946,1,8,1,gunze24_25,,PARKER GUN METALLIC,,パーカーガンメタリック,
+gunze,C,LAC103,#A8A9AD,1,8,1,gunze24_25,,STAINLESS SILVER,,ステンレスシルバー,
+gunze,C,LAC104,#002D49,1,8,1,gunze24_25,,BLUED GUN METALLIC,,ガンブルーメタリック,
+gunze,C,LAC105,#8E804E,1,4,1,gunze24_25,,FLAT DARK EARTH 1,,フラットダークアース1,
+gunze,C,LAC106,#877059,1,4,1,gunze24_25,,FLAT DARK EARTH 2,,フラットダークアース2,
+gunze,C,UM01,#97999C,1,8,1,gunze24_25,,ULTRA SILVER,,ウルトラシルバー,
+gunze,C,UM02,#D5A828,1,8,1,gunze24_25,,ULTRA GOLD,,ウルトラゴールド,
+gunze,C,XAC01,#3C4F6E,1,2,1,gunze24_25,,,,スティールヘイズダークブルー,
+gunze,C,XAC02,#442D25,1,2,1,gunze24_25,,,,スティールヘイズダークブラウン,
+gunze,C,XGC01,#E0E1DE,1,1,1,gunze24_25,,BRUNHILD WHITE,,ブリュンヒルトホワイト,
+gunze,C,XGC02,#39828B,1,1,1,gunze24_25,,HYPERION GREEN,,ヒューベリオングリーン,
+gunze,C,XGC03,#859E78,1,1,1,gunze24_25,,FREE PLANETS ALLIANCE STANDARD BATTLESHIP GREEN,,自由惑星同盟軍標準型戦艦グリーン,
+gunze,C,XGP01,#26404E,1,2,1,gunze24_25,,,,大洗グレー,
+gunze,C,XGP02,#6E3518,1,2,1,gunze24_25,,,,大洗ブラウン,
+gunze,C,XGP03,#4B5E2C,1,2,1,gunze24_25,,,,聖グロリアーナカーキグリーン,
+gunze,C,XUC01,#C8C8C9,1,8,1,gunze24_25,,,,シルバーガルシルバー,
+gunze,C,XUC02,#BD3741,1,2,1,gunze24_25,,,,シルバーガルレッド,
+gunze,C,XUC03,#2C3967,1,2,1,gunze24_25,,,,シルバーガルブルー,
+gunze,CL,BC01,#FAB49B,1,1,1,gunze24_25,,PALE ORANGE,,ペールオレンジ,
+gunze,CL,BC02,#F15F53,1,1,1,gunze24_25,,CARROT ORANGE,,キャロットオレンジ,
+gunze,CL,BC03,#F9AA8F,1,1,1,gunze24_25,,MILKY PEACH,,ミルキーピーチ,
+gunze,CL,BC04,#F48B94,1,1,1,gunze24_25,,CORAL PINK,,コーラルピンク,
+gunze,CL,CL01,#FCD0B7,1,1,1,gunze24_25,,WHITE PEACH,,ホワイトピーチ,
+gunze,CL,CL02,#A37D76,1,1,1,gunze24_25,,COCOA MILK,,ココアミルク,
+gunze,CL,CL03,#FAC7BF,1,16,1,gunze24_25,,CLEAR PALE RED,,クリアーペールレッド,
+gunze,CL,CL04,#FCCB9C,1,16,1,gunze24_25,,CLEAR PALE ORANGE,,クリアーペールオレンジ,
+gunze,CL,CL05,#F7996E,1,16,1,gunze24_25,,CLEAR PALE BROWN,,クリアーペールブラウン,
+gunze,CL,CL06,#FFFFFF,1,16,1,gunze24_25,,CLEAR WHITE,,クリアーホワイト,
+gunze,CL,CL07,#F9B4AD,1,1,1,gunze24_25,,ROSY PEACH,,鴇羽色（ときはいろ）,
+gunze,CL,CL08,#FEFBF5,1,1,1,gunze24_25,,NUTS WHITE,,ナッツホワイト,
+gunze,CL,CL09,#FFFFFF,1,1,1,gunze24_25,,SMOOTH PEARL COAT,,スムースパールコート,
+gunze,CL,CL101,#F0F099,1,1,1,gunze24_25,,BLONDE,,ブロンド,
+gunze,CL,CL102,#C45738,1,1,1,gunze24_25,,COPPER BROWN,,栗毛色,
+gunze,CL,CL103,#3D3D3E,1,1,1,gunze24_25,,BLACK HAIR,,濡烏（ぬれがらす）,
+gunze,CL,CL104,#E794C0,1,1,1,gunze24_25,,PINK PURPLE,,ピンクパープル,
+gunze,CL,CL105,#C099C6,1,1,1,gunze24_25,,LILACK,,ライラック,
+gunze,CL,CL106,#FFFFFF,1,1,1,gunze24_25,,ICY WHITE,,白雪色,
+gunze,CL,CL107,#A4A091,1,1,1,gunze24_25,,FLAXEN,,亜麻色,
+gunze,CL,CL108,#00A6AF,1,1,1,gunze24_25,,PALE BLUE-GREEN,,浅葱色,
+gunze,CL,CL109,#94CC6E,1,1,1,gunze24_25,,LIME GREEN,,ライムグリーン,
+gunze,CL,CL110,#EE336C,1,1,1,gunze24_25,,SCARLET,,緋色,
+gunze,CL,CL111,#5BC3EF,1,1,1,gunze24_25,,AZURE,,空色,
+gunze,CL,CL200,#F2F2AC,1,32,1,gunze24_25,,,,ゴールドパールベース,
+gunze,CL,CL201,#4C4E50,1,1,1,gunze24_25,,,,ストッキングブラック,
+gunze,CL,CL202,#705957,1,1,1,gunze24_25,,,,ストッキングブラウン,
+gunze,CL,CL203,#F3F3F3,1,1,1,gunze24_25,,,,ストッキングホワイト,
+gunze,CR,CR1,#00AEEF,1,1,1,gunze24_25,,CYAN,,シアン,
+gunze,CR,CR2,#EC008C,1,1,1,gunze24_25,,MAGENTA,,マゼンタ,
+gunze,CR,CR3,#FFF200,1,1,1,gunze24_25,,YELLOW,,イエロー,
+gunze,CR,HCR1,#00AEEF,2,1,5,gunze24_25,,CYAN,,シアン,
+gunze,CR,HCR2,#EC008C,2,1,5,gunze24_25,,MAGENTA,,マゼンタ,
+gunze,CR,HCR3,#FFF200,2,1,5,gunze24_25,,YELLOW,,イエロー,
+gunze,GX,GX1,#FFFFFF,1,1,1,gunze24_25,,COOL WHITE,,クールホワイト,
+gunze,GX,GX100,#FFFFFF,1,16,1,gunze24_25,,SUPER CLEAR Ⅲ,,スーパークリアーⅢ,
+gunze,GX,GX101,#221F1F,1,1,1,gunze24_25,,GX CLEAR BLACK,,GXクリアブラック,
+gunze,GX,GX102,#B3292F,1,1,1,gunze24_25,,GX DEEP CLEAR RED,,GXディープクリアレッド,
+gunze,GX,GX103,#0066B2,1,1,1,gunze24_25,,GX DEEP CLEAR BLUE,,GXディープクリアブルー,
+gunze,GX,GX104,#159655,1,1,1,gunze24_25,,GX CLEAR GREEN,,GXクリアグリーン,
+gunze,GX,GX105,#DA5893,1,1,1,gunze24_25,,GX CLEAR PINK,,GXクリアピンク,
+gunze,GX,GX106,#DE6C27,1,1,1,gunze24_25,,GX CLEAR ORANGE,,GXクリアオレンジ,
+gunze,GX,GX107,#70469B,1,1,1,gunze24_25,,GX CLEAR PURPLE,,GXクリアバイオレット,
+gunze,GX,GX108,#532E86,1,1,1,gunze24_25,,GX CLEAR VIOLET,,GXクリアブラウン,
+gunze,GX,GX109,#9D7237,1,1,1,gunze24_25,,GX CLEAR BROWN,,GXクリアシルバー,
+gunze,GX,GX110,#B6AAA6,1,1,1,gunze24_25,,GX CLEAR SILVER,,GXクリアゴールド,
+gunze,GX,GX111,#A78236,1,1,1,gunze24_25,,GX CLEAR GOLD,,GXクリアルージュ,
+gunze,GX,GX112,#D1D2D4,1,16,1,gunze24_25,,SUPER CLEARⅢ UV CUT GLOSS,,スーパークリアーⅢ UVカット光沢,
+gunze,GX,GX113,#D1D2D4,1,16,1,gunze24_25,,SUPER CLEARⅢ UV CUT MATT,,スーパークリアーⅢ UVカットつや消し,
+gunze,GX,GX114,#D1D2D4,1,16,1,gunze24_25,,SUPER SMOOTH CLEAR〈MATT〉,,スーパースムースクリアー（つや消し）,
+gunze,GX,GX121,#A62B31,1,1,1,gunze24_25,,,,GXクリアピーコックグリーン,
+gunze,GX,GX122,#368D7C,1,1,1,gunze24_25,,,,GXクリアピーコックグリーン,
+gunze,GX,GX2,#231F20,1,1,1,gunze24_25,,UENO BLACK,,ウイノーブラック,
+gunze,GX,GX201,#626368,1,8,1,gunze24_25,,GX METAL BLACK,,GXメタルブラック,
+gunze,GX,GX202,#D46262,1,8,1,gunze24_25,,GX METAL RED,,GXメタルレッド,
+gunze,GX,GX203,#ADA253,1,8,1,gunze24_25,,GX METAL YELLOW,,GXメタルイエロー,
+gunze,GX,GX204,#387EC0,1,8,1,gunze24_25,,GX METAL BLUE,,GXメタルブルー,
+gunze,GX,GX205,#3DABA3,1,8,1,gunze24_25,,GX METAL GREEN,,GXメタルグリーン,
+gunze,GX,GX206,#9D77A2,1,8,1,gunze24_25,,GX METAL PURPLE,,GXメタルパープル,
+gunze,GX,GX207,#7A60A8,1,8,1,gunze24_25,,GX METAL VIOLET,,GXメタルバイオレット,
+gunze,GX,GX208,#AEAEB0,1,8,1,gunze24_25,,GX ROUGH SILVER,,GXラフシルバー,
+gunze,GX,GX209,#B9906B,1,8,1,gunze24_25,,GX RED GOLD,,GXレッドゴールド,
+gunze,GX,GX210,#B09463,1,8,1,gunze24_25,,GX BLUE GOLD,,GXブルーゴールド,
+gunze,GX,GX211,#88956E,1,8,1,gunze24_25,,GX METAL YELLOW GREEN,,GXメタルイエローグリーン,
+gunze,GX,GX212,#A56267,1,8,1,gunze24_25,,GX METAL PEACH,,GXメタルピーチ,
+gunze,GX,GX213,#9996A7,1,8,1,gunze24_25,,GX WHITE SILVER,,GXホワイトシルバー,
+gunze,GX,GX214,#747B92,1,8,1,gunze24_25,,GX ICE SILVER,,GXアイスシルバー,
+gunze,GX,GX215,#72303B,1,8,1,gunze24_25,,GX METAL BLOODY RED,,GXメタルブラッディレッド,
+gunze,GX,GX216,#374C7E,1,8,1,gunze24_25,,GX METAL DARK BLUE,,GXメタルダークブルー,
+gunze,GX,GX217,#AD8D54,1,8,1,gunze24_25,,GX ROUGH GOLD,,GXラフゴールド,
+gunze,GX,GX218,#524A47,1,8,1,gunze24_25,,,,GXグラファイトブラック,
+gunze,GX,GX3,#EE1D23,1,1,1,gunze24_25,,HARMANN RED,,ハーマンレッド,
+gunze,GX,GX4,#FFDC01,1,1,1,gunze24_25,,CHIARA YELLOW,,キアライエロー,
+gunze,GX,GX5,#015AAA,1,1,1,gunze24_25,,SUSIE BLUE,,スージーブルー,
+gunze,GX,GX6,#006733,1,1,1,gunze24_25,,MORRIE GREEN,,モウリーグリーン,
+gunze,GX,LG1,#FFFFFF,1,1,1,gunze24_25,,GGX WHITE,,GGXホワイト,
+gunze,GX,LG112,#FFFFFF,1,16,1,gunze24_25,,GGX CLEAR UV CUT GLOSS,,GGXクリアーUVカット光沢,
+gunze,GX,LG113,#FFFFFF,1,16,1,gunze24_25,,GGX CLEAR UV CUT MATT,,GGXクリアーUVカットつや消し,
+gunze,GX,LG115,#FFFFFF,1,16,1,gunze24_25,,,,GGXクリアーUVカット半光沢,
+gunze,GX,LG2,#231F20,1,1,1,gunze24_25,,GGX BLACK,,GGXブラック,
+gunze,GX,XC01,#9AB0C1,1,32,1,gunze24_25,,DIAMOND SILVER,,ダイヤモンドシルバー,
+gunze,GX,XC02,#B8BA8F,1,32,1,gunze24_25,,TOPAZ GOLD,,トパーズゴールド,
+gunze,GX,XC03,#A96E72,1,32,1,gunze24_25,,RUBY RED,,ルビーレッド,
+gunze,GX,XC04,#8155A2,1,32,1,gunze24_25,,AMETHYST PURPLE,,アメジストパープル,
+gunze,GX,XC05,#3777BC,1,32,1,gunze24_25,,SAPPHIRE BLUE,,サファイアブルー,
+gunze,GX,XC06,#45A2A4,1,32,1,gunze24_25,,TOURMALINE GREEN,,トルマリングリーン,
+gunze,GX,XC07,#2296BE,1,32,1,gunze24_25,,TURQUOISE GREEN,,ターコイズグリーン,
+gunze,GX,XC08,#B4C2D5,1,32,1,gunze24_25,,MOONSTONE PEARL,,ムーンストーンパール,
+gunze,H,H1,#FFFFFF,2,1,5,gunze24_25,,WHITE,,ホワイト（白）,gunze;C1;gunze26|gunze;N1;gunze26
+gunze,H,H10,#CD733A,2,8,5,gunze24_25,,COPPER,,カッパー（銅）,gunze;C10;gunze26|gunze;N10;gunze26
+gunze,H,H100,#00A650,2,64,5,gunze24_25,,FLUORESCENT GREEN,,蛍光グリーン,gunze;C175;gunze26|gunze;N100;gunze26
+gunze,H,H101,#ED1C24,2,64,5,gunze24_25,,FLUORESCENT RED,,蛍光レッド,gunze;C171;gunze26|gunze;N101;gunze26
+gunze,H,H11,#FFFFFF,2,4,5,gunze24_25,,FLAT WHITE,,つや消しホワイト,gunze;C62;gunze26|gunze;N11;gunze26
+gunze,H,H110,#FFFFFF,2,16,5,gunze24_25,,SEMI-GLOSS CLEAR,,半光沢クリアー,gunze;C181;gunze26
+gunze,H,H12,#231F20,2,4,5,gunze24_25,,FLAT BLACK,,つや消しブラック,gunze;C33;gunze26|gunze;N12;gunze26
+gunze,H,H13,#DA2128,2,4,5,gunze24_25,,FLAT RED,,つや消しレッド,gunze;N13;gunze26
+gunze,H,H14,#EF4023,2,1,5,gunze24_25,,ORANGE,,オレンジ（橙）,gunze;C59;gunze26|gunze;N14;gunze26
+gunze,H,H15,#074EA2,2,1,5,gunze24_25,,BRIGHT BLUE,,インディブルー,gunze;C65;gunze26|gunze;N15;gunze26
+gunze,H,H151,#F1F1EB,2,32,5,gunze24_25,,,,ホワイトパール,
+gunze,H,H16,#2AA44A,2,1,5,gunze24_25,,YELLOW GREEN,,イエローグリーン（黄緑）,gunze;C64;gunze26|gunze;N16;gunze26
+gunze,H,H17,#613438,2,1,5,gunze24_25,,COCOA BROWN,,ココアブラウン（艦底色）,gunze;C29;gunze26|gunze;N17;gunze26
+gunze,H,H18,#231F20,2,8,5,gunze24_25,,STEEL,,黒鉄色,gunze;C28;gunze26|gunze;N18;gunze26
+gunze,H,H19,#F17298,2,1,5,gunze24_25,,PINK,,ピンク（桃）,gunze;C63;gunze26|gunze;N19;gunze26
+gunze,H,H2,#231F20,2,1,5,gunze24_25,,BLACK,,ブラック（黒）,gunze;C2;gunze26|gunze;N2;gunze26
+gunze,H,H20,#FFFFFF,2,16,5,gunze24_25,,FLAT CLEAR,,つや消しクリアー,gunze;C182;gunze26|gunze;N20;gunze26
+gunze,H,H21,#F6F3EE,2,1,5,gunze24_25,,OFF WHITE,,グランプリホワイト,gunze;C69;gunze26|gunze;N21;gunze26
+gunze,H,H22,#5B6B78,2,1,5,gunze24_25,,GRAY,,グレー（ねずみ色）,
+gunze,H,H23,#ED1C24,2,1,5,gunze24_25,,SHINE RED,,シャインレッド（朱色）,gunze;C79;gunze26|gunze;N23;gunze26
+gunze,H,H24,#F47920,2,1,5,gunze24_25,,ORANGE YELLOW,,オレンジイエロー（黄橙色）,gunze;C58;gunze26|gunze;N24;gunze26
+gunze,H,H25,#0095DA,2,1,5,gunze24_25,,SKY BLUE,,スカイブルー,gunze;C34;gunze26|gunze;N25;gunze26
+gunze,H,H26,#00A650,2,1,5,gunze24_25,,BRIGHT GREEN,,デイトナグリーン,gunze;C66;gunze26|gunze;N26;gunze26
+gunze,H,H27,#C4A26E,2,1,5,gunze24_25,,TAN,,ライトブラウン（タン）,gunze;C44;gunze26|gunze;N27;gunze26
+gunze,H,H28,#231F20,2,8,5,gunze24_25,,METAL BLACK,,メタルブラック,gunze;C78;gunze26|gunze;N28;gunze26
+gunze,H,H29,#F15A4E,2,1,5,gunze24_25,,SALMON PINK,,サーモンピンク,
+gunze,H,H3,#ED1C24,2,1,5,gunze24_25,,RED,,レッド（赤）,gunze;C3;gunze26|gunze;N3;gunze26
+gunze,H,H30,#FFFFFF,2,16,5,gunze24_25,,CLEAR,,クリアー（透明）,gunze;C46;gunze26|gunze;N30;gunze26
+gunze,H,H301,#4F504F,2,2,5,gunze24_25,,GRAY FS36081,,グレー FS36081,gunze;C301;gunze26
+gunze,H,H302,#445041,2,2,5,gunze24_25,,GREEN FS34092,,グリーン FS34092,gunze;C302;gunze26
+gunze,H,H303,#6F5F3C,2,2,5,gunze24_25,,GREEN FS34102,,グリーン FS34102,gunze;C303;gunze26
+gunze,H,H304,#79603B,2,2,5,gunze24_25,,OLIVE DRAB FS34087,,オリーブドラブ FS34087,gunze;C304;gunze26
+gunze,H,H305,#667375,2,2,5,gunze24_25,,GRAY FS36118,,グレー FS36118,gunze;C305;gunze26
+gunze,H,H306,#8A92A0,2,2,5,gunze24_25,,GRAY FS36270,,グレー FS36270,gunze;C306;gunze26
+gunze,H,H307,#6A8891,2,2,5,gunze24_25,,GRAY FS36320,,グレー FS36320,gunze;C307;gunze26
+gunze,H,H308,#879FAD,2,2,5,gunze24_25,,GRAY FS36375,,グレー FS36375,gunze;C308;gunze26
+gunze,H,H309,#5C503C,2,2,5,gunze24_25,,GREEN FS34079,,グリーン FS34079,gunze;C309;gunze26
+gunze,H,H31,#E3F2E7,2,1,5,gunze24_25,,WHITE GREEN,,ホワイトグリーン,
+gunze,H,H310,#A5755E,2,2,5,gunze24_25,,BROWN S30219,,ブラウン FS30219,gunze;C310;gunze26
+gunze,H,H311,#E5E6CF,2,2,5,gunze24_25,,GRAY FS36622,,グレー FS36622,gunze;C311;gunze26
+gunze,H,H312,#76977C,2,2,5,gunze24_25,,GREEN FS34227,,グリーン FS34227,gunze;C312;gunze26
+gunze,H,H313,#E5C89E,2,2,5,gunze24_25,,YELLOW FS33531,,イエロー FS33531,gunze;C313;gunze26
+gunze,H,H314,#E3F2E7,2,2,5,gunze24_25,,BLUE FS35622,,ブルー FS35622,gunze;C314;gunze26
+gunze,H,H315,#C1BEB7,2,1,5,gunze24_25,,GRAY FS16440,,グレー FS16440,gunze;C315;gunze26
+gunze,H,H316,#FFFDE9,2,1,5,gunze24_25,,WHITE FS17875,,ホワイト FS17875,gunze;C316;gunze26
+gunze,H,H317,#857E7D,2,4,5,gunze24_25,,GRAY FS36231,,グレー FS36231,gunze;C317;gunze26
+gunze,H,H318,#FECF8D,2,2,5,gunze24_25,,RADOME,,レドーム,gunze;C318;gunze26
+gunze,H,H319,#5C7651,2,2,5,gunze24_25,,LIGHT GREEN,,薄松葉色,gunze;C319;gunze26
+gunze,H,H32,#2F4248,2,1,5,gunze24_25,,FIELD GRAY (1),,ダークグレー,gunze;C40;gunze26|gunze;N32;gunze26
+gunze,H,H320,#756D53,2,2,5,gunze24_25,,DARK GREEN,,濃松葉色,gunze;C320;gunze26
+gunze,H,H321,#AE8D71,2,2,5,gunze24_25,,LIGHT BROWN,,黄土色,gunze;C321;gunze26
+gunze,H,H322,#313C5A,2,1,5,gunze24_25,,PHTHALO CYANINE BLUE,,フタロシアニンブルー,gunze;C322;gunze26
+gunze,H,H323,#00B9F2,2,1,5,gunze24_25,,LIGHT BLUE,,ライトブルー,gunze;C323;gunze26
+gunze,H,H324,#9EACAB,2,4,5,gunze24_25,,LIGHT GRAY,,ライトグレー,gunze;C324;gunze26
+gunze,H,H325,#9FABA3,2,2,5,gunze24_25,,GRAY FS26440,,グレー FS26440,gunze;C325;gunze26
+gunze,H,H326,#35354E,2,1,5,gunze24_25,,BLUE FS15044,,ブルー FS15044,gunze;C326;gunze26
+gunze,H,H327,#9E2D33,2,1,5,gunze24_25,,RED FS11136,,レッド FS11136,gunze;C327;gunze26
+gunze,H,H328,#313C5A,2,1,5,gunze24_25,,BLUE FS15050,,ブルー FS15050,gunze;C328;gunze26
+gunze,H,H329,#FCAF17,2,1,5,gunze24_25,,YELLOW S13538,,イエロー FS13538,gunze;C329;gunze26
+gunze,H,H33,#853035,2,1,5,gunze24_25,,RUSSET,,あずき色（赤２号）,gunze;C81;gunze26|gunze;N33;gunze26
+gunze,H,H330,#5C503C,2,2,5,gunze24_25,,DARK GREEN BS381C/641,,ダークグリーン BS381C/641,gunze;C330;gunze26
+gunze,H,H331,#555E63,2,2,5,gunze24_25,,DARK SEAGRAY BS381C/638,,ダークシーグレー,gunze;C331;gunze26
+gunze,H,H332,#B2B1AB,2,2,5,gunze24_25,,LIGHT AIRCRAFT GRAY BS381C/627,,ライトエアクラフトグレー,gunze;C332;gunze26
+gunze,H,H333,#57555D,2,2,5,gunze24_25,,EXTRA DARK SEAGRAY BS381C/640,,エクストラダークシーグレー,gunze;C333;gunze26
+gunze,H,H334,#90B1B6,2,2,5,gunze24_25,,BARLEY GRAY BS4800/18B21,,バーリーグレー,gunze;C334;gunze26
+gunze,H,H335,#63797D,2,2,5,gunze24_25,,MEDIUM SEAGRAY BS381C/637,,ミディアムシーグレー,gunze;C335;gunze26
+gunze,H,H336,#B8A988,2,2,5,gunze24_25,,HEMP BS4800/10B21,,ヘンプ,gunze;C336;gunze26
+gunze,H,H337,#818D97,2,2,5,gunze24_25,,GRAYISH BLUE S35237,,グレイッシュブルー,gunze;C337;gunze26
+gunze,H,H338,#B4BBBF,2,2,5,gunze24_25,,LIGHT GRAY FS36495,,ライトグレー FS36495,gunze;C338;gunze26
+gunze,H,H339,#58554E,2,1,5,gunze24_25,,ENGINE GRAY FS16081,,エンジングレー FS16081,gunze;C339;gunze26
+gunze,H,H34,#E4A024,2,1,5,gunze24_25,,CREAM YELLOW,,クリームイエロー,gunze;N34;gunze26
+gunze,H,H340,#645E41,2,2,5,gunze24_25,,FIELD GREEN FS34097,,フィールドグリーン FS34097,gunze;C340;gunze26
+gunze,H,H35,#2E3092,2,1,5,gunze24_25,,COBALT BLUE,,コバルトブルー,gunze;C80;gunze26|gunze;N35;gunze26
+gunze,H,H36,#44503D,2,1,5,gunze24_25,,DARK GREEN,,ダークグリーン,
+gunze,H,H37,#71513A,2,1,5,gunze24_25,,WOOD BROWN,,ウッドブラウン,gunze;C43;gunze26|gunze;N37;gunze26
+gunze,H,H38,#4C3540,2,8,5,gunze24_25,,STEEL RED,,赤鉄色,gunze;N38;gunze26
+gunze,H,H39,#483087,2,1,5,gunze24_25,,PURPLE,,パープル（紫）,gunze;C67;gunze26|gunze;N39;gunze26
+gunze,H,H4,#FFDD00,2,1,5,gunze24_25,,YELLOW,,イエロー（黄）,gunze;C4;gunze26|gunze;N4;gunze26
+gunze,H,H40,#FFFFFF,2,4,5,gunze24_25,,FLAT BASE,,フラットベース（つや消し剤）,gunze;C30;gunze26|gunze;N40;gunze26
+gunze,H,H401,#2F4248,2,4,5,gunze24_25,,DARK GRAY,,ダークグレー,
+gunze,H,H402,#BA9765,2,4,5,gunze24_25,,GREEN BROWN,,グリーンブラウン,
+gunze,H,H403,#C6AA55,2,4,5,gunze24_25,,DARK YELLOW,,ダークイエロー,
+gunze,H,H404,#9D8145,2,4,5,gunze24_25,,KHAKI BROWN,,カーキブラウン,
+gunze,H,H405,#4B604D,2,4,5,gunze24_25,,OLIVE GREEN,,オリーブグリーン,
+gunze,H,H406,#573438,2,4,5,gunze24_25,,CHOCOLATE BROWN,,チョコレートブラウン,
+gunze,H,H41,#99D4C0,2,1,5,gunze24_25,,PALE GREEN,,ペールグリーン,
+gunze,H,H413,#FAA619,2,2,5,gunze24_25,,RLM04 YELLOW,,RLM04 イエロー,
+gunze,H,H414,#C9234A,2,2,5,gunze24_25,,RLM23 RED,,RLM23 レッド,
+gunze,H,H416,#333132,2,2,5,gunze24_25,,RLM66 BLACK GRAY,,RLM66 ブラックグレー,
+gunze,H,H417,#B6D4DB,2,2,5,gunze24_25,,RLM76 LIGHT BLUE,,RLM76 ライトブルー,
+gunze,H,H418,#6BA6BD,2,2,5,gunze24_25,,RLM78 LIGHT BLUE,,RLM78 ライトブルー,
+gunze,H,H42,#3D6C89,2,1,5,gunze24_25,,BLUE GRAY,,ブルーグレー,
+gunze,H,H420,#595D3E,2,2,5,gunze24_25,,RLM80 OLIVE GREEN,,RLM80 オリーブグリーン,
+gunze,H,H421,#575D52,2,2,5,gunze24_25,,RLM81 BROWN VIOLET,,RLM81 ブラウン VIOLE,
+gunze,H,H422,#517542,2,2,5,gunze24_25,,RLM82 LIGHT GREEN,,RLM82 ライトグリーン,
+gunze,H,H423,#346756,2,2,5,gunze24_25,,RLM83 DARK GREEN,,RLM83 ダークグリーン,
+gunze,H,H43,#C9252B,2,1,5,gunze24_25,,WINE RED,,ワインレッド（マルーン）,gunze;C100;gunze26|gunze;N43;gunze26
+gunze,H,H44,#E3AC7C,2,2,5,gunze24_25,,FLESH,,薄茶色,gunze;C51;gunze26|gunze;N44;gunze26
+gunze,H,H45,#00C0F3,2,1,5,gunze24_25,,LIGHT BLUE,,みず色,gunze;N45;gunze26
+gunze,H,H46,#00AD8E,2,1,5,gunze24_25,,EMERALD GREEN,,エメラルドグリーン,gunze;N46;gunze26
+gunze,H,H47,#743237,2,1,5,gunze24_25,,RED BROWN,,レッドブラウン,gunze;C41;gunze26|gunze;N47;gunze26
+gunze,H,H48,#405651,2,1,5,gunze24_25,,FIELD GRAY (2),,オリーブグレー,gunze;C52;gunze26
+gunze,H,H49,#6F85C2,2,1,5,gunze24_25,,VIOLET,,すみれ色,gunze;N49;gunze26
+gunze,H,H5,#005AAA,2,1,5,gunze24_25,,BLUE,,ブルー（青）,gunze;C5;gunze26|gunze;N5;gunze26
+gunze,H,H50,#83AE74,2,1,5,gunze24_25,,LIME GREEN,,よもぎ色,gunze;N50;gunze26
+gunze,H,H51,#B4BBBF,2,1,5,gunze24_25,,LIGHT GULL GRAY,,ガルグレー,gunze;C11;gunze26|gunze;N51;gunze26
+gunze,H,H511,#695F31,2,4,5,gunze24_25,,"RUSSIAN GREEN ""4BO""",,"ロシアングリーン""4BO""WWⅡ",gunze;C511;gunze26
+gunze,H,H512,#5D6136,2,4,5,gunze24_25,,"RUSSIAN GREEN ""4BO"" 1947-",,"ロシアングリーン""4BO""1947年以降",gunze;C512;gunze26
+gunze,H,H513,#3A4B59,2,4,5,gunze24_25,,"DARK GRAY ""DUNKEL GRAU""",,ジャーマングレー/ドゥンケルグラウ,gunze;C513;gunze26
+gunze,H,H514,#496C78,2,4,5,gunze24_25,,"GRAY ""GRAU""",,ジャーマングレー/グラウ,gunze;C514;gunze26
+gunze,H,H515,#55757D,2,4,5,gunze24_25,,"FADED GRAY ""BLASSGRAU""",,ジャーマングレー/グラウ（退色）,gunze;C515;gunze26
+gunze,H,H52,#5F552E,2,2,5,gunze24_25,,OLIVE DRAB (1),,オリーブドラブ（1）,gunze;C12;gunze26|gunze;N52;gunze26
+gunze,H,H53,#5B6B78,2,2,5,gunze24_25,,NEUTRAL GRAY,,ニュートラルグレー,gunze;C13;gunze26|gunze;N22;gunze26
+gunze,H,H54,#234F5B,2,2,5,gunze24_25,,NAVY BLUE,,ネイビーブルー,gunze;C14;gunze26|gunze;N54;gunze26
+gunze,H,H55,#231F20,2,1,5,gunze24_25,,MIDNIGHT BLUE,,ミッドナイトブルー,gunze;C71;gunze26|gunze;N55;gunze26
+gunze,H,H56,#2D5562,2,2,5,gunze24_25,,INTERMEDIATE BLUE,,ミディアムブルー,gunze;C72;gunze26|gunze;N56;gunze26
+gunze,H,H57,#729998,2,1,5,gunze24_25,,AIRCRAFT GRAY,,灰色９号,gunze;C73;gunze26|gunze;N57;gunze26
+gunze,H,H58,#B2A335,2,2,5,gunze24_25,,INTERIOR GREEN,,機体内部色,gunze;C27;gunze26|gunze;N58;gunze26
+gunze,H,H59,#003920,2,1,5,gunze24_25,,IJN GREEN,,濃緑色（暗緑色）（1）,gunze;C15;gunze26
+gunze,H,H6,#00904D,2,1,5,gunze24_25,,GREEN,,グリーン（緑）,gunze;C6;gunze26|gunze;N6;gunze26
+gunze,H,H60,#1A5A40,2,2,5,gunze24_25,,IJA GREEN,,濃緑色（暗緑色）（2）,gunze;C16;gunze26|gunze;N60;gunze26
+gunze,H,H61,#65858F,2,1,5,gunze24_25,,IJN GRAY,,明灰白色（1）,gunze;C35;gunze26|gunze;N61;gunze26
+gunze,H,H62,#769589,2,2,5,gunze24_25,,IJA GRAY,,明灰白色（2）,
+gunze,H,H63,#006563,2,8,5,gunze24_25,,METALLIC BLUE GREEN,,青竹色,gunze;C57;gunze26|gunze;N63;gunze26
+gunze,H,H64,#3A4238,2,2,5,gunze24_25,,RLM71 DARK GREEN,,RLM71 ダークグリーン,gunze;C17;gunze26
+gunze,H,H65,#363639,2,2,5,gunze24_25,,RLM70 BLACK GREEN,,RLM70 ブラックグリーン,gunze;C18;gunze26
+gunze,H,H66,#A68352,2,2,5,gunze24_25,,RLM79 SANDY BROWN,,RLM79 サンディブラウン,gunze;C119;gunze26|gunze;N66;gunze26
+gunze,H,H67,#73ADB6,2,2,5,gunze24_25,,RLM65 LIGHT BLUE,,RLM65 ライトブルー,gunze;C115;gunze26|gunze;N67;gunze26
+gunze,H,H68,#4D4D4F,2,2,5,gunze24_25,,RLM74 DARK GRAY,,RLM74 グレーグリーン,gunze;C36;gunze26|gunze;N68;gunze26
+gunze,H,H69,#636466,2,2,5,gunze24_25,,RLM75 GRAY,,RLM75 グレーバイオレット,gunze;C37;gunze26|gunze;N69;gunze26
+gunze,H,H7,#CA4136,2,1,5,gunze24_25,,BROWN,,ブラウン（茶）,gunze;C7;gunze26|gunze;N7;gunze26
+gunze,H,H70,#828065,2,2,5,gunze24_25,,RLM02 GRAY,,RLM02 グレー,gunze;C60;gunze26|gunze;N70;gunze26
+gunze,H,H71,#AA8A4B,2,2,5,gunze24_25,,MIDDLE STONE,,ミドルストーン,gunze;C21;gunze26|gunze;N71;gunze26
+gunze,H,H72,#85744C,2,2,5,gunze24_25,,DARK EARTH,,ダークアース,gunze;C22;gunze26|gunze;N72;gunze26
+gunze,H,H73,#4B604D,2,2,5,gunze24_25,,DARK GREEN,,ダークグリーン（2）,gunze;C23;gunze26|gunze;N73;gunze26
+gunze,H,H74,#CFDAAA,2,2,5,gunze24_25,,SKY (DUCK EGG GREEN),,スカイ,gunze;C26;gunze26
+gunze,H,H75,#6E7E6C,2,2,5,gunze24_25,,DARK SEAGRAY,,ダークシーグレー,gunze;C25;gunze26
+gunze,H,H76,#80777E,2,8,5,gunze24_25,,BURNT IRON,,焼鉄色,gunze;C61;gunze26|gunze;N76;gunze26
+gunze,H,H77,#231F20,2,4,5,gunze24_25,,TIRE BLACK,,タイヤブラック,gunze;C137;gunze26|gunze;N77;gunze26
+gunze,H,H78,#44503D,2,2,5,gunze24_25,,OLIVE DRAB (2),,オリーブドラブ（2）,gunze;C38;gunze26|gunze;N78;gunze26
+gunze,H,H79,#BA9765,2,2,5,gunze24_25,,SANDY YELLOW (DARK YELLOW),,サンディイエロー,gunze;C39;gunze26|gunze;N79;gunze26
+gunze,H,H8,#D1D3D4,2,8,5,gunze24_25,,SILVER,,シルバー（銀）,gunze;C8;gunze26|gunze;N8;gunze26
+gunze,H,H80,#284F3E,2,4,5,gunze24_25,,KHAKI GREEN,,カーキグリーン,gunze;C54;gunze26|gunze;N80;gunze26
+gunze,H,H81,#6F5F3C,2,4,5,gunze24_25,,KHAKI,,カーキ,gunze;C55;gunze26|gunze;N81;gunze26
+gunze,H,H82,#949591,2,2,5,gunze24_25,,DARK GRAY (1),,軍艦色（1）,gunze;C31;gunze26|gunze;N82;gunze26
+gunze,H,H83,#6D6E6B,2,2,5,gunze24_25,,DARK GRAY (2),,軍艦色（2）,gunze;C32;gunze26|gunze;N83;gunze26
+gunze,H,H84,#4D3538,2,2,5,gunze24_25,,MAHOGANY,,マホガニー,gunze;C42;gunze26|gunze;N84;gunze26
+gunze,H,H85,#B9B084,2,4,5,gunze24_25,,SAIL COLOR,,セールカラー,gunze;C45;gunze26|gunze;N85;gunze26
+gunze,H,H86,#DA2128,2,1,5,gunze24_25,,RED MADDER,,モンザレッド,gunze;C68;gunze26|gunze;N86;gunze26
+gunze,H,H87,#A64256,2,8,5,gunze24_25,,METALLIC RED,,メタリックレッド,gunze;C75;gunze26|gunze;N87;gunze26
+gunze,H,H88,#005A9E,2,8,5,gunze24_25,,METALLIC BLUE,,メタリックブルー,gunze;C76;gunze26|gunze;N88;gunze26
+gunze,H,H89,#009066,2,8,5,gunze24_25,,METALLIC GREEN,,メタリックグリーン,gunze;C77;gunze26|gunze;N89;gunze26
+gunze,H,H9,#DCAF31,2,8,5,gunze24_25,,GOLD,,ゴールド（金）,gunze;C9;gunze26|gunze;N9;gunze26
+gunze,H,H90,#ED1C24,2,16,5,gunze24_25,,CLEAR RED,,クリアーレッド,gunze;C47;gunze26|gunze;N90;gunze26
+gunze,H,H91,#FFD401,2,16,5,gunze24_25,,CLEAR YELLOW,,クリアーイエロー,gunze;C48;gunze26|gunze;N91;gunze26
+gunze,H,H92,#F26522,2,16,5,gunze24_25,,CLEAR ORANGE,,クリアーオレンジ,gunze;C49;gunze26|gunze;N92;gunze26
+gunze,H,H93,#00AEEF,2,16,5,gunze24_25,,CLEAR BLUE,,クリアーブルー,gunze;C50;gunze26|gunze;N93;gunze26
+gunze,H,H94,#00A650,2,16,5,gunze24_25,,CLEAR GREEN,,クリアーグリーン,gunze;C138;gunze26|gunze;N94;gunze26
+gunze,H,H95,#75675E,2,1,5,gunze24_25,,SMOKE GRAY,,スモークグレー,gunze;C101;gunze26|gunze;N95;gunze26
+gunze,H,H96,#C7EAFB,2,1,5,gunze24_25,,SMOKE BLUE,,スモークブルー,
+gunze,H,H97,#FFF200,2,64,5,gunze24_25,,FLUORESCENT YELLOW,,蛍光イエロー,gunze;C172;gunze26|gunze;N97;gunze26
+gunze,H,H98,#EE3124,2,64,5,gunze24_25,,FLUORESCENT ORANGE,,蛍光オレンジ,gunze;C173;gunze26|gunze;N98;gunze26
+gunze,H,H99,#ED0972,2,64,5,gunze24_25,,FLUORESCENT PINK,,蛍光ピンク,gunze;C174;gunze26|gunze;N99;gunze26
+gunze,H,HCD01,#E0D5EA,2,4,5,gunze24_25,,LAVENDER,,ラベンダー,
+gunze,H,HCD02,#FCDFEB,2,4,5,gunze24_25,,TULIP,,チューリップ,
+gunze,H,HCD03,#FDDDD7,2,4,5,gunze24_25,,SAKURA,,サクラ,
+gunze,H,HCD04,#FEE6D3,2,4,5,gunze24_25,,GINSENKA,,ギンセンカ,
+gunze,H,HCD05,#EFF5DE,2,4,5,gunze24_25,,MIMOSA,,ミモザ,
+gunze,H,HCD06,#D7EDDD,2,4,5,gunze24_25,,CLOVER,,クローバー,
+gunze,H,HCD07,#C8DFEC,2,4,5,gunze24_25,,BLUE STAR,,ブルースター,
+gunze,H,HDQ01,#4299CC,2,1,5,gunze24_25,,,,スライムブルー,
+gunze,H,HDQ02,#F7931D,2,1,5,gunze24_25,,,,スライムベスオレンジ,
+gunze,H,HDQ03,#87C765,2,1,5,gunze24_25,,,,ライムスライムグリーン,
+gunze,H,HDQ04,#0F4D93,2,2,5,gunze24_25,,,,ドラキーダークブルー,
+gunze,H,HDQ05,#CFD2D4,2,8,5,gunze24_25,,,,メタルスライムシルバー,
+gunze,H,HEV101,#685894,2,2,5,gunze24_25,,,,エヴァパープル,
+gunze,H,HEV102,#71BF44,2,2,5,gunze24_25,,,,エヴァライムグリーン,
+gunze,H,HEV103,#F7943A,2,2,5,gunze24_25,,,,エヴァオレンジイエロー,
+gunze,H,HJ01,#FEF0E0,2,1,5,gunze24_25,,,,グローホワイト,
+gunze,H,HJ02,#C88B94,2,1,5,gunze24_25,,,,ピンクレッド,
+gunze,H,HJ03,#E8CD8A,2,1,5,gunze24_25,,,,マスタードイエロー,
+gunze,H,HJ04,#6C82B6,2,1,5,gunze24_25,,,,アースブルー,
+gunze,H,HJ05,#919586,2,1,5,gunze24_25,,,,モスグリーン,
+gunze,H,HJ06,#927A94,2,1,5,gunze24_25,,,,アッシュパープル,
+gunze,H,HJ07,#F9A51B,2,1,5,gunze24_25,,,,プロトタイプオレンジ,
+gunze,H,HJ08,#86736C,2,1,5,gunze24_25,,,,ウォームグレー,
+gunze,H,HLP101,#FCD199,2,32,5,gunze24_25,,,,ステライエロー,
+gunze,H,HLP102,#93CD94,2,32,5,gunze24_25,,,,ステラグリーン,
+gunze,H,HLP103,#9FD8D3,2,32,5,gunze24_25,,,,ステラターコイズ,
+gunze,H,HLP104,#EEB081,2,32,5,gunze24_25,,,,ステラオレンジ,
+gunze,H,HLP105,#B1657B,2,32,5,gunze24_25,,,,ステラワインレッド,
+gunze,H,HLP109,#716885,2,32,5,gunze24_25,,,,ステラジャジーブルー,
+gunze,H,HLP110,#FCFEFC,2,32,5,gunze24_25,,,,パール,
+gunze,H,HLP111,#BED9E8,2,32,5,gunze24_25,,,,ステラベビーブルー,
+gunze,H,HLP112,#A88BB9,2,32,5,gunze24_25,,,,ステラパープル,
+gunze,H,HLP113,#C6E3C0,2,32,5,gunze24_25,,,,ステラワカクサグリーン,
+gunze,H,HLP114,#67C7C1,2,32,5,gunze24_25,,,,ステラアマゾナイト,
+gunze,H,HLP115,#5A70A3,2,32,5,gunze24_25,,,,ステラカームブルー,
+gunze,H,HLP116,#896085,2,32,5,gunze24_25,,,,ステラビザンティウム,
+gunze,H,HLP117,#E5AFD0,2,32,5,gunze24_25,,,,ステラピンク,
+gunze,H,HLP118,#D65D5B,2,32,5,gunze24_25,,,,ステラレッド,
+gunze,H,HM01,#7A8185,2,2,5,gunze24_25,,,,ライトニンググレー1,
+gunze,H,HM02,#737A80,2,2,5,gunze24_25,,,,ライトニンググレー2,
+gunze,H,HMS01,#F2CEAF,2,2,5,gunze24_25,,BODY COLOR A,,ボディーカラーA,
+gunze,H,HMS02,#F9E1C7,2,2,5,gunze24_25,,BODY COLOR B,,ボディーカラーB,
+gunze,H,HMS03,#E0A689,2,2,5,gunze24_25,,BODY COLOR C,,ボディーカラーC,
+gunze,H,HMS04,#F7CAC2,2,16,5,gunze24_25,,CLEAR PALE RED,,ペールクリアーレッド,
+gunze,H,HMS05,#FCCB9D,2,16,5,gunze24_25,,CLEAR PALE ORANGE,,ペールクリアーオレンジ,
+gunze,H,HMS06,#F8A377,2,16,5,gunze24_25,,CLEAR PALE BROWN,,ペールクリアーブラウン,
+gunze,H,HMS07,#FFFFFF,2,16,5,gunze24_25,,CLEAR WHITE,,クリアーホワイト,
+gunze,H,HMS08,#FFFFFF,2,2,5,gunze24_25,,SMOOTH PEARL CORT,,スムースパールコート,
+gunze,H,HV01,#707050,2,2,5,gunze24_25,,,,AT グリーン,
+gunze,H,HV02,#B7B88D,2,2,5,gunze24_25,,,,AT ライトグリーン,
+gunze,H,HV03,#646C5F,2,2,5,gunze24_25,,,,AT ブルーグレー,
+gunze,H,HV04,#787C8B,2,2,5,gunze24_25,,,,AT ライトグレー,
+gunze,H,HV05,#29384C,2,2,5,gunze24_25,,,,AT ダークブルー,
+gunze,M,GM01,#231F20,2,1,8,gunze26,,,,スミいれ用（ブラック）,
+gunze,M,GM02,#4D4D4F,2,1,8,gunze26,,,,スミいれ用（グレー）,
+gunze,M,GM03,#733247,2,1,8,gunze26,,,,スミいれ用（ブラウン）,
+gunze,M,GM04,#D6BA85,2,1,8,gunze26,,,,ガンダムゴールド,
+gunze,M,GM05,#BDBEBB,2,8,8,gunze26,,,,ガンダムシルバー,
+gunze,M,GM06,#005AAA,2,1,8,gunze26,,,,ガンダムブルー,
+gunze,M,GM07,#ED1846,2,1,8,gunze26,,,,ガンダムレッド,
+gunze,M,GM08,#FAA619,2,1,8,gunze26,,,,ガンダムイエロー,
+gunze,M,GM09,#09B26A,2,64,8,gunze26,,,,ガンダムアイグリーン,
+gunze,M,GM10,#051922,2,1,8,gunze26,,,,ガンダムブラック,
+gunze,M,GM11,#F2F2F3,2,1,8,gunze26,,,,ガンダムホワイト,
+gunze,M,GM12,#808285,2,1,8,gunze26,,,,ガンダムグレー,
+gunze,M,GM13,#586C87,2,1,8,gunze26,,,,ガンダムメカグレー,
+gunze,M,GM14,#F287B6,2,64,8,gunze26,,,,ガンダム蛍光ピンク,
+gunze,M,GM15,#A3CF62,2,64,8,gunze26,,,,ガンダム蛍光グリーン,
+gunze,M,GM151,#E8D8C0,2,8,8,gunze26,,,,メタリックセットゴールド,
+gunze,M,GM152,#E0E0E0,2,8,8,gunze26,,,,メタリックセットシルバー,
+gunze,M,GM153,#0058A8,2,8,8,gunze26,,,,メタリックセットブルー,
+gunze,M,GM154,#B0D8A0,2,8,8,gunze26,,,,メタリックセットグリーン,
+gunze,M,GM155,#F09890,2,8,8,gunze26,,,,メタリックセットレッド,
+gunze,M,GM16,#C35852,2,8,8,gunze26,,,,ガンダムメタレッド,
+gunze,M,GM166,#282020,2,1,8,gunze26,,,,ガンダムニューホワイト,
+gunze,M,GM167,#D09828,2,8,8,gunze26,,,,ガンダムレッドゴールド,
+gunze,M,GM168,#0090D8,2,1,8,gunze26,,,,ガンダムライトブルー,
+gunze,M,GM169,#482880,2,1,8,gunze26,,,,ガンダムパープル,
+gunze,M,GM17,#779FC1,2,8,8,gunze26,,,,ガンダムメタブルー,
+gunze,M,GM170,#080850,2,1,8,gunze26,,,,ティターンズブルー,
+gunze,M,GM171,#C82048,2,1,8,gunze26,,,,シャアピンク2,
+gunze,M,GM172,#787878,2,8,8,gunze26,,,,メタリックブラック,
+gunze,M,GM173,#0848A0,2,8,8,gunze26,,,,メタリックダークブルー,
+gunze,M,GM174,#B0D8A0,2,8,8,gunze26,,,,メタリックイエローグリーン,
+gunze,M,GM175,#F8C090,2,8,8,gunze26,,,,メタリックオレンジ,
+gunze,M,GM176,#F8D0E0,2,8,8,gunze26,,,,メタリックピンク,
+gunze,M,GM177,#D8D8D8,2,8,8,gunze26,,,,シャインシルバー,
+gunze,M,GM178,#E0D0B0,2,8,8,gunze26,,,,ガンダムゴールド,
+gunze,M,GM179,#D8D8D8,2,8,8,gunze26,,,,シャインシルバー,
+gunze,M,GM18,#6B9A79,2,8,8,gunze26,,,,ガンダムメタグリーン,
+gunze,M,GM180,#E0E0E0,2,8,8,gunze26,,,,ガンダムガンメタリック,
+gunze,M,GM181,#F09890,2,8,8,gunze26,,,,ロイヤルメタレッド,
+gunze,M,GM182,#0058A8,2,8,8,gunze26,,,,コスモメタブルー,
+gunze,M,GM183,#506880,2,1,8,gunze26,,,,ガンダムメカグレー,
+gunze,M,GM184,#F0F0F0,2,1,8,gunze26,,,,ガンダムニューホワイト,
+gunze,M,GM185,#C0A880,2,1,8,gunze26,,,,MSVダークイエロー,
+gunze,M,GM186,#483838,2,1,8,gunze26,,,,MSVレッドブラウン,
+gunze,M,GM187,#607060,2,1,8,gunze26,,,,MSVダークグリーン,
+gunze,M,GM188,#98B0B0,2,1,8,gunze26,,,,MSVライトブルー,
+gunze,M,GM189,#403830,2,1,8,gunze26,,,,MSVブラウングリーン,
+gunze,M,GM19,#7E749A,2,8,8,gunze26,,,,ガンダムメタバイオレット,
+gunze,M,GM190,#283038,2,1,8,gunze26,,,,MSVダークグレー,
+gunze,M,GM20,#231F20,8,1,8,gunze26,,,,スミいれ用ふでペン（ブラック）,
+gunze,M,GM21,#4D4D4F,8,1,8,gunze26,,,,スミいれ用ふでペン（グレー）,
+gunze,M,GM22,#2C2E35,2,8,8,gunze26,,,,ガンダムガンメタリック,
+gunze,M,GM300,#FFFFFF,2,1,8,gunze26,,,,消しペン,
+gunze,M,GM301,#201818,2,1,8,gunze26,,,,流し込み用スミ入れペン（ブラック）,
+gunze,M,GM302,#909090,2,1,8,gunze26,,,,流し込み用スミ入れペン（グレー）,
+gunze,M,GM303,#704038,2,1,8,gunze26,,,,流し込み用スミ入れペン（ブラウン）,
+gunze,M,GM311,#F05828,2,1,8,gunze26,,,,流し込み用スミ入れペン（オレンジ1）,
+gunze,M,GM312,#283890,2,1,8,gunze26,,,,流し込み用スミ入れペン（ブルー1）,
+gunze,M,GM313,#004830,2,1,8,gunze26,,,,流し込み用スミ入れペン（オリーブ）,
+gunze,M,GM34,#C82048,2,1,8,gunze26,,,,シャアピンク,
+gunze,M,GM35,#902848,2,1,8,gunze26,,,,シャアレッド,
+gunze,M,GM36,#285048,2,1,8,gunze26,,,,ザクダークグリーン,
+gunze,M,GM37,#488858,2,1,8,gunze26,,,,ザクライトグリーン,
+gunze,M,GM38,#000010,2,1,8,gunze26,,,,ファントムグレー,
+gunze,M,GM39,#284050,2,1,8,gunze26,,,,ジオングレー,
+gunze,M,GM40,#D01820,2,1,8,gunze26,,,,SEEDレッド,
+gunze,M,GM400,#FFFFFF,8,1,8,gunze26,,,,ぼかしペン,
+gunze,M,GM401,#485D81,8,1,8,gunze26,,,,リアルタッチグレー,
+gunze,M,GM402,#4A4D56,8,1,8,gunze26,,,,リアルタッチグレー2,
+gunze,M,GM403,#04489B,8,1,8,gunze26,,,,リアルタッチブルー1,
+gunze,M,GM404,#7A1B5D,8,1,8,gunze26,,,,リアルタッチレッド1,
+gunze,M,GM405,#FF7E43,8,1,8,gunze26,,,,リアルタッチオレンジ1,
+gunze,M,GM406,#2C2E35,8,1,8,gunze26,,,,リアルタッチグレー3,
+gunze,M,GM407,#7E3930,8,1,8,gunze26,,,,リアルタッチブラウン,
+gunze,M,GM408,#2C5C3F,8,1,8,gunze26,,,,リアルタッチグリーン1,
+gunze,M,GM409,#FF9C53,8,1,8,gunze26,,,,リアルタッチイエロー1,
+gunze,M,GM41,#F8A810,2,1,8,gunze26,,,,SEEDイエロー,
+gunze,M,GM410,#FFBDCD,8,1,8,gunze26,,,,リアルタッチピンク1,
+gunze,M,GM42,#E0E8E8,2,1,8,gunze26,,,,SEEDホワイト,
+gunze,M,GM43,#0088C8,2,1,8,gunze26,,,,SEEDブルー,
+gunze,M,GM44,#606060,2,1,8,gunze26,,,,SEEDグレー,
+gunze,M,GM45,#002048,2,1,8,gunze26,,,,SEEDダークブルー,
+gunze,M,GM46,#D01820,2,1,8,gunze26,,,,ガンダムレッド,
+gunze,M,GM47,#F8A018,2,1,8,gunze26,,,,ガンダムイエロー,
+gunze,M,GM48,#001820,2,1,8,gunze26,,,,ガンダムブラック,
+gunze,M,GM50,#F080B0,2,1,8,gunze26,,,,ガンダム蛍光ピンク,
+gunze,M,GM501,#FFFFFF,2,16,8,gunze26,,,,クリアー（光沢）,
+gunze,M,GM502,#FFFFFF,2,16,8,gunze26,,,,クリアー（つや消し）,
+gunze,M,GM51,#388858,2,8,8,gunze26,,,,ガンダムメタグリーン,
+gunze,M,PSM01,#201818,2,1,8,gunze26,,,,プラノサウルスブラック,
+gunze,M,PSM02,#205838,2,1,8,gunze26,,,,プラノサウルスグリーン,
+gunze,M,PSM03,#802860,2,1,8,gunze26,,,,プラノサウルスレッド,
+gunze,M,PSM04,#703830,2,1,8,gunze26,,,,プラノサウルスブラウン,
+gunze,M,PSM05,#D89050,2,1,8,gunze26,,,,プラノサウルスイエロー,
+gunze,M,PSM06,#204080,2,1,8,gunze26,,,,プラノサウルスブルー,
+gunze,M,TM01,#685870,2,1,8,gunze26,,,,30MMフレームグレー,
+gunze,M,TM02,#E8D8C0,2,8,8,gunze26,,,,30MMゴールド(細芯),
+gunze,M,TM03,#D8D8D8,2,8,8,gunze26,,,,30MMシルバー(細芯),
+gunze,M,TM04,#E0E0E0,2,8,8,gunze26,,,,30MMガンメタ,
+gunze,M,TM05,#B0D8C0,2,8,8,gunze26,,,,30MMメタリックグリーン(細芯),
+gunze,M,TM06,#201818,2,1,8,gunze26,,,,30MMブラック,
+gunze,M,TM07,#A0A0A0,2,1,8,gunze26,,,,30MMホワイト,
+gunze,M,TM08,#485890,2,1,8,gunze26,,,,30MMブルーパープル,
+gunze,M,TM09,#384828,2,1,8,gunze26,,,,30MMグリーン,
+gunze,M,TM10,#586830,2,1,8,gunze26,,,,30MMダークカーキグリーン,
+gunze,M,TM11,#484848,2,1,8,gunze26,,,,30MMダークグレー,
+gunze,M,TM12,#484848,2,1,8,gunze26,,,,30MMスミ入れペン,
+gunze,M,XGM01,#F2F2F3,2,8,8,gunze26,,,,ニューホワイト,
+gunze,M,XGM02,#C5C6C4,2,8,8,gunze26,,,,シャインシルバー,
+gunze,M,XGM03,#D2584B,2,8,8,gunze26,,,,ロイヤルメタレッド,
+gunze,M,XGM04,#4974B9,2,8,8,gunze26,,,,コスモメタブルー,
+gunze,M,XGM05,#B59582,2,8,8,gunze26,,,,ヘビーガンメタリック,
+gunze,M,XGM06,#69C28F,2,8,8,gunze26,,,,ルミナスメタグリーン,
+gunze,M,XGM07,#DBC085,2,8,8,gunze26,,,,ホワイトゴールド,
+gunze,M,XGM08,#DDBF5E,2,8,8,gunze26,,,,イエローゴールド,
+gunze,M,XGM100,#878987,2,8,8,gunze26,,,,ガンダムメッキシルバー,
+gunze,M,XGM201,#A7B6BF,2,8,8,gunze26,,,,月光蝶ホロシルバー,
+gunze,M,XGM202,#A57998,2,8,8,gunze26,,,,トランザムホロレッド,
+gunze,M,XGM203,#E4D764,2,8,8,gunze26,,,,HEPEホロイエロー,
+gunze,M,XGM204,#00BAF2,2,8,8,gunze26,,,,光の翼ホロブルー,
+gunze,M,XGM205,#93CC84,2,8,8,gunze26,,,,サイコフレームホログリーン,
+gunze,M,XGM301,#E8E7DC,2,32,8,gunze26,,,,パールホワイト,
+gunze,M,XGM302,#DBBC54,2,32,8,gunze26,,,,パールゴールド,
+gunze,N,BN01,#FFFFFF,8,4,5,gunze24_25,,BASE WHITE,,白色系統下地色,
+gunze,N,BN02,#4E5E64,8,4,5,gunze24_25,,BASE GRAY,,灰色系統下地色,
+gunze,N,BN03,#AF3446,8,4,5,gunze24_25,,BASE RED,,赤色系統下地色,
+gunze,N,BN04,#F8B84C,8,4,5,gunze24_25,,BASE YELLOW,,黄色系統下地色,
+gunze,N,BN05,#007DC4,8,4,5,gunze24_25,,BASE BLUE,,青色系統下地色,
+gunze,N,BN06,#006B65,8,4,5,gunze24_25,,BASE GREEN,,緑色系統下地色,
+gunze,N,N1,#FFFFFF,8,1,5,gunze24_25,,WHITE,,ホワイト（白）,gunze;C1;gunze26|gunze;H1;gunze26
+gunze,N,N10,#CD733A,8,8,5,gunze24_25,,COPPER,,カッパー（銅）,gunze;C10;gunze26|gunze;H10;gunze26
+gunze,N,N100,#00A650,8,64,5,gunze24_25,,FLUORESCENT GREEN,,蛍光グリーン,gunze;C175;gunze26|gunze;H100;gunze26
+gunze,N,N101,#ED1C24,8,64,5,gunze24_25,,FLUORESCENT RED,,蛍光レッド,gunze;C171;gunze26|gunze;H101;gunze26
+gunze,N,N11,#FFFFFF,8,4,5,gunze24_25,,MATT WHITE,,つや消しホワイト,gunze;C62;gunze26|gunze;H11;gunze26
+gunze,N,N12,#231F20,8,4,5,gunze24_25,,MATT BLACK,,つや消しブラック,gunze;C33;gunze26|gunze;H12;gunze26
+gunze,N,N127,#A2B180,8,2,5,gunze24_25,,COCKPIT COLOR (NAKAJIMA),,コクピット色（中島系）,gunze;C127;gunze26
+gunze,N,N13,#DA2128,8,4,5,gunze24_25,,MATT RED,,つや消しレッド,gunze;H13;gunze26
+gunze,N,N14,#EF4023,8,1,5,gunze24_25,,ORANGE,,オレンジ（橙）,gunze;C59;gunze26|gunze;H14;gunze26
+gunze,N,N15,#074EA2,8,1,5,gunze24_25,,BRIGHT BLUE,,インディブルー,gunze;C65;gunze26|gunze;H15;gunze26
+gunze,N,N16,#2AA44A,8,1,5,gunze24_25,,YELLOW GREEN,,ルマングリーン（黄緑）,gunze;C64;gunze26|gunze;H16;gunze26
+gunze,N,N17,#61343B,8,2,5,gunze24_25,,HULL RED,,艦底色（ココアブラウン）,gunze;C29;gunze26|gunze;H17;gunze26
+gunze,N,N18,#231F20,8,8,5,gunze24_25,,STEEL,,黒鉄色,gunze;C28;gunze26|gunze;H18;gunze26
+gunze,N,N19,#F17298,8,1,5,gunze24_25,,PINK,,ピンク（桃）,gunze;C63;gunze26|gunze;H19;gunze26
+gunze,N,N2,#231F20,8,1,5,gunze24_25,,BLACK,,ブラック（黒）,gunze;C2;gunze26|gunze;H2;gunze26
+gunze,N,N20,#FFFFFF,8,16,5,gunze24_25,,FLAT CLEAR,,つや消しクリアー,gunze;C182;gunze26|gunze;H20;gunze26
+gunze,N,N21,#F6F3EE,8,1,5,gunze24_25,,OFF WHITE,,グランプリホワイト,gunze;C69;gunze26|gunze;H21;gunze26
+gunze,N,N22,#5B6B78,8,2,5,gunze24_25,,NEUTRAL GRAY,,ニュートラルグレー,gunze;C13;gunze26|gunze;H53;gunze26
+gunze,N,N23,#ED1C24,8,1,5,gunze24_25,,SHINE RED,,シャインレッド（朱色）,gunze;C79;gunze26|gunze;H23;gunze26
+gunze,N,N24,#F47920,8,2,5,gunze24_25,,ORANGE YELLOW,,オレンジイエロー（黄橙色）,gunze;C58;gunze26|gunze;H24;gunze26
+gunze,N,N25,#0095DA,8,1,5,gunze24_25,,SKY BLUE,,スカイブルー,gunze;C34;gunze26|gunze;H25;gunze26
+gunze,N,N26,#00A650,8,1,5,gunze24_25,,BRIGHT GREEN,,デイトナグリーン,gunze;C66;gunze26|gunze;H26;gunze26
+gunze,N,N27,#C4A26E,8,2,5,gunze24_25,,TAN,,タン（ライトブラウン）,gunze;C44;gunze26|gunze;H27;gunze26
+gunze,N,N28,#231F20,8,8,5,gunze24_25,,METAL BLACK,,メタルブラック,gunze;C78;gunze26|gunze;H28;gunze26
+gunze,N,N3,#ED1C24,8,1,5,gunze24_25,,RED,,レッド（赤）,gunze;C3;gunze26|gunze;H3;gunze26
+gunze,N,N30,#FFFFFF,8,16,5,gunze24_25,,CLEAR,,クリアー（透明）,gunze;C46;gunze26|gunze;H30;gunze26
+gunze,N,N32,#2F4248,8,4,5,gunze24_25,,GERMAN GRAY 3/4,,ジャーマングレー（フィールドグレー1）,gunze;C40;gunze26|gunze;H32;gunze26
+gunze,N,N33,#853039,8,1,5,gunze24_25,,RUSSET,,あずき色（赤2号）,gunze;C81;gunze26|gunze;H33;gunze26
+gunze,N,N34,#E4A024,8,1,5,gunze24_25,,CREAM YELLOW,,クリームイエロー,gunze;H34;gunze26
+gunze,N,N35,#2E3092,8,1,5,gunze24_25,,COBALT BLUE,,コバルトブルー,gunze;C80;gunze26|gunze;H35;gunze26
+gunze,N,N36,#003920,8,2,5,gunze24_25,,IJN GREEN (NAKAJIMA),,暗緑色（中島系）,gunze;C15;gunze26|gunze;H59;gunze26
+gunze,N,N37,#71513A,8,2,5,gunze24_25,,WOOD BROWN,,ウッドブラウン,gunze;C43;gunze26|gunze;H37;gunze26
+gunze,N,N38,#4C3540,8,8,5,gunze24_25,,STEEL RED,,赤鉄色,gunze;H38;gunze26
+gunze,N,N39,#483087,8,1,5,gunze24_25,,PURPLE,,パープル（紫）,gunze;C67;gunze26|gunze;H39;gunze26
+gunze,N,N4,#FFDD00,8,1,5,gunze24_25,,YELLOW,,イエロー（黄）,gunze;C4;gunze26|gunze;H4;gunze26
+gunze,N,N40,#FFFFFF,8,4,5,gunze24_25,,FLAT BASE,,フラットベース（つや消し剤）,gunze;C30;gunze26|gunze;H40;gunze26
+gunze,N,N43,#AF2A3D,8,1,5,gunze24_25,,WINE RED,,マルーン（ワインレッド）,gunze;C100;gunze26|gunze;H43;gunze26
+gunze,N,N44,#E3AC7C,8,2,5,gunze24_25,,FLESH,,薄茶色,gunze;C51;gunze26|gunze;H44;gunze26
+gunze,N,N45,#00C0F3,8,1,5,gunze24_25,,LIGHT BLUE,,みず色,gunze;H45;gunze26
+gunze,N,N46,#00AD8E,8,1,5,gunze24_25,,EMERALD GREEN,,エメラルドグリーン,gunze;H46;gunze26
+gunze,N,N47,#743237,8,4,5,gunze24_25,,RED BROWN,,レッドブラウン,gunze;C41;gunze26|gunze;H47;gunze26
+gunze,N,N49,#6F85C2,8,1,5,gunze24_25,,VIOLET,,すみれ色,gunze;H49;gunze26
+gunze,N,N5,#005AAA,8,1,5,gunze24_25,,BLUE,,ブルー（青）,gunze;C5;gunze26|gunze;H5;gunze26
+gunze,N,N50,#83AE74,8,1,5,gunze24_25,,LIME GREEN,,よもぎ色,gunze;H50;gunze26
+gunze,N,N51,#B4BBBF,8,1,5,gunze24_25,,LIGHT GULL GRAY,,ガルグレー,gunze;C11;gunze26|gunze;H51;gunze26
+gunze,N,N52,#5F552E,8,2,5,gunze24_25,,OLIVE DRAB (1),,オリーブドラブ（1）,gunze;C12;gunze26|gunze;H52;gunze26
+gunze,N,N54,#234F5B,8,2,5,gunze24_25,,NAVY BLUE,,ネイビーブルー,gunze;C14;gunze26|gunze;H54;gunze26
+gunze,N,N55,#38494E,8,1,5,gunze24_25,,MIDNIGHT BLUE,,ミッドナイトブルー,gunze;C71;gunze26|gunze;H55;gunze26
+gunze,N,N56,#2D5562,8,2,5,gunze24_25,,INTERMEDIATE BLUE,,ミディアムブルー,gunze;C72;gunze26|gunze;H56;gunze26
+gunze,N,N57,#729998,8,1,5,gunze24_25,,AIRCRAFT GRAY,,エアクラフトグレー,gunze;C73;gunze26|gunze;H57;gunze26
+gunze,N,N58,#B2A335,8,2,5,gunze24_25,,INTERIOR GREEN,,機体内部色,gunze;C27;gunze26|gunze;H58;gunze26
+gunze,N,N6,#00904D,8,1,5,gunze24_25,,GREEN,,グリーン（緑）,gunze;C6;gunze26|gunze;H6;gunze26
+gunze,N,N60,#22543F,8,2,5,gunze24_25,,IJA GREEN,,濃緑色,gunze;C16;gunze26|gunze;H60;gunze26
+gunze,N,N61,#94B0BE,8,1,5,gunze24_25,,IJN GRAY (MITSUBISHI),,明灰白色（三菱系）,gunze;C35;gunze26|gunze;H61;gunze26
+gunze,N,N62,#6F9F9B,8,2,5,gunze24_25,,IJN GRAY GREEN (NAKAJIMA),,明灰緑色（中島系）,gunze;C56;gunze26
+gunze,N,N63,#007B72,8,8,5,gunze24_25,,METALLIC BLUE GREEN,,青竹色,gunze;C57;gunze26|gunze;H63;gunze26
+gunze,N,N66,#9D8145,8,2,5,gunze24_25,,RLM79 SAND YELLOW,,RLM79 サンドイエロ－,gunze;C119;gunze26|gunze;H66;gunze26
+gunze,N,N67,#6D92A0,8,2,5,gunze24_25,,RLM65 LIGHT BLUE,,RLM65 ライトブルー,gunze;C115;gunze26|gunze;H67;gunze26
+gunze,N,N68,#264142,8,2,5,gunze24_25,,RLM74 GRAY GREEN,,RLM74 グレーグリーン,gunze;C36;gunze26|gunze;H68;gunze26
+gunze,N,N69,#546460,8,2,5,gunze24_25,,RLM75 GRAY VIOLET,,RLM75 グレーバイオレット,gunze;C37;gunze26|gunze;H69;gunze26
+gunze,N,N7,#CA4136,8,1,5,gunze24_25,,BROWN,,ブラウン（茶）,gunze;C7;gunze26|gunze;H7;gunze26
+gunze,N,N70,#959480,8,2,5,gunze24_25,,RLM02 GRAY,,RLM02 グレー,gunze;C60;gunze26|gunze;H70;gunze26
+gunze,N,N71,#AA8A4B,8,2,5,gunze24_25,,MIDDLE STONE,,ミドルストーン,gunze;C21;gunze26|gunze;H71;gunze26
+gunze,N,N72,#5C5144,8,2,5,gunze24_25,,DARK EARTH,,ダークアース,gunze;C22;gunze26|gunze;H72;gunze26
+gunze,N,N73,#3A4940,8,2,5,gunze24_25,,DARK GREEN,,ダークグリーン（2）,gunze;C23;gunze26|gunze;H73;gunze26
+gunze,N,N76,#58575C,8,8,5,gunze24_25,,BURNT IRON,,焼鉄色,gunze;C61;gunze26|gunze;H76;gunze26
+gunze,N,N77,#231F20,8,4,5,gunze24_25,,TIRE BLACK,,タイヤブラック,gunze;C137;gunze26|gunze;H77;gunze26
+gunze,N,N78,#44503D,8,4,5,gunze24_25,,OLIVE DRAB (2),,オリーブドラブ（2）,gunze;C38;gunze26|gunze;H78;gunze26
+gunze,N,N79,#BA9765,8,4,5,gunze24_25,,DARK YELLOW 3/4,,ダークイエロー（サンディイエロー）,gunze;C39;gunze26|gunze;H79;gunze26
+gunze,N,N8,#D1D3D4,8,8,5,gunze24_25,,SILVER,,シルバー（銀）,gunze;C8;gunze26|gunze;H8;gunze26
+gunze,N,N80,#3A4940,8,4,5,gunze24_25,,KHAKI GREEN,,カーキグリーン,gunze;C54;gunze26|gunze;H80;gunze26
+gunze,N,N81,#5B573D,8,4,5,gunze24_25,,KHAKI,,カーキ,gunze;C55;gunze26|gunze;H81;gunze26
+gunze,N,N82,#848C8D,8,2,5,gunze24_25,,DARKGRAY (1),,軍艦色（1）,gunze;C31;gunze26|gunze;H82;gunze26
+gunze,N,N83,#485D64,8,2,5,gunze24_25,,DARKGRAY (2),,軍艦色（2）,gunze;C32;gunze26|gunze;H83;gunze26
+gunze,N,N84,#4D3538,8,2,5,gunze24_25,,MAHOGANY,,マホガニー,gunze;C42;gunze26|gunze;H84;gunze26
+gunze,N,N85,#B9B084,8,4,5,gunze24_25,,SAIL COLOR,,セールカラー,gunze;C45;gunze26|gunze;H85;gunze26
+gunze,N,N86,#DA2128,8,1,5,gunze24_25,,RED MADDER,,モンザレッド,gunze;C68;gunze26|gunze;H86;gunze26
+gunze,N,N87,#AF2A30,8,8,5,gunze24_25,,METALLIC RED,,メタリックレッド,gunze;C75;gunze26|gunze;H87;gunze26
+gunze,N,N88,#005AAA,8,8,5,gunze24_25,,METALLIC BLUE,,メタリックブルー,gunze;C76;gunze26|gunze;H88;gunze26
+gunze,N,N89,#009058,8,8,5,gunze24_25,,METALLIC GREEN,,メタリックグリーン,gunze;C77;gunze26|gunze;H89;gunze26
+gunze,N,N9,#DCAF31,8,8,5,gunze24_25,,GOLD,,ゴールド（金）,gunze;C9;gunze26|gunze;H9;gunze26
+gunze,N,N90,#ED1C24,8,16,5,gunze24_25,,CLEAR RED,,クリアーレッド,gunze;C47;gunze26|gunze;H90;gunze26
+gunze,N,N91,#FFD401,8,16,5,gunze24_25,,CLEAR YELLOW,,クリアーイエロー,gunze;C48;gunze26|gunze;H91;gunze26
+gunze,N,N92,#F26522,8,16,5,gunze24_25,,CLEAR ORANGE,,クリアーオレンジ,gunze;C49;gunze26|gunze;H92;gunze26
+gunze,N,N93,#00AEEF,8,16,5,gunze24_25,,CLEAR BLUE,,クリアーブルー,gunze;C50;gunze26|gunze;H93;gunze26
+gunze,N,N94,#00A650,8,16,5,gunze24_25,,CLEAR GREEN,,クリアーグリーン,gunze;C138;gunze26|gunze;H94;gunze26
+gunze,N,N95,#3B2F20,8,1,5,gunze24_25,,SMOKE GRAY,,スモークグレー,gunze;C101;gunze26|gunze;H95;gunze26
+gunze,N,N97,#FFF200,8,64,5,gunze24_25,,FLUORESCENT YELLOW,,蛍光イエロー,gunze;C172;gunze26|gunze;H97;gunze26
+gunze,N,N98,#EE3124,8,64,5,gunze24_25,,FLUORESCENT ORANGE,,蛍光オレンジ,gunze;C173;gunze26|gunze;H98;gunze26
+gunze,N,N99,#ED0972,8,64,5,gunze24_25,,FLUORESCENT PINK,,蛍光ピンク,gunze;C174;gunze26|gunze;H99;gunze26
+gunze,N,ND01,#D18734,8,4,5,gunze24_25,,,,生地色,
+gunze,N,ND02,#BB7444,8,4,5,gunze24_25,,,,ほんのり焦げ目,
+gunze,N,ND03,#7A5240,8,4,5,gunze24_25,,,,こんがり焦げ目,
+gunze,N,ND04,#F1A16B,8,16,5,gunze24_25,,,,クリアーブラウン,
+gunze,N,ND05,#774940,8,4,5,gunze24_25,,,,ミルクチョコレート,
+gunze,N,ND06,#4B331F,8,4,5,gunze24_25,,,,ダークチョコレート,
+gunze,N,ND07,#ED2435,8,4,5,gunze24_25,,,,いちご,
+gunze,N,NF01,#F1AAB3,8,4,5,gunze24_25,,STRAWBERRY PINK,,ストロベリーピンク,
+gunze,N,NF02,#F4CAC1,8,4,5,gunze24_25,,MILKY CORAL,,ミルキーコーラル,
+gunze,N,NF03,#EAD8BC,8,4,5,gunze24_25,,CREAMY BEIGE,,クリーミーベージュ,
+gunze,N,NF04,#9ED3A1,8,4,5,gunze24_25,,GRASS GREEN,,グラスグリーン,
+gunze,N,NF05,#B6DFCF,8,4,5,gunze24_25,,MINT BLUE,,ミントブルー,
+gunze,N,NF06,#8A4B66,8,4,5,gunze24_25,,CASSIS PINK,,カシスピンク,
+gunze,N,NF07,#A32952,8,4,5,gunze24_25,,WINE RED,,ワインレッド,
+gunze,N,NF08,#815F89,8,4,5,gunze24_25,,GRAYISH PURPLE,,グレイッシュパープル,
+gunze,N,NF09,#786B35,8,4,5,gunze24_25,,ANTIQUE GOLD,,アンティークゴールド,
+gunze,S,S1,#FFFFFF,1,1,2,gunze24_25,,WHITE,,ホワイト（白）,
+gunze,S,S101,#3B2F20,1,1,2,gunze24_25,,SMOKE GRAY,,スモークグレー,
+gunze,S,S107,#F0F1EE,1,2,2,gunze24_25,,CHARACTER WHITE,,キャラクターホワイト,
+gunze,S,S108,#C9252B,1,2,2,gunze24_25,,CHARACTER RED,,キャラクターレッド,
+gunze,S,S109,#F5821F,1,2,2,gunze24_25,,CHARACTER YELLOW,,キャラクターイエロー,
+gunze,S,S11,#B4BBBF,1,2,2,gunze24_25,,LIGHT GULL GRAY A,,ガルグレー,
+gunze,S,S110,#074EA2,1,2,2,gunze24_25,,CHARACTER BLUE,,キャラクターブルー,
+gunze,S,S111,#FDDDCF,1,2,2,gunze24_25,,CHARACTER FLESH (1),,キャラクターフレッシュ（1）,
+gunze,S,S112,#F9B5B2,1,2,2,gunze24_25,,CHARACTER FLESH (2),,キャラクターフレッシュ（2）,
+gunze,S,S115,#6D92A0,1,2,2,gunze24_25,,RLM65 LIGHT BLUE A,,RLM65 ライトブルー,
+gunze,S,S117,#AFCBC9,1,2,2,gunze24_25,,RLM76 LIGHT BLUE A,,RLM76 ライトブルー,
+gunze,S,S12,#6F5F3C,1,2,2,gunze24_25,,OLIVE DRAB (1) A,,オリーブドラブ（1）,
+gunze,S,S124,#22473F,1,2,2,gunze24_25,,DARK GREEN (MITSUBISHI) A,,暗緑色（三菱系）,
+gunze,S,S13,#677A83,1,2,2,gunze24_25,,NEUTRAL GRAY A,,ニュートラルグレー,
+gunze,S,S14,#234F5B,1,2,2,gunze24_25,,NAVY BLUE A,,ネイビーブルー,
+gunze,S,S15,#44503D,1,2,2,gunze24_25,,IJN GREEN (NAKAJIMA) A,,暗緑色（中島系）,
+gunze,S,S16,#22543F,1,2,2,gunze24_25,,IJA GREEN A,,濃緑色,
+gunze,S,S2,#231F20,1,1,2,gunze24_25,,BLACK,,ブラック（黒）,
+gunze,S,S28,#231F20,1,8,2,gunze24_25,,STEEL,,黒鉄色,
+gunze,S,S29,#61343B,1,2,2,gunze24_25,,HULL RED,,艦底色（ココアブラウン）,
+gunze,S,S3,#ED1C24,1,1,2,gunze24_25,,RED,,レッド（赤）,
+gunze,S,S30,#FFFFFF,1,16,2,gunze24_25,,FLAT CLEAR,,フラットベース・スタンダード,
+gunze,S,S31,#4C7566,1,2,2,gunze24_25,,DARK GRAY (1) S,,軍艦色（1）,
+gunze,S,S32,#485D64,1,2,2,gunze24_25,,DARK GRAY (2) S,,軍艦色（2）,
+gunze,S,S33,#231F20,1,4,2,gunze24_25,,FLAT BLACK,,つや消しブラック,
+gunze,S,S34,#0095DA,1,1,2,gunze24_25,,SKY BLUE,,スカイブルー,
+gunze,S,S35,#94B0BE,1,2,2,gunze24_25,,IJN GRAY (MITSUBISHI) A,,明灰白色（三菱系）,
+gunze,S,S38,#44503D,1,4,2,gunze24_25,,OLIVE DRAB (2) T,,オリーブドラブ（2）,
+gunze,S,S39,#BA9765,1,4,2,gunze24_25,,DARK YELLOW (SANDY YELLOW) T,,ダークイエロー,
+gunze,S,S4,#FFDD00,1,1,2,gunze24_25,,YELLOW,,イエロー（黄）,
+gunze,S,S40,#2F4248,1,4,2,gunze24_25,,GERMAN GRAY T,,ジャーマングレー,
+gunze,S,S41,#573438,1,4,2,gunze24_25,,RED BROWN T,,レッドブラウン,
+gunze,S,S42,#4D3538,1,2,2,gunze24_25,,MAHOGANY,,マホガニー,
+gunze,S,S43,#71513A,1,2,2,gunze24_25,,WOOD BROWN,,ウッドブラウン,
+gunze,S,S44,#C4A26E,1,2,2,gunze24_25,,TAN,,タン（ライトブラウン）,
+gunze,S,S46,#FFFFFF,1,16,2,gunze24_25,,CLEAR,,クリアー（透明）,
+gunze,S,S47,#ED1C24,1,16,2,gunze24_25,,CLEAR RED,,クリアーレッド,
+gunze,S,S48,#FFD401,1,16,2,gunze24_25,,CLEAR YELLOW,,クリアーイエロー,
+gunze,S,S49,#F26522,1,16,2,gunze24_25,,CLEAR ORANGE,,クリアーオレンジ,
+gunze,S,S5,#0060AF,1,1,2,gunze24_25,,BLUE,,ブルー（青）,
+gunze,S,S50,#00AEEF,1,16,2,gunze24_25,,CLEAR BLUE,,クリアーブルー,
+gunze,S,S58,#F47920,1,2,2,gunze24_25,,ORANGE YELLOW A,,黄橙色（オレンジイエロー）,
+gunze,S,S59,#F26522,1,2,2,gunze24_25,,ORANGE,,オレンジ（橙）,
+gunze,S,S6,#006835,1,1,2,gunze24_25,,GREEN,,グリーン（緑）,
+gunze,S,S61,#573A34,1,8,2,gunze24_25,,BURNT IRON,,焼鉄色,
+gunze,S,S62,#FFFFFF,1,4,2,gunze24_25,,FLAT WHITE,,つや消しホワイト,
+gunze,S,S63,#F17298,1,1,2,gunze24_25,,PINK,,ピンク（桃）,
+gunze,S,S64,#1EAA4A,1,1,2,gunze24_25,,YELLOW GREEN,,ルマングリーン（黄緑）,
+gunze,S,S65,#074EA2,1,1,2,gunze24_25,,BRIGHT BLUE,,インディブルー,
+gunze,S,S66,#00A650,1,1,2,gunze24_25,,BRIGHT GREEN,,デイトナグリーン,
+gunze,S,S67,#483087,1,1,2,gunze24_25,,PURPLE,,パープル（紫）,
+gunze,S,S68,#DA2128,1,1,2,gunze24_25,,MADDER RED,,モンザレッド,
+gunze,S,S69,#F6F3EE,1,1,2,gunze24_25,,OFF WHITE,,グランプリホワイト,
+gunze,S,S70,#3A4940,1,4,2,gunze24_25,,DARK GREEN T,,ダークグリーン,
+gunze,S,S72,#2A879F,1,2,2,gunze24_25,,INTERMEDIATE,,ミディアムブルー,
+gunze,S,S75,#AF2A30,1,8,2,gunze24_25,,METALLIC RED,,メタリックレッド,
+gunze,S,S76,#005AAA,1,8,2,gunze24_25,,METALLIC BLUE,,メタリックブルー,
+gunze,S,S77,#009058,1,8,2,gunze24_25,,METALLIC GREEN,,メタリックグリーン,
+gunze,S,S78,#231F20,1,8,2,gunze24_25,,METAL BLACK,,メタルブラック,
+gunze,S,S79,#ED1C24,1,1,2,gunze24_25,,SHINE RED,,シャインレッド（朱色）,
+gunze,S,S8,#D1D3D4,1,8,2,gunze24_25,,SILVER,,シルバー（銀）,
+gunze,S,S80,#2E3092,1,2,2,gunze24_25,,COBALT BLUE,,コバルトブルー,
+gunze,S,S81,#7C3139,1,1,2,gunze24_25,,RUSSET,,あずき色（赤２号）,
+gunze,S,S9,#DCAF31,1,8,2,gunze24_25,,GOLD,,ゴールド（金）,
+gunze,S,S90,#C7C8CA,1,8,2,gunze24_25,,SHINE SILVER,,シャインシルバー,
+gunze,S,S92,#231F20,1,2,2,gunze24_25,,SEMI GLOSS BLACK,,セミグロスブラック,
+gunze,S,S97,#AAB7AF,1,1,2,gunze24_25,,LIGHT GRAY,,灰色９号,
+gunze,S,SJ01,#60727A,1,4,2,gunze24_25,,JAPANESE NAVAL ARSENAL COLOR,,呉海軍工廠標準色,
+gunze,S,SJ02,#515254,1,4,2,gunze24_25,,JAPANESE NAVAL ARSENAL COLOR,,佐世保海軍工廠標準色,
+gunze,SM,SM201,#CCCDCF,1,8,1,gunze24_25,,SUPER FINE SILVER 2,,スーパーファインシルバー2,
+gunze,SM,SM202,#CBAC77,1,8,1,gunze24_25,,SUPER GOLD 2,,スーパーゴールド2,
+gunze,SM,SM203,#B7B8BB,1,8,1,gunze24_25,,SUPER IRON 2,,スーパーアイアン2,
+gunze,SM,SM204,#BCBDC0,1,8,1,gunze24_25,,SUPER STAINLESS 2,,スーパーステンレス2,
+gunze,SM,SM205,#D6D2D6,1,8,1,gunze24_25,,SUPER TITANIUM 2,,スーパーチタン2,
+gunze,SM,SM206,#CBCCCE,1,8,1,gunze24_25,,SUPER CHROME SILVER 2,,クロームシルバー2,
+gunze,SM,SM207,#DEB232,1,8,1,gunze24_25,,SUPER RICH GOLD,,スーパーリッチゴールド,
+gunze,SM,SM208,#D3D4D6,1,8,1,gunze24_25,,SUPER DURALUMIN,,スーパージュラルミン,
+gunze,SM,SM209,#CA6B59,1,8,1,gunze24_25,,SUPER COPPER,,スーパーカッパー,
+gunze,SM,SM210,#D99FA1,1,8,1,gunze24_25,,SUPER PINK GOLD,,スーパーピンクゴールド,
+gunze,SM,SM211,#DD9B31,1,8,1,gunze24_25,,SUPER RED GOLD,,スーパーレッドゴールド,
+gunze,SM,SM212,#D4D5D7,1,8,1,gunze24_25,,SUPER MATT ALUMINUM,,スーパーマットアルミ,
+gunze,SVC,SVC1,#FFFFFF,8,1,5,gunze24_25,,WHITE,,ホワイト,
+gunze,SVC,SVC10,#8B3415,8,4,5,gunze24_25,,,,ブラウン,
+gunze,SVC,SVC101,#F7F7F8,8,16,5,gunze24_25,,,,クリアー（光沢）,
+gunze,SVC,SVC11,#4B626E,8,4,5,gunze24_25,,,,グレー,
+gunze,SVC,SVC2,#231F20,8,1,5,gunze24_25,,BLACK,,ブラック,
+gunze,SVC,SVC3,#EE1D23,8,1,5,gunze24_25,,RED,,レッド,
+gunze,SVC,SVC4,#FFDC01,8,1,5,gunze24_25,,YELLOW,,イエロー,
+gunze,SVC,SVC5,#015AAA,8,1,5,gunze24_25,,BLUE,,ブルー,
+gunze,SVC,SVC6,#D1D2D4,8,8,5,gunze24_25,,SILVER,,シルバー,
+gunze,SVC,SVC7,#DBAF31,8,8,5,gunze24_25,,GOLD,,ゴールド,
+gunze,SVC,SVC8,#253B4C,8,8,5,gunze24_25,,METALLIC BLACK,,メタリックブラック,
+gunze,SVC,SVC9,#003914,8,4,5,gunze24_25,,,,グリーン,
+gunze,UG,HGQ01,#E0E8EC,2,2,5,gunze24_25,,,,GQuuuuuuXホワイト,
+gunze,UG,HGQ02,#48809B,2,2,5,gunze24_25,,,,GQuuuuuuXブルー,
+gunze,UG,HGQ03,#F79447,2,2,5,gunze24_25,,,,GQuuuuuuXイエロー,
+gunze,UG,HGQ04,#B4181D,2,2,5,gunze24_25,,,,GQuuuuuuXレッド,
+gunze,UG,HGQ05,#423C3B,2,2,5,gunze24_25,,,,GQuuuuuuXダークグレー,
+gunze,UG,HGQ06,#F05A67,2,2,5,gunze24_25,,,,赤いガンダムピンク,
+gunze,UG,HGQ07,#BF2640,2,2,5,gunze24_25,,,,赤いガンダムレッド,
+gunze,UG,HUG01,#EBF3F6,2,2,5,gunze24_25,,RX-78-2 GUNDAM WHITE,,RX-78-2ガンダムホワイト,
+gunze,UG,HUG02,#0153A0,2,2,5,gunze24_25,,RX-78-2 GUNDAM BLUE,,RX-78-2ガンダムブルー,
+gunze,UG,HUG03,#FCBA13,2,2,5,gunze24_25,,RX-78-2 GUNDAM YELLOW,,RX-78-2ガンダムイエロー,
+gunze,UG,HUG04,#EE1D23,2,2,5,gunze24_25,,RX-78-2 GUNDAM RED,,RX-78-2ガンダムレッド,
+gunze,UG,HUG05,#DC6C70,2,2,5,gunze24_25,,PINK FOR CHAR AZNABLE,,シャア専用機ピンク,
+gunze,UG,HUG06,#892E4F,2,2,5,gunze24_25,,RED FOR CHAR AZNABLE,,シャア専用機レッド,
+gunze,UG,HUG07,#0F0B15,2,2,5,gunze24_25,,MS PHANTOM GRAY,,ファントムグレー,
+gunze,UG,HUG08,#080917,2,2,5,gunze24_25,,MS TITANS BLUE 1,,ティターンズブルー1,
+gunze,UG,HUG09,#080E58,2,2,5,gunze24_25,,MS TITANS BLUE 2,,ティターンズブルー2,
+gunze,UG,HUG101,#5582AB,2,2,5,gunze24_25,,SWORD STRIKE BLUE,,ソードストライクブルー,
+gunze,UG,HUG102,#3B5B52,2,2,5,gunze24_25,,LAUNCHER STRIKE GREEN,,ランチャーストライクグリーン,
+gunze,UG,HUG103,#F0D5E6,2,2,5,gunze24_25,,STRIKE ROUGE PINK,,ストライクルージュピンク,
+gunze,UG,HUG104,#B3BBBE,2,2,5,gunze24_25,,DEACTIVE WHITE,,ディアクティブホワイト,
+gunze,UG,HUG105,#5B6B77,2,2,5,gunze24_25,,DEACTIVE GRAY,,ディアクティブグレー,
+gunze,UG,HUG106,#231F20,2,2,5,gunze24_25,,DEACTIVE BLACK,,ディアクティブブラック,
+gunze,UG,HUG107,#0078BF,2,2,5,gunze24_25,,FREEDOM BLUE,,フリーダムブルー,
+gunze,UG,HUG108,#B66886,2,2,5,gunze24_25,,JUSTICE PINK,,ジャスティスピンク,
+gunze,UG,HUG201,#D82628,2,2,5,gunze24_25,,SWORD IMPULSE RED,,ソードインパルスレッド,
+gunze,UG,HUG202,#3C5A31,2,2,5,gunze24_25,,BLAST IMPULSE GREEN,,ブラストインパルスグリーン,
+gunze,UG,HUG203,#6DB2B0,2,2,5,gunze24_25,,SKY BLUE FOR YZAK JULE,,イザーク専用機スカイブルー,
+gunze,UG,HUG204,#CD2853,2,2,5,gunze24_25,,PINK FOR LUNAMARIA HAWKE,,ルナマリア専用機ピンク,
+gunze,UG,HUG205,#C299C5,2,2,5,gunze24_25,,PURPLE FOR REY ZA BURREL,,レイ専用機パープル,
+gunze,UG,HUG206,#C52447,2,2,5,gunze24_25,,DESTINY RED,,デスティニーレッド,
+gunze,UG,HUG207,#F17097,2,2,5,gunze24_25,,LIVE CONCERT PINK,,ライブコンサートピンク,
+gunze,UG,HUG208,#F58420,2,2,5,gunze24_25,,ORANGE FOR HEINE WESTENFLUSS,,ハイネ専用機オレンジ,
+gunze,UG,HUG301,#2F69A6,2,2,5,gunze24_25,,RISING FREEDOM BLUE,,ライジングフリーダムブルー,
+gunze,UG,HUG302,#B6404F,2,2,5,gunze24_25,,IMMORTAL JUSTICE RED,,イモータルジャスティスレッド,
+gunze,UG,HUG303,#231F20,2,2,5,gunze24_25,,BLACK KNIGHT SQUAD BLACK,,ブラックナイトスコードブラック,
+gunze,UG,HUG304,#4F7BBE,2,2,5,gunze24_25,,GYAN STROM (AGNES CUSTOM) BLUE,,ギャンシュトローム（アグネス機）ブルー,
+gunze,UG,HUG305,#080036,2,2,5,gunze24_25,,MIGHTY STRIKE FREEDOM DARK BLUE,,マイティーストライクフリーダムダークブルー,
+gunze,UG,HUG306,#CB556A,2,2,5,gunze24_25,,INFINITE JUSTICE TYPE II RED,,インフィニットジャスティス弐式ピンク,
+gunze,UG,HUG307,#7E7E95,2,2,5,gunze24_25,,DUEL BLITZ BLUE GRAY,,デュエルブリッツブルーグレー,
+gunze,UG,HUG308,#F2F1EC,2,2,5,gunze24_25,,LIGHTNING BUSTER WHITE,,ライトニングバスターホワイト,
+gunze,UG,HUG309,#A8A6A5,2,2,5,gunze24_25,,,,ディスティニーSpecIIライトグレー,
+gunze,UG,HUG310,#D4E5F5,2,2,5,gunze24_25,,,,ブラックナイトスコードカルラライトブルー,
+gunze,UG,HUG311,#CFBD10,2,8,5,gunze24_25,,,,ゼウスシルエットゴールド,
+gunze,UG,SG01,#EBF3F6,1,2,2,gunze26,,MS WHITE,,MSホワイト,
+gunze,UG,SG02,#0153A0,1,2,2,gunze26,,MS BLUE,,MSブルー,
+gunze,UG,SG03,#FCBA13,1,2,2,gunze26,,MS YELLOW,,MSイエロー,
+gunze,UG,SG04,#C92C2E,1,2,2,gunze26,,MS RED,,MSレッド,
+gunze,UG,SG05,#2C3031,1,2,2,gunze26,,U.N.T'.s MS GRAY,,MSグレー連邦系,
+gunze,UG,SG06,#88AB8F,1,2,2,gunze26,,MS GREEN,,MSグリーン,
+gunze,UG,SG07,#4E6F56,1,2,2,gunze26,,MS DEEP GREEN,,MSディープグリーン,
+gunze,UG,SG08,#9C85BD,1,2,2,gunze26,,MS PURPLE,,MSパープル,
+gunze,UG,SG09,#4F5362,1,2,2,gunze26,,ZEON'S MS GRAY,,MSグレージオン系,
+gunze,UG,SG10,#DC6C70,1,2,2,gunze26,,MS CHAR'S PINK,,MSシャアピンク,
+gunze,UG,SG11,#892E4F,1,2,2,gunze26,,MS CHAR'S RED,,MSシャアレッド,
+gunze,UG,SG12,#D1232A,1,2,2,gunze26,,MS SAZABI RED,,MSサザビーレッド,
+gunze,UG,SG13,#0F4CA0,1,2,2,gunze26,,A.E.U.G'.s MS BLUE,,MSブルーZ系,
+gunze,UG,SG14,#437EC1,1,2,2,gunze26,,MS LIGHT BLUE,,MSライトブルー,
+gunze,UG,SG15,#04010F,1,2,2,gunze26,,MS PHANTOM GRAY,,MSファントムグレー,
+gunze,UG,SG16,#080917,1,2,2,gunze26,,MS TITANS BLUE 1,,ティターンズブルー1,
+gunze,UG,SG17,#080E58,1,2,2,gunze26,,MS TITANS BLUE 2,,ティターンズブルー2,
+gunze,UG,UG01,#EBF3F6,1,2,1,gunze24_25,,MS WHITE,,MSホワイト,
+gunze,UG,UG02,#0153A0,1,2,1,gunze24_25,,MS BLUE,,MSブルー,
+gunze,UG,UG03,#FCBA13,1,2,1,gunze24_25,,MS YELLOW,,MSイエロー,
+gunze,UG,UG04,#C92C2E,1,2,1,gunze24_25,,MS RED,,MSレッド,
+gunze,UG,UG05,#2C3031,1,2,1,gunze24_25,,U.N.T'.s MS GRAY,,MSグレー連邦系,
+gunze,UG,UG06,#88AB8F,1,2,1,gunze24_25,,MS GREEN,,MSグリーン,
+gunze,UG,UG07,#4E6F56,1,2,1,gunze24_25,,MS DEEP GREEN,,MSディープグリーン,
+gunze,UG,UG08,#9C85BD,1,2,1,gunze24_25,,MS PURPLE,,MSパープル,
+gunze,UG,UG09,#4F5362,1,2,1,gunze24_25,,ZEON'S MS GRAY,,MSグレージオン系,
+gunze,UG,UG10,#DC6C70,1,2,1,gunze24_25,,MS CHAR'S PINK,,MSシャアピンク,
+gunze,UG,UG11,#892E4F,1,2,1,gunze24_25,,MS CHAR'S RED,,MSシャアレッド,
+gunze,UG,UG12,#D1232A,1,2,1,gunze24_25,,MS SAZABI RED,,MSサザビーレッド,
+gunze,UG,UG13,#0F4CA0,1,2,1,gunze24_25,,A.E.U.G'.s MS BLUE,,MSブルーZ系,
+gunze,UG,UG14,#437EC1,1,2,1,gunze24_25,,MS LIGHT BLUE,,MSライトブルー,
+gunze,UG,UG15,#04010F,1,2,1,gunze24_25,,MS PHANTOM GRAY,,MSファントムグレー,
+gunze,UG,UG16,#080917,1,2,1,gunze24_25,,MS TITANS BLUE 1,,ティターンズブルー1,
+gunze,UG,UG17,#080E58,1,2,1,gunze24_25,,MS TITANS BLUE 2,,ティターンズブルー2,
+gunze,UG,UG18,#D5EBDB,1,2,1,gunze24_25,,RX-78 WHITE Ver. ANIME COLOR,,RX-78ホワイト,
+gunze,UG,UG19,#009FD7,1,2,1,gunze24_25,,RX-78 BLUE Ver. ANIME COLOR,,RX-78ブルー,
+gunze,UG,UG20,#EF342A,1,2,1,gunze24_25,,RX-78 RED Ver. ANIME COLOR,,RX-78レッド,
+gunze,UG,UG21,#FBB017,1,2,1,gunze24_25,,RX-78 YELLOW Ver. ANIME COLOR,,RX-78イエロー,
+gunze,UG,UG22,#723236,1,2,1,gunze24_25,,MS-06S RED Ver. ANIME COLOR,,MS-06S レッド,
+gunze,UG,UG23,#F05970,1,2,1,gunze24_25,,MS-06S PINK Ver. ANIME COLOR,,MS-06S ピンク,
+gunze,UG,UG24,#D91D4E,1,1,1,gunze24_25,,TRANS-AM RED PEARL,,トランザムレッドパール,
+gunze,UG,UG25,#EF3875,1,1,1,gunze24_25,,TRANS-AM HIGHLIGHT RED,,トランザムハイライトレッド,
+gunze,UG,UG26,#000037,1,1,1,gunze24_25,,,,νダークブルー,
+gunze,UG,UG27,#3663AF,1,1,1,gunze24_25,,,,ブルー,
+gunze,UG,UG28,#3E3F99,1,1,1,gunze24_25,,,,Hi-νバイオレット,
+gunze,UG,UG29,#5B2E91,1,1,1,gunze24_25,,,,Hi-νパープル,
+gunze,UG,XHUG01,#4F7BBE,2,2,5,gunze24_25,,GUNDAM AERIAL BLUE,,ガンダムエアリアルブルー,
+gunze,UG,XHUG02,#F8FAFD,2,2,5,gunze24_25,,GUNDAM AERIAL WHITE,,ガンダムエアリアルホワイト,
+gunze,UG,XHUG03,#808285,2,2,5,gunze24_25,,GUNDAM AERIAL GRAY,,ガンダムエアリアルグレー,
+gunze,UG,XHUG04,#B12C7D,2,2,5,gunze24_25,,GUNDAM LFRITH PINK,,ガンダムルブリスピンク,
+gunze,UG,XHUG05,#867E86,2,2,5,gunze24_25,,GUNDAM LFRITH GRAY,,ガンダムルブリスグレー,
+gunze,UG,XHUG06,#CACC99,2,2,5,gunze24_25,,CHUCHUʼS DEMI TRAINER YELLOW,,デミトレーナー（チュチュ専用機）イエロー,
+gunze,UG,XHUG07,#9E3C35,2,2,5,gunze24_25,,DARILBALDE RED,,ダリルバルデレッド,
+gunze,UG,XHUG08,#616777,2,2,5,gunze24_25,,GUNDAM PHARACT GRAY,,ガンダムファラクトグレー,
+gunze,UG,XHUG09,#A19EBD,2,2,5,gunze24_25,,MICHAELIS PURPLE,,ミカエリスパープル,
+gunze,UG,XHUG10,#534D76,2,2,5,gunze24_25,,BEGUIR-PENTE VIOLET,,ペギルペンデバイオレット,
+gunze,UG,XHUG11,#347C7A,2,2,5,gunze24_25,,GUNDAM LFRITH UR GREEN,,ガンダムルブリスウルグリーン,
+gunze,UG,XHUG12,#918176,2,2,5,gunze24_25,,GUNDAM LFRITH THORN BROWN,,ガンダムルブリスソーンブラウン,
+gunze,UG,XHUG13,#374B6E,2,2,5,gunze24_25,,GUNDAM AERIAL REBUILD BLUE,,ガンダムエアリアル（改修型）ブルー,
+gunze,W,MIG01,#614F28,4,128,4,gunze24_25,,DARK WASH WWⅡ WESTERN FRONT,,ダークウォッシュ,
+gunze,W,MIG02,#5C2F1C,4,128,4,gunze24_25,,DARK STREAKING GRIME WWⅡ WESTERN FRONT,,ダークストリークグレイム,
+gunze,W,MIG03,#F7F3DF,4,128,4,gunze24_25,,DRY MUD WWⅡ WESTERN FRONT,,ドライマッド,
+gunze,W,MIG04,#E7DEC2,4,128,4,gunze24_25,,EUROPE DUST WWⅡ WESTERN FRONT,,ヨーロッパダスト,
+gunze,W,MIG05,#564B27,4,128,4,gunze24_25,,WINTER WASH WWⅡ EASTERN FRONT,,ウィンターウォッシュ,
+gunze,W,MIG06,#352315,4,128,4,gunze24_25,,WINTER STREAKING GRIME WWⅡ EASTERN FRONT,,ウインターストリークグレイム,
+gunze,W,MIG07,#543A1F,4,128,4,gunze24_25,,FRESH DARK MUD WWⅡ EASTERN FRONT,,フレッシュダークマッド,
+gunze,W,MIG08,#C28861,4,128,4,gunze24_25,,DRY EARTH WWⅡ EASTERN FRONT,,ドライアース,
+gunze,W,MIG09,#EAD8A1,4,128,4,gunze24_25,,SAND FILTER WWⅡ AFRIKA KORPS,,サンドフィルター,
+gunze,W,MIG10,#543F20,4,128,4,gunze24_25,,WINTER STREAKING GRIME WWⅡ AFRIKA KORPS,,デザートウォッシュ,
+gunze,W,MIG11,#D0A375,4,128,4,gunze24_25,,GREY STREAKING GRIME WWⅡ AFRIKA KORPS,,グレイストリークグレイム,
+gunze,W,MIG12,#F7F3C5,4,128,4,gunze24_25,,LIGHT DUST WWⅡ AFRIKA KORPS,,ライトダスト,
+gunze,W,MIG13,#230A07,4,128,4,gunze24_25,,FUEL & OIL,,燃料＆オイル,
+gunze,W,MIG14,#805E33,4,128,4,gunze24_25,,EARTH & GRIME,,アース＆グレイム,
+gunze,W,MIG15,#54341B,8,128,4,gunze24_25,,CHIPPING,,チッピング,
+gunze,W,MIG16,#B13A2E,4,128,4,gunze24_25,,RUST,,ラスト,
+gunze,W,WC01,#211E1D,4,128,4,gunze24_25,,MULTI BLACK WEATHERING COLOR,,マルチブラック,
+gunze,W,WC02,#271C13,4,128,4,gunze24_25,,GROUND BROWN WEATHERING COLOR,,グランドブラウン,
+gunze,W,WC03,#623122,4,128,4,gunze24_25,,STAIN BROWN WEATHERING COLOR,,ステインブラウン,
+gunze,W,WC04,#D2C3AE,4,128,4,gunze24_25,,SANDY WASH WEATHERING COLOR,,サンディウォッシュ,
+gunze,W,WC05,#DDDDDD,4,128,4,gunze24_25,,MULTI WHITE WEATHERING COLOR,,マルチホワイト,
+gunze,W,WC06,#64656A,4,128,4,gunze24_25,,MULTI GRAY WEATHERING COLOR,,マルチグレー,
+gunze,W,WC07,#8C7457,4,128,4,gunze24_25,,GRAYISH BROWN WEATHERING COLOR,,グレイッシュブラウン,
+gunze,W,WC08,#C07D47,4,128,4,gunze24_25,,RUST ORANGE WEATHERING COLOR,,ラストオレンジ,
+gunze,W,WC09,#163866,4,128,4,gunze24_25,,SHADE BLUE FILTER LIQUID,,シェードブルー,
+gunze,W,WC10,#EFCD48,4,128,4,gunze24_25,,SPOT YELLOW FILTER LIQUID,,スポットイエロー,
+gunze,W,WC11,#867399,4,128,4,gunze24_25,,LAYER VIOLET FILTER LIQUID,,レイヤーバイオレット,
+gunze,W,WC12,#3A583A,4,128,4,gunze24_25,,FACE GREEN FILTER LIQUID,,フェイスグリーン,
+gunze,W,WC13,#C54F4C,4,128,4,gunze26,,,,グレーズレッド,
+gunze,W,WP01,#55483A,4,128,4,gunze26,,,,Mr.ウェザリングペースト,
+gunze,W,WP02,#9A8D78,4,128,4,gunze26,,,,Mr.ウェザリングペースト,
+gunze,W,WP03,#8A9383,4,128,4,gunze26,,,,ウェットクリアー,
+gunze,W,WP04,#926C46,4,128,4,gunze26,,,,Mr.ウェザリングペースト,
+gunze,W,WP05,#94715F,4,128,4,gunze26,,,,Mr.ウェザリングペースト,
+gunze,W,WT01,#FFFFFF,8,128,5,gunze24_25,,WHITE WEATHERING COLOR GOUACHE,,ベーシックホワイト,
+gunze,W,WT02,#030303,8,128,5,gunze24_25,,BLACK WEATHERING COLOR GOUACHE,,ベーシックブラック,
+gunze,W,WT03,#6E675E,8,128,5,gunze24_25,,LIGHT MUD BLOWN WEATHERING COLOR GOUACHE,,ミィディアムマッド,
+gunze,W,WT04,#E4864D,8,128,5,gunze24_25,,LIGHT RUST WEATHERING COLOR GOUACHE,,ナチュラルラスト,
+gunze,W,WT05,#D2C8B6,8,128,5,gunze24_25,,LIGHT DUST WEATHERING COLOR GOUACHE,,ファインダスト,
+gunze,W,WT06,#B1A4A1,8,128,5,gunze24_25,,BURNT UMBER WEATHERING COLOR GOUACHE,,ウォッシュアンバー,
+tamiya,AS,AS1,#234945,1,4,2,tamiya26,,,,暗緑色,
+tamiya,AS,AS10,#8498AB,1,4,2,tamiya26,,,,オーシャン グレイ,
+tamiya,AS,AS11,#B9BBAA,1,4,2,tamiya26,,,,ミディアム シーグレイ,
+tamiya,AS,AS12,#C9CACA,1,8,2,tamiya26,,,,シルバー メタル,
+tamiya,AS,AS13,#364E3B,1,4,2,tamiya26,,,,グリーン,
+tamiya,AS,AS14,#44613F,1,4,2,tamiya26,,,,オリーブ グリーン,
+tamiya,AS,AS15,#BC9966,1,4,2,tamiya26,,,,タン,
+tamiya,AS,AS16,#D0CDC1,1,4,2,tamiya26,,,,ライト グレイ,
+tamiya,AS,AS17,#0C5E4C,1,4,2,tamiya26,,,,濃緑色,
+tamiya,AS,AS18,#A7B5B4,1,4,2,tamiya26,,,,明灰緑色,
+tamiya,AS,AS19,#599AB6,1,4,2,tamiya26,,,,インターミディ エイトブルー,
+tamiya,AS,AS2,#A3ABA8,1,4,2,tamiya26,,,,明灰白色,
+tamiya,AS,AS20,#DDDCD6,1,4,2,tamiya26,,,,インシグニア ホワイト,
+tamiya,AS,AS21,#004234,1,4,2,tamiya26,,,,暗緑色2 (日本海軍),
+tamiya,AS,AS22,#7E5C51,1,4,2,tamiya26,,,,ダークアース,
+tamiya,AS,AS23,#3C6934,1,4,2,tamiya26,,,,ライトグリーン (ドイツ空軍),
+tamiya,AS,AS24,#244F34,1,4,2,tamiya26,,,,ダークグリーン (ドイツ空軍),
+tamiya,AS,AS25,#80A1B0,1,4,2,tamiya26,,,,ダーク ゴーストグレイ,
+tamiya,AS,AS26,#98B4C1,1,4,2,tamiya26,,,,ライト ゴーストグレイ,
+tamiya,AS,AS27,#8DA0A9,1,4,2,tamiya26,,,,ガンシップ グレイ2,
+tamiya,AS,AS28,#8DA0A9,1,4,2,tamiya26,,,,ミディアム グレイ,
+tamiya,AS,AS29,#B9C4A7,1,4,2,tamiya26,,,,灰緑色 (日本海軍),
+tamiya,AS,AS3,#285960,1,4,2,tamiya26,,,,グレイ グリーン,
+tamiya,AS,AS30,#355633,1,4,2,tamiya26,,,,ダークグリーン2 (イギリス空軍),
+tamiya,AS,AS31,#6D8E9B,1,4,2,tamiya26,,,,オーシャングレイ2 (イギリス空軍),
+tamiya,AS,AS32,#ABBFBB,1,4,2,tamiya26,,,,ミディアムシーグレイ2 (イギリス空軍),
+tamiya,AS,AS33,#6F6F6F,1,4,2,tamiya26,,,,カモフラージュ グレイ,
+tamiya,AS,AS4,#364951,1,4,2,tamiya26,,,,グレイ バイオレット,
+tamiya,AS,AS5,#8DB5B7,1,4,2,tamiya26,,,,ライト ブルー,
+tamiya,AS,AS6,#495D3D,1,4,2,tamiya26,,,,オリーブ ドラブ,
+tamiya,AS,AS7,#95A0A5,1,4,2,tamiya26,,,,ニュートラル グレイ,
+tamiya,AS,AS8,#003686,1,4,2,tamiya26,,,,ネービー ブルー,
+tamiya,AS,AS9,#4A5434,1,4,2,tamiya26,,,,ダーク グリーン,
+tamiya,LP,LP1,#231916,1,1,1,tamiya26,,,,ブラック,
+tamiya,LP,LP10,#FFFFFF,1,16,1,tamiya26,,,,ラッカー 溶剤,
+tamiya,LP,LP11,#DEDFDF,1,8,1,tamiya26,,,,シルバー,
+tamiya,LP,LP12,#717C85,1,4,1,tamiya26,,,,呉海軍工廠 グレイ(日本海軍),
+tamiya,LP,LP13,#535760,1,4,1,tamiya26,,,,佐世保海軍工廠 グレイ(日本海軍),
+tamiya,LP,LP14,#7D8086,1,4,1,tamiya26,,,,舞鶴海軍工廠 グレイ(日本海軍),
+tamiya,LP,LP15,#636B74,1,4,1,tamiya26,,,,横須賀海軍工廠 グレイ(日本海軍),
+tamiya,LP,LP16,#BFAF86,1,4,1,tamiya26,,,,木甲板色,
+tamiya,LP,LP17,#5E4A33,1,4,1,tamiya26,,,,リノリウム 甲板色,
+tamiya,LP,LP18,#97412A,1,4,1,tamiya26,,,,ダルレッド,
+tamiya,LP,LP19,#595757,1,8,1,tamiya26,,,,ガンメタル,
+tamiya,LP,LP2,#FFFFFF,1,1,1,tamiya26,,,,ホワイト,
+tamiya,LP,LP20,#898989,1,8,1,tamiya26,,,,ライト ガンメタル,
+tamiya,LP,LP21,#E60013,1,1,1,tamiya26,,,,イタリアン レッド,
+tamiya,LP,LP22,#FFFFFF,1,4,1,tamiya26,,,,フラット ベース,
+tamiya,LP,LP23,#FFFFFF,1,16,1,tamiya26,,,,フラット クリヤー,
+tamiya,LP,LP24,#FFFFFF,1,16,1,tamiya26,,,,セミグロス クリヤー,
+tamiya,LP,LP25,#7F5C2E,1,4,1,tamiya26,,,,茶色 (陸上自衛隊),
+tamiya,LP,LP26,#19603A,1,4,1,tamiya26,,,,濃緑色 (陸上自衛隊),
+tamiya,LP,LP27,#436878,1,4,1,tamiya26,,,,ジャーマン グレイ,
+tamiya,LP,LP28,#485A3B,1,4,1,tamiya26,,,,オリーブ ドラブ,
+tamiya,LP,LP29,#3C5C37,1,4,1,tamiya26,,,,オリーブ ドラブ２,
+tamiya,LP,LP3,#231916,1,4,1,tamiya26,,,,フラット ブラック,
+tamiya,LP,LP30,#E5B876,1,4,1,tamiya26,,,,ライト サンド,
+tamiya,LP,LP31,#004234,1,2,1,tamiya26,,,,暗緑色２ (日本海軍),
+tamiya,LP,LP32,#C9D2C3,1,2,1,tamiya26,,,,明灰白色 (日本海軍),
+tamiya,LP,LP33,#B9C4A7,1,2,1,tamiya26,,,,灰緑色 (日本海軍),
+tamiya,LP,LP34,#D0CDC1,1,4,1,tamiya26,,,,ライト グレイ,
+tamiya,LP,LP35,#DDDCD6,1,4,1,tamiya26,,,,インシグニア ホワイト,
+tamiya,LP,LP36,#80A1B0,1,4,1,tamiya26,,,,ダーク ゴーストグレイ,
+tamiya,LP,LP37,#98B4C1,1,4,1,tamiya26,,,,ライト ゴーストグレイ,
+tamiya,LP,LP38,#DCDDDD,1,8,1,tamiya26,,,,フラット アルミ,
+tamiya,LP,LP39,#FFFEF8,1,1,1,tamiya26,,,,レーシング ホワイト,
+tamiya,LP,LP4,#FFFFFF,1,4,1,tamiya26,,,,フラット ホワイト,
+tamiya,LP,LP40,#3E3A39,1,8,1,tamiya26,,,,メタリック ブラック,
+tamiya,LP,LP41,#00398E,1,1,1,tamiya26,,,,マイカ ブルー,
+tamiya,LP,LP42,#C8171E,1,1,1,tamiya26,,,,マイカ レッド,
+tamiya,LP,LP43,#FFFFFF,1,1,1,tamiya26,,,,パール ホワイト,
+tamiya,LP,LP44,#EE7800,1,8,1,tamiya26,,,,メタリック オレンジ,
+tamiya,LP,LP45,#003C90,1,1,1,tamiya26,,,,レーシング ブルー,
+tamiya,LP,LP46,#DF0011,1,8,1,tamiya26,,,,ピュアー メタリックレッド,
+tamiya,LP,LP47,#003C90,1,1,1,tamiya26,,,,パール ブルー,
+tamiya,LP,LP48,#DEDFDF,1,8,1,tamiya26,,,,スパークリング シルバー,
+tamiya,LP,LP49,#F8F8F8,1,16,1,tamiya26,,,,パール クリヤー,
+tamiya,LP,LP5,#231916,1,2,1,tamiya26,,,,セミグロス ブラック,
+tamiya,LP,LP50,#E60013,1,1,1,tamiya26,,,,ブライト レッド,
+tamiya,LP,LP51,#F18D00,1,1,1,tamiya26,,,,ピュアー オレンジ,
+tamiya,LP,LP52,#E60039,1,16,1,tamiya26,,,,クリヤー レッド,
+tamiya,LP,LP53,#F18900,1,16,1,tamiya26,,,,クリヤー オレンジ,
+tamiya,LP,LP54,#524333,1,4,1,tamiya26,,,,ダークアイアン (履帯色),
+tamiya,LP,LP55,#C9B44B,1,4,1,tamiya26,,,,ダークイエロー２ (ドイツ陸軍),
+tamiya,LP,LP56,#5B8361,1,4,1,tamiya26,,,,ダークグリーン２ (ドイツ陸軍),
+tamiya,LP,LP57,#4F3833,1,4,1,tamiya26,,,,レッドブラウン２ (ドイツ陸軍),
+tamiya,LP,LP58,#265438,1,4,1,tamiya26,,,,NATO グリーン,
+tamiya,LP,LP59,#6A4B31,1,4,1,tamiya26,,,,NATO ブラウン,
+tamiya,LP,LP6,#005BAC,1,1,1,tamiya26,,,,ピュアー ブルー,
+tamiya,LP,LP60,#231916,1,4,1,tamiya26,,,,NATO ブラック,
+tamiya,LP,LP61,#727171,1,8,1,tamiya26,,,,メタリック グレイ,
+tamiya,LP,LP62,#DBCA94,1,8,1,tamiya26,,,,チタン ゴールド,
+tamiya,LP,LP63,#DDDCCF,1,8,1,tamiya26,,,,チタン シルバー,
+tamiya,LP,LP64,#265438,1,4,1,tamiya26,,,,OD色 (陸上自衛隊),
+tamiya,LP,LP65,#231916,1,4,1,tamiya26,,,,ラバー ブラック,
+tamiya,LP,LP66,#FACD8F,1,4,1,tamiya26,,,,フラット フレッシュ,
+tamiya,LP,LP67,#C7C8C8,1,1,1,tamiya26,,,,スモーク,
+tamiya,LP,LP68,#00A6EA,1,16,1,tamiya26,,,,クリヤー ブルー,
+tamiya,LP,LP69,#FFE500,1,16,1,tamiya26,,,,クリヤー イエロー,
+tamiya,LP,LP7,#E60013,1,1,1,tamiya26,,,,ピュアー レッド,
+tamiya,LP,LP70,#DCDDDD,1,8,1,tamiya26,,,,アルミ シルバー,
+tamiya,LP,LP71,#D2C89B,1,8,1,tamiya26,,,,シャンパン ゴールド,
+tamiya,LP,LP72,#D4D9DC,1,8,1,tamiya26,,,,マイカ シルバー,
+tamiya,LP,LP73,#9B8F33,1,4,1,tamiya26,,,,カーキ,
+tamiya,LP,LP74,#994930,1,4,1,tamiya26,,,,フラットアース,
+tamiya,LP,LP75,#CBA77B,1,4,1,tamiya26,,,,バフ,
+tamiya,LP,LP76,#B28350,1,4,1,tamiya26,,,,イエローブラウン (DAK 1941〜),
+tamiya,LP,LP77,#E6B36E,1,4,1,tamiya26,,,,ライトブラウン (DAK 1942〜),
+tamiya,LP,LP78,#006894,1,4,1,tamiya26,,,,フラット ブルー,
+tamiya,LP,LP79,#E6001D,1,4,1,tamiya26,,,,フラット レッド,
+tamiya,LP,LP8,#FFF100,1,1,1,tamiya26,,,,ピュアー イエロー,
+tamiya,LP,LP80,#FFE100,1,4,1,tamiya26,,,,フラット イエロー,
+tamiya,LP,LP81,#1F2B66,1,1,1,tamiya26,,,,調色用 ブルー,
+tamiya,LP,LP82,#C8123D,1,1,1,tamiya26,,,,調色用 レッド,
+tamiya,LP,LP83,#FED700,1,1,1,tamiya26,,,,調色用 イエロー,
+tamiya,LP,LP84,#6F6F6F,1,4,1,tamiya26,,,,カモフラージュ グレイ,
+tamiya,LP,LP85,#848484,1,4,1,tamiya26,,,,ミディアム エアーグレイ,
+tamiya,LP,LP9,#FFFFFF,1,16,1,tamiya26,,,,クリヤー,
+tamiya,PS,PS1,#FFFFFF,1,1,2,tamiya26,,,,ホワイ,
+tamiya,PS,PS10,#724698,1,1,2,tamiya26,,,,パープル,
+tamiya,PS,PS11,#F1A0C3,1,1,2,tamiya26,,,,ピンク,
+tamiya,PS,PS12,#D5D5D6,1,8,2,tamiya26,,,,シルバー,
+tamiya,PS,PS13,#ECBC00,1,8,2,tamiya26,,,,ゴールド,
+tamiya,PS,PS14,#CC5D17,1,8,2,tamiya26,,,,コッパー,
+tamiya,PS,PS15,#E60013,1,8,2,tamiya26,,,,メタリック レッド,
+tamiya,PS,PS16,#0068B7,1,8,2,tamiya26,,,,メタリック ブルー,
+tamiya,PS,PS17,#008442,1,8,2,tamiya26,,,,メタリック グリーン,
+tamiya,PS,PS18,#494992,1,8,2,tamiya26,,,,メタリック パープル,
+tamiya,PS,PS19,#FBC600,1,1,2,tamiya26,,,,キャメル イエロー,
+tamiya,PS,PS2,#E60013,1,1,2,tamiya26,,,,レッド,
+tamiya,PS,PS20,#E60013,1,64,2,tamiya26,,,,蛍光 レッド,
+tamiya,PS,PS21,#009944,1,1,2,tamiya26,,,,パーク グリーン,
+tamiya,PS,PS22,#007447,1,1,2,tamiya26,,,,レーシング グリーン,
+tamiya,PS,PS23,#575555,1,8,2,tamiya26,,,,ガンメタル,
+tamiya,PS,PS24,#E94B2B,1,64,2,tamiya26,,,,蛍光 オレンジ,
+tamiya,PS,PS25,#007F55,1,1,2,tamiya26,,,,ブライト グリーン,
+tamiya,PS,PS27,#FFF100,1,64,2,tamiya26,,,,蛍光 イエロー,
+tamiya,PS,PS28,#9EC915,1,64,2,tamiya26,,,,蛍光 グリーン,
+tamiya,PS,PS29,#EB6BA4,1,64,2,tamiya26,,,,蛍光 ピンク,
+tamiya,PS,PS3,#00A5EA,1,1,2,tamiya26,,,,ライトブルー,
+tamiya,PS,PS30,#006EB7,1,1,2,tamiya26,,,,ブリリアント ブルー,
+tamiya,PS,PS31,#C8BEC3,1,1,2,tamiya26,,,,スモーク,
+tamiya,PS,PS32,#B2D3DB,1,1,2,tamiya26,,,,コルサ グレイ,
+tamiya,PS,PS33,#D5004D,1,1,2,tamiya26,,,,チェリー レッド,
+tamiya,PS,PS34,#E60013,1,1,2,tamiya26,,,,ブライト レッド,
+tamiya,PS,PS35,#5877BA,1,1,2,tamiya26,,,,ブルー バイオレット,
+tamiya,PS,PS36,#DCDDDD,1,8,2,tamiya26,,,,フロスト シルバー,
+tamiya,PS,PS37,#C8123D,1,1,2,tamiya26,,,,フロスト レッド,
+tamiya,PS,PS38,#0B5EAD,1,1,2,tamiya26,,,,フロスト ブルー,
+tamiya,PS,PS39,#00A5EA,1,1,2,tamiya26,,,,フロスト ライトブルー,
+tamiya,PS,PS4,#004098,1,1,2,tamiya26,,,,ブルー,
+tamiya,PS,PS40,#F1A0C3,1,1,2,tamiya26,,,,フロスト ピンク,
+tamiya,PS,PS41,#CBD0D3,1,8,2,tamiya26,,,,ブライト シルバー,
+tamiya,PS,PS42,#FFF100,1,1,2,tamiya26,,,,フロスト イエロー,
+tamiya,PS,PS43,#F08300,1,1,2,tamiya26,,,,フロスト オレンジ,
+tamiya,PS,PS44,#00A051,1,1,2,tamiya26,,,,フロスト グリーン,
+tamiya,PS,PS45,#584C9D,1,1,2,tamiya26,,,,フロスト パープル,
+tamiya,PS,PS48,#DDE2E5,1,8,2,tamiya26,,,,サテンシルバー アルマイト,
+tamiya,PS,PS49,#95C5E3,1,1,2,tamiya26,,,,スカイブルー アルマイト,
+tamiya,PS,PS5,#231916,1,1,2,tamiya26,,,,ブラック,
+tamiya,PS,PS50,#D4A3C2,1,1,2,tamiya26,,,,スパークル ピンクアルマイト,
+tamiya,PS,PS51,#848ABC,1,1,2,tamiya26,,,,パープル アルマイト,
+tamiya,PS,PS52,#D6C677,1,8,2,tamiya26,,,,シャンパン ゴールドアルマイト,
+tamiya,PS,PS54,#00A496,1,1,2,tamiya26,,,,コバルト グリーン,
+tamiya,PS,PS55,#FFFFFF,1,16,2,tamiya26,,,,フラット クリヤー,
+tamiya,PS,PS56,#D5B200,1,1,2,tamiya26,,,,マスタード イエロー,
+tamiya,PS,PS57,#FFFFFF,1,1,2,tamiya26,,,,パール ホワイト,
+tamiya,PS,PS58,#FFFFFF,1,16,2,tamiya26,,,,パール クリヤー,
+tamiya,PS,PS59,#003175,1,8,2,tamiya26,,,,ダークメタリック ブルー,
+tamiya,PS,PS6,#FFF100,1,1,2,tamiya26,,,,イエロー,
+tamiya,PS,PS60,#E60013,1,1,2,tamiya26,,,,ブライト マイカレッド,
+tamiya,PS,PS61,#E17B00,1,8,2,tamiya26,,,,メタリック オレンジ,
+tamiya,PS,PS62,#F18D00,1,1,2,tamiya26,,,,ピュアー オレンジ,
+tamiya,PS,PS63,#818D93,1,8,2,tamiya26,,,,ブライト ガンメタル,
+tamiya,PS,PS7,#EF7A00,1,1,2,tamiya26,,,,オレンジ,
+tamiya,PS,PS8,#5BB531,1,1,2,tamiya26,,,,ライト グリーン,
+tamiya,PS,PS9,#004B33,1,1,2,tamiya26,,,,グリーン,
+tamiya,TS,TS1,#7F5A44,1,256,2,tamiya26,,,,レッド ブラウン,
+tamiya,TS,TS10,#0088CF,1,256,2,tamiya26,,,,フレンチ ブルー,
+tamiya,TS,TS100,#717F87,1,8,2,tamiya26,,,,ブライトガンメタル (セミグロス),
+tamiya,TS,TS101,#FFFFFF,1,256,2,tamiya26,,,,ベース ホワイト,
+tamiya,TS,TS102,#00A496,1,256,2,tamiya26,,,,コバルト グリーン,
+tamiya,TS,TS11,#671A1F,1,256,2,tamiya26,,,,マルーン,
+tamiya,TS,TS12,#F08300,1,256,2,tamiya26,,,,オレンジ,
+tamiya,TS,TS13,#FFFFFF,1,16,2,tamiya26,,,,クリヤー,
+tamiya,TS,TS14,#231916,1,256,2,tamiya26,,,,ブラック,
+tamiya,TS,TS15,#00479D,1,256,2,tamiya26,,,,ブルー,
+tamiya,TS,TS16,#FFF100,1,256,2,tamiya26,,,,イエロー,
+tamiya,TS,TS17,#DCDDDD,1,8,2,tamiya26,,,,アルミ シルバー,
+tamiya,TS,TS18,#E6003E,1,8,2,tamiya26,,,,メタリック レッド,
+tamiya,TS,TS19,#0056A2,1,8,2,tamiya26,,,,メタリック ブルー,
+tamiya,TS,TS2,#214E3D,1,256,2,tamiya26,,,,ダーク グリーン,
+tamiya,TS,TS20,#009F41,1,8,2,tamiya26,,,,メタリック グリーン,
+tamiya,TS,TS21,#D6B400,1,8,2,tamiya26,,,,ゴールド,
+tamiya,TS,TS22,#DBE000,1,256,2,tamiya26,,,,ライト グリーン,
+tamiya,TS,TS23,#00A1E9,1,256,2,tamiya26,,,,ライト ブルー,
+tamiya,TS,TS24,#56498E,1,256,2,tamiya26,,,,パープル,
+tamiya,TS,TS25,#F4B4D0,1,256,2,tamiya26,,,,ピンク,
+tamiya,TS,TS26,#FFFFFF,1,256,2,tamiya26,,,,ピュアー ホワイト,
+tamiya,TS,TS27,#FFFFFF,1,256,2,tamiya26,,,,マット ホワイト,
+tamiya,TS,TS28,#3C5C37,1,256,2,tamiya26,,,,オリーブ ドラブ2,
+tamiya,TS,TS29,#231916,1,256,2,tamiya26,,,,セミグロス ブラック,
+tamiya,TS,TS3,#C9B44B,1,256,2,tamiya26,,,,ダーク イエロー,
+tamiya,TS,TS30,#DEDFDF,1,8,2,tamiya26,,,,シルバー リーフ,
+tamiya,TS,TS31,#EA5505,1,256,2,tamiya26,,,,ブライト オレンジ,
+tamiya,TS,TS32,#698F99,1,256,2,tamiya26,,,,ヘイズ グレイ,
+tamiya,TS,TS33,#97412A,1,256,2,tamiya26,,,,ダルレッド,
+tamiya,TS,TS34,#FABE00,1,256,2,tamiya26,,,,キャメル イエロー,
+tamiya,TS,TS35,#009944,1,256,2,tamiya26,,,,パーク グリーン,
+tamiya,TS,TS36,#E60013,1,64,2,tamiya26,,,,蛍光レッド,
+tamiya,TS,TS37,#601986,1,256,2,tamiya26,,,,ラベンダー,
+tamiya,TS,TS38,#595757,1,8,2,tamiya26,,,,ガンメタル,
+tamiya,TS,TS39,#C8171E,1,256,2,tamiya26,,,,マイカ レッド,
+tamiya,TS,TS4,#485157,1,256,2,tamiya26,,,,ジャーマン グレイ,
+tamiya,TS,TS40,#3E3A39,1,8,2,tamiya26,,,,メタリック ブラック,
+tamiya,TS,TS41,#00B1A7,1,256,2,tamiya26,,,,コーラル ブルー,
+tamiya,TS,TS42,#898989,1,8,2,tamiya26,,,,ライト ガンメタル,
+tamiya,TS,TS43,#004C32,1,256,2,tamiya26,,,,レーシング グリーン,
+tamiya,TS,TS44,#0065AE,1,256,2,tamiya26,,,,ブリリアント ブルー,
+tamiya,TS,TS45,#FFFFFF,1,256,2,tamiya26,,,,パール ホワイト,
+tamiya,TS,TS46,#E5B876,1,256,2,tamiya26,,,,ライト サンド,
+tamiya,TS,TS47,#FFE100,1,256,2,tamiya26,,,,クローム イエロー,
+tamiya,TS,TS48,#708894,1,256,2,tamiya26,,,,ガンシップ グレイ,
+tamiya,TS,TS49,#E60013,1,256,2,tamiya26,,,,ブライト レッド,
+tamiya,TS,TS5,#495D3D,1,256,2,tamiya26,,,,オリーブ ドラブ,
+tamiya,TS,TS50,#00398E,1,256,2,tamiya26,,,,マイカ ブルー,
+tamiya,TS,TS51,#003C90,1,256,2,tamiya26,,,,レーシング ブルー,
+tamiya,TS,TS52,#22AC39,1,256,2,tamiya26,,,,キャンディー ライムグリーン,
+tamiya,TS,TS53,#031C6A,1,8,2,tamiya26,,,,ディープ メタリックブルー,
+tamiya,TS,TS54,#007AAA,1,8,2,tamiya26,,,,ライト メタリックブルー,
+tamiya,TS,TS55,#002F55,1,256,2,tamiya26,,,,ダーク ブルー,
+tamiya,TS,TS56,#F08300,1,256,2,tamiya26,,,,ブリリアント オレンジ,
+tamiya,TS,TS57,#5877BA,1,256,2,tamiya26,,,,ブルー バイオレット,
+tamiya,TS,TS58,#79A2CA,1,256,2,tamiya26,,,,パール ライトブルー,
+tamiya,TS,TS59,#CF93A6,1,256,2,tamiya26,,,,パール ライトレッド,
+tamiya,TS,TS6,#231916,1,256,2,tamiya26,,,,マット ブラック,
+tamiya,TS,TS60,#89C4A9,1,256,2,tamiya26,,,,パール グリーン,
+tamiya,TS,TS61,#265438,1,256,2,tamiya26,,,,NATO グリーン,
+tamiya,TS,TS62,#6A4B31,1,256,2,tamiya26,,,,NATO ブラウン,
+tamiya,TS,TS63,#2F2125,1,256,2,tamiya26,,,,NATO ブラック,
+tamiya,TS,TS64,#00243F,1,256,2,tamiya26,,,,ダーク マイカブルー,
+tamiya,TS,TS65,#FFFFFF,1,16,2,tamiya26,,,,パール クリヤー,
+tamiya,TS,TS66,#717C85,1,256,2,tamiya26,,,,呉海軍工廠 グレイ(日本海軍),
+tamiya,TS,TS67,#535760,1,256,2,tamiya26,,,,佐世保海軍工廠 グレイ(日本海軍),
+tamiya,TS,TS68,#BFAF86,1,256,2,tamiya26,,,,木甲板色,
+tamiya,TS,TS69,#5E4A33,1,256,2,tamiya26,,,,リノリウム 甲板色,
+tamiya,TS,TS7,#FFFEF8,1,256,2,tamiya26,,,,レーシング ホワイト,
+tamiya,TS,TS70,#265438,1,256,2,tamiya26,,,,OD色 (陸上自衛隊),
+tamiya,TS,TS71,#CAC4C8,1,256,2,tamiya26,,,,スモーク,
+tamiya,TS,TS72,#00AFD5,1,16,2,tamiya26,,,,クリヤー ブルー,
+tamiya,TS,TS73,#F18900,1,16,2,tamiya26,,,,クリヤー オレンジ,
+tamiya,TS,TS74,#E60039,1,16,2,tamiya26,,,,クリヤー レッド,
+tamiya,TS,TS75,#D2C89B,1,8,2,tamiya26,,,,シャンパン ゴールド,
+tamiya,TS,TS76,#DCDDDD,1,8,2,tamiya26,,,,マイカ シルバー,
+tamiya,TS,TS77,#FACD8F,1,4,2,tamiya26,,,,フラット フレッシュ,
+tamiya,TS,TS78,#3F6B76,1,256,2,tamiya26,,,,フィールド グレイ,
+tamiya,TS,TS79,#FFFFFF,1,16,2,tamiya26,,,,セミグロス クリヤー,
+tamiya,TS,TS8,#E60013,1,256,2,tamiya26,,,,イタリアン レッド,
+tamiya,TS,TS80,#FFFFFF,1,16,2,tamiya26,,,,フラット クリヤー,
+tamiya,TS,TS81,#C1CAC9,1,256,2,tamiya26,,,,ロイヤル ライトグレイ,
+tamiya,TS,TS82,#231916,1,256,2,tamiya26,,,,ラバー ブラック,
+tamiya,TS,TS83,#C1C5CC,1,8,2,tamiya26,,,,メタル シルバー,
+tamiya,TS,TS84,#D2C37C,1,8,2,tamiya26,,,,メタル ゴールド,
+tamiya,TS,TS85,#E60013,1,256,2,tamiya26,,,,ブライト マイカレッド,
+tamiya,TS,TS86,#E60013,1,256,2,tamiya26,,,,ピュアー レッド,
+tamiya,TS,TS87,#DBCA94,1,8,2,tamiya26,,,,チタン ゴールド,
+tamiya,TS,TS88,#DDDCCF,1,8,2,tamiya26,,,,チタン シルバー,
+tamiya,TS,TS89,#003C90,1,256,2,tamiya26,,,,パール ブルー,
+tamiya,TS,TS9,#00583B,1,256,2,tamiya26,,,,ブリティッシュ グリーン,
+tamiya,TS,TS90,#7F5C2E,1,256,2,tamiya26,,,,茶色 (陸上自衛隊),
+tamiya,TS,TS91,#19603A,1,256,2,tamiya26,,,,濃緑色 (陸上自衛隊),
+tamiya,TS,TS92,#EE7800,1,8,2,tamiya26,,,,メタリック オレンジ,
+tamiya,TS,TS93,#005BAC,1,256,2,tamiya26,,,,ピュアー ブルー,
+tamiya,TS,TS94,#727171,1,8,2,tamiya26,,,,メタリック グレイ,
+tamiya,TS,TS95,#DF0011,1,8,2,tamiya26,,,,ピュアー メタリックレッド,
+tamiya,TS,TS96,#F7AB00,1,64,2,tamiya26,,,,蛍光 オレンジ,
+tamiya,TS,TS97,#FFEA00,1,256,2,tamiya26,,,,パール イエロー,
+tamiya,TS,TS98,#F39800,1,256,2,tamiya26,,,,ピュアー オレンジ,
+tamiya,TS,TS99,#7D8086,1,256,2,tamiya26,,,,舞鶴海軍工廠 グレイ(日本海軍),
+tamiya,X,X1,#231916,6,1,5,tamiya26,,,,ブラック,
+tamiya,X,X10,#595757,6,8,5,tamiya26,,,,ガン メタル,
+tamiya,X,X11,#D7D7D8,6,8,5,tamiya26,,,,クローム シルバー,
+tamiya,X,X12,#CDA701,6,8,5,tamiya26,,,,ゴールド リーフ,
+tamiya,X,X13,#006189,6,8,5,tamiya26,,,,メタリック ブルー,
+tamiya,X,X14,#00A5EA,6,1,5,tamiya26,,,,スカイ ブルー,
+tamiya,X,X15,#72BB2B,6,1,5,tamiya26,,,,ライト グリーン,
+tamiya,X,X16,#56498E,6,1,5,tamiya26,,,,パープル,
+tamiya,X,X17,#EE84B2,6,1,5,tamiya26,,,,ピンク,
+tamiya,X,X18,#231916,6,1,5,tamiya26,,,,セミグロス ブラック,
+tamiya,X,X19,#C7C8C8,6,1,5,tamiya26,,,,スモーク,
+tamiya,X,X2,#FFFFFF,6,1,5,tamiya26,,,,ホワイト,
+tamiya,X,X20,#FFFFFF,6,16,5,tamiya26,,,,エナメル 溶剤,
+tamiya,X,X20A,#FFFFFF,6,16,5,tamiya26,,,,アクリル 溶剤,
+tamiya,X,X21,#FFFFFF,6,4,5,tamiya26,,,,フラット ベース,
+tamiya,X,X22,#FFFFFF,6,16,5,tamiya26,,,,クリヤー,
+tamiya,X,X23,#00A6EA,6,16,5,tamiya26,,,,クリヤー ブルー,
+tamiya,X,X24,#FFE500,6,16,5,tamiya26,,,,クリヤー イエロー,
+tamiya,X,X25,#009E41,6,16,5,tamiya26,,,,クリヤー グリーン,
+tamiya,X,X26,#EF7E00,6,16,5,tamiya26,,,,クリヤー オレンジ,
+tamiya,X,X27,#E60039,6,16,5,tamiya26,,,,クリヤー レッド,
+tamiya,X,X28,#009944,6,1,5,tamiya26,,,,パーク グリーン,
+tamiya,X,X3,#163560,6,1,5,tamiya26,,,,ロイヤル ブルー,
+tamiya,X,X31,#DDCBA5,6,8,5,tamiya26,,,,チタン ゴールド,
+tamiya,X,X32,#DFDDCF,6,8,5,tamiya26,,,,チタン シルバー,
+tamiya,X,X33,#877575,6,1,5,tamiya26,,,,ブロンズ,
+tamiya,X,X34,#C05608,6,8,5,tamiya26,,,,メタリック ブラウン,
+tamiya,X,X35,#FFFFFF,2,16,5,tamiya26,,,,セミグロス クリヤー,
+tamiya,X,X4,#004EA2,6,1,5,tamiya26,,,,ブルー,
+tamiya,X,X5,#006B45,6,1,5,tamiya26,,,,グリーン,
+tamiya,X,X6,#ED6C00,6,1,5,tamiya26,,,,オレンジ,
+tamiya,X,X7,#E60013,6,1,5,tamiya26,,,,レッド,
+tamiya,X,X8,#FFDE00,6,1,5,tamiya26,,,,レモン イエロー,
+tamiya,X,X9,#74372F,6,1,5,tamiya26,,,,ブラウン,
+tamiya,XF,XF1,#231916,6,4,5,tamiya26,,,,フラット ブラック,
+tamiya,XF,XF10,#4F3833,6,4,5,tamiya26,,,,フラット ブラウン,
+tamiya,XF,XF11,#00473A,6,4,5,tamiya26,,,,暗緑色,
+tamiya,XF,XF12,#C9D2C3,6,4,5,tamiya26,,,,明灰白色,
+tamiya,XF,XF13,#014542,6,4,5,tamiya26,,,,濃緑色,
+tamiya,XF,XF14,#EDECD9,6,4,5,tamiya26,,,,明灰緑色,
+tamiya,XF,XF15,#FACD8F,6,4,5,tamiya26,,,,フラット フレッシュ,
+tamiya,XF,XF16,#B7B8B8,6,8,5,tamiya26,,,,フラット アルミ,
+tamiya,XF,XF17,#103A58,6,4,5,tamiya26,,,,シーブルー,
+tamiya,XF,XF18,#0878A0,6,4,5,tamiya26,,,,ミディアム ブルー,
+tamiya,XF,XF19,#C9D1C9,6,4,5,tamiya26,,,,スカイ グレイ,
+tamiya,XF,XF2,#FFFFFF,6,4,5,tamiya26,,,,フラット ホワイト,
+tamiya,XF,XF20,#B0BCB7,6,4,5,tamiya26,,,,ミディアム グレイ,
+tamiya,XF,XF21,#E8F1CD,6,4,5,tamiya26,,,,スカイ,
+tamiya,XF,XF22,#526367,6,4,5,tamiya26,,,,RLM グレイ,
+tamiya,XF,XF23,#7ECCDE,6,4,5,tamiya26,,,,ライト ブルー,
+tamiya,XF,XF24,#326878,6,4,5,tamiya26,,,,ダーク グレイ,
+tamiya,XF,XF25,#849AA6,6,4,5,tamiya26,,,,ライト シーグレイ,
+tamiya,XF,XF26,#0A6441,6,4,5,tamiya26,,,,ディープ グリーン,
+tamiya,XF,XF27,#004631,6,4,5,tamiya26,,,,ブラック グリーン,
+tamiya,XF,XF28,#A58063,6,8,5,tamiya26,,,,ダーク コッパー,
+tamiya,XF,XF3,#FFE100,6,4,5,tamiya26,,,,フラット イエロー,
+tamiya,XF,XF4,#B9C227,6,4,5,tamiya26,,,,イエロー グリーン,
+tamiya,XF,XF49,#9B8F33,6,4,5,tamiya26,,,,カーキ,
+tamiya,XF,XF5,#5B8361,6,4,5,tamiya26,,,,フラット グリーン,
+tamiya,XF,XF50,#0C81A5,6,4,5,tamiya26,,,,フィールド ブルー,
+tamiya,XF,XF51,#575F5C,6,4,5,tamiya26,,,,カーキ ドラブ,
+tamiya,XF,XF52,#994930,6,4,5,tamiya26,,,,フラット アース,
+tamiya,XF,XF53,#71848E,6,4,5,tamiya26,,,,ニュートラル グレイ,
+tamiya,XF,XF54,#ACB2B3,6,4,5,tamiya26,,,,ダーク シーグレイ,
+tamiya,XF,XF55,#CBBEA2,6,4,5,tamiya26,,,,デッキタン,
+tamiya,XF,XF56,#727171,6,8,5,tamiya26,,,,メタリック グレイ,
+tamiya,XF,XF57,#CBA77B,6,4,5,tamiya26,,,,バフ,
+tamiya,XF,XF58,#204837,6,4,5,tamiya26,,,,オリーブ グリーン,
+tamiya,XF,XF59,#F3C787,6,4,5,tamiya26,,,,デザート イエロー,
+tamiya,XF,XF6,#C44D27,6,8,5,tamiya26,,,,コッパー,
+tamiya,XF,XF60,#C8B241,6,4,5,tamiya26,,,,ダーク イエロー,
+tamiya,XF,XF61,#004631,6,4,5,tamiya26,,,,ダーク グリーン,
+tamiya,XF,XF62,#485A3B,6,4,5,tamiya26,,,,オリーブ ドラブ,
+tamiya,XF,XF63,#436878,6,4,5,tamiya26,,,,ジャーマン グレイ,
+tamiya,XF,XF64,#503928,6,4,5,tamiya26,,,,レッド ブラウン,
+tamiya,XF,XF65,#3F6B76,6,4,5,tamiya26,,,,フィールド グレイ,
+tamiya,XF,XF66,#516A76,6,4,5,tamiya26,,,,ライト グレイ,
+tamiya,XF,XF67,#265438,2,4,5,tamiya26,,,,NATO グリーン,
+tamiya,XF,XF68,#6A4B31,2,4,5,tamiya26,,,,NATO ブラウン,
+tamiya,XF,XF69,#231916,2,4,5,tamiya26,,,,NATO ブラック,
+tamiya,XF,XF7,#E6001D,6,4,5,tamiya26,,,,フラット レッド,
+tamiya,XF,XF70,#004234,6,4,5,tamiya26,,,,暗緑色2,
+tamiya,XF,XF71,#759875,6,4,5,tamiya26,,,,コックピット色 (日本海軍),
+tamiya,XF,XF72,#7F5C2E,2,4,5,tamiya26,,,,茶色 (陸上自衛隊),
+tamiya,XF,XF73,#19603A,2,4,5,tamiya26,,,,濃緑色 (陸上自衛隊),
+tamiya,XF,XF74,#265438,2,4,5,tamiya26,,,,OD色 (陸上自衛隊),
+tamiya,XF,XF75,#717C85,2,4,5,tamiya26,,,,呉海軍工廠 グレイ(日本海軍),
+tamiya,XF,XF76,#B9C4A7,2,4,5,tamiya26,,,,灰緑色 (日本海軍),
+tamiya,XF,XF77,#535760,2,4,5,tamiya26,,,,佐世保海軍工廠 グレイ(日本海軍),
+tamiya,XF,XF78,#BFAF86,2,4,5,tamiya26,,,,木甲板色,
+tamiya,XF,XF79,#5E4A33,2,4,5,tamiya26,,,,リノリウム 甲板色,
+tamiya,XF,XF8,#006894,6,4,5,tamiya26,,,,フラット ブルー,
+tamiya,XF,XF80,#C1CAC9,2,4,5,tamiya26,,,,ロイヤル ライトグレイ,
+tamiya,XF,XF81,#355633,2,4,5,tamiya26,,,,ダークグリーン2 (イギリス空軍),
+tamiya,XF,XF82,#6C8D9A,2,4,5,tamiya26,,,,オーシャングレイ2 (イギリス空軍),
+tamiya,XF,XF83,#ABBFBA,2,4,5,tamiya26,,,,ミディアムシーグレイ2 (イギリス空軍),
+tamiya,XF,XF84,#524333,6,4,5,tamiya26,,,,ダークアイアン (履帯色),
+tamiya,XF,XF85,#231916,6,4,5,tamiya26,,,,ラバー ブラック,
+tamiya,XF,XF86,#FFFFFF,2,16,5,tamiya26,,,,フラット クリヤー,
+tamiya,XF,XF87,#7D8086,2,4,5,tamiya26,,,,舞鶴海軍工廠 グレイ(日本海軍),
+tamiya,XF,XF88,#C9B44B,2,4,5,tamiya26,,,,ダークイエロー2 (ドイツ陸軍),
+tamiya,XF,XF89,#5B8361,2,4,5,tamiya26,,,,ダークグリーン2 (ドイツ陸軍),
+tamiya,XF,XF9,#612D30,6,4,5,tamiya26,,,,ハルレッド,
+tamiya,XF,XF90,#4F3833,2,4,5,tamiya26,,,,レッドブラウン2 (ドイツ陸軍),
+tamiya,XF,XF91,#636B74,2,4,5,tamiya26,,,,横須賀海軍工廠 グレイ(日本海軍),
+tamiya,XF,XF92,#B28350,2,4,5,tamiya26,,,,イエローブラウン (DAK 1941〜),
+tamiya,XF,XF93,#E6B36E,2,4,5,tamiya26,,,,ライトブラウン (DAK 1942〜),

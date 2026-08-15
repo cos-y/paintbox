@@ -30,27 +30,48 @@ class DanglingResult:
     samples: dict[str, list[str]]  # 字段 -> 最多 3 个示例
 
 
+def missing_fields(r: Row) -> list[str]:
+    """该行缺失的必需字段（与 check_dangling 同一判定）。
+
+    判定：brand/serie/code 空串、color/bases None、surfaces/mediums 0。
+    """
+    missing: list[str] = []
+    for f in REQUIRED_FIELDS:
+        v = getattr(r, f)
+        if f in ("surfaces", "mediums"):
+            ok = v != 0
+        elif isinstance(v, str):
+            ok = bool(v)
+        else:
+            ok = v is not None
+        if not ok:
+            missing.append(f)
+    return missing
+
+
+def partial_data(r: Row) -> bool:
+    """color/bases/surfaces/mediums 部分提供（有值但不全）→ 数据不完整。
+
+    纯补充源（gunze26 类：只带 code/equivs，四维全空）合法；
+    半提供（cc070 类：有 color 却无 bases/surfaces/mediums）拒绝。
+    """
+    vals = [r.color is not None, r.bases is not None,
+            r.surfaces != 0, r.mediums != 0]
+    return any(vals) and not all(vals)
+
+
 def check_dangling(wide: Wide) -> DanglingResult:
     counts: dict[str, int] = {f: 0 for f in REQUIRED_FIELDS}
     samples: dict[str, list[str]] = {f: [] for f in REQUIRED_FIELDS}
     rows_missing = 0
     for r in wide.paints:
-        row_missing = []
-        for f in REQUIRED_FIELDS:
-            v = getattr(r, f)
-            if f in ("surfaces", "mediums"):
-                missing = v == 0
-            elif isinstance(v, str):
-                missing = not v
-            else:
-                missing = v is None
-            if missing:
-                counts[f] += 1
-                row_missing.append(f)
-                if len(samples[f]) < 3:
-                    samples[f].append(f"{r.brand}:{r.code}")
+        row_missing = missing_fields(r)
         if row_missing:
             rows_missing += 1
+            for f in row_missing:
+                counts[f] += 1
+                if len(samples[f]) < 3:
+                    samples[f].append(f"{r.brand}:{r.code}")
     return DanglingResult(total=len(wide.paints), rows_missing=rows_missing,
                           counts=counts, samples=samples)
 
@@ -104,9 +125,21 @@ def _channel_delta(a: int, b: int) -> int:
     return sum(abs(((a >> s) & 0xFF) - ((b >> s) & 0xFF)) for s in (16, 8, 0))
 
 
-def row_priority(row: Row, priority: dict[str, int]) -> int:
-    """行的优先级 = 其各来源 priority 的最大值（未登记 = 0）。"""
-    return max([priority.get(s, 0) for s in row.sources] or [0])
+def _adopted(old: Row, new: Row, color, bases, serie, desc) -> bool:
+    """主体数据（color/bases/serie/desc）是否有 new 的值实际生效。
+
+    new 与 old 全同（或 --keep 下冲突列全部保留）→ 不采纳 → sources 不并入；
+    补缺（old 缺字段被 new 补上）也算采纳。仅 union 了 surfaces/mediums/
+    equivs 不算（equivs 来源由 equiv.source 承载）。
+    """
+    for f, v in (("color", color), ("bases", bases), ("serie", serie)):
+        n, o = getattr(new, f), getattr(old, f)
+        if n is not None and n != o and v == n:
+            return True
+    for lang, v in desc.items():
+        if v != old.desc.get(lang) and new.desc.get(lang) == v:
+            return True
+    return False
 
 
 def _mutex_conflict(flags: dict[str, int], group_name: str) -> list[str]:
@@ -115,28 +148,31 @@ def _mutex_conflict(flags: dict[str, int], group_name: str) -> list[str]:
     return [group_name] if len(lit) > 1 else []
 
 
-def merge_row(old: Optional[Row], new: Row, priority: dict[str, int],
-              now: int | None = None) -> tuple[Row, RowDiff]:
-    now = now or int(time.time())
+def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row, RowDiff]:
+    """合并一行。overwrite=True（默认）时新行覆盖旧行的同名冲突字段；
+    overwrite=False 时旧列优先（只补缺，surfaces/mediums/equivs/sources 仍 union）。
+    更新时间不入文件（由 build_data 从 git 派生）。
+    """
     if old is None:
-        return new.model_copy(update={"created_ts": now, "update_ts": now}), \
-            RowDiff(new.brand, new.code, "new")
+        return new, RowDiff(new.brand, new.code, "new")
 
-    new_wins = row_priority(new, priority) >= row_priority(old, priority)
+    def pick(newv, oldv):
+        return (newv if newv is not None else oldv) if overwrite else (
+            oldv if oldv is not None else newv)
+
+    # 同名语言：overwrite 时 new 覆盖，否则 old 覆盖（另一个补缺）
+    src = {**old.desc, **new.desc} if overwrite else {**new.desc, **old.desc}
+    color = pick(new.color, old.color)
+    bases = pick(new.bases, old.bases)
+    serie = pick(new.serie, old.serie)
+
     # 新行除 equivs 外无任何其他数据（增量补充等价声明）：其 sources 只由等价
     # 来源组成，不并入行的 sources（等价来源由 equiv.source 承载，见 schema 约定）
-    if _only_equivs(new):
+    # 主体数据（color/bases/serie/desc）未被采纳时 sources 也不并入
+    if _only_equivs(new) or not _adopted(old, new, color, bases, serie, src):
         merged_sources = old.sources
     else:
         merged_sources = _dedupe(old.sources + new.sources)
-    # 同名语言：new_wins 时 new 覆盖，否则 old 覆盖（另一个补缺）
-    src = {**old.desc, **new.desc} if new_wins else {**new.desc, **old.desc}
-    color = (new.color if new.color is not None else old.color) if new_wins else (
-        old.color if old.color is not None else new.color)
-    bases = (new.bases if new.bases is not None else old.bases) if new_wins else (
-        old.bases if old.bases is not None else new.bases)
-    serie = (new.serie if new.serie is not None else old.serie) if new_wins else (
-        old.serie if old.serie is not None else new.serie)
 
     merged = Row(
         brand=old.brand,
@@ -150,8 +186,6 @@ def merge_row(old: Optional[Row], new: Row, priority: dict[str, int],
         mediums=old.mediums | new.mediums,
         sources=merged_sources,
         note=old.note or new.note,
-        created_ts=old.created_ts,
-        update_ts=old.update_ts,
     )
 
     fields: list[FieldDiff] = []
@@ -188,21 +222,25 @@ def merge_row(old: Optional[Row], new: Row, priority: dict[str, int],
             )
     for g in MUTEX_GROUPS:
         conflicts += [f"{old.brand}:{old.code} mutex {c}" for c in _mutex_conflict(merged.surfaces, g)]
-    if new_wins is False:
-        fields.append(FieldDiff("priority", old.sources, new.sources, "rejected"))
+    # overwrite=False 时被拒绝的覆盖（旧列保留，只报告）
+    if not overwrite:
+        for f in ("color", "bases", "serie"):
+            o, n = getattr(old, f), getattr(new, f)
+            if n is not None and n != o:
+                fields.append(FieldDiff(f, o, n, "rejected"))
+        for lang in sorted(set(new.desc) & set(old.desc)):
+            if new.desc[lang] != old.desc[lang]:
+                fields.append(FieldDiff(f"desc.{lang}", old.desc[lang], new.desc[lang], "rejected"))
 
-    merged = merged.model_copy(update={"update_ts": now})
     return merged, RowDiff(old.brand, old.code, "updated", fields, conflicts)
 
 
-def merge_wide(old: Optional[Wide], new: Wide, priority: dict[str, int],
-               now: int | None = None) -> MergeResult:
-    now = now or int(time.time())
+def merge_wide(old: Optional[Wide], new: Wide, overwrite: bool = True) -> MergeResult:
     by_key = old.by_key() if old else {}
     diffs: list[RowDiff] = []
     conflicts: list[str] = []
     for row in new.paints:
-        merged, diff = merge_row(by_key.get(row.key()), row, priority, now=now)
+        merged, diff = merge_row(by_key.get(row.key()), row, overwrite)
         by_key[row.key()] = merged
         diffs.append(diff)
         conflicts += diff.conflicts

@@ -7,7 +7,7 @@
 
 设计约定：
 - 行序 = (brand, serie, natural(code)) 排序，index 由此确定，wasm majors 与 equivs 共用
-- surfaces 位转换：wide 是 FL=1<<5/PA=1<<6，wasm/前端是 PA=1<<5/FL=1<<6，生成时对调 bit5/6
+- surfaces 位序与 wasm/前端统一（FL=1<<6/PA=1<<5，wide 数据直接正确，无转换）
 - desc 只进 i18n（不进主数据）；equivs 独立文件；dangling equivs 跳过（不生成对）
 - 不做传递闭包：equivs 只保留源直接声明的方向
 """
@@ -28,12 +28,6 @@ OUT = ROOT / "web" / "static"
 PAINTS_DIR = OUT / "paints"
 
 SCHEMA = "paintbox.paints.v2"
-
-# wide surfaces 位 -> wasm/前端位（PA/FL 对调）
-_WIDE_TO_WASM = {1 << 0: 1 << 0, 1 << 1: 1 << 1, 1 << 2: 1 << 2, 1 << 3: 1 << 3,
-                 1 << 4: 1 << 4, 1 << 5: 1 << 6, 1 << 6: 1 << 5, 1 << 7: 1 << 7,
-                 1 << 8: 1 << 8}
-
 
 def natural_key(s: str) -> list:
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", s)]
@@ -68,15 +62,18 @@ def sanitize_en(name: str) -> str:
 
 
 def to_wasm_surfaces(v: int) -> int:
-    out = 0
-    for bit in (1 << i for i in range(9)):
-        if v & bit:
-            out |= _WIDE_TO_WASM[bit]
-    return out
+    # wide 与 wasm/前端位序已统一（FL=1<<6, PA=1<<5），无需转换
+    return v
 
 
 def load_wide() -> dict:
-    return json.loads(WIDE.read_text(encoding="utf-8"))
+    meta = json.loads(WIDE.read_text(encoding="utf-8"))
+    from wide.csvio import read_paints_csv
+    paints = [r.model_dump() for r in read_paints_csv(WIDE.with_suffix(".csv"))]
+    return {"schema": meta.get("schema", ""),
+            "generatedAt": meta.get("generatedAt", ""),
+            "sources": meta.get("sources", {}),
+            "paints": paints}
 
 
 def main() -> None:
@@ -98,7 +95,7 @@ def main() -> None:
     source_id = {s: 1 << i for i, s in enumerate(sources_all)}
 
     cols = {k: [] for k in ("brand", "serie", "code", "color", "bases",
-                            "surfaces", "mediums", "sources", "updated")}
+                            "surfaces", "mediums", "sources")}
     stats = Counter()
     for r in rows:
         cols["brand"].append(brand_id[r["brand"]])
@@ -112,7 +109,6 @@ def main() -> None:
         for s in r.get("sources", []):
             mask |= source_id[s]
         cols["sources"].append(mask)
-        cols["updated"].append(r.get("update_ts") or 0)
         stats[r["brand"]] += 1
 
     blob = [
@@ -120,7 +116,7 @@ def main() -> None:
         brands, series_list, sources_all,
         cols["brand"], cols["serie"], cols["code"],
         cols["color"], cols["bases"], cols["surfaces"], cols["mediums"],
-        cols["sources"], cols["updated"],
+        cols["sources"],
     ]
     (OUT / "paints.bin").write_bytes(msgpack.packb(blob, use_bin_type=False))
     print(f"paints.bin: {len(msgpack.packb(blob, use_bin_type=False))} bytes, {n} rows, "

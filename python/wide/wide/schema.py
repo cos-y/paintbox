@@ -44,8 +44,6 @@ class Row(BaseModel):
     mediums: int = 0  # bitflags，可 OR
     sources: list[str] = Field(default_factory=list)  # 引用 sources.json 的 id
     note: str | None = None  # 人工维护说明，merge 不生成
-    created_ts: int = 0  # 数据库语义：merge 自动维护，业务字段放前面
-    update_ts: int = 0
 
     def key(self) -> tuple[str, str]:
         return (self.brand, self.code)

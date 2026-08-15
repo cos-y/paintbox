@@ -228,7 +228,6 @@ struct PaintsBlob(
     Vec<u16>,              // 10 col surfaces
     Vec<u16>,              // 11 col mediums
     serde::de::IgnoredAny, // 12 col sources bitmap（JS 用）
-    serde::de::IgnoredAny, // 13 col updated（JS 用）
 );
 
 #[derive(Debug, Serialize)]
