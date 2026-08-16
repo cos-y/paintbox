@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-16T00:44:50.927108+00:00",
+ "generatedAt": "2026-08-16T12:03:25.661288+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -96,6 +96,11 @@
    "id": "gaia",
    "url": "https://www.gaianotes.com/products/gaia-color_chart.html",
    "title": "ガイアカラーチャート"
+  },
+  "gh_minp": {
+   "id": "gh_minp",
+   "url": "https://github.com/Arcturus5404/miniature-paints",
+   "title": "Miniature Painter Pro"
   }
  }
 }

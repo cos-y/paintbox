@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus, Search, X, Funnel } from '@lucide/svelte';
+	import { ChevronLeft, Check, Plus, Search, X, Funnel, ExternalLink } from '@lucide/svelte';
 	import { Card, Badge } from 'flowbite-svelte';
 	import {
 		getCatalog,
@@ -11,7 +11,7 @@
 	} from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav, goBackOneLevel } from '$lib/stocknav.svelte';
-	import { isMedia } from '$lib/utils.svelte';
+	import { isMedia, openExternal } from '$lib/utils.svelte';
 	import { drawer } from '$lib/drawer.svelte';
 	import { registerBackHandler, unregisterBackHandler } from '$lib/back.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
@@ -181,7 +181,7 @@
 
 {#snippet filterBar()}
 	<div
-		class="max-h-[50dvh] shrink-0 overflow-y-auto border-b border-theme px-4 py-3 dark:border-theme"
+		class="border-theme dark:border-theme max-h-[50dvh] shrink-0 overflow-y-auto border-b px-4 py-3"
 	>
 		<StockFilterPanel />
 	</div>
@@ -211,7 +211,7 @@
 {#snippet seriesNav()}
 	{#if isMedia().xl}
 		<!-- 桌面侧栏：宽栏（图标 + 系列名/描述 + 库存） -->
-		<div class="w-56 shrink-0 overflow-y-auto border-r border-theme dark:border-theme">
+		<div class="border-theme dark:border-theme w-56 shrink-0 overflow-y-auto border-r">
 			{#each visibleSeries as [serie, paints]}
 				{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 				{@const ownCount = ownedCountInSerie(paints)}
@@ -250,7 +250,7 @@
 		</div>
 	{:else}
 		<!-- 移动侧栏：极窄栏（第一行 图标 + 库存角标 + 型号总数，第二行 系列名小字） -->
-		<div class="w-24 shrink-0 overflow-y-auto border-r border-theme dark:border-theme">
+		<div class="border-theme dark:border-theme w-24 shrink-0 overflow-y-auto border-r">
 			{#each visibleSeries as [serie, paints]}
 				{@const serieMeta = getSerieMeta(selectedBrand, serie)}
 				{@const ownCount = ownedCountInSerie(paints)}
@@ -387,7 +387,7 @@
 {/snippet}
 
 <div class="flex h-full flex-col">
-	<div class="shrink-0 border-b border-theme px-4 py-2 dark:border-theme">
+	<div class="border-theme dark:border-theme shrink-0 border-b px-4 py-2">
 		<div class="flex min-h-13 items-center gap-2">
 			{#if level > 0}
 				<button
@@ -404,8 +404,23 @@
 						? 'max-sm:pointer-events-none max-sm:opacity-0'
 						: 'opacity-100'}"
 				>
-					<div class="truncate text-xl font-semibold text-gray-900 dark:text-white">
-						{level > 0 ? (getBrandMeta(selectedBrand)?.name ?? selectedBrand) : t('stock.brands')}
+					<div class="flex min-w-0 items-center gap-1.5">
+						<span class="truncate text-xl font-semibold text-gray-900 dark:text-white">
+							{level > 0 ? (getBrandMeta(selectedBrand)?.name ?? selectedBrand) : t('stock.brands')}
+						</span>
+						{#if level > 0}
+							{@const bmeta = getBrandMeta(selectedBrand)}
+							{#if bmeta?.url}
+								<button
+									type="button"
+									onclick={() => openExternal(bmeta.url)}
+									title={bmeta?.name}
+									class="flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+								>
+									<ExternalLink class="h-3 w-3" />
+								</button>
+							{/if}
+						{/if}
 					</div>
 					{#if selectedSerie}
 						<nav class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
@@ -427,11 +442,11 @@
 						out:fade={{ duration: 150 }}
 						bind:value={stockNav.query}
 						placeholder={t('stock.searchPlaceholder')}
-						class="absolute top-1/2 left-0 h-9 w-full -translate-y-1/2
-							rounded-md border border-theme bg-gray-100 px-2 py-1.5 text-sm
-							placeholder:text-gray-500 focus:border-primary-500 focus:outline-none
-							sm:right-0 sm:left-auto sm:w-2/3
-							dark:border-theme dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
+						class="border-theme dark:border-theme absolute top-1/2 left-0 h-9
+							w-full -translate-y-1/2 rounded-md border bg-gray-100 px-2 py-1.5
+							text-sm placeholder:text-gray-500 focus:border-primary-500
+							focus:outline-none sm:right-0 sm:left-auto
+							sm:w-2/3 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
 					/>
 				{/if}
 			</div>
@@ -518,7 +533,7 @@
 			<!-- 右栏：详情面板（品牌层及以上常驻；根路由纯列表不加分栏） -->
 			{#if isMedia().sm && level > 0}
 				<aside
-					class="w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l border-theme dark:border-theme"
+					class="border-theme dark:border-theme w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l"
 				>
 					{#if selectedPaint}
 						{@const paint = selectedPaint}
