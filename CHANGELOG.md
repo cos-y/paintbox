@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.12] - 2026-08-17
+
+### Added
+
+- 392 new Vallejo paints cross-referenced from the Miniature Painter Pro community database (github.com/Arcturus5404/miniature-paints), covering 7 series not previously collected: Arte Deco, Panzer Aces, Nocturna, Weathering FX, Surface Primer, Game Air (72.7xx numbering) and additional Game Color Xpress/Special FX/Wash entries, with full zh/ja/es translations.
+- 33 new Gunze Mr.Hobby paints from the same source: 21 Aqueous Hobby Color weather-effect colors (H341–H466), 9 Mr Metal Color legacy metallics as a new MC series (MC211–MC219), 2 Mr Color Spray (S129/S151) and 1 Super Metallic (SM08), all with full translations.
+- Gaia brand (167 paints) added.
+
+### Changed
+
+- Mediums reclassified to reflect design intent (not physical capability): Vallejo Game Air / Model Air / Mecha Color changed from airbrush+brush to airbrush-only (383 rows), Game Color changed to brush-only — official wording like "can also be applied with a brush" is treated as a compliance statement, not a brush flag.
+- Surfaces corrected against official catalogs: Game Air and Game Color main line changed from semi-gloss to matt (143 rows), matching the "self-leveling matt finish" / "offer a matt finish" wording in the official PDFs.
+- AV data adjusted against the sales script (950 rows touched) — serie/series labels and code prefixes reconciled with the sales tooling.
+- AK equivalence link fixed (bad URL replaced).
+- Wide-table merge dry-run no longer blocks on partial data: it warns and shows the diff, only rejecting on --apply.
+
+### Fixed
+
+- Equivalence symmetric-deduplication bug in build_data.py — equiv pairs are now deduplicated symmetrically, removing duplicate reverse links.
+
 ## [0.3.11] - 2026-08-16
 
 ### Added
@@ -321,6 +341,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
 [0.3.11]: https://github.com/cos-y/paintbox/releases/tag/v0.3.11
+[0.3.12]: https://github.com/cos-y/paintbox/releases/tag/v0.3.12
 [0.3.10]: https://github.com/cos-y/paintbox/releases/tag/v0.3.10
 [0.3.9]: https://github.com/cos-y/paintbox/releases/tag/v0.3.9
 [0.3.8]: https://github.com/cos-y/paintbox/releases/tag/v0.3.8
