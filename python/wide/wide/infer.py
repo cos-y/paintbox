@@ -39,14 +39,15 @@ SURFACE_TAGS: list[tuple[int, tuple[str, ...]]] = [
     (128, ("weathering", "wash")),                                            # W
 ]
 
-# 系列默认 (bases, surfaces, mediums)，归纳自现有 data/wide.csv：
-#   av MC/GC: bases=8（水基底）/ mediums=4；GC 默认半光 2
-#   av GA:    bases=8 / mediums=5；默认半光 2
+# 系列默认 (bases, surfaces, mediums)，归纳自现有 data/wide.csv（2026-08-17 修正）：
+#   av MC/GC: bases=8（水基底）/ mediums=4；GC 默认哑光 4（官方 "offer a matt finish"）
+#   av GA:    bases=8 / mediums=1（官方 airbrush 定位，让步句不构成 Brush 位）
+#             默认哑光 4（官方 "self-leveling matt finish"）
 #   av LM:    bases=2（酒精基底）/ mediums=5；默认金属 8
 SERIES_DEFAULTS: dict[tuple[str, str], tuple[int, int, int]] = {
     ("av", "MC"): (8, 4, 4),
-    ("av", "GC"): (8, 2, 4),
-    ("av", "GA"): (8, 2, 5),
+    ("av", "GC"): (8, 4, 4),
+    ("av", "GA"): (8, 4, 1),
     ("av", "LM"): (2, 8, 5),
 }
 

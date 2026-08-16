@@ -265,21 +265,30 @@ def main() -> None:
         raise SystemExit(1)
     new_paints = read_paints_csv(new_path)
 
-    # 输入校验：数据半提供（color/bases/surfaces/mediums 部分有值）→ 拒绝整个 merge
+    # 输入校验：数据半提供（color/bases/surfaces/mediums 部分有值）
+    # dry-run 只警告不阻断（先看 diff）；--apply 写盘前硬性拒绝
     bad = [(r, fs) for r in new_paints
            for fs in (missing_fields(r),) if fs and partial_data(r)]
     if bad:
         from collections import Counter
         by_field = Counter(f for _, fs in bad for f in fs)
-        print(f"[error] input has {len(bad)} rows with partial data (some of "
-              f"color/bases/surfaces/mediums provided, merge rejected):")
+        if args.apply:
+            print(f"[error] input has {len(bad)} rows with partial data (some of "
+                  f"color/bases/surfaces/mediums provided, merge rejected):")
+            for f in REQUIRED_FIELDS:
+                n = by_field.get(f, 0)
+                if n:
+                    samples = [f"{r.brand}:{r.code}" for r, fs in bad if f in fs][:3]
+                    print(f"  - {f}: {n} rows  e.g. {', '.join(samples)}")
+            print("  fix the source build.py (or provide all four fields) first")
+            raise SystemExit(1)
+        print(f"[warn] input has {len(bad)} rows with partial data (some of "
+              f"color/bases/surfaces/mediums provided; --apply will reject):")
         for f in REQUIRED_FIELDS:
             n = by_field.get(f, 0)
             if n:
                 samples = [f"{r.brand}:{r.code}" for r, fs in bad if f in fs][:3]
                 print(f"  - {f}: {n} rows  e.g. {', '.join(samples)}")
-        print("  fix the source build.py (or provide all four fields) first")
-        raise SystemExit(1)
 
     # 源 meta 注册：小宽表自带 sources + cli --source（默认同目录 source.json）覆盖/补充
     source_meta: dict = {}

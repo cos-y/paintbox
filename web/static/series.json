@@ -177,19 +177,19 @@
     "brand": "av",
     "serie": "GC",
     "name": "Game Color [72.x]",
-    "desc": "Acrylic colors for fantasy and wargame figures"
+    "desc": "Paints for fantasy figures"
   },
   {
     "brand": "av",
     "serie": "GA",
     "name": "Game Air [76.x]",
-    "desc": "Versatile paints for brush or airbrush"
+    "desc": "Airbrush paints for fantasy figures"
   },
   {
     "brand": "av",
     "serie": "MA",
     "name": "Model Air [71.x]",
-    "desc": "Versatile paints for brush or airbrush"
+    "desc": "Airbrush paints"
   },
   {
     "brand": "av",
@@ -201,37 +201,61 @@
     "brand": "av",
     "serie": "MEC",
     "name": "Mecha Color [69.x]",
-    "desc": "Acrylic airbrush colors for painting mecha's"
+    "desc": "Airbrush paints for mecha's"
   },
   {
     "brand": "av",
     "serie": "HP",
     "name": "Hobby Paint [28.x]",
-    "desc": "Spray paint for metal, plastic and resin miniatures"
+    "desc": "Spray cans"
   },
   {
     "brand": "av",
     "serie": "MET",
     "name": "Metal Color [77.x]",
-    "desc": "Acrylic airbrush metal colors"
+    "desc": "Airbrush metal paints"
   },
   {
     "brand": "av",
     "serie": "MW",
     "name": "Model Wash [76.x]",
-    "desc": "Weathering effects"
+    "desc": "Washing effects"
   },
   {
     "brand": "av",
     "serie": "PC",
     "name": "Premium Color [62.x]",
-    "desc": "Acrylic polyurethane airbrush colors"
+    "desc": "Polyurethane airbrush paints"
   },
   {
     "brand": "av",
     "serie": "TMM",
     "name": "True Metallic Metal [77.x]",
     "desc": "Realistic metallic paints"
+  },
+  {
+    "brand": "av",
+    "serie": "PA",
+    "name": "Panzer Aces [70.x]",
+    "desc": "paints for military"
+  },
+  {
+    "brand": "av",
+    "serie": "AD",
+    "name": "Arte Deco [8x.x]",
+    "desc": "Paints for DIY/crafting"
+  },
+  {
+    "brand": "av",
+    "serie": "W",
+    "name": "Weathering FX [73.x]",
+    "desc": "Weathering effects"
+  },
+  {
+    "brand": "av",
+    "serie": "N",
+    "name": "Nocturna/Fantasy-Pro [74.x]",
+    "desc": "paints for fantacy figures"
   },
   {
     "brand": "gaia",
