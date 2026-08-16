@@ -35,7 +35,7 @@
 	class="cursor-pointer! list-none overflow-hidden! {clz}"
 	bind:isOpen
 >
-	{#each Object.entries(options) as [key, desc]}
+	{#each Object.entries(options) as [key, desc] (key)}
 		{@const idx = value.indexOf(key)}
 		<DropdownItem
 			class="cursor-pointer"

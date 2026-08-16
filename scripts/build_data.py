@@ -2,7 +2,7 @@
 
 产出（web/static/）：
 - paints.bin      主数据，msgpack 列式（10 字段，Rust wasm 用前 7 列，JS 用全列）
-- equivs.bin      等价表，msgpack 数组 [[src_idx, dst_idx], ...]（单向，仅源声明方向）
+- equivs.bin      等价表，msgpack [n_pairs, dict_sources, src_idx[], dst_idx[], source_id[]]（双向展开，每条源声明方向 + 反向，按对去重 source 取 publishTs 最新）
 - paints/<lang>.json  i18n 名称字典（en/zh/ja/es 合并 wide 源语言 + 现有翻译；raw 重建）
 
 设计约定：
@@ -132,23 +132,34 @@ def main() -> None:
         json.dumps(src_meta, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"sources.json: {len(src_meta)} sources")
 
-    # equivs.bin：单向对（仅源声明方向），每条带声明来源 source id
-    # 格式：[n_pairs, dict_sources, src_idx[], dst_idx[], source_id[]]
-    # 双向由前端 JS 解析时补充（反向继承 source）；不做传递闭包
-    # dangling 跳过（目标不在当前行集）；旧 equivalences.csv 历史坏数据不转换
-    pairs = []
-    pair_sources = []
+    # equivs.bin：双向展开（每条源声明方向 + 其反向，反向继承 source），
+    # 按 (src_idx, dst_idx) 对去重，source 取 publishTs 最新者（无 publishTs 的排后；
+    # 都没有则保留先出现的）；不做传递闭包；dangling 跳过（目标不在当前行集）
+    src_meta = wide.get("sources", {})
+
+    def _newer(new_src: str, cur_src: str) -> bool:
+        pn = src_meta.get(new_src, {}).get("publishTs")
+        pc = src_meta.get(cur_src, {}).get("publishTs")
+        if pn and pc:
+            return pn > pc
+        return bool(pn)
+
+    best: dict[tuple[int, int], str] = {}
     skipped = 0
-    equiv_sources = sorted({e["source"] for r in rows for e in r.get("equivs", [])})
-    equiv_src_id = {s: i for i, s in enumerate(equiv_sources)}
     for i, r in enumerate(rows):
         for e in r.get("equivs", []):
             dst = index_of.get((e["brand"], e["code"]))
             if dst is None:
                 skipped += 1
                 continue
-            pairs.append((i, dst))
-            pair_sources.append(equiv_src_id[e["source"]])
+            for a, b in ((i, dst), (dst, i)):  # 正向 + 反向展开
+                cur = best.get((a, b))
+                if cur is None or _newer(e["source"], cur):
+                    best[(a, b)] = e["source"]
+    pairs = list(best)
+    equiv_sources = sorted({e["source"] for r in rows for e in r.get("equivs", [])})
+    equiv_src_id = {s: i for i, s in enumerate(equiv_sources)}
+    pair_sources = [equiv_src_id[best[k]] for k in pairs]
     equiv_blob = [len(pairs), equiv_sources,
                   [a for a, _ in pairs], [b for _, b in pairs], pair_sources]
     (OUT / "equivs.bin").write_bytes(msgpack.packb(equiv_blob, use_bin_type=False))
