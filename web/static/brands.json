@@ -160,5 +160,11 @@
     "name": "Acrylicos Vallejo",
     "desc": "Bottled acrylic paints",
     "url": "https://acrylicosvallejo.com/"
+  },
+  {
+    "slug": "Gaia",
+    "name": "Gaianotes",
+    "desc": "Bottled lacquer paints",
+    "url": "https://www.gaianotes.com/"
   }
 ]

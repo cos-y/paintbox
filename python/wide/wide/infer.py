@@ -21,15 +21,20 @@ import re
 # surfaces tag 表：flag 按 skill 列表顺序（靠后者优先命中）。
 # 全部语言 desc 都会检查；tag 用词边界匹配，避免误伤颜色名形容词
 # （如 \bgold\b 不命中 Golden/Silvergrey，silvergrey 是一个词）。
+# 日文 tag（含非 ASCII）用子串匹配：\b 只认 ASCII 单词边界，对日文
+# 完全失效（2026-08-17, raw/gaia：蛍光ブルー 等命中不到）；子串匹配
+# 在 en/es 文本里不会误伤（日文词不会出现在拉丁文本中）。
 SURFACE_TAGS: list[tuple[int, tuple[str, ...]]] = [
     (1, ("gloss", "glossy", "brillante")),                            # G
-    (2, ("satin", "satinado", "semi")),                               # SG
-    (4, ("flat", "matt", "mate", "つや消し", "下地色")),                 # M
+    (2, ("satin", "satinado", "semi", "セミグロス")),                  # SG
+    (4, ("flat", "matt", "mate", "つや消し", "下地色", "フラット")),      # M
     (8, ("metal", "metallic", "metálico", "メタリック", "メタル",
          "gold", "silver", "bronze", "copper", "brass", "steel",
-         "gunmetal", "oro", "plata", "cobre", "bronce", "acero")),    # ME
+         "gunmetal", "oro", "plata", "cobre", "bronce", "acero",
+         "シルバー", "ゴールド", "ブラス", "アイアン", "メッキ",
+         "ミラー", "クローム")),                                       # ME
     (16, ("clear", "transparent", "transparente", "クリアー")),        # C
-    (32, ("pearl", "nacar", "perla", "真珠")),                         # PA
+    (32, ("pearl", "nacar", "perla", "真珠", "パール", "プリズム")),     # PA
     (64, ("fluo", "fluorescent", "fluorescente", "蛍光")),             # FL
     (128, ("weathering", "wash")),                                            # W
 ]
@@ -60,6 +65,10 @@ def infer_surfaces(desc: dict[str, str] | None, default: int = 0) -> int:
     text = " ".join((desc or {}).values()).lower()
     for flag, tags in reversed(SURFACE_TAGS):
         for t in tags:
-            if re.search(rf"\b{re.escape(t)}\b", text):
-                return flag
+            if t.isascii():
+                if re.search(rf"\b{re.escape(t)}\b", text):
+                    return flag
+            else:
+                if t in text:  # 日文：子串匹配（\b 对非 ASCII 失效）
+                    return flag
     return default

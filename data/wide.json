@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-15T23:47:35.201577+00:00",
+ "generatedAt": "2026-08-16T00:44:50.927108+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -91,6 +91,11 @@
    "url": "https://acrylicosvallejo.com/wp-content/uploads/2026/06/CC339-True_Metallic_Metal.pdf",
    "title": "TRUE METALLIC METAL COLOR CHART",
    "publishTs": "2026-06-15T16:25:04+08:00"
+  },
+  "gaia": {
+   "id": "gaia",
+   "url": "https://www.gaianotes.com/products/gaia-color_chart.html",
+   "title": "ガイアカラーチャート"
   }
  }
 }

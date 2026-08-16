@@ -232,5 +232,83 @@
     "serie": "TMM",
     "name": "True Metallic Metal [77.x]",
     "desc": "Realistic metallic paints"
+  },
+  {
+    "brand": "gaia",
+    "serie": "BC",
+    "name": "Basic Color",
+    "desc": "基本カラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "CL",
+    "name": "Clear Color",
+    "desc": "クリアーカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "EX",
+    "name": "Ex Series",
+    "desc": "Ex-シリーズ"
+  },
+  {
+    "brand": "gaia",
+    "serie": "FL",
+    "name": "Fluorescent Color",
+    "desc": "蛍光カラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "GE",
+    "name": "Gaia Enamel Color",
+    "desc": "エナメルカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "GP",
+    "name": "Premium Series",
+    "desc": "プレミアムシリーズ"
+  },
+  {
+    "brand": "gaia",
+    "serie": "MC",
+    "name": "Metallic Color",
+    "desc": "メタリックカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "MIL",
+    "name": "Military Series",
+    "desc": "ミリタリーカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "PL",
+    "name": "Pearl Color",
+    "desc": "パールカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "PRI",
+    "name": "Primary Color Series",
+    "desc": "純色シリーズ"
+  },
+  {
+    "brand": "gaia",
+    "serie": "PRZ",
+    "name": "Prism Color",
+    "desc": "プリズムカラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "RR",
+    "name": "Railroad Models Series",
+    "desc": "鉄道模型用カラー"
+  },
+  {
+    "brand": "gaia",
+    "serie": "TL",
+    "name": "Tactical Label",
+    "desc": "タクティカル レーベル"
   }
 ]
