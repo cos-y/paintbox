@@ -1,255 +1,255 @@
 brand,serie,code,color,bases,surfaces,mediums,sources,note,desc_en,desc_es,desc_ja,equivs
 ak,AFV,11301,#4A3C2C,8,4,5,ak_equiv21,,WWI British Khaki Brown Base,,,ak;4042;ak_equiv21
-ak,AFV,11302,#907651,8,4,5,ak_equiv21,,WWI French Milky Coffee,,,av;70.71027;ak_equiv21|fs;FS23448;ak_equiv21|lifecolor;UA097;ak_equiv21|ak;4051;ak_equiv21
-ak,AFV,11303,#4F5B6A,8,4,5,ak_equiv21,,WWI French Artillery Grey,,,av;70.71257;ak_equiv21|fs;FS36176;ak_equiv21|ak;4052;ak_equiv21
-ak,AFV,11304,#462514,8,4,5,ak_equiv21,,WWI French Brown,,,fs;FS31090;ak_equiv21|ak;4053;ak_equiv21
-ak,AFV,11305,#2D3B2A,8,4,5,ak_equiv21,,WWI French Green 1,,,av;70.71006;ak_equiv21|fs;FS34097;ak_equiv21|ak;4054;ak_equiv21
+ak,AFV,11302,#907651,8,4,5,ak_equiv21,,WWI French Milky Coffee,,,av;71.027;ak_equiv21|fs;23448;ak_equiv21|lifecolor;UA097;ak_equiv21|ak;4051;ak_equiv21
+ak,AFV,11303,#4F5B6A,8,4,5,ak_equiv21,,WWI French Artillery Grey,,,av;71.257;ak_equiv21|fs;36176;ak_equiv21|ak;4052;ak_equiv21
+ak,AFV,11304,#462514,8,4,5,ak_equiv21,,WWI French Brown,,,fs;31090;ak_equiv21|ak;4053;ak_equiv21
+ak,AFV,11305,#2D3B2A,8,4,5,ak_equiv21,,WWI French Green 1,,,av;71.006;ak_equiv21|fs;34097;ak_equiv21|ak;4054;ak_equiv21
 ak,AFV,11306,#222217,8,4,5,ak_equiv21,,WWI French Green 2,,,ak;4055;ak_equiv21
-ak,AFV,11307,#736737,8,4,5,ak_equiv21,,RAL 7009 Hellgrau,,,ral;RAL7009;ak_equiv21|real;54;ak_equiv21|hataka;233;ak_equiv21
-ak,AFV,11308,#3D6136,8,4,5,ak_equiv21,,RAL 6007 Grün,,,av;70.71019;ak_equiv21|ral;RAL6007;ak_equiv21|real;49;ak_equiv21|hataka;298;ak_equiv21
-ak,AFV,11309,#465025,8,4,5,ak_equiv21,,RAL 6003 Olivgrün opt.1,,,av;70.71092;ak_equiv21|gunze;H405;ak_equiv21|ral;RAL6003;ak_equiv21|real;47;ak_equiv21|lifecolor;UA206;ak_equiv21|hataka;169;ak_equiv21
+ak,AFV,11307,#736737,8,4,5,ak_equiv21,,RAL 7009 Hellgrau,,,ral;7009;ak_equiv21|real;54;ak_equiv21|hataka;233;ak_equiv21
+ak,AFV,11308,#3D6136,8,4,5,ak_equiv21,,RAL 6007 Grün,,,av;71.019;ak_equiv21|ral;6007;ak_equiv21|real;49;ak_equiv21|hataka;298;ak_equiv21
+ak,AFV,11309,#465025,8,4,5,ak_equiv21,,RAL 6003 Olivgrün opt.1,,,av;71.092;ak_equiv21|gunze;H405;ak_equiv21|ral;6003;ak_equiv21|real;47;ak_equiv21|lifecolor;UA206;ak_equiv21|hataka;169;ak_equiv21
 ak,AFV,11310,#333317,8,4,5,ak_equiv21,,RAL 6003 Olivgrün opt.2,,,ak;755;ak_equiv21
-ak,AFV,11311,#5B6B42,8,4,5,ak_equiv21,,RAL 6011 Resedagrün,,,ral;RAL6011;ak_equiv21|ak;715;ak_equiv21
+ak,AFV,11311,#5B6B42,8,4,5,ak_equiv21,,RAL 6011 Resedagrün,,,ral;6011;ak_equiv21|ak;715;ak_equiv21
 ak,AFV,11312,#526137,8,4,5,ak_equiv21,,RAL 6011B Resedagrün,,,ak;716;ak_equiv21
-ak,AFV,11313,#786C3A,8,4,5,ak_equiv21,,RAL 7008 Graugrün,,,av;70.71116;ak_equiv21|ral;RAL7008;ak_equiv21|real;53;ak_equiv21|lifecolor;UA212;ak_equiv21|hataka;304;ak_equiv21
+ak,AFV,11313,#786C3A,8,4,5,ak_equiv21,,RAL 7008 Graugrün,,,av;71.116;ak_equiv21|ral;7008;ak_equiv21|real;53;ak_equiv21|lifecolor;UA212;ak_equiv21|hataka;304;ak_equiv21
 ak,AFV,11314,#65733E,8,4,5,ak_equiv21,,RAL 7008 Graugrün Opt 2,,,
-ak,AFV,11315,#46372B,8,4,5,ak_equiv21,,RAL 7017 Dunkelbraun,,,av;70.71248;ak_equiv21|ral;RAL7017;ak_equiv21|real;56;ak_equiv21|lifecolor;UA210;ak_equiv21
-ak,AFV,11316,#121A1B,8,4,5,ak_equiv21,,RAL 7021 Dunkelgrau,,,av;70.71056;ak_equiv21|ral;RAL7021;ak_equiv21|fs;FS34086;ak_equiv21|real;57;ak_equiv21|lifecolor;UA207;ak_equiv21|hataka;164;ak_equiv21
-ak,AFV,11317,#675E47,8,4,5,ak_equiv21,,RAL 7027 Grau,,,av;70.71118;ak_equiv21|ral;RAL7027;ak_equiv21|real;58;ak_equiv21|lifecolor;UA202;ak_equiv21|hataka;306;ak_equiv21
-ak,AFV,11318,#8F8356,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Initial),,,av;70.71025;ak_equiv21|gunze;H403;ak_equiv21|ral;RAL7028;ak_equiv21|fs;FS33434;ak_equiv21|real;60;ak_equiv21|lifecolor;UA204;ak_equiv21|hataka;244;ak_equiv21
-ak,AFV,11319,#AC9A74,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb Ausgabe 1944,,,ral;RAL7028;ak_equiv21|real;61;ak_equiv21|hataka;250;ak_equiv21
-ak,AFV,11320,#AA945C,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Variant),,,ral;RAL7028;ak_equiv21
-ak,AFV,11323,#5C5331,8,4,5,ak_equiv21,,RAL 6040 F9 Helloliv,,,av;70.71247;ak_equiv21|ral;RAL6040 F9;ak_equiv21|real;90;ak_equiv21|hataka;281;ak_equiv21
-ak,AFV,11325,#B39564,8,4,5,ak_equiv21,,RAL 1039 F9 Sandbeige,,,av;70.71244;ak_equiv21|ral;RAL1039 F9;ak_equiv21|real;88;ak_equiv21|hataka;278;ak_equiv21|ak;728;ak_equiv21
-ak,AFV,11326,#846138,8,4,5,ak_equiv21,,RAL 8031 F9 Sandbraun,,,av;70.71246;ak_equiv21|ral;RAL8031 F9;ak_equiv21|real;92;ak_equiv21|hataka;280;ak_equiv21|ak;727;ak_equiv21
-ak,AFV,11327,#7A643D,8,4,5,ak_equiv21,,RAL 8000 Gelbbraun,,,av;70.71272;ak_equiv21|ral;RAL8000;ak_equiv21|real;63;ak_equiv21|lifecolor;UA203;ak_equiv21|hataka;303;ak_equiv21|ak;702;ak_equiv21
-ak,AFV,11328,#671E15,8,4,5,ak_equiv21,,RAL 8012 Rotbraun,,,av;70.71271;ak_equiv21|ral;RAL8012;ak_equiv21|real;67;ak_equiv21|lifecolor;UA211;ak_equiv21|hataka;175;ak_equiv21|ak;717;ak_equiv21
-ak,AFV,11329,#4C0E0F,8,4,5,ak_equiv21,,RAL 8013 Rotbraun,,,ral;RAL8013;ak_equiv21|real;66;ak_equiv21|ak;731;ak_equiv21
-ak,AFV,11330,#35211A,8,4,5,ak_equiv21,,RAL 8017 Rotbraun,,,av;70.71041;ak_equiv21|gunze;H406;ak_equiv21|ral;RAL8017;ak_equiv21|real;68;ak_equiv21|lifecolor;UA205;ak_equiv21|hataka;147;ak_equiv21|ak;718;ak_equiv21
-ak,AFV,11331,#A37F59,8,4,5,ak_equiv21,,RAL 8020 Braun,,,av;70.71117;ak_equiv21|ral;RAL8020;ak_equiv21|real;69;ak_equiv21|lifecolor;UA201;ak_equiv21|hataka;35;ak_equiv21|ak;700;ak_equiv21
-ak,AFV,11333,#E1D8A8,8,4,5,ak_equiv21,,Cremeweiss,,,av;70.71075;ak_equiv21|ral;RAL1001;ak_equiv21|fs;FS23717;ak_equiv21|real;46;ak_equiv21|hataka;184;ak_equiv21|ak;092;ak_equiv21
-ak,AFV,11334,#4E502E,8,4,5,ak_equiv21,,Olive Drab Base,,,fs;FS24098;ak_equiv21
-ak,AFV,11335,#565E27,8,4,5,ak_equiv21,,Nº1 Light Green (FS34151),,,av;70.71137;ak_equiv21|fs;FS34151;ak_equiv21|real;28;ak_equiv21|hataka;211;ak_equiv21|ak;4214;ak_equiv21
-ak,AFV,11336,#473425,8,4,5,ak_equiv21,,Nº5 Earth Brown (FS30099),,,av;70.71290;ak_equiv21|fs;FS30099;ak_equiv21|lifecolor;UA087;ak_equiv21|hataka;256;ak_equiv21|ak;4221;ak_equiv21
-ak,AFV,11337,#9D703C,8,4,5,ak_equiv21,,Nº6 Earth Yellow (FS30257),,,av;70.71291;ak_equiv21|fs;FS30257;ak_equiv21|real;30;ak_equiv21|hataka;212;ak_equiv21|ak;4222;ak_equiv21
-ak,AFV,11338,#653926,8,4,5,ak_equiv21,,Nº8 Earth Red (FS30117),,,av;70.71293;ak_equiv21|fs;FS30117;ak_equiv21|ak;4223;ak_equiv21
-ak,AFV,11339,#343B22,8,4,5,ak_equiv21,,Nº9 Olive Drab (FS33070),,,fs;FS33070;ak_equiv21|ak;4211;ak_equiv21
-ak,AFV,11340,#9C7E61,8,4,5,ak_equiv21,,Nº13 Desert Sand (FS30279),,,av;70.71140;ak_equiv21|gunze;H346;ak_equiv21|fs;FS30279;ak_equiv21|lifecolor;UA089;ak_equiv21|hataka;68;ak_equiv21|ak;4224;ak_equiv21
-ak,AFV,11341,#485A68,8,4,5,ak_equiv21,,Ocean Gray (FS35164),,,fs;FS35164;ak_equiv21|ak;4225;ak_equiv21
-ak,AFV,11342,#2A381C,8,4,5,ak_equiv21,,Dark Green (FS34102),,,av;70.71289;ak_equiv21|fs;FS34102;ak_equiv21|real;83;ak_equiv21|lifecolor;UA002;ak_equiv21|hataka;21;ak_equiv21|ak;4231;ak_equiv21
-ak,AFV,11343,#7C694B,8,4,5,ak_equiv21,,MERDC Sand (FS30277),,,av;70.71138;ak_equiv21|fs;FS30277;ak_equiv21|real;84;ak_equiv21|lifecolor;UA019;ak_equiv21|hataka;187;ak_equiv21|ak;4233;ak_equiv21
-ak,AFV,11344,#4F3C1C,8,4,5,ak_equiv21,,Field Drab (FS30118),,,av;70.71139;ak_equiv21|fs;FS30118;ak_equiv21|real;85;ak_equiv21|lifecolor;UA016;ak_equiv21|hataka;209;ak_equiv21|ak;4234;ak_equiv21
-ak,AFV,11345,#BFC7A0,8,4,5,ak_equiv21,,APC Interior Light Green (FS24533),,,fs;FS24533;ak_equiv21|real;78;ak_equiv21|ak;4012;ak_equiv21
-ak,AFV,11346,#213118,8,4,5,ak_equiv21,,Forest Green (FS34079),,,av;70.71294;ak_equiv21|fs;FS34079;ak_equiv21|real;27;ak_equiv21|lifecolor;UA001;ak_equiv21|hataka;16;ak_equiv21
-ak,AFV,11347,#9E855A,8,4,5,ak_equiv21,,Australian Camouﬂage Brown,,,fs;FS30219;ak_equiv21|ak;4022;ak_equiv21
-ak,AFV,11348,#565E27,8,4,5,ak_equiv21,,Australian Camouﬂage Green,,,fs;FS34088;ak_equiv21|ak;4021;ak_equiv21
-ak,AFV,11349,#AD8C63,8,4,5,ak_equiv21,,CARC Tan 686A (FS33446),,,av;70.71122;ak_equiv21|gunze;H53;ak_equiv21|fs;FS33446;ak_equiv21|real;79;ak_equiv21
+ak,AFV,11315,#46372B,8,4,5,ak_equiv21,,RAL 7017 Dunkelbraun,,,av;71.248;ak_equiv21|ral;7017;ak_equiv21|real;56;ak_equiv21|lifecolor;UA210;ak_equiv21
+ak,AFV,11316,#121A1B,8,4,5,ak_equiv21,,RAL 7021 Dunkelgrau,,,av;71.056;ak_equiv21|ral;7021;ak_equiv21|fs;34086;ak_equiv21|real;57;ak_equiv21|lifecolor;UA207;ak_equiv21|hataka;164;ak_equiv21
+ak,AFV,11317,#675E47,8,4,5,ak_equiv21,,RAL 7027 Grau,,,av;71.118;ak_equiv21|ral;7027;ak_equiv21|real;58;ak_equiv21|lifecolor;UA202;ak_equiv21|hataka;306;ak_equiv21
+ak,AFV,11318,#8F8356,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Initial),,,av;71.025;ak_equiv21|gunze;H403;ak_equiv21|ral;7028;ak_equiv21|fs;33434;ak_equiv21|real;60;ak_equiv21|lifecolor;UA204;ak_equiv21|hataka;244;ak_equiv21
+ak,AFV,11319,#AC9A74,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb Ausgabe 1944,,,ral;7028;ak_equiv21|real;61;ak_equiv21|hataka;250;ak_equiv21
+ak,AFV,11320,#AA945C,8,4,5,ak_equiv21,,RAL 7028 Dunkelgelb (Variant),,,ral;7028;ak_equiv21
+ak,AFV,11323,#5C5331,8,4,5,ak_equiv21,,RAL 6040 F9 Helloliv,,,av;71.247;ak_equiv21|ral;6040 F9;ak_equiv21|real;90;ak_equiv21|hataka;281;ak_equiv21
+ak,AFV,11325,#B39564,8,4,5,ak_equiv21,,RAL 1039 F9 Sandbeige,,,av;71.244;ak_equiv21|ral;1039 F9;ak_equiv21|real;88;ak_equiv21|hataka;278;ak_equiv21|ak;728;ak_equiv21
+ak,AFV,11326,#846138,8,4,5,ak_equiv21,,RAL 8031 F9 Sandbraun,,,av;71.246;ak_equiv21|ral;8031 F9;ak_equiv21|real;92;ak_equiv21|hataka;280;ak_equiv21|ak;727;ak_equiv21
+ak,AFV,11327,#7A643D,8,4,5,ak_equiv21,,RAL 8000 Gelbbraun,,,av;71.272;ak_equiv21|ral;8000;ak_equiv21|real;63;ak_equiv21|lifecolor;UA203;ak_equiv21|hataka;303;ak_equiv21|ak;702;ak_equiv21
+ak,AFV,11328,#671E15,8,4,5,ak_equiv21,,RAL 8012 Rotbraun,,,av;71.271;ak_equiv21|ral;8012;ak_equiv21|real;67;ak_equiv21|lifecolor;UA211;ak_equiv21|hataka;175;ak_equiv21|ak;717;ak_equiv21
+ak,AFV,11329,#4C0E0F,8,4,5,ak_equiv21,,RAL 8013 Rotbraun,,,ral;8013;ak_equiv21|real;66;ak_equiv21|ak;731;ak_equiv21
+ak,AFV,11330,#35211A,8,4,5,ak_equiv21,,RAL 8017 Rotbraun,,,av;71.041;ak_equiv21|gunze;H406;ak_equiv21|ral;8017;ak_equiv21|real;68;ak_equiv21|lifecolor;UA205;ak_equiv21|hataka;147;ak_equiv21|ak;718;ak_equiv21
+ak,AFV,11331,#A37F59,8,4,5,ak_equiv21,,RAL 8020 Braun,,,av;71.117;ak_equiv21|ral;8020;ak_equiv21|real;69;ak_equiv21|lifecolor;UA201;ak_equiv21|hataka;35;ak_equiv21|ak;700;ak_equiv21
+ak,AFV,11333,#E1D8A8,8,4,5,ak_equiv21,,Cremeweiss,,,av;71.075;ak_equiv21|ral;1001;ak_equiv21|fs;23717;ak_equiv21|real;46;ak_equiv21|hataka;184;ak_equiv21|ak;092;ak_equiv21
+ak,AFV,11334,#4E502E,8,4,5,ak_equiv21,,Olive Drab Base,,,fs;24098;ak_equiv21
+ak,AFV,11335,#565E27,8,4,5,ak_equiv21,,Nº1 Light Green (FS34151),,,av;71.137;ak_equiv21|fs;34151;ak_equiv21|real;28;ak_equiv21|hataka;211;ak_equiv21|ak;4214;ak_equiv21
+ak,AFV,11336,#473425,8,4,5,ak_equiv21,,Nº5 Earth Brown (FS30099),,,av;71.290;ak_equiv21|fs;30099;ak_equiv21|lifecolor;UA087;ak_equiv21|hataka;256;ak_equiv21|ak;4221;ak_equiv21
+ak,AFV,11337,#9D703C,8,4,5,ak_equiv21,,Nº6 Earth Yellow (FS30257),,,av;71.291;ak_equiv21|fs;30257;ak_equiv21|real;30;ak_equiv21|hataka;212;ak_equiv21|ak;4222;ak_equiv21
+ak,AFV,11338,#653926,8,4,5,ak_equiv21,,Nº8 Earth Red (FS30117),,,av;71.293;ak_equiv21|fs;30117;ak_equiv21|ak;4223;ak_equiv21
+ak,AFV,11339,#343B22,8,4,5,ak_equiv21,,Nº9 Olive Drab (FS33070),,,fs;33070;ak_equiv21|ak;4211;ak_equiv21
+ak,AFV,11340,#9C7E61,8,4,5,ak_equiv21,,Nº13 Desert Sand (FS30279),,,av;71.140;ak_equiv21|gunze;H346;ak_equiv21|fs;30279;ak_equiv21|lifecolor;UA089;ak_equiv21|hataka;68;ak_equiv21|ak;4224;ak_equiv21
+ak,AFV,11341,#485A68,8,4,5,ak_equiv21,,Ocean Gray (FS35164),,,fs;35164;ak_equiv21|ak;4225;ak_equiv21
+ak,AFV,11342,#2A381C,8,4,5,ak_equiv21,,Dark Green (FS34102),,,av;71.289;ak_equiv21|fs;34102;ak_equiv21|real;83;ak_equiv21|lifecolor;UA002;ak_equiv21|hataka;21;ak_equiv21|ak;4231;ak_equiv21
+ak,AFV,11343,#7C694B,8,4,5,ak_equiv21,,MERDC Sand (FS30277),,,av;71.138;ak_equiv21|fs;30277;ak_equiv21|real;84;ak_equiv21|lifecolor;UA019;ak_equiv21|hataka;187;ak_equiv21|ak;4233;ak_equiv21
+ak,AFV,11344,#4F3C1C,8,4,5,ak_equiv21,,Field Drab (FS30118),,,av;71.139;ak_equiv21|fs;30118;ak_equiv21|real;85;ak_equiv21|lifecolor;UA016;ak_equiv21|hataka;209;ak_equiv21|ak;4234;ak_equiv21
+ak,AFV,11345,#BFC7A0,8,4,5,ak_equiv21,,APC Interior Light Green (FS24533),,,fs;24533;ak_equiv21|real;78;ak_equiv21|ak;4012;ak_equiv21
+ak,AFV,11346,#213118,8,4,5,ak_equiv21,,Forest Green (FS34079),,,av;71.294;ak_equiv21|fs;34079;ak_equiv21|real;27;ak_equiv21|lifecolor;UA001;ak_equiv21|hataka;16;ak_equiv21
+ak,AFV,11347,#9E855A,8,4,5,ak_equiv21,,Australian Camouﬂage Brown,,,fs;30219;ak_equiv21|ak;4022;ak_equiv21
+ak,AFV,11348,#565E27,8,4,5,ak_equiv21,,Australian Camouﬂage Green,,,fs;34088;ak_equiv21|ak;4021;ak_equiv21
+ak,AFV,11349,#AD8C63,8,4,5,ak_equiv21,,CARC Tan 686A (FS33446),,,av;71.122;ak_equiv21|gunze;H53;ak_equiv21|fs;33446;ak_equiv21|real;79;ak_equiv21
 ak,AFV,11350,#47532E,8,4,5,ak_equiv21,,Modern Spanish Green,,,
-ak,AFV,11351,#998E69,8,4,5,ak_equiv21,,Wood Base,,,fs;FS23564;ak_equiv21|ak;779;ak_equiv21
+ak,AFV,11351,#998E69,8,4,5,ak_equiv21,,Wood Base,,,fs;23564;ak_equiv21|ak;779;ak_equiv21
 ak,AFV,11352,#625330,8,4,5,ak_equiv21,,IDF Modern Grey,,,gunze;C530;ak_equiv21|real;94;ak_equiv21
-ak,AFV,11353,#6A5F3D,8,4,5,ak_equiv21,,IDF Sand Grey 1970s-1980s,,,av;70.71142;ak_equiv21|gunze;C529;ak_equiv21|testor;2138;ak_equiv21|real;95;ak_equiv21
-ak,AFV,11354,#86794E,8,4,5,ak_equiv21,,IDF Early Sand Yellow,,,av;70.71141;ak_equiv21|gunze;C528;ak_equiv21|real;96;ak_equiv21
+ak,AFV,11353,#6A5F3D,8,4,5,ak_equiv21,,IDF Sand Grey 1970s-1980s,,,av;71.142;ak_equiv21|gunze;C529;ak_equiv21|testor;2138;ak_equiv21|real;95;ak_equiv21
+ak,AFV,11354,#86794E,8,4,5,ak_equiv21,,IDF Early Sand Yellow,,,av;71.141;ak_equiv21|gunze;C528;ak_equiv21|real;96;ak_equiv21
 ak,AFV,11355,#29311B,8,4,5,ak_equiv21,,IDF Green,,,
-ak,AFV,11356,#3F5D5B,8,4,5,ak_equiv21,,SLA Blue,,,fs;FS34158;ak_equiv21|ak;794;ak_equiv21
+ak,AFV,11356,#3F5D5B,8,4,5,ak_equiv21,,SLA Blue,,,fs;34158;ak_equiv21|ak;794;ak_equiv21
 ak,AFV,11357,#272D21,8,4,5,ak_equiv21,,LAF Green,,,ak;795;ak_equiv21
-ak,AFV,11358,#223B24,8,4,5,ak_equiv21,,NATO Green,,,av;70.71250;ak_equiv21|ral;RAL6031 F9;ak_equiv21|real;80;ak_equiv21|lifecolor;UA303;ak_equiv21|hataka;152;ak_equiv21|ak;796;ak_equiv21
-ak,AFV,11359,#412F23,8,4,5,ak_equiv21,,NATO Brown,,,av;70.71249;ak_equiv21|ral;RAL8027 F9;ak_equiv21|real;81;ak_equiv21|lifecolor;UA302;ak_equiv21|hataka;188;ak_equiv21|ak;797;ak_equiv21
-ak,AFV,11360,#1B1D22,8,4,5,ak_equiv21,,NATO Black,,,av;70.71251;ak_equiv21|ral;RAL9021 F9;ak_equiv21|real;82;ak_equiv21|lifecolor;UA301;ak_equiv21|hataka;125;ak_equiv21|ak;799;ak_equiv21
-ak,AFV,11361,#D1B67E,8,4,5,ak_equiv21,,New Iraqi Army Sand,,,fs;FS23531;ak_equiv21|ak;725;ak_equiv21
-ak,AFV,11362,#DDA145,8,4,5,ak_equiv21,,British Sand Yellow,,,fs;FS33695;ak_equiv21|ak;726;ak_equiv21
-ak,AFV,11363,#CAA16F,8,4,5,ak_equiv21,,French Army Desert Sand,,,av;70.71064;ak_equiv21|fs;FS17178;ak_equiv21|ak;4081;ak_equiv21
+ak,AFV,11358,#223B24,8,4,5,ak_equiv21,,NATO Green,,,av;71.250;ak_equiv21|ral;6031 F9;ak_equiv21|real;80;ak_equiv21|lifecolor;UA303;ak_equiv21|hataka;152;ak_equiv21|ak;796;ak_equiv21
+ak,AFV,11359,#412F23,8,4,5,ak_equiv21,,NATO Brown,,,av;71.249;ak_equiv21|ral;8027 F9;ak_equiv21|real;81;ak_equiv21|lifecolor;UA302;ak_equiv21|hataka;188;ak_equiv21|ak;797;ak_equiv21
+ak,AFV,11360,#1B1D22,8,4,5,ak_equiv21,,NATO Black,,,av;71.251;ak_equiv21|ral;9021 F9;ak_equiv21|real;82;ak_equiv21|lifecolor;UA301;ak_equiv21|hataka;125;ak_equiv21|ak;799;ak_equiv21
+ak,AFV,11361,#D1B67E,8,4,5,ak_equiv21,,New Iraqi Army Sand,,,fs;23531;ak_equiv21|ak;725;ak_equiv21
+ak,AFV,11362,#DDA145,8,4,5,ak_equiv21,,British Sand Yellow,,,fs;33695;ak_equiv21|ak;726;ak_equiv21
+ak,AFV,11363,#CAA16F,8,4,5,ak_equiv21,,French Army Desert Sand,,,av;71.064;ak_equiv21|fs;17178;ak_equiv21|ak;4081;ak_equiv21
 ak,AFV,11364,#45554C,8,4,5,ak_equiv21,,French Army Green,,,ak;4082;ak_equiv21
 ak,AFV,11365,#888B86,8,4,5,ak_equiv21,,French Army Grey-Blue,,,gunze;H417;ak_equiv21|ak;4083;ak_equiv21
-ak,AFV,11366,#C2943A,8,4,5,ak_equiv21,,Mustard Yellow,,,av;70.71033;ak_equiv21|fs;FS33637;ak_equiv21|ak;4132;ak_equiv21
+ak,AFV,11366,#C2943A,8,4,5,ak_equiv21,,Mustard Yellow,,,av;71.033;ak_equiv21|fs;33637;ak_equiv21|ak;4132;ak_equiv21
 ak,AFV,11367,#2E3220,8,4,5,ak_equiv21,,Base Green Protective,,,
-ak,AFV,11368,#374929,8,4,5,ak_equiv21,,Russian Green 4BO,,,av;70.71017;ak_equiv21|gunze;H136;ak_equiv21|testor;2129;ak_equiv21|real;73;ak_equiv21
-ak,AFV,11369,#322A12,8,4,5,ak_equiv21,,Russian Dark Brown 6K,,,av;70.71282;ak_equiv21|testor;2126;ak_equiv21|real;74;ak_equiv21|hataka;317;ak_equiv21
-ak,AFV,11370,#7C5E30,8,4,5,ak_equiv21,,Russian Sand 7K,,,av;70.71283;ak_equiv21|real;75;ak_equiv21|lifecolor;UA242;ak_equiv21|hataka;318;ak_equiv21
+ak,AFV,11368,#374929,8,4,5,ak_equiv21,,Russian Green 4BO,,,av;71.017;ak_equiv21|gunze;H136;ak_equiv21|testor;2129;ak_equiv21|real;73;ak_equiv21
+ak,AFV,11369,#322A12,8,4,5,ak_equiv21,,Russian Dark Brown 6K,,,av;71.282;ak_equiv21|testor;2126;ak_equiv21|real;74;ak_equiv21|hataka;317;ak_equiv21
+ak,AFV,11370,#7C5E30,8,4,5,ak_equiv21,,Russian Sand 7K,,,av;71.283;ak_equiv21|real;75;ak_equiv21|lifecolor;UA242;ak_equiv21|hataka;318;ak_equiv21
 ak,AFV,11371,#1A331D,8,4,5,ak_equiv21,,Protective Green 1920s-1930s,,,real;76;ak_equiv21
 ak,AFV,11372,#FFFFFF,8,4,5,ak_equiv21,,Washable White Paint,,,ak;751;ak_equiv21
-ak,AFV,11373,#473E2F,8,4,5,ak_equiv21,,Khaki green No.3,,,av;70.71330;ak_equiv21|real;33;ak_equiv21|hataka;64;ak_equiv21|ak;4035;ak_equiv21
-ak,AFV,11374,#8F8F61,8,4,5,ak_equiv21,,Silver Grey No.28,,,av;70.71401;ak_equiv21|real;38;ak_equiv21|lifecolor;UA264;ak_equiv21|ak;4032;ak_equiv21
-ak,AFV,11375,#45472D,8,4,5,ak_equiv21,,Slate No.34,,,av;70.71012;ak_equiv21|gunze;H73;ak_equiv21|real;39;ak_equiv21|lifecolor;UA265;ak_equiv21|ak;4033;ak_equiv21
-ak,AFV,11377,#C79E4D,8,4,5,ak_equiv21,,Light Stone No.61,,,av;70.71143;ak_equiv21|real;40;ak_equiv21|lifecolor;UA266;ak_equiv21|ak;4034;ak_equiv21
-ak,AFV,11378,#E0BD88,8,4,5,ak_equiv21,,Portland Stone No.64,,,av;70.71288;ak_equiv21|real;41;ak_equiv21|lifecolor;UA267;ak_equiv21|ak;4031;ak_equiv21
+ak,AFV,11373,#473E2F,8,4,5,ak_equiv21,,Khaki green No.3,,,av;71.330;ak_equiv21|real;33;ak_equiv21|hataka;64;ak_equiv21|ak;4035;ak_equiv21
+ak,AFV,11374,#8F8F61,8,4,5,ak_equiv21,,Silver Grey No.28,,,av;71.401;ak_equiv21|real;38;ak_equiv21|lifecolor;UA264;ak_equiv21|ak;4032;ak_equiv21
+ak,AFV,11375,#45472D,8,4,5,ak_equiv21,,Slate No.34,,,av;71.012;ak_equiv21|gunze;H73;ak_equiv21|real;39;ak_equiv21|lifecolor;UA265;ak_equiv21|ak;4033;ak_equiv21
+ak,AFV,11377,#C79E4D,8,4,5,ak_equiv21,,Light Stone No.61,,,av;71.143;ak_equiv21|real;40;ak_equiv21|lifecolor;UA266;ak_equiv21|ak;4034;ak_equiv21
+ak,AFV,11378,#E0BD88,8,4,5,ak_equiv21,,Portland Stone No.64,,,av;71.288;ak_equiv21|real;41;ak_equiv21|lifecolor;UA267;ak_equiv21|ak;4031;ak_equiv21
 ak,AFV,11381,#41402E,8,4,5,ak_equiv21,,British Dark Olive Green PFI,,,real;42;ak_equiv21|lifecolor;UA269;ak_equiv21
-ak,AFV,11382,#F49063,8,4,5,ak_equiv21,,British Desert Pink ZI,,,av;70.71400;ak_equiv21|real;43;ak_equiv21|lifecolor;UA268;ak_equiv21
-ak,AFV,11383,#79794D,8,4,5,ak_equiv21,,British Light Mud,,,av;70.71284;ak_equiv21|real;44;ak_equiv21|lifecolor;UA272;ak_equiv21
-ak,AFV,11384,#39291F,8,4,5,ak_equiv21,,S.C.C. No.1A Very Dark Brown,,,av;70.71039;ak_equiv21|fs;FS30059;ak_equiv21|real;34;ak_equiv21|lifecolor;UA274;ak_equiv21|hataka;77;ak_equiv21
-ak,AFV,11385,#754C2D,8,4,5,ak_equiv21,,S.C.C. No.2 Brown,,,av;70.71038;ak_equiv21|fs;FS30097;ak_equiv21|real;35;ak_equiv21|lifecolor;UA273;ak_equiv21|hataka;76;ak_equiv21
-ak,AFV,11386,#393C28,8,4,5,ak_equiv21,,S.C.C. No.15 Olive Drab,,,av;70.71016;ak_equiv21|gunze;H309;ak_equiv21|real;37;ak_equiv21|lifecolor;UA270;ak_equiv21|hataka;110;ak_equiv21
-ak,AFV,11387,#13190D,8,4,5,ak_equiv21,,3B AU/ZB AU,,,av;70.71281;ak_equiv21|real;77;ak_equiv21|hataka;246;ak_equiv21
-ak,AIR,11801,#7A8C7C,8,4,5,ak_equiv21,,WWI German Fokker Grey,,,av;70.71033;ak_equiv21|ak;2271;ak_equiv21
+ak,AFV,11382,#F49063,8,4,5,ak_equiv21,,British Desert Pink ZI,,,av;71.400;ak_equiv21|real;43;ak_equiv21|lifecolor;UA268;ak_equiv21
+ak,AFV,11383,#79794D,8,4,5,ak_equiv21,,British Light Mud,,,av;71.284;ak_equiv21|real;44;ak_equiv21|lifecolor;UA272;ak_equiv21
+ak,AFV,11384,#39291F,8,4,5,ak_equiv21,,S.C.C. No.1A Very Dark Brown,,,av;71.039;ak_equiv21|fs;30059;ak_equiv21|real;34;ak_equiv21|lifecolor;UA274;ak_equiv21|hataka;77;ak_equiv21
+ak,AFV,11385,#754C2D,8,4,5,ak_equiv21,,S.C.C. No.2 Brown,,,av;71.038;ak_equiv21|fs;30097;ak_equiv21|real;35;ak_equiv21|lifecolor;UA273;ak_equiv21|hataka;76;ak_equiv21
+ak,AFV,11386,#393C28,8,4,5,ak_equiv21,,S.C.C. No.15 Olive Drab,,,av;71.016;ak_equiv21|gunze;H309;ak_equiv21|real;37;ak_equiv21|lifecolor;UA270;ak_equiv21|hataka;110;ak_equiv21
+ak,AFV,11387,#13190D,8,4,5,ak_equiv21,,3B AU/ZB AU,,,av;71.281;ak_equiv21|real;77;ak_equiv21|hataka;246;ak_equiv21
+ak,AIR,11801,#7A8C7C,8,4,5,ak_equiv21,,WWI German Fokker Grey,,,av;71.033;ak_equiv21|ak;2271;ak_equiv21
 ak,AIR,11802,#769460,8,4,5,ak_equiv21,,WWI German Light Green,,,ak;2272;ak_equiv21
-ak,AIR,11803,#344731,8,4,5,ak_equiv21,,WWI German Dark Green,,,av;70.71017;ak_equiv21|ak;2273;ak_equiv21
-ak,AIR,11804,#826881,8,4,5,ak_equiv21,,WWI German Mauve,,,av;70.71282;ak_equiv21|ak;2274;ak_equiv21
-ak,AIR,11805,#673615,8,4,5,ak_equiv21,,WWI German Red Brown,,,av;70.71283;ak_equiv21|citadel;51040;ak_equiv21|ak;2275;ak_equiv21
+ak,AIR,11803,#344731,8,4,5,ak_equiv21,,WWI German Dark Green,,,av;71.017;ak_equiv21|ak;2273;ak_equiv21
+ak,AIR,11804,#826881,8,4,5,ak_equiv21,,WWI German Mauve,,,av;71.282;ak_equiv21|ak;2274;ak_equiv21
+ak,AIR,11805,#673615,8,4,5,ak_equiv21,,WWI German Red Brown,,,av;71.283;ak_equiv21|citadel;51040;ak_equiv21|ak;2275;ak_equiv21
 ak,AIR,11806,#C8DEEC,8,4,5,ak_equiv21,,WWI German Light Blue,,,ak;2276;ak_equiv21
 ak,AIR,11807,#B193AF,8,4,5,ak_equiv21,,WWI German Lilac,,,ak;2277;ak_equiv21
-ak,AIR,11808,#B7C4AA,8,4,5,ak_equiv21,,WWI German Grey-Green Primer,,,av;70.71330;ak_equiv21|ak;2278;ak_equiv21
-ak,AIR,11809,#3D422C,8,4,5,ak_equiv21,,PC10 Late,,,av;70.71401;ak_equiv21|ak;2282;ak_equiv21
-ak,AIR,11810,#40372E,8,4,5,ak_equiv21,,PC12,,,av;70.71012;ak_equiv21|ak;2283;ak_equiv21
-ak,AIR,11811,#979481,8,4,5,ak_equiv21,,RLM 02 RLM-Grau (1938),,,tamiya;XF20;ak_equiv21|humbrol;240;ak_equiv21|av;70.71044;ak_equiv21|gunze;C60;ak_equiv21|gunze;H70;ak_equiv21|real;265;ak_equiv21|lifecolor;UA504;ak_equiv21|hataka;23;ak_equiv21
+ak,AIR,11808,#B7C4AA,8,4,5,ak_equiv21,,WWI German Grey-Green Primer,,,av;71.330;ak_equiv21|ak;2278;ak_equiv21
+ak,AIR,11809,#3D422C,8,4,5,ak_equiv21,,PC10 Late,,,av;71.401;ak_equiv21|ak;2282;ak_equiv21
+ak,AIR,11810,#40372E,8,4,5,ak_equiv21,,PC12,,,av;71.012;ak_equiv21|ak;2283;ak_equiv21
+ak,AIR,11811,#979481,8,4,5,ak_equiv21,,RLM 02 RLM-Grau (1938),,,av;71.044;ak_equiv21|gunze;C60;ak_equiv21|gunze;H70;ak_equiv21|tamiya;XF20;ak_equiv21|humbrol;240;ak_equiv21|real;265;ak_equiv21|lifecolor;UA504;ak_equiv21|hataka;23;ak_equiv21
 ak,AIR,11812,#80805E,8,4,5,ak_equiv21,,RLM 02 RLM-Grau (1941),,,real;266;ak_equiv21
-ak,AIR,11813,#F1A60D,8,4,5,ak_equiv21,,RLM 04,,,humbrol;154;ak_equiv21|av;70.71078;ak_equiv21|gunze;C113;ak_equiv21|gunze;H413;ak_equiv21|real;267;ak_equiv21|lifecolor;UA140;ak_equiv21|hataka;66;ak_equiv21|ak;2091;ak_equiv21
-ak,AIR,11814,#57524E,8,4,5,ak_equiv21,,RLM 61,,,av;70.71042;ak_equiv21|real;268;ak_equiv21|hataka;168;ak_equiv21
-ak,AIR,11815,#676A4F,8,4,5,ak_equiv21,,RLM 62,,,av;70.71104;ak_equiv21|real;269;ak_equiv21|hataka;169;ak_equiv21
-ak,AIR,11816,#7E7B6A,8,4,5,ak_equiv21,,RLM 63,,,av;70.71260;ak_equiv21|real;270;ak_equiv21|hataka;167;ak_equiv21
+ak,AIR,11813,#F1A60D,8,4,5,ak_equiv21,,RLM 04,,,av;71.078;ak_equiv21|gunze;C113;ak_equiv21|gunze;H413;ak_equiv21|humbrol;154;ak_equiv21|real;267;ak_equiv21|lifecolor;UA140;ak_equiv21|hataka;66;ak_equiv21|ak;2091;ak_equiv21
+ak,AIR,11814,#57524E,8,4,5,ak_equiv21,,RLM 61,,,av;71.042;ak_equiv21|real;268;ak_equiv21|hataka;168;ak_equiv21
+ak,AIR,11815,#676A4F,8,4,5,ak_equiv21,,RLM 62,,,av;71.104;ak_equiv21|real;269;ak_equiv21|hataka;169;ak_equiv21
+ak,AIR,11816,#7E7B6A,8,4,5,ak_equiv21,,RLM 63,,,av;71.260;ak_equiv21|real;270;ak_equiv21|hataka;167;ak_equiv21
 ak,AIR,11817,#86A2A5,8,4,5,ak_equiv21,,RLM 65 (1938),,,humbrol;65;ak_equiv21|real;271;ak_equiv21
-ak,AIR,11818,#94A198,8,4,5,ak_equiv21,,RLM 65 (1941),,,tamiya;XF23;ak_equiv21|av;70.71255;ak_equiv21|gunze;C115;ak_equiv21|gunze;H67;ak_equiv21|real;272;ak_equiv21|lifecolor;UA503;ak_equiv21|hataka;29;ak_equiv21
-ak,AIR,11819,#363E40,8,4,5,ak_equiv21,,RLM 66 (1938),,,av;70.71055;ak_equiv21|gunze;C116;ak_equiv21|gunze;H416;ak_equiv21|real;339;ak_equiv21|lifecolor;UA133;ak_equiv21|hataka;40;ak_equiv21
+ak,AIR,11818,#94A198,8,4,5,ak_equiv21,,RLM 65 (1941),,,av;71.255;ak_equiv21|gunze;C115;ak_equiv21|gunze;H67;ak_equiv21|tamiya;XF23;ak_equiv21|real;272;ak_equiv21|lifecolor;UA503;ak_equiv21|hataka;29;ak_equiv21
+ak,AIR,11819,#363E40,8,4,5,ak_equiv21,,RLM 66 (1938),,,av;71.055;ak_equiv21|gunze;C116;ak_equiv21|gunze;H416;ak_equiv21|real;339;ak_equiv21|lifecolor;UA133;ak_equiv21|hataka;40;ak_equiv21
 ak,AIR,11820,#53524D,8,4,5,ak_equiv21,,RLM 66 (1941),,,real;273;ak_equiv21
-ak,AIR,11821,#474A41,8,4,5,ak_equiv21,,RLM 70,,,tamiya;XF27;ak_equiv21|humbrol;241;ak_equiv21|av;70.71021;ak_equiv21|gunze;C18;ak_equiv21|gunze;H65;ak_equiv21|real;274;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA501;ak_equiv21|hataka;15;ak_equiv21
-ak,AIR,11822,#514F43,8,4,5,ak_equiv21,,RLM 71,,,humbrol;242;ak_equiv21|av;70.71015;ak_equiv21|gunze;C17;ak_equiv21|gunze;H64;ak_equiv21|real;275;ak_equiv21|lifecolor;UA502;ak_equiv21|hataka;17;ak_equiv21
-ak,AIR,11823,#464742,8,4,5,ak_equiv21,,RLM 72,,,humbrol;243;ak_equiv21|av;70.71263;ak_equiv21|real;276;ak_equiv21|hataka;311;ak_equiv21
-ak,AIR,11824,#424941,8,4,5,ak_equiv21,,RLM 73,,,humbrol;244;ak_equiv21|av;70.71256;ak_equiv21|real;277;ak_equiv21|hataka;312;ak_equiv21
-ak,AIR,11825,#5B5A55,8,4,5,ak_equiv21,,RLM 74,,,humbrol;245;ak_equiv21|av;70.71258;ak_equiv21|gunze;C36;ak_equiv21|gunze;H68;ak_equiv21|real;278;ak_equiv21|lifecolor;UA507;ak_equiv21|hataka;313;ak_equiv21
-ak,AIR,11826,#706F6D,8,4,5,ak_equiv21,,RLM 75,,,humbrol;246;ak_equiv21|av;70.71259;ak_equiv21|gunze;C37;ak_equiv21|gunze;H69;ak_equiv21|real;279;ak_equiv21|lifecolor;UA508;ak_equiv21|hataka;7;ak_equiv21
+ak,AIR,11821,#474A41,8,4,5,ak_equiv21,,RLM 70,,,av;71.021;ak_equiv21|gunze;C18;ak_equiv21|gunze;H65;ak_equiv21|tamiya;XF27;ak_equiv21|humbrol;241;ak_equiv21|real;274;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA501;ak_equiv21|hataka;15;ak_equiv21
+ak,AIR,11822,#514F43,8,4,5,ak_equiv21,,RLM 71,,,av;71.015;ak_equiv21|gunze;C17;ak_equiv21|gunze;H64;ak_equiv21|humbrol;242;ak_equiv21|real;275;ak_equiv21|lifecolor;UA502;ak_equiv21|hataka;17;ak_equiv21
+ak,AIR,11823,#464742,8,4,5,ak_equiv21,,RLM 72,,,av;71.263;ak_equiv21|humbrol;243;ak_equiv21|real;276;ak_equiv21|hataka;311;ak_equiv21
+ak,AIR,11824,#424941,8,4,5,ak_equiv21,,RLM 73,,,av;71.256;ak_equiv21|humbrol;244;ak_equiv21|real;277;ak_equiv21|hataka;312;ak_equiv21
+ak,AIR,11825,#5B5A55,8,4,5,ak_equiv21,,RLM 74,,,av;71.258;ak_equiv21|gunze;C36;ak_equiv21|gunze;H68;ak_equiv21|humbrol;245;ak_equiv21|real;278;ak_equiv21|lifecolor;UA507;ak_equiv21|hataka;313;ak_equiv21
+ak,AIR,11826,#706F6D,8,4,5,ak_equiv21,,RLM 75,,,av;71.259;ak_equiv21|gunze;C37;ak_equiv21|gunze;H69;ak_equiv21|humbrol;246;ak_equiv21|real;279;ak_equiv21|lifecolor;UA508;ak_equiv21|hataka;7;ak_equiv21
 ak,AIR,11827,#A9B6A5,8,4,5,ak_equiv21,,RLM 76 Version 1,,,real;320;ak_equiv21
-ak,AIR,11828,#ADBDBD,8,4,5,ak_equiv21,,RLM 76 Version 2,,,humbrol;247;ak_equiv21|av;70.71257;ak_equiv21|gunze;C117;ak_equiv21|gunze;H417;ak_equiv21|real;321;ak_equiv21|lifecolor;UA509;ak_equiv21|hataka;38;ak_equiv21
-ak,AIR,11829,#C1C19D,8,4,5,ak_equiv21,,RLM 76 Late War Variation,,,av;70.71103;ak_equiv21|real;322;ak_equiv21
+ak,AIR,11828,#ADBDBD,8,4,5,ak_equiv21,,RLM 76 Version 2,,,av;71.257;ak_equiv21|gunze;C117;ak_equiv21|gunze;H417;ak_equiv21|humbrol;247;ak_equiv21|real;321;ak_equiv21|lifecolor;UA509;ak_equiv21|hataka;38;ak_equiv21
+ak,AIR,11829,#C1C19D,8,4,5,ak_equiv21,,RLM 76 Late War Variation,,,av;71.103;ak_equiv21|real;322;ak_equiv21
 ak,AIR,11830,#80979F,8,4,5,ak_equiv21,,RLM 78 (1941),,,real;280;ak_equiv21
-ak,AIR,11831,#889D98,8,4,5,ak_equiv21,,RLM 78 (1942),,,humbrol;248;ak_equiv21|av;70.71101;ak_equiv21|gunze;C118;ak_equiv21|gunze;H418;ak_equiv21|real;281;ak_equiv21|lifecolor;UA512;ak_equiv21|hataka;314;ak_equiv21
+ak,AIR,11831,#889D98,8,4,5,ak_equiv21,,RLM 78 (1942),,,av;71.101;ak_equiv21|gunze;C118;ak_equiv21|gunze;H418;ak_equiv21|humbrol;248;ak_equiv21|real;281;ak_equiv21|lifecolor;UA512;ak_equiv21|hataka;314;ak_equiv21
 ak,AIR,11832,#E8A25A,8,4,5,ak_equiv21,,RLM 79 (1941),,,real;282;ak_equiv21|hataka;14;ak_equiv21
-ak,AIR,11833,#9C714E,8,4,5,ak_equiv21,,RLM 79 (1942),,,humbrol;249;ak_equiv21|av;70.71278;ak_equiv21|gunze;C119;ak_equiv21|gunze;H66;ak_equiv21|real;283;ak_equiv21|lifecolor;UA137;ak_equiv21
-ak,AIR,11834,#585745,8,4,5,ak_equiv21,,RLM 80,,,av;70.71265;ak_equiv21|gunze;C120;ak_equiv21|gunze;H420;ak_equiv21|real;284;ak_equiv21|lifecolor;UA138;ak_equiv21|hataka;53;ak_equiv21
-ak,AIR,11835,#585745,8,4,5,ak_equiv21,,RLM 81 Version 1,,,tamiya;XF51;ak_equiv21|humbrol;251;ak_equiv21|av;70.71264;ak_equiv21|gunze;C121;ak_equiv21|gunze;H421;ak_equiv21|real;323;ak_equiv21|lifecolor;UA510;ak_equiv21|hataka;8;ak_equiv21
-ak,AIR,11836,#474D3F,8,4,5,ak_equiv21,,RLM 81 Version 2,,,tamiya;XF74;ak_equiv21|humbrol;253;ak_equiv21|av;70.71011;ak_equiv21|gunze;C123;ak_equiv21|gunze;H423;ak_equiv21|real;324;ak_equiv21|lifecolor;UA132;ak_equiv21|hataka;22;ak_equiv21
+ak,AIR,11833,#9C714E,8,4,5,ak_equiv21,,RLM 79 (1942),,,av;71.278;ak_equiv21|gunze;C119;ak_equiv21|gunze;H66;ak_equiv21|humbrol;249;ak_equiv21|real;283;ak_equiv21|lifecolor;UA137;ak_equiv21
+ak,AIR,11834,#585745,8,4,5,ak_equiv21,,RLM 80,,,av;71.265;ak_equiv21|gunze;C120;ak_equiv21|gunze;H420;ak_equiv21|real;284;ak_equiv21|lifecolor;UA138;ak_equiv21|hataka;53;ak_equiv21
+ak,AIR,11835,#585745,8,4,5,ak_equiv21,,RLM 81 Version 1,,,av;71.264;ak_equiv21|gunze;C121;ak_equiv21|gunze;H421;ak_equiv21|tamiya;XF51;ak_equiv21|humbrol;251;ak_equiv21|real;323;ak_equiv21|lifecolor;UA510;ak_equiv21|hataka;8;ak_equiv21
+ak,AIR,11836,#474D3F,8,4,5,ak_equiv21,,RLM 81 Version 2,,,av;71.011;ak_equiv21|gunze;C123;ak_equiv21|gunze;H423;ak_equiv21|tamiya;XF74;ak_equiv21|humbrol;253;ak_equiv21|real;324;ak_equiv21|lifecolor;UA132;ak_equiv21|hataka;22;ak_equiv21
 ak,AIR,11837,#5A5245,8,4,5,ak_equiv21,,RLM 81 Version 3,,,real;325;ak_equiv21
-ak,AIR,11838,#4F5C4B,8,4,5,ak_equiv21,,RLM 82,,,humbrol;252;ak_equiv21|av;70.71022;ak_equiv21|gunze;C122;ak_equiv21|gunze;H422;ak_equiv21|real;326;ak_equiv21|lifecolor;UA511;ak_equiv21|hataka;20;ak_equiv21
+ak,AIR,11838,#4F5C4B,8,4,5,ak_equiv21,,RLM 82,,,av;71.022;ak_equiv21|gunze;C122;ak_equiv21|gunze;H422;ak_equiv21|humbrol;252;ak_equiv21|real;326;ak_equiv21|lifecolor;UA511;ak_equiv21|hataka;20;ak_equiv21
 ak,AIR,11839,#394555,8,4,5,ak_equiv21,,RLM 83,,,real;327;ak_equiv21
-ak,AIR,11840,#57574D,8,4,5,ak_equiv21,,RAF Dark Green,,,tamiya;XF81;ak_equiv21|humbrol;163;ak_equiv21|av;70.71324;ak_equiv21|gunze;C330;ak_equiv21|gunze;H330;ak_equiv21|ral;RALBS381C/ 241;ak_equiv21|real;286;ak_equiv21|lifecolor;UA546;ak_equiv21|hataka;143;ak_equiv21
-ak,AIR,11841,#72573C,8,4,5,ak_equiv21,,RAF Dark Earth,,,humbrol;29;ak_equiv21|av;70.71323;ak_equiv21|gunze;C369;ak_equiv21|gunze;H72;ak_equiv21|real;287;ak_equiv21|lifecolor;UA547;ak_equiv21|hataka;9;ak_equiv21
-ak,AIR,11842,#5D686A,8,4,5,ak_equiv21,,RAF Ocean Grey,,,tamiya;XF82;ak_equiv21|humbrol;106;ak_equiv21|av;70.71273;ak_equiv21|gunze;C362;ak_equiv21|real;288;ak_equiv21|lifecolor;UA093;ak_equiv21|hataka;32;ak_equiv21
-ak,AIR,11843,#818C92,8,4,5,ak_equiv21,,RAF Medium Sea Grey BS381C/637,,,tamiya;XF83;ak_equiv21|humbrol;165;ak_equiv21|av;70.71307;ak_equiv21|gunze;C335;ak_equiv21|gunze;H335;ak_equiv21|ral;RALBS381C/ 637;ak_equiv21|real;289;ak_equiv21|lifecolor;UA094;ak_equiv21|hataka;034/ 141;ak_equiv21
-ak,AIR,11844,#B3B7A0,8,4,5,ak_equiv21,,RAF Sky / FS 34424,,,av;70.71321;ak_equiv21|gunze;C368;ak_equiv21|fs;FS 34424;ak_equiv21|real;290;ak_equiv21|lifecolor;UA550;ak_equiv21|hataka;234;ak_equiv21
-ak,AIR,11845,#7D9DC4,8,4,5,ak_equiv21,,RAF Azure Blue,,,humbrol;157;ak_equiv21|av;70.71108;ak_equiv21|gunze;C370;ak_equiv21|real;291;ak_equiv21|citadel;51024;ak_equiv21|lifecolor;UA098;ak_equiv21|hataka;28;ak_equiv21
-ak,AIR,11846,#A57E39,8,4,5,ak_equiv21,,RAF Middle Stone,,,humbrol;225;ak_equiv21|av;70.71031;ak_equiv21|gunze;C21;ak_equiv21|gunze;H71;ak_equiv21|real;292;ak_equiv21|lifecolor;UA097;ak_equiv21|hataka;13;ak_equiv21
-ak,AIR,11847,#738168,8,4,5,ak_equiv21,,RAF Cockpit Grey-Green,,,tamiya;XF71;ak_equiv21|humbrol;78;ak_equiv21|av;70.71305;ak_equiv21|gunze;C364;ak_equiv21|real;293;ak_equiv21|lifecolor;UA551;ak_equiv21|hataka;25;ak_equiv21
-ak,AIR,11848,#A1A5A4,8,4,5,ak_equiv21,,RAF Sky Grey,,,av;70.71339;ak_equiv21|fs;FS 26373;ak_equiv21|real;285;ak_equiv21|lifecolor;UA036;ak_equiv21|hataka;302;ak_equiv21
-ak,AIR,11849,#5F5D51,8,4,5,ak_equiv21,,RAF Dark Slate Grey,,,humbrol;224;ak_equiv21|av;70.71309;ak_equiv21|real;294;ak_equiv21|hataka;202;ak_equiv21
-ak,AIR,11850,#4F565E,8,4,5,ak_equiv21,,RAF Extra Dark Sea Grey BS381C/640,,,tamiya;XF54;ak_equiv21|humbrol;123;ak_equiv21|av;70.71110;ak_equiv21|gunze;C333;ak_equiv21|gunze;H333;ak_equiv21|ral;RALBS381C/ 640;ak_equiv21|real;295;ak_equiv21|lifecolor;UA109;ak_equiv21|hataka;140;ak_equiv21
-ak,AIR,11851,#696C71,8,4,5,ak_equiv21,,RAF Dark Sea Grey BS381C/638,,,tamiya;XF77;ak_equiv21|humbrol;164;ak_equiv21|av;70.71405;ak_equiv21|gunze;C331;ak_equiv21|gunze;H331;ak_equiv21|ral;RALBS381C/ 638;ak_equiv21|real;296;ak_equiv21|citadel;51040;ak_equiv21|hataka;144;ak_equiv21
-ak,AIR,11852,#556B76,8,4,5,ak_equiv21,,RAF PRU Blue BS381C/636,,,tamiya;XF18;ak_equiv21|humbrol;230;ak_equiv21|av;70.71109;ak_equiv21|gunze;C72;ak_equiv21|gunze;H56;ak_equiv21|ral;RALBS381C/ 636;ak_equiv21|real;297;ak_equiv21|hataka;207;ak_equiv21
-ak,AIR,11853,#B1B2AA,8,4,5,ak_equiv21,,RAF Light Aircraft Grey BS381C/627,,,humbrol;166;ak_equiv21|gunze;C332;ak_equiv21|gunze;H332;ak_equiv21|ral;RALBS381C/ 627;ak_equiv21|real;298;ak_equiv21|hataka;217;ak_equiv21
-ak,AIR,11854,#979D9D,8,4,5,ak_equiv21,,RAF Camouﬂage (Barley) Grey BS381C/626,,,tamiya;XF80;ak_equiv21|humbrol;167;ak_equiv21|gunze;C334;ak_equiv21|gunze;H334;ak_equiv21|ral;RALBS381C/ 626;ak_equiv21|real;299;ak_equiv21|lifecolor;UA079;ak_equiv21|hataka;142;ak_equiv21
-ak,AIR,11855,#72797F,8,4,5,ak_equiv21,,RAF Dark Camouﬂage Grey BS381C/629,,,ral;RALBS381C/ 629;ak_equiv21|real;300;ak_equiv21|hataka;214;ak_equiv21
-ak,AIR,11856,#9D9580,8,4,5,ak_equiv21,,RAF Camouﬂage Beige (Hemp) BS381C/389,,,tamiya;XF57;ak_equiv21|humbrol;168;ak_equiv21|gunze;C336;ak_equiv21|gunze;H336;ak_equiv21|ral;RALBS381C/ 389;ak_equiv21|real;301;ak_equiv21|hataka;262;ak_equiv21
+ak,AIR,11840,#57574D,8,4,5,ak_equiv21,,RAF Dark Green,,,av;71.324;ak_equiv21|gunze;C330;ak_equiv21|gunze;H330;ak_equiv21|tamiya;XF81;ak_equiv21|humbrol;163;ak_equiv21|bs;241;ak_equiv21|real;286;ak_equiv21|lifecolor;UA546;ak_equiv21|hataka;143;ak_equiv21
+ak,AIR,11841,#72573C,8,4,5,ak_equiv21,,RAF Dark Earth,,,av;71.323;ak_equiv21|gunze;C369;ak_equiv21|gunze;H72;ak_equiv21|humbrol;29;ak_equiv21|real;287;ak_equiv21|lifecolor;UA547;ak_equiv21|hataka;9;ak_equiv21
+ak,AIR,11842,#5D686A,8,4,5,ak_equiv21,,RAF Ocean Grey,,,av;71.273;ak_equiv21|gunze;C362;ak_equiv21|tamiya;XF82;ak_equiv21|humbrol;106;ak_equiv21|real;288;ak_equiv21|lifecolor;UA093;ak_equiv21|hataka;32;ak_equiv21
+ak,AIR,11843,#818C92,8,4,5,ak_equiv21,,RAF Medium Sea Grey BS381C/637,,,av;71.307;ak_equiv21|gunze;C335;ak_equiv21|gunze;H335;ak_equiv21|tamiya;XF83;ak_equiv21|humbrol;165;ak_equiv21|bs;637;ak_equiv21|real;289;ak_equiv21|lifecolor;UA094;ak_equiv21|hataka;034;ak_equiv21|hataka;141;ak_equiv21
+ak,AIR,11844,#B3B7A0,8,4,5,ak_equiv21,,RAF Sky / FS 34424,,,av;71.321;ak_equiv21|gunze;C368;ak_equiv21|fs;FS 34424;ak_equiv21|real;290;ak_equiv21|lifecolor;UA550;ak_equiv21|hataka;234;ak_equiv21
+ak,AIR,11845,#7D9DC4,8,4,5,ak_equiv21,,RAF Azure Blue,,,av;71.108;ak_equiv21|gunze;C370;ak_equiv21|humbrol;157;ak_equiv21|real;291;ak_equiv21|citadel;51024;ak_equiv21|lifecolor;UA098;ak_equiv21|hataka;28;ak_equiv21
+ak,AIR,11846,#A57E39,8,4,5,ak_equiv21,,RAF Middle Stone,,,av;71.031;ak_equiv21|gunze;C21;ak_equiv21|gunze;H71;ak_equiv21|humbrol;225;ak_equiv21|real;292;ak_equiv21|lifecolor;UA097;ak_equiv21|hataka;13;ak_equiv21
+ak,AIR,11847,#738168,8,4,5,ak_equiv21,,RAF Cockpit Grey-Green,,,av;71.305;ak_equiv21|gunze;C364;ak_equiv21|tamiya;XF71;ak_equiv21|humbrol;78;ak_equiv21|real;293;ak_equiv21|lifecolor;UA551;ak_equiv21|hataka;25;ak_equiv21
+ak,AIR,11848,#A1A5A4,8,4,5,ak_equiv21,,RAF Sky Grey,,,av;71.339;ak_equiv21|fs;FS 26373;ak_equiv21|real;285;ak_equiv21|lifecolor;UA036;ak_equiv21|hataka;302;ak_equiv21
+ak,AIR,11849,#5F5D51,8,4,5,ak_equiv21,,RAF Dark Slate Grey,,,av;71.309;ak_equiv21|humbrol;224;ak_equiv21|real;294;ak_equiv21|hataka;202;ak_equiv21
+ak,AIR,11850,#4F565E,8,4,5,ak_equiv21,,RAF Extra Dark Sea Grey BS381C/640,,,av;71.110;ak_equiv21|gunze;C333;ak_equiv21|gunze;H333;ak_equiv21|tamiya;XF54;ak_equiv21|humbrol;123;ak_equiv21|bs;640;ak_equiv21|real;295;ak_equiv21|lifecolor;UA109;ak_equiv21|hataka;140;ak_equiv21
+ak,AIR,11851,#696C71,8,4,5,ak_equiv21,,RAF Dark Sea Grey BS381C/638,,,av;71.405;ak_equiv21|gunze;C331;ak_equiv21|gunze;H331;ak_equiv21|tamiya;XF77;ak_equiv21|humbrol;164;ak_equiv21|bs;638;ak_equiv21|real;296;ak_equiv21|citadel;51040;ak_equiv21|hataka;144;ak_equiv21
+ak,AIR,11852,#556B76,8,4,5,ak_equiv21,,RAF PRU Blue BS381C/636,,,av;71.109;ak_equiv21|gunze;C72;ak_equiv21|gunze;H56;ak_equiv21|tamiya;XF18;ak_equiv21|humbrol;230;ak_equiv21|bs;636;ak_equiv21|real;297;ak_equiv21|hataka;207;ak_equiv21
+ak,AIR,11853,#B1B2AA,8,4,5,ak_equiv21,,RAF Light Aircraft Grey BS381C/627,,,gunze;C332;ak_equiv21|gunze;H332;ak_equiv21|humbrol;166;ak_equiv21|bs;627;ak_equiv21|real;298;ak_equiv21|hataka;217;ak_equiv21
+ak,AIR,11854,#979D9D,8,4,5,ak_equiv21,,RAF Camouﬂage (Barley) Grey BS381C/626,,,gunze;C334;ak_equiv21|gunze;H334;ak_equiv21|tamiya;XF80;ak_equiv21|humbrol;167;ak_equiv21|bs;626;ak_equiv21|real;299;ak_equiv21|lifecolor;UA079;ak_equiv21|hataka;142;ak_equiv21
+ak,AIR,11855,#72797F,8,4,5,ak_equiv21,,RAF Dark Camouﬂage Grey BS381C/629,,,bs;629;ak_equiv21|real;300;ak_equiv21|hataka;214;ak_equiv21
+ak,AIR,11856,#9D9580,8,4,5,ak_equiv21,,RAF Camouﬂage Beige (Hemp) BS381C/389,,,gunze;C336;ak_equiv21|gunze;H336;ak_equiv21|tamiya;XF57;ak_equiv21|humbrol;168;ak_equiv21|bs;389;ak_equiv21|real;301;ak_equiv21|hataka;262;ak_equiv21
 ak,AIR,11857,#293625,8,4,5,ak_equiv21,,Bronze Green,,,real;264;ak_equiv21|ak;2205;ak_equiv21
-ak,AIR,11858,#E2D10F,8,4,5,ak_equiv21,,Zinc Chromate Yellow,,,av;70.71107;ak_equiv21|gunze;C352;ak_equiv21|real;263;ak_equiv21|ak;2207;ak_equiv21
+ak,AIR,11858,#E2D10F,8,4,5,ak_equiv21,,Zinc Chromate Yellow,,,av;71.107;ak_equiv21|gunze;C352;ak_equiv21|real;263;ak_equiv21|ak;2207;ak_equiv21
 ak,AIR,11859,#848566,8,4,5,ak_equiv21,,US Interior Yellow Green,,,real;262;ak_equiv21|ak;2206;ak_equiv21
-ak,AIR,11860,#535041,8,4,5,ak_equiv21,,Dark Olive Drab 41,,,tamiya;XF62;ak_equiv21|av;70.71316;ak_equiv21|gunze;C38;ak_equiv21|gunze;H78;ak_equiv21|fs;FS 33070;ak_equiv21|real;259;ak_equiv21|lifecolor;UA005;ak_equiv21|hataka;4;ak_equiv21|ak;2201;ak_equiv21
+ak,AIR,11860,#535041,8,4,5,ak_equiv21,,Dark Olive Drab 41,,,av;71.316;ak_equiv21|gunze;C38;ak_equiv21|gunze;H78;ak_equiv21|tamiya;XF62;ak_equiv21|fs;FS 33070;ak_equiv21|real;259;ak_equiv21|lifecolor;UA005;ak_equiv21|hataka;4;ak_equiv21|ak;2201;ak_equiv21
 ak,AIR,11861,#47533F,8,4,5,ak_equiv21,,Medium Green 42,,,real;260;ak_equiv21|hataka;19;ak_equiv21|ak;2202;ak_equiv21
-ak,AIR,11862,#6C6D68,8,4,5,ak_equiv21,,Neutral Grey 43,,,av;70.71051;ak_equiv21|gunze;C13;ak_equiv21|gunze;H53;ak_equiv21|real;261;ak_equiv21|lifecolor;UA046;ak_equiv21|hataka;33;ak_equiv21|ak;2203;ak_equiv21
+ak,AIR,11862,#6C6D68,8,4,5,ak_equiv21,,Neutral Grey 43,,,av;71.051;ak_equiv21|gunze;C13;ak_equiv21|gunze;H53;ak_equiv21|real;261;ak_equiv21|lifecolor;UA046;ak_equiv21|hataka;33;ak_equiv21|ak;2203;ak_equiv21
 ak,AIR,11863,#5B5849,8,4,5,ak_equiv21,,ANA 613 Olive Drab,,,ral;RAL 7013;ak_equiv21|ak;2204;ak_equiv21
-ak,AIR,11864,#37464D,8,4,5,ak_equiv21,,Deep Sea Blue,,,humbrol;181;ak_equiv21|av;70.71300;ak_equiv21|gunze;C365;ak_equiv21|fs;FS 35045;ak_equiv21|real;258;ak_equiv21|lifecolor;UA047;ak_equiv21|hataka;1;ak_equiv21|ak;2234;ak_equiv21
-ak,AIR,11865,#72858B,8,4,5,ak_equiv21,,M-485 Blue-Grey,,,av;70.71109;ak_equiv21|gunze;C367;ak_equiv21|fs;FS 35189;ak_equiv21|real;256;ak_equiv21|lifecolor;UA038;ak_equiv21|hataka;218;ak_equiv21|ak;2231;ak_equiv21
-ak,AIR,11866,#AFAFA5,8,4,5,ak_equiv21,,Light Gull Grey FS 16440,,,humbrol;129;ak_equiv21|av;70.71121;ak_equiv21|gunze;C315;ak_equiv21|gunze;H315;ak_equiv21|fs;FS 16440;ak_equiv21|real;220;ak_equiv21|lifecolor;UA025;ak_equiv21|hataka;48;ak_equiv21
-ak,AIR,11867,#9FAAA6,8,4,5,ak_equiv21,,ADC Grey FS 16473,,,av;70.71335;ak_equiv21|fs;FS 16473;ak_equiv21|real;221;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA041;ak_equiv21|hataka;45;ak_equiv21|ak;2146;ak_equiv21
-ak,AIR,11868,#E6E8DB,8,4,5,ak_equiv21,,Insignia White FS 17875,,,tamiya;X1;ak_equiv21|humbrol;22;ak_equiv21|av;70.72279;ak_equiv21|gunze;C316;ak_equiv21|gunze;H316;ak_equiv21|fs;FS 17875;ak_equiv21|real;222;ak_equiv21|lifecolor;UA148;ak_equiv21|hataka;49;ak_equiv21|ak;2052;ak_equiv21
-ak,AIR,11869,#C6B49E,8,4,5,ak_equiv21,,Sand FS 33531,,,tamiya;XF59;ak_equiv21|humbrol;121;ak_equiv21|av;70.71327;ak_equiv21|gunze;C313;ak_equiv21|gunze;H313;ak_equiv21|fs;FS 33531;ak_equiv21|real;226;ak_equiv21|hataka;90;ak_equiv21|ak;2151;ak_equiv21
-ak,AIR,11870,#E5C7A1,8,4,5,ak_equiv21,,Radome Tan FS 33613,,,humbrol;148;ak_equiv21|av;70.71074;ak_equiv21|gunze;C318;ak_equiv21|gunze;H318;ak_equiv21|fs;FS 33613;ak_equiv21|real;227;ak_equiv21|ak;2053;ak_equiv21
+ak,AIR,11864,#37464D,8,4,5,ak_equiv21,,Deep Sea Blue,,,av;71.300;ak_equiv21|gunze;C365;ak_equiv21|humbrol;181;ak_equiv21|fs;FS 35045;ak_equiv21|real;258;ak_equiv21|lifecolor;UA047;ak_equiv21|hataka;1;ak_equiv21|ak;2234;ak_equiv21
+ak,AIR,11865,#72858B,8,4,5,ak_equiv21,,M-485 Blue-Grey,,,av;71.109;ak_equiv21|gunze;C367;ak_equiv21|fs;FS 35189;ak_equiv21|real;256;ak_equiv21|lifecolor;UA038;ak_equiv21|hataka;218;ak_equiv21|ak;2231;ak_equiv21
+ak,AIR,11866,#AFAFA5,8,4,5,ak_equiv21,,Light Gull Grey FS 16440,,,av;71.121;ak_equiv21|gunze;C315;ak_equiv21|gunze;H315;ak_equiv21|humbrol;129;ak_equiv21|fs;FS 16440;ak_equiv21|real;220;ak_equiv21|lifecolor;UA025;ak_equiv21|hataka;48;ak_equiv21
+ak,AIR,11867,#9FAAA6,8,4,5,ak_equiv21,,ADC Grey FS 16473,,,av;71.335;ak_equiv21|fs;FS 16473;ak_equiv21|real;221;ak_equiv21|citadel;51004;ak_equiv21|lifecolor;UA041;ak_equiv21|hataka;45;ak_equiv21|ak;2146;ak_equiv21
+ak,AIR,11868,#E6E8DB,8,4,5,ak_equiv21,,Insignia White FS 17875,,,av;72.279;ak_equiv21|gunze;C316;ak_equiv21|gunze;H316;ak_equiv21|tamiya;X1;ak_equiv21|humbrol;22;ak_equiv21|fs;FS 17875;ak_equiv21|real;222;ak_equiv21|lifecolor;UA148;ak_equiv21|hataka;49;ak_equiv21|ak;2052;ak_equiv21
+ak,AIR,11869,#C6B49E,8,4,5,ak_equiv21,,Sand FS 33531,,,av;71.327;ak_equiv21|gunze;C313;ak_equiv21|gunze;H313;ak_equiv21|tamiya;XF59;ak_equiv21|humbrol;121;ak_equiv21|fs;FS 33531;ak_equiv21|real;226;ak_equiv21|hataka;90;ak_equiv21|ak;2151;ak_equiv21
+ak,AIR,11870,#E5C7A1,8,4,5,ak_equiv21,,Radome Tan FS 33613,,,av;71.074;ak_equiv21|gunze;C318;ak_equiv21|gunze;H318;ak_equiv21|humbrol;148;ak_equiv21|fs;FS 33613;ak_equiv21|real;227;ak_equiv21|ak;2053;ak_equiv21
 ak,AIR,11871,#F9D193,8,4,5,ak_equiv21,,USMC Sand FS 33711,,,fs;FS 33711;ak_equiv21|real;228;ak_equiv21|lifecolor;UA090;ak_equiv21|hataka;60;ak_equiv21
 ak,AIR,11872,#474843,8,4,5,ak_equiv21,,US Army Helo Drab FS 34031,,,fs;FS 34031;ak_equiv21|real;229;ak_equiv21|hataka;67;ak_equiv21
-ak,AIR,11873,#4A5952,8,4,5,ak_equiv21,,Dull Dark Green FS 34092,,,tamiya;XF26;ak_equiv21|humbrol;149;ak_equiv21|av;70.71124;ak_equiv21|gunze;C302;ak_equiv21|gunze;H302;ak_equiv21|fs;FS 34092;ak_equiv21|real;230;ak_equiv21|lifecolor;UA008;ak_equiv21|hataka;56;ak_equiv21|ak;2106;ak_equiv21
+ak,AIR,11873,#4A5952,8,4,5,ak_equiv21,,Dull Dark Green FS 34092,,,av;71.124;ak_equiv21|gunze;C302;ak_equiv21|gunze;H302;ak_equiv21|tamiya;XF26;ak_equiv21|humbrol;149;ak_equiv21|fs;FS 34092;ak_equiv21|real;230;ak_equiv21|lifecolor;UA008;ak_equiv21|hataka;56;ak_equiv21|ak;2106;ak_equiv21
 ak,AIR,11874,#585C1F,8,4,5,ak_equiv21,,USMC Green FS 34095,,,ral;RAL 6003;ak_equiv21|fs;FS 34095;ak_equiv21|real;209;ak_equiv21|hataka;59;ak_equiv21
 ak,AIR,11875,#696E2B,8,4,5,ak_equiv21,,Field Green FS 34097,,,gunze;C340;ak_equiv21|gunze;H340;ak_equiv21|fs;FS 34097;ak_equiv21|real;231;ak_equiv21
-ak,AIR,11876,#80825B,8,4,5,ak_equiv21,,Green FS 34258,,,av;70.71094;ak_equiv21|fs;FS 34258;ak_equiv21|real;233;ak_equiv21|lifecolor;UA115;ak_equiv21|hataka;93;ak_equiv21|ak;2153;ak_equiv21
-ak,AIR,11877,#3B6C70,8,4,5,ak_equiv21,,Aggressor Blue FS 35109,,,av;70.71111;ak_equiv21|fs;FS 35109;ak_equiv21|real;234;ak_equiv21|lifecolor;UA404;ak_equiv21|hataka;156;ak_equiv21
-ak,AIR,11878,#5C979F,8,4,5,ak_equiv21,,Blue FS 35190,,,av;70.70901;ak_equiv21|fs;FS 35190;ak_equiv21|real;236;ak_equiv21
-ak,AIR,11879,#8AB0C3,8,4,5,ak_equiv21,,Air Superiority Blue FS 35450,,,humbrol;47;ak_equiv21|av;70.71332;ak_equiv21|fs;FS 35450;ak_equiv21|real;239;ak_equiv21|lifecolor;UA037;ak_equiv21|hataka;155;ak_equiv21|ak;2145;ak_equiv21
-ak,AIR,11880,#C4D0C6,8,4,5,ak_equiv21,,Duck Egg Blue FS 35622,,,humbrol;122;ak_equiv21|av;70.71328;ak_equiv21|gunze;C314;ak_equiv21|gunze;H314;ak_equiv21|fs;FS 35622;ak_equiv21|real;241;ak_equiv21|lifecolor;UA139;ak_equiv21|hataka;92;ak_equiv21|ak;2154;ak_equiv21
-ak,AIR,11881,#5E626B,8,4,5,ak_equiv21,,Medium Gunship Grey FS 36118,,,tamiya;XF24;ak_equiv21|humbrol;125;ak_equiv21|av;70.71097;ak_equiv21|gunze;C305;ak_equiv21|gunze;H305;ak_equiv21|fs;FS 36118;ak_equiv21|real;244;ak_equiv21|lifecolor;UA022;ak_equiv21|hataka;31;ak_equiv21|ak;2144;ak_equiv21
+ak,AIR,11876,#80825B,8,4,5,ak_equiv21,,Green FS 34258,,,av;71.094;ak_equiv21|fs;FS 34258;ak_equiv21|real;233;ak_equiv21|lifecolor;UA115;ak_equiv21|hataka;93;ak_equiv21|ak;2153;ak_equiv21
+ak,AIR,11877,#3B6C70,8,4,5,ak_equiv21,,Aggressor Blue FS 35109,,,av;71.111;ak_equiv21|fs;FS 35109;ak_equiv21|real;234;ak_equiv21|lifecolor;UA404;ak_equiv21|hataka;156;ak_equiv21
+ak,AIR,11878,#5C979F,8,4,5,ak_equiv21,,Blue FS 35190,,,av;70.901;ak_equiv21|fs;FS 35190;ak_equiv21|real;236;ak_equiv21
+ak,AIR,11879,#8AB0C3,8,4,5,ak_equiv21,,Air Superiority Blue FS 35450,,,av;71.332;ak_equiv21|humbrol;47;ak_equiv21|fs;FS 35450;ak_equiv21|real;239;ak_equiv21|lifecolor;UA037;ak_equiv21|hataka;155;ak_equiv21|ak;2145;ak_equiv21
+ak,AIR,11880,#C4D0C6,8,4,5,ak_equiv21,,Duck Egg Blue FS 35622,,,av;71.328;ak_equiv21|gunze;C314;ak_equiv21|gunze;H314;ak_equiv21|humbrol;122;ak_equiv21|fs;FS 35622;ak_equiv21|real;241;ak_equiv21|lifecolor;UA139;ak_equiv21|hataka;92;ak_equiv21|ak;2154;ak_equiv21
+ak,AIR,11881,#5E626B,8,4,5,ak_equiv21,,Medium Gunship Grey FS 36118,,,av;71.097;ak_equiv21|gunze;C305;ak_equiv21|gunze;H305;ak_equiv21|tamiya;XF24;ak_equiv21|humbrol;125;ak_equiv21|fs;FS 36118;ak_equiv21|real;244;ak_equiv21|lifecolor;UA022;ak_equiv21|hataka;31;ak_equiv21|ak;2144;ak_equiv21
 ak,AIR,11882,#706F6D,8,4,5,ak_equiv21,,Have Glass Grey FS 36170,,,fs;FS 36170;ak_equiv21|real;245;ak_equiv21|hataka;58;ak_equiv21
-ak,AIR,11883,#6F7982,8,4,5,ak_equiv21,,F-15 Dark Grey (Mod Eagle) FS 36176,,,humbrol;5;ak_equiv21|av;70.71273;ak_equiv21|fs;FS 36176;ak_equiv21|real;246;ak_equiv21|lifecolor;UA029;ak_equiv21|hataka;158;ak_equiv21|ak;2143;ak_equiv21
-ak,AIR,11884,#808487,8,4,5,ak_equiv21,,Dark Gull Grey FS 36231,,,humbrol;140;ak_equiv21|av;70.71277;ak_equiv21|gunze;C317;ak_equiv21|gunze;H317;ak_equiv21|fs;FS 36231;ak_equiv21|real;247;ak_equiv21|lifecolor;UA033;ak_equiv21|hataka;44;ak_equiv21
-ak,AIR,11885,#828385,8,4,5,ak_equiv21,,Aggressor Grey FS 36251,,,av;70.71274;ak_equiv21|fs;FS 36251;ak_equiv21|real;248;ak_equiv21|lifecolor;UA034;ak_equiv21|hataka;157;ak_equiv21|ak;2142;ak_equiv21
-ak,AIR,11886,#84898C,8,4,5,ak_equiv21,,Medium Grey FS 36270,,,humbrol;126;ak_equiv21|av;70.71275;ak_equiv21|gunze;C306;ak_equiv21|gunze;H306;ak_equiv21|fs;FS 36270;ak_equiv21|real;249;ak_equiv21|lifecolor;UA028;ak_equiv21|hataka;54;ak_equiv21|ak;2141;ak_equiv21
-ak,AIR,11887,#87949C,8,4,5,ak_equiv21,,Dark Ghost Grey FS 36320,,,humbrol;128;ak_equiv21|av;70.71120;ak_equiv21|gunze;C307;ak_equiv21|gunze;H307;ak_equiv21|fs;FS 36320;ak_equiv21|real;251;ak_equiv21|lifecolor;UA027;ak_equiv21|hataka;35;ak_equiv21
-ak,AIR,11888,#9DA6AB,8,4,5,ak_equiv21,,Light Ghost Grey FS 36375,,,humbrol;127;ak_equiv21|av;70.71615;ak_equiv21|gunze;C308;ak_equiv21|gunze;H308;ak_equiv21|fs;FS 36375;ak_equiv21|real;252;ak_equiv21|lifecolor;UA026;ak_equiv21|hataka;37;ak_equiv21
-ak,AIR,11889,#C4C8C7,8,4,5,ak_equiv21,,Light Grey FS 36495,,,humbrol;147;ak_equiv21|av;70.71276;ak_equiv21|gunze;C338;ak_equiv21|gunze;H338;ak_equiv21|fs;FS 36495;ak_equiv21|real;253;ak_equiv21|lifecolor;UA023;ak_equiv21|hataka;50;ak_equiv21
-ak,AIR,11890,#C2C0B3,8,4,5,ak_equiv21,,Camouﬂage Grey FS 36622,,,humbrol;28;ak_equiv21|av;70.71296;ak_equiv21|gunze;C311;ak_equiv21|gunze;H311;ak_equiv21|fs;FS 36622;ak_equiv21|real;254;ak_equiv21|lifecolor;UA021;ak_equiv21|hataka;39;ak_equiv21|ak;2104;ak_equiv21
+ak,AIR,11883,#6F7982,8,4,5,ak_equiv21,,F-15 Dark Grey (Mod Eagle) FS 36176,,,av;71.273;ak_equiv21|humbrol;5;ak_equiv21|fs;FS 36176;ak_equiv21|real;246;ak_equiv21|lifecolor;UA029;ak_equiv21|hataka;158;ak_equiv21|ak;2143;ak_equiv21
+ak,AIR,11884,#808487,8,4,5,ak_equiv21,,Dark Gull Grey FS 36231,,,av;71.277;ak_equiv21|gunze;C317;ak_equiv21|gunze;H317;ak_equiv21|humbrol;140;ak_equiv21|fs;FS 36231;ak_equiv21|real;247;ak_equiv21|lifecolor;UA033;ak_equiv21|hataka;44;ak_equiv21
+ak,AIR,11885,#828385,8,4,5,ak_equiv21,,Aggressor Grey FS 36251,,,av;71.274;ak_equiv21|fs;FS 36251;ak_equiv21|real;248;ak_equiv21|lifecolor;UA034;ak_equiv21|hataka;157;ak_equiv21|ak;2142;ak_equiv21
+ak,AIR,11886,#84898C,8,4,5,ak_equiv21,,Medium Grey FS 36270,,,av;71.275;ak_equiv21|gunze;C306;ak_equiv21|gunze;H306;ak_equiv21|humbrol;126;ak_equiv21|fs;FS 36270;ak_equiv21|real;249;ak_equiv21|lifecolor;UA028;ak_equiv21|hataka;54;ak_equiv21|ak;2141;ak_equiv21
+ak,AIR,11887,#87949C,8,4,5,ak_equiv21,,Dark Ghost Grey FS 36320,,,av;71.120;ak_equiv21|gunze;C307;ak_equiv21|gunze;H307;ak_equiv21|humbrol;128;ak_equiv21|fs;FS 36320;ak_equiv21|real;251;ak_equiv21|lifecolor;UA027;ak_equiv21|hataka;35;ak_equiv21
+ak,AIR,11888,#9DA6AB,8,4,5,ak_equiv21,,Light Ghost Grey FS 36375,,,av;71.615;ak_equiv21|gunze;C308;ak_equiv21|gunze;H308;ak_equiv21|humbrol;127;ak_equiv21|fs;FS 36375;ak_equiv21|real;252;ak_equiv21|lifecolor;UA026;ak_equiv21|hataka;37;ak_equiv21
+ak,AIR,11889,#C4C8C7,8,4,5,ak_equiv21,,Light Grey FS 36495,,,av;71.276;ak_equiv21|gunze;C338;ak_equiv21|gunze;H338;ak_equiv21|humbrol;147;ak_equiv21|fs;FS 36495;ak_equiv21|real;253;ak_equiv21|lifecolor;UA023;ak_equiv21|hataka;50;ak_equiv21
+ak,AIR,11890,#C2C0B3,8,4,5,ak_equiv21,,Camouﬂage Grey FS 36622,,,av;71.296;ak_equiv21|gunze;C311;ak_equiv21|gunze;H311;ak_equiv21|humbrol;28;ak_equiv21|fs;FS 36622;ak_equiv21|real;254;ak_equiv21|lifecolor;UA021;ak_equiv21|hataka;39;ak_equiv21|ak;2104;ak_equiv21
 ak,AIR,11891,#909388,8,4,5,ak_equiv21,,IJN J3 Hai-iro (Grey),,,gunze;C35;ak_equiv21|gunze;H61;ak_equiv21|fs;FS 36307;ak_equiv21|real;302;ak_equiv21|citadel;51024;ak_equiv21|ak;2061;ak_equiv21
-ak,AIR,11892,#958F75,8,4,5,ak_equiv21,,IJN J3 SP (Amber Grey),,,av;70.71311;ak_equiv21|real;303;ak_equiv21|ak;2062;ak_equiv21
-ak,AIR,11893,#2A362C,8,4,5,ak_equiv21,,IJN D1 Deep Green Black,,,tamiya;XF11;ak_equiv21|av;70.71325;ak_equiv21|gunze;C15;ak_equiv21|gunze;H59;ak_equiv21|real;304;ak_equiv21|ak;2063;ak_equiv21
-ak,AIR,11894,#263731,8,4,5,ak_equiv21,,IJN D2 Green Black,,,av;70.71322;ak_equiv21|real;305;ak_equiv21|ak;2064;ak_equiv21
+ak,AIR,11892,#958F75,8,4,5,ak_equiv21,,IJN J3 SP (Amber Grey),,,av;71.311;ak_equiv21|real;303;ak_equiv21|ak;2062;ak_equiv21
+ak,AIR,11893,#2A362C,8,4,5,ak_equiv21,,IJN D1 Deep Green Black,,,av;71.325;ak_equiv21|gunze;C15;ak_equiv21|gunze;H59;ak_equiv21|tamiya;XF11;ak_equiv21|real;304;ak_equiv21|ak;2063;ak_equiv21
+ak,AIR,11894,#263731,8,4,5,ak_equiv21,,IJN D2 Green Black,,,av;71.322;ak_equiv21|real;305;ak_equiv21|ak;2064;ak_equiv21
 ak,AIR,11895,#1B2325,8,4,5,ak_equiv21,,IJN Q1 Anti-Glare Blue-Black,,,gunze;C125;ak_equiv21|ak;2066;ak_equiv21
 ak,AIR,11896,#676333,8,4,5,ak_equiv21,,IJN M3 (M) Mitsubishi Interior Green,,,gunze;C126;ak_equiv21|real;306;ak_equiv21|ak;2067;ak_equiv21
 ak,AIR,11897,#504A2A,8,4,5,ak_equiv21,,IJN M3 (N) Nakajima Interior Green,,,gunze;C127;ak_equiv21|real;307;ak_equiv21|ak;2068;ak_equiv21
-ak,AIR,11898,#0C5E73,8,4,5,ak_equiv21,,IJN/IJA Aotake,,,av;70.71419;ak_equiv21|gunze;C57;ak_equiv21|gunze;H63;ak_equiv21
-ak,AIR,11899,#A7A896,8,4,5,ak_equiv21,,IJA #1 Hairyokushoku (Grey-Green),,,tamiya;XF12;ak_equiv21|av;70.71326;ak_equiv21|gunze;C56;ak_equiv21|gunze;H62;ak_equiv21|real;328;ak_equiv21|ak;2261;ak_equiv21
+ak,AIR,11898,#0C5E73,8,4,5,ak_equiv21,,IJN/IJA Aotake,,,av;71.419;ak_equiv21|gunze;C057;ak_equiv21|gunze;H063;ak_equiv21
+ak,AIR,11899,#A7A896,8,4,5,ak_equiv21,,IJA #1 Hairyokushoku (Grey-Green),,,av;71.326;ak_equiv21|gunze;C56;ak_equiv21|gunze;H62;ak_equiv21|tamiya;XF12;ak_equiv21|real;328;ak_equiv21|ak;2261;ak_equiv21
 ak,AIR,11900,#4A5D5B,8,4,5,ak_equiv21,,IJA #3 Hairanshoku Grey (Indigo),,,humbrol;77;ak_equiv21|real;329;ak_equiv21|ak;2262;ak_equiv21
-ak,AIR,11901,#504A2A,8,4,5,ak_equiv21,,IJA #7 Ohryuko Nana Go Shoku (Olive Brown),,,av;70.71286;ak_equiv21|real;330;ak_equiv21|ak;2263;ak_equiv21
+ak,AIR,11901,#504A2A,8,4,5,ak_equiv21,,IJA #7 Ohryuko Nana Go Shoku (Olive Brown),,,av;71.286;ak_equiv21|real;330;ak_equiv21|ak;2263;ak_equiv21
 ak,AIR,11902,#31442E,8,4,5,ak_equiv21,,IJA #21 Midori iro (Green),,,real;331;ak_equiv21|ak;2264;ak_equiv21
 ak,AIR,11903,#0C372D,8,4,5,ak_equiv21,,IJA #27 Ao Midori iro (Blue-Green),,,real;332;ak_equiv21|citadel;51004;ak_equiv21|ak;2265;ak_equiv21
 ak,AIR,11904,#777125,8,4,5,ak_equiv21,,IJA #29 Ki Midori iro (Yellow-Green),,,real;333;ak_equiv21|ak;2266;ak_equiv21
 ak,AIR,11905,#867956,8,4,5,ak_equiv21,,IJA #30 Karekusa iro (Dry Grass),,,real;334;ak_equiv21|ak;2267;ak_equiv21
 ak,AIR,11906,#685247,8,4,5,ak_equiv21,,IJA #31 Cha Kasshoku (Tea Colour),,,real;335;ak_equiv21|ak;2268;ak_equiv21
 ak,AIR,11907,#9DB3A6,8,4,5,ak_equiv21,,Grey-Blue 1920s-1930s,,,
-ak,AIR,11908,#D4D5CD,8,4,5,ak_equiv21,,AE-9/AII Light Grey,,,av;70.71414;ak_equiv21|fs;FS 25630;ak_equiv21|real;308;ak_equiv21|hataka;127;ak_equiv21|ak;2251;ak_equiv21
-ak,AIR,11909,#313F1E,8,4,5,ak_equiv21,,AII Green,,,av;70.71410;ak_equiv21|real;309;ak_equiv21|hataka;128;ak_equiv21|ak;2252;ak_equiv21
-ak,AIR,11910,#7DA3AE,8,4,5,ak_equiv21,,AII Light Blue,,,av;70.71317;ak_equiv21|real;310;ak_equiv21|hataka;129;ak_equiv21|ak;2253;ak_equiv21
-ak,AIR,11911,#657376,8,4,5,ak_equiv21,,A-14 Interior Steel Grey,,,humbrol;5;ak_equiv21|av;70.71336;ak_equiv21|real;319;ak_equiv21|ak;2241;ak_equiv21
-ak,AIR,11912,#85A59A,8,4,5,ak_equiv21,,A-18f Light Grey-Blue,,,av;70.71413;ak_equiv21|real;311;ak_equiv21|ak;2254;ak_equiv21
-ak,AIR,11913,#53653D,8,4,5,ak_equiv21,,A-19f Grass Green,,,av;70.71411;ak_equiv21|real;312;ak_equiv21|ak;2255;ak_equiv21
-ak,AIR,11914,#8F8762,8,4,5,ak_equiv21,,A-21m Light Yellowish Brown,,,humbrol;72;ak_equiv21|av;70.71415;ak_equiv21|real;314;ak_equiv21|lifecolor;UA039;ak_equiv21|hataka;74;ak_equiv21|ak;2248;ak_equiv21
-ak,AIR,11915,#425223,8,4,5,ak_equiv21,,AMT-4 (A-24m) Green,,,av;70.71301;ak_equiv21|real;315;ak_equiv21|hataka;73;ak_equiv21|ak;2242;ak_equiv21
-ak,AIR,11916,#6790A4,8,4,5,ak_equiv21,,AMT-7 Light Blue,,,av;70.71318;ak_equiv21|real;316;ak_equiv21|hataka;72;ak_equiv21|ak;2244;ak_equiv21
-ak,AIR,11917,#475A61,8,4,5,ak_equiv21,,AMT-11 Blue-Grey,,,av;70.71304;ak_equiv21|real;317;ak_equiv21|hataka;71;ak_equiv21|ak;2245;ak_equiv21
-ak,AIR,11918,#2B3638,8,4,5,ak_equiv21,,AMT-12 Dark Grey,,,av;70.71308;ak_equiv21|real;318;ak_equiv21|hataka;70;ak_equiv21|ak;2246;ak_equiv21
+ak,AIR,11908,#D4D5CD,8,4,5,ak_equiv21,,AE-9/AII Light Grey,,,av;71.414;ak_equiv21|fs;FS 25630;ak_equiv21|real;308;ak_equiv21|hataka;127;ak_equiv21|ak;2251;ak_equiv21
+ak,AIR,11909,#313F1E,8,4,5,ak_equiv21,,AII Green,,,av;71.410;ak_equiv21|real;309;ak_equiv21|hataka;128;ak_equiv21|ak;2252;ak_equiv21
+ak,AIR,11910,#7DA3AE,8,4,5,ak_equiv21,,AII Light Blue,,,av;71.317;ak_equiv21|real;310;ak_equiv21|hataka;129;ak_equiv21|ak;2253;ak_equiv21
+ak,AIR,11911,#657376,8,4,5,ak_equiv21,,A-14 Interior Steel Grey,,,av;71.336;ak_equiv21|humbrol;5;ak_equiv21|real;319;ak_equiv21|ak;2241;ak_equiv21
+ak,AIR,11912,#85A59A,8,4,5,ak_equiv21,,A-18f Light Grey-Blue,,,av;71.413;ak_equiv21|real;311;ak_equiv21|ak;2254;ak_equiv21
+ak,AIR,11913,#53653D,8,4,5,ak_equiv21,,A-19f Grass Green,,,av;71.411;ak_equiv21|real;312;ak_equiv21|ak;2255;ak_equiv21
+ak,AIR,11914,#8F8762,8,4,5,ak_equiv21,,A-21m Light Yellowish Brown,,,av;71.415;ak_equiv21|humbrol;72;ak_equiv21|real;314;ak_equiv21|lifecolor;UA039;ak_equiv21|hataka;74;ak_equiv21|ak;2248;ak_equiv21
+ak,AIR,11915,#425223,8,4,5,ak_equiv21,,AMT-4 (A-24m) Green,,,av;71.301;ak_equiv21|real;315;ak_equiv21|hataka;73;ak_equiv21|ak;2242;ak_equiv21
+ak,AIR,11916,#6790A4,8,4,5,ak_equiv21,,AMT-7 Light Blue,,,av;71.318;ak_equiv21|real;316;ak_equiv21|hataka;72;ak_equiv21|ak;2244;ak_equiv21
+ak,AIR,11917,#475A61,8,4,5,ak_equiv21,,AMT-11 Blue-Grey,,,av;71.304;ak_equiv21|real;317;ak_equiv21|hataka;71;ak_equiv21|ak;2245;ak_equiv21
+ak,AIR,11918,#2B3638,8,4,5,ak_equiv21,,AMT-12 Dark Grey,,,av;71.308;ak_equiv21|real;318;ak_equiv21|hataka;70;ak_equiv21|ak;2246;ak_equiv21
 ak,AIR,11919,#2C652E,8,4,5,ak_equiv21,,Radome & Wheel Hub Green,,,gunze;C66;ak_equiv21|gunze;H26;ak_equiv21|ak;2302;ak_equiv21
 ak,AIR,11920,#BEBFBA,8,4,5,ak_equiv21,,MiG-25/MiG-31 Grey,,,real;336;ak_equiv21
-ak,FIG,11401,#784931,8,4,5,ak_equiv21,,Base Flesh,,,av;70.70341;ak_equiv21|fs;FS30233;ak_equiv21|ak;3011;ak_equiv21
-ak,FIG,11402,#CC9078,8,4,5,ak_equiv21,,Light Flesh,,,fs;FS31433;ak_equiv21|ak;3012;ak_equiv21
-ak,FIG,11403,#FDCB9E,8,4,5,ak_equiv21,,Highlight Flesh,,,av;70.70342;ak_equiv21|ak;3013;ak_equiv21
-ak,FIG,11404,#8B433F,8,4,5,ak_equiv21,,Shadow Flesh,,,fs;FS31136;ak_equiv21|ak;3014;ak_equiv21
-ak,FIG,11405,#542725,8,4,5,ak_equiv21,,Dark Shadow Flesh,,,humbrol;73;ak_equiv21|av;70.982;ak_equiv21|ak;3015;ak_equiv21
-ak,FIG,11406,#351C1F,8,4,5,ak_equiv21,,Reddish Black,,,fs;FS10049;ak_equiv21|ak;3016;ak_equiv21
-ak,FIG,11407,#020408,8,4,5,ak_equiv21,,Black Uniform Base,,,av;70.70306;ak_equiv21|gunze;C137;ak_equiv21|fs;FS26081;ak_equiv21|lifecolor;UA733;ak_equiv21|ak;3002;ak_equiv21
+ak,FIG,11401,#784931,8,4,5,ak_equiv21,,Base Flesh,,,av;70.341;ak_equiv21|fs;30233;ak_equiv21|ak;3011;ak_equiv21
+ak,FIG,11402,#CC9078,8,4,5,ak_equiv21,,Light Flesh,,,fs;31433;ak_equiv21|ak;3012;ak_equiv21
+ak,FIG,11403,#FDCB9E,8,4,5,ak_equiv21,,Highlight Flesh,,,av;70.342;ak_equiv21|ak;3013;ak_equiv21
+ak,FIG,11404,#8B433F,8,4,5,ak_equiv21,,Shadow Flesh,,,fs;31136;ak_equiv21|ak;3014;ak_equiv21
+ak,FIG,11405,#542725,8,4,5,ak_equiv21,,Dark Shadow Flesh,,,av;70.982;ak_equiv21|humbrol;73;ak_equiv21|ak;3015;ak_equiv21
+ak,FIG,11406,#351C1F,8,4,5,ak_equiv21,,Reddish Black,,,fs;10049;ak_equiv21|ak;3016;ak_equiv21
+ak,FIG,11407,#020408,8,4,5,ak_equiv21,,Black Uniform Base,,,av;70.306;ak_equiv21|gunze;C137;ak_equiv21|fs;26081;ak_equiv21|lifecolor;UA733;ak_equiv21|ak;3002;ak_equiv21
 ak,FIG,11408,#4B402F,8,4,5,ak_equiv21,,Dot44 Brown Base,,,ak;3021;ak_equiv21
-ak,FIG,11409,#C4884F,8,4,5,ak_equiv21,,Orange Tan,,,fs;FS32516;ak_equiv21|ak;3022;ak_equiv21
+ak,FIG,11409,#C4884F,8,4,5,ak_equiv21,,Orange Tan,,,fs;32516;ak_equiv21|ak;3022;ak_equiv21
 ak,FIG,11410,#142A20,8,4,5,ak_equiv21,,Dark Green,,,ak;3023;ak_equiv21
 ak,FIG,11411,#708D4C,8,4,5,ak_equiv21,,Light Green,,,ak;3024;ak_equiv21
-ak,FIG,11412,#1F391E,8,4,5,ak_equiv21,,Medium Green,,,av;70.70348;ak_equiv21|gunze;H303;ak_equiv21|fs;FS34102;ak_equiv21|lifecolor;UA002;ak_equiv21|ak;3025;ak_equiv21
-ak,FIG,11413,#876647,8,4,5,ak_equiv21,,Denison Tan Base,,,av;70.70339;ak_equiv21|fs;FS30227;ak_equiv21|ak;3026;ak_equiv21
-ak,FIG,11414,#696647,8,4,5,ak_equiv21,,Splittermuster Base,,,av;70.70332;ak_equiv21|fs;FS33303;ak_equiv21|ak;3041;ak_equiv21
-ak,FIG,11415,#263A25,8,4,5,ak_equiv21,,Splittermuster Green Spots,,,fs;FS34095;ak_equiv21|ak;3043;ak_equiv21
+ak,FIG,11412,#1F391E,8,4,5,ak_equiv21,,Medium Green,,,av;70.348;ak_equiv21|gunze;H303;ak_equiv21|fs;34102;ak_equiv21|lifecolor;UA002;ak_equiv21|ak;3025;ak_equiv21
+ak,FIG,11413,#876647,8,4,5,ak_equiv21,,Denison Tan Base,,,av;70.339;ak_equiv21|fs;30227;ak_equiv21|ak;3026;ak_equiv21
+ak,FIG,11414,#696647,8,4,5,ak_equiv21,,Splittermuster Base,,,av;70.332;ak_equiv21|fs;33303;ak_equiv21|ak;3041;ak_equiv21
+ak,FIG,11415,#263A25,8,4,5,ak_equiv21,,Splittermuster Green Spots,,,fs;34095;ak_equiv21|ak;3043;ak_equiv21
 ak,FIG,11416,#42352C,8,4,5,ak_equiv21,,Waffen Brown Grey,,,ak;3051;ak_equiv21
-ak,FIG,11417,#5A3F26,8,4,5,ak_equiv21,,Waffen Brown,,,av;70.875;ak_equiv21|fs;FS30045;ak_equiv21|ak;3055;ak_equiv21
-ak,FIG,11418,#190B07,8,4,5,ak_equiv21,,Brown Black,,,av;70.70333;ak_equiv21|ak;3056;ak_equiv21
-ak,FIG,11419,#452922,8,4,5,ak_equiv21,,Waffen Red Brown,,,humbrol;160;ak_equiv21|av;70.984;ak_equiv21|ral;RAL8011;ak_equiv21|fs;FS30108;ak_equiv21|ak;3061;ak_equiv21
+ak,FIG,11417,#5A3F26,8,4,5,ak_equiv21,,Waffen Brown,,,av;70.875;ak_equiv21|fs;30045;ak_equiv21|ak;3055;ak_equiv21
+ak,FIG,11418,#190B07,8,4,5,ak_equiv21,,Brown Black,,,av;70.333;ak_equiv21|ak;3056;ak_equiv21
+ak,FIG,11419,#452922,8,4,5,ak_equiv21,,Waffen Red Brown,,,av;70.984;ak_equiv21|humbrol;160;ak_equiv21|ral;8011;ak_equiv21|fs;30108;ak_equiv21|ak;3061;ak_equiv21
 ak,FIG,11420,#2A3C21,8,4,5,ak_equiv21,,Waffen Green,,,ak;3065;ak_equiv21
-ak,FIG,11421,#233217,8,4,5,ak_equiv21,,Dark Olive Green,,,fs;FS34094;ak_equiv21|ak;3071;ak_equiv21
-ak,FIG,11422,#998042,8,4,5,ak_equiv21,,Ocher Khaki,,,humbrol;93;ak_equiv21|av;70.824;ak_equiv21|fs;FS30266;ak_equiv21|ak;3072;ak_equiv21
-ak,FIG,11423,#393F34,8,4,5,ak_equiv21,,Field Grey Base #2 (Grey Uniform),,,humbrol;79;ak_equiv21|av;70.867;ak_equiv21|gunze;H68;ak_equiv21|fs;FS36099;ak_equiv21|ak;3142;ak_equiv21
-ak,FIG,11424,#918D55,8,4,5,ak_equiv21,,Grey Green,,,fs;FS34424;ak_equiv21|ak;3143;ak_equiv21
-ak,FIG,11425,#393923,8,4,5,ak_equiv21,,Field Grey Base #1 (Green uniform),,,humbrol;75;ak_equiv21|av;70.897;ak_equiv21|fs;FS34052;ak_equiv21
-ak,FIG,11426,#6A7374,8,4,5,ak_equiv21,,Grey Blue,,,av;70.70338;ak_equiv21|ak;3146;ak_equiv21
-ak,FIG,11427,#26341C,8,4,5,ak_equiv21,,Green Uniform Base,,,av;70.70335;ak_equiv21|fs;FS16165;ak_equiv21|ak;3114;ak_equiv21
-ak,FIG,11428,#4E5C30,8,4,5,ak_equiv21,,Light Green Uniform,,,av;70.70336;ak_equiv21|ak;3115;ak_equiv21
-ak,FIG,11429,#67712E,8,4,5,ak_equiv21,,Russian Uniform Lights,,,fs;FS34258;ak_equiv21|ak;3121;ak_equiv21
-ak,FIG,11430,#505A28,8,4,5,ak_equiv21,,Russian Uniform Base,,,av;70.70327;ak_equiv21|fs;FS34098;ak_equiv21|ak;3122;ak_equiv21
+ak,FIG,11421,#233217,8,4,5,ak_equiv21,,Dark Olive Green,,,fs;34094;ak_equiv21|ak;3071;ak_equiv21
+ak,FIG,11422,#998042,8,4,5,ak_equiv21,,Ocher Khaki,,,av;70.824;ak_equiv21|humbrol;93;ak_equiv21|fs;30266;ak_equiv21|ak;3072;ak_equiv21
+ak,FIG,11423,#393F34,8,4,5,ak_equiv21,,Field Grey Base #2 (Grey Uniform),,,av;70.867;ak_equiv21|gunze;H68;ak_equiv21|humbrol;79;ak_equiv21|fs;36099;ak_equiv21|ak;3142;ak_equiv21
+ak,FIG,11424,#918D55,8,4,5,ak_equiv21,,Grey Green,,,fs;34424;ak_equiv21|ak;3143;ak_equiv21
+ak,FIG,11425,#393923,8,4,5,ak_equiv21,,Field Grey Base #1 (Green uniform),,,av;70.897;ak_equiv21|humbrol;75;ak_equiv21|fs;34052;ak_equiv21
+ak,FIG,11426,#6A7374,8,4,5,ak_equiv21,,Grey Blue,,,av;70.338;ak_equiv21|ak;3146;ak_equiv21
+ak,FIG,11427,#26341C,8,4,5,ak_equiv21,,Green Uniform Base,,,av;70.335;ak_equiv21|fs;16165;ak_equiv21|ak;3114;ak_equiv21
+ak,FIG,11428,#4E5C30,8,4,5,ak_equiv21,,Light Green Uniform,,,av;70.336;ak_equiv21|ak;3115;ak_equiv21
+ak,FIG,11429,#67712E,8,4,5,ak_equiv21,,Russian Uniform Lights,,,fs;34258;ak_equiv21|ak;3121;ak_equiv21
+ak,FIG,11430,#505A28,8,4,5,ak_equiv21,,Russian Uniform Base,,,av;70.327;ak_equiv21|fs;34098;ak_equiv21|ak;3122;ak_equiv21
 ak,FIG,11431,#162434,8,4,5,ak_equiv21,,Russian Blue Lights,,,ak;3124;ak_equiv21
-ak,FIG,11432,#020A1D,8,4,5,ak_equiv21,,Russian Blue Base,,,av;70.70309;ak_equiv21|ak;3125;ak_equiv21
+ak,FIG,11432,#020A1D,8,4,5,ak_equiv21,,Russian Blue Base,,,av;70.309;ak_equiv21|ak;3125;ak_equiv21
 ak,FIG,11433,#49471F,8,4,5,ak_equiv21,,US Olive Base Uniform,,,
-ak,FIG,11434,#713F32,8,4,5,ak_equiv21,,Red Brown,,,av;70.70343;ak_equiv21|ak;3073;ak_equiv21
+ak,FIG,11434,#713F32,8,4,5,ak_equiv21,,Red Brown,,,av;70.343;ak_equiv21|ak;3073;ak_equiv21
 ak,FIG,11435,#745438,8,4,5,ak_equiv21,,Field Drab,,,av;70.873;ak_equiv21|ak;3075;ak_equiv21
 ak,FIG,11436,#484428,8,4,5,ak_equiv21,,Canvas Tone,,,av;70.988;ak_equiv21|ak;3076;ak_equiv21
-ak,FIG,11437,#664D30,8,4,5,ak_equiv21,,British Uniform Base,,,av;70.70317;ak_equiv21|fs;FS16160;ak_equiv21|ak;3081;ak_equiv21
-ak,FIG,11438,#836430,8,4,5,ak_equiv21,,British Uniform Lights,,,av;70.70321;ak_equiv21|fs;FS20475;ak_equiv21|ak;3082;ak_equiv21
-ak,FIG,11439,#3C4D53,8,4,5,ak_equiv21,,French Greyish Blue,,,fs;FS35109;ak_equiv21|ak;3101;ak_equiv21
+ak,FIG,11437,#664D30,8,4,5,ak_equiv21,,British Uniform Base,,,av;70.317;ak_equiv21|fs;16160;ak_equiv21|ak;3081;ak_equiv21
+ak,FIG,11438,#836430,8,4,5,ak_equiv21,,British Uniform Lights,,,av;70.321;ak_equiv21|fs;20475;ak_equiv21|ak;3082;ak_equiv21
+ak,FIG,11439,#3C4D53,8,4,5,ak_equiv21,,French Greyish Blue,,,fs;35109;ak_equiv21|ak;3101;ak_equiv21
 ak,FIG,11440,#936922,8,4,5,ak_equiv21,,Desert Uniform Base,,,ak;3111;ak_equiv21
-ak,IC,11001,#FFFFFF,8,4,5,ak_equiv21,,White,,,tamiya;XF2;ak_equiv21|av;70.951;ak_equiv21|gunze;H11;ak_equiv21|testor;1768;ak_equiv21|rlm;RLM21;ak_equiv21|ral;RAL9016;ak_equiv21|fs;FS37925;ak_equiv21|revell;5;ak_equiv21|real;RC004;ak_equiv21
-ak,IC,11029,#020403,8,4,5,ak_equiv21,,Black,,,tamiya;XF1;ak_equiv21|humbrol;33;ak_equiv21|av;70.950;ak_equiv21|gunze;H12;ak_equiv21|testor;1583;ak_equiv21|rlm;RLM22;ak_equiv21|ral;RAL9004;ak_equiv21|fs;FS37038;ak_equiv21|real;RC001;ak_equiv21
-ak,IC,11045,#FFC425,8,4,5,ak_equiv21,,Deep Yellow,,,av;70.915;ak_equiv21|gunze;H4;ak_equiv21|ral;RAL1023;ak_equiv21
+ak,IC,11001,#FFFFFF,8,4,5,ak_equiv21,,White,,,av;70.951;ak_equiv21|gunze;H11;ak_equiv21|tamiya;XF2;ak_equiv21|humbrol;34;ak_equiv21|testor;1768;ak_equiv21|rlm;21;ak_equiv21|ral;9016;ak_equiv21|fs;37925;ak_equiv21|revell;5;ak_equiv21|real;RC004;ak_equiv21
+ak,IC,11029,#020403,8,4,5,ak_equiv21,,Black,,,av;70.950;ak_equiv21|gunze;H12;ak_equiv21|tamiya;XF1;ak_equiv21|humbrol;33;ak_equiv21|testor;1583;ak_equiv21|rlm;22;ak_equiv21|ral;9004;ak_equiv21|fs;37038;ak_equiv21|real;RC001;ak_equiv21
+ak,IC,11045,#FFC425,8,4,5,ak_equiv21,,Deep Yellow,,,av;70.915;ak_equiv21|gunze;H4;ak_equiv21|ral;1023;ak_equiv21
 ak,IC,11065,#EE778F,8,4,5,ak_equiv21,,Intense Pink,,,av;70.958;ak_equiv21|citadel;51070;ak_equiv21
 ak,IC,11072,#6B536D,8,4,5,ak_equiv21,,Deep Violet,,,
 ak,IC,11074,#724B6A,8,4,5,ak_equiv21,,Deep Purple,,,
-ak,IC,11080,#F26931,8,4,5,ak_equiv21,,Deep Orange,,,humbrol;18;ak_equiv21|av;70.851;ak_equiv21|gunze;H14;ak_equiv21|ral;RAL2004;ak_equiv21|real;RC009;ak_equiv21
-ak,IC,11088,#E12D29,8,4,5,ak_equiv21,,Deep Red,,,tamiya;XF7;ak_equiv21|humbrol;153;ak_equiv21|gunze;H23;ak_equiv21
-ak,IC,11102,#7D492B,8,4,5,ak_equiv21,,Deep Brown,,,av;70.818;ak_equiv21|gunze;H453;ak_equiv21|fs;FS20100;ak_equiv21
-ak,IC,11142,#196533,8,4,5,ak_equiv21,,Deep Green,,,av;70.969;ak_equiv21|gunze;H26;ak_equiv21|fs;FS14115;ak_equiv21
-ak,IC,11182,#10456A,8,4,5,ak_equiv21,,Deep Blue,,,humbrol;14;ak_equiv21|av;70.930;ak_equiv21|gunze;H15;ak_equiv21|testor;2715;ak_equiv21|revell;52;ak_equiv21|real;RC010;ak_equiv21
+ak,IC,11080,#F26931,8,4,5,ak_equiv21,,Deep Orange,,,av;70.851;ak_equiv21|gunze;H14;ak_equiv21|humbrol;18;ak_equiv21|ral;2004;ak_equiv21|real;RC009;ak_equiv21
+ak,IC,11088,#E12D29,8,4,5,ak_equiv21,,Deep Red,,,gunze;H23;ak_equiv21|tamiya;XF7;ak_equiv21|humbrol;153;ak_equiv21
+ak,IC,11102,#7D492B,8,4,5,ak_equiv21,,Deep Brown,,,av;70.818;ak_equiv21|gunze;H453;ak_equiv21|fs;20100;ak_equiv21
+ak,IC,11142,#196533,8,4,5,ak_equiv21,,Deep Green,,,av;70.969;ak_equiv21|gunze;H26;ak_equiv21|fs;14115;ak_equiv21
+ak,IC,11182,#10456A,8,4,5,ak_equiv21,,Deep Blue,,,av;70.930;ak_equiv21|gunze;H15;ak_equiv21|humbrol;14;ak_equiv21|testor;2715;ak_equiv21|revell;52;ak_equiv21|real;RC010;ak_equiv21
 ak,INK,11219,#150101,8,4,5,ak_equiv21,,Sepia INK,,,
 ak,INK,11220,#005E5E,8,4,5,ak_equiv21,,Turquoise INK,,,
 ak,INK,11221,#8E3A20,8,4,5,ak_equiv21,,Skin INK,,,
@@ -262,13 +262,13 @@ ak,INK,11227,#B3482F,8,4,5,ak_equiv21,,Penetrating Red INK,,,
 ak,INK,11228,#001525,8,4,5,ak_equiv21,,Night Blue INK,,,
 ak,INK,11229,#0E0803,8,4,5,ak_equiv21,,Burnt Umber INK,,,
 ak,INK,11230,#FFFFFF,8,4,5,ak_equiv21,,Titanium White INK,,,
-ak,M,11191,#A77F3D,8,8,5,ak_equiv21,,Gold,,,gunze;H9;ak_equiv21|fs;FS17043;ak_equiv21
+ak,M,11191,#A77F3D,8,8,5,ak_equiv21,,Gold,,,gunze;H9;ak_equiv21|fs;17043;ak_equiv21
 ak,M,11192,#AB994C,8,8,5,ak_equiv21,,Old Gold,,,
 ak,M,11193,#62562A,8,8,5,ak_equiv21,,Rusty Gold,,,
-ak,M,11194,#8E6426,8,8,5,ak_equiv21,,Brass,,,humbrol;54;ak_equiv21|av;70.801;ak_equiv21|testor;1582;ak_equiv21|revell;92;ak_equiv21|citadel;51066;ak_equiv21
+ak,M,11194,#8E6426,8,8,5,ak_equiv21,,Brass,,,av;70.801;ak_equiv21|humbrol;54;ak_equiv21|testor;1582;ak_equiv21|revell;92;ak_equiv21|citadel;51066;ak_equiv21
 ak,M,11195,#8F5922,8,8,5,ak_equiv21,,Rusty Brass,,,
-ak,M,11196,#8B7827,8,8,5,ak_equiv21,,Bronze,,,humbrol;55;ak_equiv21|av;70.998;ak_equiv21|revell;95;ak_equiv21|citadel;51063;ak_equiv21
-ak,M,11197,#904C22,8,8,5,ak_equiv21,,Copper,,,tamiya;XF6;ak_equiv21|humbrol;12;ak_equiv21|av;70.999;ak_equiv21|gunze;H10;ak_equiv21|testor;1551;ak_equiv21|revell;93;ak_equiv21|citadel;51065;ak_equiv21
+ak,M,11196,#8B7827,8,8,5,ak_equiv21,,Bronze,,,av;70.998;ak_equiv21|humbrol;55;ak_equiv21|revell;95;ak_equiv21|citadel;51063;ak_equiv21
+ak,M,11197,#904C22,8,8,5,ak_equiv21,,Copper,,,av;70.999;ak_equiv21|gunze;H10;ak_equiv21|tamiya;XF6;ak_equiv21|humbrol;12;ak_equiv21|testor;1551;ak_equiv21|revell;93;ak_equiv21|citadel;51065;ak_equiv21
 ak,M,11198,#36200D,8,8,5,ak_equiv21,,Burnt Tin,,,tamiya;XF28;ak_equiv21|humbrol;171;ak_equiv21
 ak,M,11199,#478E95,8,8,5,ak_equiv21,,Metallic Blue,,,gunze;H88;ak_equiv21
 ak,M,11200,#44736E,8,8,5,ak_equiv21,,Astral Beryllium,,,gunze;H63;ak_equiv21
@@ -278,191 +278,191 @@ ak,M,11203,#C43F3D,8,8,5,ak_equiv21,,Foundry Red,,,
 ak,M,11204,#1F7A42,8,8,5,ak_equiv21,,Emerald Metallic Green,,,
 ak,M,11205,#6E9757,8,8,5,ak_equiv21,,Metallic Green,,,gunze;H89;ak_equiv21
 ak,M,11206,#F7F4D5,8,8,5,ak_equiv21,,Pearl,,,
-ak,M,11207,#A0A4A5,8,8,5,ak_equiv21,,Aluminium,,,tamiya;XF16;ak_equiv21|fs;FS36628;ak_equiv21|real;RC020;ak_equiv21
+ak,M,11207,#A0A4A5,8,8,5,ak_equiv21,,Aluminium,,,tamiya;XF16;ak_equiv21|fs;36628;ak_equiv21|real;RC020;ak_equiv21
 ak,M,11208,#6C6F71,8,8,5,ak_equiv21,,Dark Aluminium,,,
-ak,M,11209,#8B999D,8,8,5,ak_equiv21,,Silver,,,tamiya;X11;ak_equiv21|humbrol;11;ak_equiv21|av;70.997;ak_equiv21|gunze;H8;ak_equiv21|testor;1790;ak_equiv21|fs;FS17178;ak_equiv21|revell;90;ak_equiv21
-ak,M,11210,#979B96,8,8,5,ak_equiv21,,Natural Steel,,,tamiya;XF56;ak_equiv21|humbrol;56;ak_equiv21|av;70.864;ak_equiv21|testor;1781;ak_equiv21|revell;99;ak_equiv21|gunze;H18;ak_equiv21
-ak,M,11211,#999887,8,8,5,ak_equiv21,,Oily Steel,,,humbrol;27002;ak_equiv21|av;70.865;ak_equiv21|testor;1401;ak_equiv21|gunze;H38;ak_equiv21
-ak,M,11212,#424544,8,8,5,ak_equiv21,,Gun Metal,,,tamiya;X10;ak_equiv21|humbrol;53;ak_equiv21|av;70.863;ak_equiv21|gunze;H76;ak_equiv21|testor;1795;ak_equiv21
-ak,PC,11037,#FDD878,8,4,5,ak_equiv21,,Pastel Yellow,,,fs;FS33798;ak_equiv21
-ak,PC,11059,#FABCA2,8,4,5,ak_equiv21,,Pastel Pink,,,fs;FS31669;ak_equiv21
+ak,M,11209,#8B999D,8,8,5,ak_equiv21,,Silver,,,av;70.997;ak_equiv21|gunze;H8;ak_equiv21|tamiya;X11;ak_equiv21|humbrol;11;ak_equiv21|testor;1790;ak_equiv21|fs;17178;ak_equiv21|revell;90;ak_equiv21
+ak,M,11210,#979B96,8,8,5,ak_equiv21,,Natural Steel,,,av;70.864;ak_equiv21|gunze;H18;ak_equiv21|tamiya;XF56;ak_equiv21|humbrol;56;ak_equiv21|testor;1781;ak_equiv21|revell;99;ak_equiv21
+ak,M,11211,#999887,8,8,5,ak_equiv21,,Oily Steel,,,av;70.865;ak_equiv21|gunze;H38;ak_equiv21|humbrol;27002;ak_equiv21|testor;1401;ak_equiv21
+ak,M,11212,#424544,8,8,5,ak_equiv21,,Gun Metal,,,av;70.863;ak_equiv21|gunze;H76;ak_equiv21|tamiya;X10;ak_equiv21|humbrol;53;ak_equiv21|testor;1795;ak_equiv21
+ak,PC,11037,#FDD878,8,4,5,ak_equiv21,,Pastel Yellow,,,fs;33798;ak_equiv21
+ak,PC,11059,#FABCA2,8,4,5,ak_equiv21,,Pastel Pink,,,fs;31669;ak_equiv21
 ak,PC,11069,#FCE1ED,8,4,5,ak_equiv21,,Pastel Violet,,,
 ak,PC,11076,#F8995A,8,4,5,ak_equiv21,,Pastel Peach,,,
 ak,PC,11131,#9DD29A,8,4,5,ak_equiv21,,Pastel Green,,,
 ak,PC,11168,#AFDAB7,8,4,5,ak_equiv21,,Pastel Blue,,,gunze;H41;ak_equiv21
-ak,S,11002,#E6E5DA,8,4,5,ak_equiv21,,Offwhite,,,av;70.820;ak_equiv21|gunze;H316;ak_equiv21|ral;RAL9001;ak_equiv21|fs;FS27780;ak_equiv21|real;RC222;ak_equiv21
+ak,S,11002,#E6E5DA,8,4,5,ak_equiv21,,Offwhite,,,av;70.820;ak_equiv21|gunze;H316;ak_equiv21|ral;9001;ak_equiv21|fs;27780;ak_equiv21|real;RC222;ak_equiv21
 ak,S,11003,#F0F1E8,8,4,5,ak_equiv21,,White Grey,,,av;70.993;ak_equiv21|gunze;H311;ak_equiv21
-ak,S,11004,#EDE9C0,8,4,5,ak_equiv21,,Ivory,,,humbrol;41;ak_equiv21|av;70.918;ak_equiv21|gunze;H21;ak_equiv21|testor;2709;ak_equiv21|fs;FS37855;ak_equiv21|revell;10;ak_equiv21
-ak,S,11005,#DCECC7,8,4,5,ak_equiv21,,Greenish White,,,humbrol;90;ak_equiv21|gunze;H31;ak_equiv21|fs;FS17773;ak_equiv21
-ak,S,11006,#DCD1B0,8,4,5,ak_equiv21,,Silver Grey,,,humbrol;28;ak_equiv21|av;70.883;ak_equiv21|gunze;H51;ak_equiv21|testor;1733;ak_equiv21|ral;RAL9002;ak_equiv21|fs;FS36622;ak_equiv21|citadel;51058;ak_equiv21
-ak,S,11007,#B5B090,8,4,5,ak_equiv21,,Rock Grey,,,humbrol;129;ak_equiv21|gunze;H57;ak_equiv21|testor;1730;ak_equiv21|fs;FS26440;ak_equiv21|revell;301;ak_equiv21
-ak,S,11008,#D8C394,8,4,5,ak_equiv21,,Grimy Grey,,,fs;FS33531;ak_equiv21|gunze;H313;ak_equiv21
-ak,S,11009,#A8A085,8,4,5,ak_equiv21,,Warm Grey,,,tamiya;XF20;ak_equiv21|gunze;H321;ak_equiv21
-ak,S,11010,#ABB29C,8,4,5,ak_equiv21,,Medium Grey,,,tamiya;XF25;ak_equiv21|av;70.907;ak_equiv21|gunze;H62;ak_equiv21|rlm;RLM76;ak_equiv21|fs;FS36473;ak_equiv21
-ak,S,11011,#BBC8C6,8,4,5,ak_equiv21,,Blue-Grey,,,tamiya;XF12;ak_equiv21|humbrol;89;ak_equiv21|av;70.973;ak_equiv21|gunze;H67;ak_equiv21|testor;1562;ak_equiv21|fs;FS25526;ak_equiv21
-ak,S,11012,#AEB1AD,8,4,5,ak_equiv21,,Sky Grey,,,tamiya;XF19;ak_equiv21|humbrol;196;ak_equiv21|av;70.989;ak_equiv21|gunze;H334;ak_equiv21|ral;RAL7004;ak_equiv21|fs;FS36463;ak_equiv21|revell;371;ak_equiv21
-ak,S,11013,#A3A8AD,8,4,5,ak_equiv21,,Pale Grey,,,tamiya;XF80;ak_equiv21|av;70.990;ak_equiv21|gunze;H53;ak_equiv21|testor;1728;ak_equiv21|ral;RAL7001;ak_equiv21|fs;FS36300;ak_equiv21
-ak,S,11014,#95937D,8,4,5,ak_equiv21,,Medium Sea Grey,,,gunze;H61;ak_equiv21|fs;FS36307;ak_equiv21
-ak,S,11015,#71726E,8,4,5,ak_equiv21,,Dark Sea Grey,,,tamiya;XF53;ak_equiv21|humbrol;140;ak_equiv21|av;70.991;ak_equiv21|gunze;H82;ak_equiv21|testor;1729;ak_equiv21|fs;FS36231;ak_equiv21|revell;70;ak_equiv21
-ak,S,11016,#757A64,8,4,5,ak_equiv21,,Grey-Green,,,tamiya;XF73;ak_equiv21|av;70.886;ak_equiv21|gunze;H70;ak_equiv21|rlm;RLM2;ak_equiv21|real;RC265;ak_equiv21
+ak,S,11004,#EDE9C0,8,4,5,ak_equiv21,,Ivory,,,av;70.918;ak_equiv21|gunze;H21;ak_equiv21|humbrol;41;ak_equiv21|testor;2709;ak_equiv21|fs;37855;ak_equiv21|revell;10;ak_equiv21
+ak,S,11005,#DCECC7,8,4,5,ak_equiv21,,Greenish White,,,gunze;H31;ak_equiv21|humbrol;90;ak_equiv21|fs;17773;ak_equiv21
+ak,S,11006,#DCD1B0,8,4,5,ak_equiv21,,Silver Grey,,,av;70.883;ak_equiv21|gunze;H51;ak_equiv21|humbrol;28;ak_equiv21|testor;1733;ak_equiv21|ral;9002;ak_equiv21|fs;36622;ak_equiv21|citadel;51058;ak_equiv21
+ak,S,11007,#B5B090,8,4,5,ak_equiv21,,Rock Grey,,,gunze;H57;ak_equiv21|humbrol;129;ak_equiv21|testor;1730;ak_equiv21|fs;26440;ak_equiv21|revell;301;ak_equiv21
+ak,S,11008,#D8C394,8,4,5,ak_equiv21,,Grimy Grey,,,gunze;H313;ak_equiv21|fs;33531;ak_equiv21
+ak,S,11009,#A8A085,8,4,5,ak_equiv21,,Warm Grey,,,gunze;H321;ak_equiv21|tamiya;XF20;ak_equiv21
+ak,S,11010,#ABB29C,8,4,5,ak_equiv21,,Medium Grey,,,av;70.907;ak_equiv21|gunze;H62;ak_equiv21|tamiya;XF25;ak_equiv21|rlm;76;ak_equiv21|fs;36473;ak_equiv21
+ak,S,11011,#BBC8C6,8,4,5,ak_equiv21,,Blue-Grey,,,av;70.973;ak_equiv21|gunze;H67;ak_equiv21|tamiya;XF12;ak_equiv21|humbrol;89;ak_equiv21|testor;1562;ak_equiv21|fs;25526;ak_equiv21
+ak,S,11012,#AEB1AD,8,4,5,ak_equiv21,,Sky Grey,,,av;70.989;ak_equiv21|gunze;H334;ak_equiv21|tamiya;XF19;ak_equiv21|humbrol;196;ak_equiv21|ral;7004;ak_equiv21|fs;36463;ak_equiv21|revell;371;ak_equiv21
+ak,S,11013,#A3A8AD,8,4,5,ak_equiv21,,Pale Grey,,,av;70.990;ak_equiv21|gunze;H53;ak_equiv21|tamiya;XF80;ak_equiv21|testor;1728;ak_equiv21|ral;7001;ak_equiv21|fs;36300;ak_equiv21
+ak,S,11014,#95937D,8,4,5,ak_equiv21,,Medium Sea Grey,,,gunze;H61;ak_equiv21|fs;36307;ak_equiv21
+ak,S,11015,#71726E,8,4,5,ak_equiv21,,Dark Sea Grey,,,av;70.991;ak_equiv21|gunze;H82;ak_equiv21|tamiya;XF53;ak_equiv21|humbrol;140;ak_equiv21|testor;1729;ak_equiv21|fs;36231;ak_equiv21|revell;70;ak_equiv21
+ak,S,11016,#757A64,8,4,5,ak_equiv21,,Grey-Green,,,av;70.886;ak_equiv21|gunze;H70;ak_equiv21|tamiya;XF73;ak_equiv21|rlm;2;ak_equiv21|real;RC265;ak_equiv21
 ak,S,11017,#6F6451,8,4,5,ak_equiv21,,Reddish Grey,,,
-ak,S,11018,#5F6A65,8,4,5,ak_equiv21,,Neutral Grey,,,tamiya;XF66;ak_equiv21|humbrol;27;ak_equiv21|av;70.992;ak_equiv21|gunze;H68;ak_equiv21|testor;2160;ak_equiv21|fs;FS36173;ak_equiv21
-ak,S,11019,#63695E,8,4,5,ak_equiv21,,Graphite,,,tamiya;XF22;ak_equiv21|gunze;H22;ak_equiv21
-ak,S,11020,#646861,8,4,5,ak_equiv21,,English Grey,,,tamiya;XF54;ak_equiv21|av;70.836;ak_equiv21|gunze;H305;ak_equiv21|fs;FS36118;ak_equiv21
-ak,S,11021,#545C58,8,4,5,ak_equiv21,,Basalt Grey,,,tamiya;XF77;ak_equiv21|humbrol;106;ak_equiv21|av;70.869;ak_equiv21|gunze;H83;ak_equiv21|rlm;RLM75;ak_equiv21|ral;RAL7012;ak_equiv21|fs;FS36152;ak_equiv21|revell;47;ak_equiv21
-ak,S,11022,#414542,8,4,5,ak_equiv21,,Dark Grey,,,tamiya;XF24;ak_equiv21|humbrol;85;ak_equiv21|av;70.994;ak_equiv21|testor;1579;ak_equiv21|fs;FS26008;ak_equiv21|revell;302;ak_equiv21|gunze;H27;ak_equiv21
-ak,S,11023,#3D433F,8,4,5,ak_equiv21,,Lead Grey,,,ral;RAL7022;ak_equiv21|fs;FS34031;ak_equiv21|gunze;H333;ak_equiv21
-ak,S,11024,#3A3D36,8,4,5,ak_equiv21,,Ash Grey,,,humbrol;123;ak_equiv21|av;70.866;ak_equiv21|gunze;H68;ak_equiv21|rlm;RLM66;ak_equiv21|fs;FS26008;ak_equiv21
-ak,S,11025,#30332D,8,4,5,ak_equiv21,,German Grey,,,tamiya;XF63;ak_equiv21|humbrol;67;ak_equiv21|av;70.995;ak_equiv21|gunze;H404;ak_equiv21|testor;1592;ak_equiv21|ral;RAL7016;ak_equiv21|fs;FS26044;ak_equiv21|revell;78;ak_equiv21
+ak,S,11018,#5F6A65,8,4,5,ak_equiv21,,Neutral Grey,,,av;70.992;ak_equiv21|gunze;H68;ak_equiv21|tamiya;XF66;ak_equiv21|humbrol;27;ak_equiv21|testor;2160;ak_equiv21|fs;36173;ak_equiv21
+ak,S,11019,#63695E,8,4,5,ak_equiv21,,Graphite,,,gunze;H22;ak_equiv21|tamiya;XF22;ak_equiv21
+ak,S,11020,#646861,8,4,5,ak_equiv21,,English Grey,,,av;70.836;ak_equiv21|gunze;H305;ak_equiv21|tamiya;XF54;ak_equiv21|fs;36118;ak_equiv21
+ak,S,11021,#545C58,8,4,5,ak_equiv21,,Basalt Grey,,,av;70.869;ak_equiv21|gunze;H83;ak_equiv21|tamiya;XF77;ak_equiv21|humbrol;106;ak_equiv21|rlm;75;ak_equiv21|ral;7012;ak_equiv21|fs;36152;ak_equiv21|revell;47;ak_equiv21
+ak,S,11022,#414542,8,4,5,ak_equiv21,,Dark Grey,,,av;70.994;ak_equiv21|gunze;H27;ak_equiv21|tamiya;XF24;ak_equiv21|humbrol;85;ak_equiv21|testor;1579;ak_equiv21|fs;26008;ak_equiv21|revell;302;ak_equiv21
+ak,S,11023,#3D433F,8,4,5,ak_equiv21,,Lead Grey,,,gunze;H333;ak_equiv21|ral;7022;ak_equiv21|fs;34031;ak_equiv21
+ak,S,11024,#3A3D36,8,4,5,ak_equiv21,,Ash Grey,,,av;70.866;ak_equiv21|gunze;H68;ak_equiv21|humbrol;123;ak_equiv21|rlm;66;ak_equiv21|fs;26008;ak_equiv21
+ak,S,11025,#30332D,8,4,5,ak_equiv21,,German Grey,,,av;70.995;ak_equiv21|gunze;H404;ak_equiv21|tamiya;XF63;ak_equiv21|humbrol;67;ak_equiv21|testor;1592;ak_equiv21|ral;7016;ak_equiv21|fs;26044;ak_equiv21|revell;78;ak_equiv21
 ak,S,11026,#28271D,8,4,5,ak_equiv21,,Tenebrous Grey,,,gunze;H452;ak_equiv21
-ak,S,11027,#202015,8,4,5,ak_equiv21,,Rubber Black,,,tamiya;XF85;ak_equiv21|gunze;H77;ak_equiv21
-ak,S,11028,#22261E,8,4,5,ak_equiv21,,Smoke Black,,,tamiya;XF69;ak_equiv21|av;70.862;ak_equiv21|gunze;H401;ak_equiv21|testor;4795;ak_equiv21|ral;RAL7021;ak_equiv21|fs;FS37031;ak_equiv21|revell;109;ak_equiv21
-ak,S,11030,#DDB553,8,4,5,ak_equiv21,,Beige,,,av;70.917;ak_equiv21|fs;FS23594;ak_equiv21
-ak,S,11031,#C9A762,8,4,5,ak_equiv21,,Buff,,,tamiya;XF57;ak_equiv21|humbrol;103;ak_equiv21|av;70.976;ak_equiv21|ral;RAL1001;ak_equiv21|fs;FS23578;ak_equiv21|citadel;51032;ak_equiv21
-ak,S,11032,#ECD283,8,4,5,ak_equiv21,,Pale Sand,,,av;70.837;ak_equiv21|fs;FS23722;ak_equiv21|real;RC018;ak_equiv21
-ak,S,11033,#E1B85E,8,4,5,ak_equiv21,,Dark Sand,,,tamiya;XF88;ak_equiv21|humbrol;74;ak_equiv21|av;70.847;ak_equiv21|gunze;H36;ak_equiv21
-ak,S,11034,#C3953E,8,4,5,ak_equiv21,,Medium Sand,,,av;70.977;ak_equiv21|gunze;H71;ak_equiv21|fs;FS30257;ak_equiv21|real;RC030;ak_equiv21
-ak,S,11035,#E4B945,8,4,5,ak_equiv21,,Sand Yellow,,,av;70.916;ak_equiv21|ral;RAL1002;ak_equiv21|fs;FS20260;ak_equiv21
-ak,S,11036,#FBF08E,8,4,5,ak_equiv21,,Ice Yellow,,,humbrol;76;ak_equiv21|av;70.858;ak_equiv21
-ak,S,11038,#FBDC60,8,4,5,ak_equiv21,,Pale Yellow,,,av;70.949;ak_equiv21|fs;FS33727;ak_equiv21
-ak,S,11039,#E7CF4A,8,4,5,ak_equiv21,,Purulent Yellow,,,av;70.806;ak_equiv21|rlm;RLM5;ak_equiv21
+ak,S,11027,#202015,8,4,5,ak_equiv21,,Rubber Black,,,gunze;H77;ak_equiv21|tamiya;XF85;ak_equiv21
+ak,S,11028,#22261E,8,4,5,ak_equiv21,,Smoke Black,,,av;70.862;ak_equiv21|gunze;H401;ak_equiv21|tamiya;XF69;ak_equiv21|testor;4795;ak_equiv21|ral;7021;ak_equiv21|fs;37031;ak_equiv21|revell;109;ak_equiv21
+ak,S,11030,#DDB553,8,4,5,ak_equiv21,,Beige,,,av;70.917;ak_equiv21|fs;23594;ak_equiv21
+ak,S,11031,#C9A762,8,4,5,ak_equiv21,,Buff,,,av;70.976;ak_equiv21|tamiya;XF57;ak_equiv21|humbrol;103;ak_equiv21|ral;1001;ak_equiv21|fs;23578;ak_equiv21|citadel;51032;ak_equiv21
+ak,S,11032,#ECD283,8,4,5,ak_equiv21,,Pale Sand,,,av;70.837;ak_equiv21|fs;23722;ak_equiv21|real;RC018;ak_equiv21
+ak,S,11033,#E1B85E,8,4,5,ak_equiv21,,Dark Sand,,,av;70.847;ak_equiv21|gunze;H36;ak_equiv21|tamiya;XF88;ak_equiv21|humbrol;74;ak_equiv21
+ak,S,11034,#C3953E,8,4,5,ak_equiv21,,Medium Sand,,,av;70.977;ak_equiv21|gunze;H71;ak_equiv21|fs;30257;ak_equiv21|real;RC030;ak_equiv21
+ak,S,11035,#E4B945,8,4,5,ak_equiv21,,Sand Yellow,,,av;70.916;ak_equiv21|ral;1002;ak_equiv21|fs;20260;ak_equiv21
+ak,S,11036,#FBF08E,8,4,5,ak_equiv21,,Ice Yellow,,,av;70.858;ak_equiv21|humbrol;76;ak_equiv21
+ak,S,11038,#FBDC60,8,4,5,ak_equiv21,,Pale Yellow,,,av;70.949;ak_equiv21|fs;33727;ak_equiv21
+ak,S,11039,#E7CF4A,8,4,5,ak_equiv21,,Purulent Yellow,,,av;70.806;ak_equiv21|rlm;5;ak_equiv21
 ak,S,11040,#A98F29,8,4,5,ak_equiv21,,Sahara Yellow,,,
-ak,S,11041,#FBAF54,8,4,5,ak_equiv21,,Golden Yellow,,,av;70.948;ak_equiv21|ral;RAL1017;ak_equiv21
-ak,S,11042,#F39329,8,4,5,ak_equiv21,,Volcanic Yellow,,,gunze;H24;ak_equiv21|fs;FS13538;ak_equiv21
+ak,S,11041,#FBAF54,8,4,5,ak_equiv21,,Golden Yellow,,,av;70.948;ak_equiv21|ral;1017;ak_equiv21
+ak,S,11042,#F39329,8,4,5,ak_equiv21,,Volcanic Yellow,,,gunze;H24;ak_equiv21|fs;13538;ak_equiv21
 ak,S,11043,#ECA630,8,4,5,ak_equiv21,,Dirty Yellow,,,gunze;H329;ak_equiv21
-ak,S,11044,#FCB52B,8,4,5,ak_equiv21,,Yellow,,,tamiya;X8;ak_equiv21|humbrol;69;ak_equiv21|av;70.953;ak_equiv21|gunze;H413;ak_equiv21|testor;1514;ak_equiv21|rlm;RLM4;ak_equiv21|ral;RAL1003;ak_equiv21|fs;FS23655;ak_equiv21|revell;12;ak_equiv21
+ak,S,11044,#FCB52B,8,4,5,ak_equiv21,,Yellow,,,av;70.953;ak_equiv21|gunze;H413;ak_equiv21|tamiya;X8;ak_equiv21|humbrol;69;ak_equiv21|testor;1514;ak_equiv21|rlm;4;ak_equiv21|ral;1003;ak_equiv21|fs;23655;ak_equiv21|revell;12;ak_equiv21
 ak,S,11046,#FFD329,8,4,5,ak_equiv21,,Radiant Yellow,,,
-ak,S,11047,#FBE133,8,4,5,ak_equiv21,,Lemon Yellow,,,tamiya;XF3;ak_equiv21|humbrol;99;ak_equiv21|av;70.952;ak_equiv21|testor;2717;ak_equiv21|ral;RAL1018;ak_equiv21
+ak,S,11047,#FBE133,8,4,5,ak_equiv21,,Lemon Yellow,,,av;70.952;ak_equiv21|tamiya;XF3;ak_equiv21|humbrol;99;ak_equiv21|testor;2717;ak_equiv21|ral;1018;ak_equiv21
 ak,S,11048,#EAE84B,8,4,5,ak_equiv21,,Laser Yellow,,,av;70.954;ak_equiv21
-ak,S,11049,#E8E73C,8,64,5,ak_equiv21,,Fluorescent Yellow,,,av;70.730;ak_equiv21|gunze;H97;ak_equiv21|ral;RAL1026;ak_equiv21|fs;FS38907;ak_equiv21
-ak,S,11050,#FED9AC,8,4,5,ak_equiv21,,Light Flesh,,,av;70.928;ak_equiv21|fs;FS31670;ak_equiv21
-ak,S,11051,#EBBC7F,8,4,5,ak_equiv21,,Luminous Flesh,,,gunze;H318;ak_equiv21|fs;FS21667;ak_equiv21
-ak,S,11052,#FAB07A,8,4,5,ak_equiv21,,Basic Skin Tone,,,av;70.815;ak_equiv21|fs;FS21670;ak_equiv21
-ak,S,11053,#FAAD5E,8,4,5,ak_equiv21,,Radiant Flesh,,,av;70.955;ak_equiv21|fs;FS22516;ak_equiv21
+ak,S,11049,#E8E73C,8,64,5,ak_equiv21,,Fluorescent Yellow,,,av;70.730;ak_equiv21|gunze;H97;ak_equiv21|ral;1026;ak_equiv21|fs;38907;ak_equiv21
+ak,S,11050,#FED9AC,8,4,5,ak_equiv21,,Light Flesh,,,av;70.928;ak_equiv21|fs;31670;ak_equiv21
+ak,S,11051,#EBBC7F,8,4,5,ak_equiv21,,Luminous Flesh,,,gunze;H318;ak_equiv21|fs;21667;ak_equiv21
+ak,S,11052,#FAB07A,8,4,5,ak_equiv21,,Basic Skin Tone,,,av;70.815;ak_equiv21|fs;21670;ak_equiv21
+ak,S,11053,#FAAD5E,8,4,5,ak_equiv21,,Radiant Flesh,,,av;70.955;ak_equiv21|fs;22516;ak_equiv21
 ak,S,11054,#C4803A,8,4,5,ak_equiv21,,Medium Flesh Tone,,,av;70.860;ak_equiv21
-ak,S,11055,#F9A45A,8,4,5,ak_equiv21,,Sunny Skin Tone,,,tamiya;XF15;ak_equiv21|av;70.845;ak_equiv21
-ak,S,11056,#ECA344,8,4,5,ak_equiv21,,Dark Flesh,,,humbrol;61;ak_equiv21|av;70.927;ak_equiv21|gunze;H44;ak_equiv21|testor;1516;ak_equiv21|revell;35;ak_equiv21
-ak,S,11057,#C5B480,8,4,5,ak_equiv21,,Vampiric Flesh,,,gunze;H336;ak_equiv21|fs;FS13522;ak_equiv21
-ak,S,11058,#AF9C64,8,4,5,ak_equiv21,,Decomposed Flesh,,,tamiya;XF78;ak_equiv21|gunze;H85;ak_equiv21|fs;FS33510;ak_equiv21
-ak,S,11060,#F9AC8D,8,4,5,ak_equiv21,,Sickly Pink,,,fs;FS31638;ak_equiv21
+ak,S,11055,#F9A45A,8,4,5,ak_equiv21,,Sunny Skin Tone,,,av;70.845;ak_equiv21|tamiya;XF15;ak_equiv21
+ak,S,11056,#ECA344,8,4,5,ak_equiv21,,Dark Flesh,,,av;70.927;ak_equiv21|gunze;H44;ak_equiv21|humbrol;61;ak_equiv21|testor;1516;ak_equiv21|revell;35;ak_equiv21
+ak,S,11057,#C5B480,8,4,5,ak_equiv21,,Vampiric Flesh,,,gunze;H336;ak_equiv21|fs;13522;ak_equiv21
+ak,S,11058,#AF9C64,8,4,5,ak_equiv21,,Decomposed Flesh,,,gunze;H85;ak_equiv21|tamiya;XF78;ak_equiv21|fs;33510;ak_equiv21
+ak,S,11060,#F9AC8D,8,4,5,ak_equiv21,,Sickly Pink,,,fs;31638;ak_equiv21
 ak,S,11061,#F89E75,8,4,5,ak_equiv21,,Salmon,,,av;70.835;ak_equiv21
-ak,S,11062,#F6937B,8,4,5,ak_equiv21,,Old Rose,,,tamiya;X17;ak_equiv21|humbrol;200;ak_equiv21|av;70.944;ak_equiv21|gunze;H19;ak_equiv21
+ak,S,11062,#F6937B,8,4,5,ak_equiv21,,Old Rose,,,av;70.944;ak_equiv21|gunze;H19;ak_equiv21|tamiya;X17;ak_equiv21|humbrol;200;ak_equiv21
 ak,S,11063,#D58366,8,4,5,ak_equiv21,,Brown Rose,,,av;70.803;ak_equiv21
-ak,S,11064,#DB915F,8,4,5,ak_equiv21,,Beige Red,,,av;70.804;ak_equiv21|ral;RAL3012;ak_equiv21|fs;FS31433;ak_equiv21|citadel;51037;ak_equiv21
+ak,S,11064,#DB915F,8,4,5,ak_equiv21,,Beige Red,,,av;70.804;ak_equiv21|ral;3012;ak_equiv21|fs;31433;ak_equiv21|citadel;51037;ak_equiv21
 ak,S,11066,#640231,8,4,5,ak_equiv21,,Laser Magenta,,,
-ak,S,11067,#AD3763,8,4,5,ak_equiv21,,Magenta,,,av;70.945;ak_equiv21|ral;RAL4006;ak_equiv21|citadel;50033;ak_equiv21
+ak,S,11067,#AD3763,8,4,5,ak_equiv21,,Magenta,,,av;70.945;ak_equiv21|ral;4006;ak_equiv21|citadel;50033;ak_equiv21
 ak,S,11068,#F0586F,8,64,5,ak_equiv21,,Fluorescent Magenta,,,av;70.735;ak_equiv21|gunze;H99;ak_equiv21
 ak,S,11070,#836EA5,8,4,5,ak_equiv21,,Blue Violet,,,av;70.811;ak_equiv21
 ak,S,11071,#5F5E71,8,4,5,ak_equiv21,,Lilac,,,gunze;H49;ak_equiv21
-ak,S,11073,#51424D,8,4,5,ak_equiv21,,Purple,,,tamiya;X16;ak_equiv21|humbrol;68;ak_equiv21|av;70.959;ak_equiv21|gunze;H39;ak_equiv21|fs;FS37100;ak_equiv21|revell;53;ak_equiv21
+ak,S,11073,#51424D,8,4,5,ak_equiv21,,Purple,,,av;70.959;ak_equiv21|gunze;H39;ak_equiv21|tamiya;X16;ak_equiv21|humbrol;68;ak_equiv21|fs;37100;ak_equiv21|revell;53;ak_equiv21
 ak,S,11075,#4F2F34,8,4,5,ak_equiv21,,Violet Red,,,av;70.812;ak_equiv21
-ak,S,11077,#F57F45,8,4,5,ak_equiv21,,Light Orange,,,av;70.911;ak_equiv21|ral;RAL2008;ak_equiv21|fs;FS32473;ak_equiv21
+ak,S,11077,#F57F45,8,4,5,ak_equiv21,,Light Orange,,,av;70.911;ak_equiv21|ral;2008;ak_equiv21|fs;32473;ak_equiv21
 ak,S,11078,#F3703E,8,4,5,ak_equiv21,,Medium Orange,,,
-ak,S,11079,#DD663A,8,4,5,ak_equiv21,,Burn Orange,,,tamiya;X6;ak_equiv21|av;70.805;ak_equiv21|ral;RAL2012;ak_equiv21
-ak,S,11081,#F2612C,8,64,5,ak_equiv21,,Fluorescent Orange,,,av;70.733;ak_equiv21|gunze;H98;ak_equiv21|testor;2041;ak_equiv21|ral;RAL2005;ak_equiv21|fs;FS38903;ak_equiv21|real;RC207;ak_equiv21
+ak,S,11079,#DD663A,8,4,5,ak_equiv21,,Burn Orange,,,av;70.805;ak_equiv21|tamiya;X6;ak_equiv21|ral;2012;ak_equiv21
+ak,S,11081,#F2612C,8,64,5,ak_equiv21,,Fluorescent Orange,,,av;70.733;ak_equiv21|gunze;H98;ak_equiv21|testor;2041;ak_equiv21|ral;2005;ak_equiv21|fs;38903;ak_equiv21|real;RC207;ak_equiv21
 ak,S,11082,#F68923,8,4,5,ak_equiv21,,Luminous Orange,,,
 ak,S,11083,#F05655,8,4,5,ak_equiv21,,Dead Red,,,gunze;H29;ak_equiv21
 ak,S,11084,#CF5251,8,4,5,ak_equiv21,,Ruby,,,av;70.802;ak_equiv21
-ak,S,11085,#F06338,8,4,5,ak_equiv21,,Cadmium Red,,,humbrol;131;ak_equiv21|av;70.910;ak_equiv21|fs;FS21400;ak_equiv21
-ak,S,11086,#D15833,8,4,5,ak_equiv21,,Amaranth Red,,,av;70.829;ak_equiv21|ral;RAL2001;ak_equiv21
-ak,S,11087,#D04634,8,4,5,ak_equiv21,,Scarlet Red,,,av;70.817;ak_equiv21|ral;RAL2002;ak_equiv21|fs;FS21310;ak_equiv21
-ak,S,11089,#C82E2A,8,4,5,ak_equiv21,,Blood Red,,,humbrol;174;ak_equiv21|av;70.909;ak_equiv21|ral;RAL3020;ak_equiv21|fs;FS31302;ak_equiv21|revell;330;ak_equiv21
-ak,S,11090,#C4553E,8,4,5,ak_equiv21,,Vermillion,,,humbrol;60;ak_equiv21|av;70.947;ak_equiv21|gunze;H86;ak_equiv21|ral;RAL3031;ak_equiv21|fs;FS31350;ak_equiv21|real;RC006;ak_equiv21
-ak,S,11091,#B8462F,8,4,5,ak_equiv21,,Carmine,,,tamiya;X7;ak_equiv21|humbrol;19;ak_equiv21|av;70.908;ak_equiv21|gunze;H3;ak_equiv21|testor;1503;ak_equiv21|ral;RAL3002;ak_equiv21|fs;FS21105;ak_equiv21|revell;31;ak_equiv21
-ak,S,11092,#B33A27,8,4,5,ak_equiv21,,Matt Red,,,av;70.957;ak_equiv21|gunze;H13;ak_equiv21|testor;4714;ak_equiv21|ral;RAL3013;ak_equiv21|fs;FS31136;ak_equiv21
-ak,S,11093,#994830,8,4,5,ak_equiv21,,Brick Red,,,av;70.946;ak_equiv21|gunze;H327;ak_equiv21|fs;FS11136;ak_equiv21
+ak,S,11085,#F06338,8,4,5,ak_equiv21,,Cadmium Red,,,av;70.910;ak_equiv21|humbrol;131;ak_equiv21|fs;21400;ak_equiv21
+ak,S,11086,#D15833,8,4,5,ak_equiv21,,Amaranth Red,,,av;70.829;ak_equiv21|ral;2001;ak_equiv21
+ak,S,11087,#D04634,8,4,5,ak_equiv21,,Scarlet Red,,,av;70.817;ak_equiv21|ral;2002;ak_equiv21|fs;21310;ak_equiv21
+ak,S,11089,#C82E2A,8,4,5,ak_equiv21,,Blood Red,,,av;70.909;ak_equiv21|humbrol;174;ak_equiv21|ral;3020;ak_equiv21|fs;31302;ak_equiv21|revell;330;ak_equiv21
+ak,S,11090,#C4553E,8,4,5,ak_equiv21,,Vermillion,,,av;70.947;ak_equiv21|gunze;H86;ak_equiv21|humbrol;60;ak_equiv21|ral;3031;ak_equiv21|fs;31350;ak_equiv21|real;RC006;ak_equiv21
+ak,S,11091,#B8462F,8,4,5,ak_equiv21,,Carmine,,,av;70.908;ak_equiv21|gunze;H3;ak_equiv21|tamiya;X7;ak_equiv21|humbrol;19;ak_equiv21|testor;1503;ak_equiv21|ral;3002;ak_equiv21|fs;21105;ak_equiv21|revell;31;ak_equiv21
+ak,S,11092,#B33A27,8,4,5,ak_equiv21,,Matt Red,,,av;70.957;ak_equiv21|gunze;H13;ak_equiv21|testor;4714;ak_equiv21|ral;3013;ak_equiv21|fs;31136;ak_equiv21
+ak,S,11093,#994830,8,4,5,ak_equiv21,,Brick Red,,,av;70.946;ak_equiv21|gunze;H327;ak_equiv21|fs;11136;ak_equiv21
 ak,S,11094,#9D4038,8,4,5,ak_equiv21,,Bordeaux Red,,,gunze;H43;ak_equiv21
-ak,S,11095,#7A1515,8,4,5,ak_equiv21,,Dirty Red,,,humbrol;20;ak_equiv21|av;70.926;ak_equiv21|gunze;H33;ak_equiv21|testor;1501;ak_equiv21|ral;RAL3026;ak_equiv21|revell;32;ak_equiv21
+ak,S,11095,#7A1515,8,4,5,ak_equiv21,,Dirty Red,,,av;70.926;ak_equiv21|gunze;H33;ak_equiv21|humbrol;20;ak_equiv21|testor;1501;ak_equiv21|ral;3026;ak_equiv21|revell;32;ak_equiv21
 ak,S,11096,#630A0F,8,4,5,ak_equiv21,,Wine Red,,,gunze;H466;ak_equiv21
-ak,S,11097,#4B2C22,8,4,5,ak_equiv21,,Burnt Red,,,tamiya;XF9;ak_equiv21|av;70.814;ak_equiv21|gunze;H47;ak_equiv21|ral;RAL8012;ak_equiv21
+ak,S,11097,#4B2C22,8,4,5,ak_equiv21,,Burnt Red,,,av;70.814;ak_equiv21|gunze;H47;ak_equiv21|tamiya;XF9;ak_equiv21|ral;8012;ak_equiv21
 ak,S,11098,#3A211B,8,4,5,ak_equiv21,,Black Red,,,av;70.859;ak_equiv21|testor;2152;ak_equiv21|real;RC068;ak_equiv21
-ak,S,11099,#F9A464,8,4,5,ak_equiv21,,Ocher Orange,,,av;P;ak_equiv21
+ak,S,11099,#F9A464,8,4,5,ak_equiv21,,Ocher Orange,,,av;70.P;ak_equiv21
 ak,S,11100,#CB8043,8,4,5,ak_equiv21,,Light Brown,,,av;70.929;ak_equiv21
-ak,S,11101,#AD5C29,8,4,5,ak_equiv21,,Orange Brown,,,humbrol;9;ak_equiv21|av;70.981;ak_equiv21|ral;RAL8023;ak_equiv21|fs;FS30252;ak_equiv21|revell;80;ak_equiv21|real;RC031;ak_equiv21|citadel;51040;ak_equiv21
-ak,S,11103,#984D36,8,4,5,ak_equiv21,,Medium Rust,,,av;P;ak_equiv21|gunze;H7;ak_equiv21|real;RC081;ak_equiv21
-ak,S,11104,#61372C,8,4,5,ak_equiv21,,Saddle Brown,,,tamiya;XF79;ak_equiv21|av;70.940;ak_equiv21|fs;FS30111;ak_equiv21
+ak,S,11101,#AD5C29,8,4,5,ak_equiv21,,Orange Brown,,,av;70.981;ak_equiv21|humbrol;9;ak_equiv21|ral;8023;ak_equiv21|fs;30252;ak_equiv21|revell;80;ak_equiv21|real;RC031;ak_equiv21|citadel;51040;ak_equiv21
+ak,S,11103,#984D36,8,4,5,ak_equiv21,,Medium Rust,,,av;70.P;ak_equiv21|gunze;H7;ak_equiv21|real;RC081;ak_equiv21
+ak,S,11104,#61372C,8,4,5,ak_equiv21,,Saddle Brown,,,av;70.940;ak_equiv21|tamiya;XF79;ak_equiv21|fs;30111;ak_equiv21
 ak,S,11105,#DD6026,8,4,5,ak_equiv21,,Light Rust,,,
-ak,S,11106,#5B280D,8,4,5,ak_equiv21,,Mahogany Brown,,,humbrol;113;ak_equiv21|av;70.846;ak_equiv21|gunze;H344;ak_equiv21|testor;1785;ak_equiv21|ral;RAL8002;ak_equiv21|revell;83;ak_equiv21
-ak,S,11107,#4C210C,8,4,5,ak_equiv21,,Dark Rust,,,tamiya;XF68;ak_equiv21|gunze;H17;ak_equiv21
-ak,S,11108,#2D1107,8,4,5,ak_equiv21,,Hull Red,,,av;70.985;ak_equiv21|gunze;H84;ak_equiv21|ral;RAL8017;ak_equiv21|fs;FS30059;ak_equiv21
-ak,S,11109,#4A3414,8,4,5,ak_equiv21,,Dark Brown,,,tamiya;XF64;ak_equiv21|av;70.826;ak_equiv21|fs;FS30140;ak_equiv21
-ak,S,11110,#3D2C1A,8,4,5,ak_equiv21,,Leather Brown,,,av;70.871;ak_equiv21|gunze;H456;ak_equiv21|ral;RAL8027;ak_equiv21|fs;FS30051;ak_equiv21
-ak,S,11111,#211609,8,4,5,ak_equiv21,,Burnt Umber,,,tamiya;XF51;ak_equiv21|av;70.941;ak_equiv21|fs;FS30097;ak_equiv21|real;RC323;ak_equiv21
-ak,S,11112,#120904,8,4,5,ak_equiv21,,Grim Brown,,,av;70.822;ak_equiv21|gunze;H462;ak_equiv21|ral;RAL8019;ak_equiv21|fs;FS37056;ak_equiv21
-ak,S,11113,#291809,8,4,5,ak_equiv21,,Chocolate (Chipping),,,tamiya;XF10;ak_equiv21|humbrol;98;ak_equiv21|av;70.872;ak_equiv21|testor;1540;ak_equiv21|ral;RAL8017;ak_equiv21|fs;FS20062;ak_equiv21
-ak,S,11114,#C3BDA9,8,4,5,ak_equiv21,,Deck Tan,,,tamiya;XF55;ak_equiv21|humbrol;128;ak_equiv21|av;70.986;ak_equiv21|gunze;H53;ak_equiv21|testor;1741;ak_equiv21|ral;RAL7038;ak_equiv21|fs;FS26496;ak_equiv21|revell;374;ak_equiv21|real;RC019;ak_equiv21
-ak,S,11115,#C7AD7D,8,4,5,ak_equiv21,,Light Earth,,,av;70.819;ak_equiv21|gunze;H79;ak_equiv21|fs;FS22446;ak_equiv21
-ak,S,11116,#CC944F,8,4,5,ak_equiv21,,Tan Yellow,,,av;70.912;ak_equiv21|ral;RAL1011;ak_equiv21|fs;FS33245;ak_equiv21|gunze;H44;ak_equiv21
-ak,S,11117,#A47425,8,4,5,ak_equiv21,,Golden Brown,,,av;70.877;ak_equiv21|fs;FS33275;ak_equiv21|citadel;51004;ak_equiv21
-ak,S,11118,#C0903A,8,4,5,ak_equiv21,,Ochre,,,humbrol;63;ak_equiv21|av;70.913;ak_equiv21|gunze;H34;ak_equiv21|testor;1706;ak_equiv21|fs;FS33434;ak_equiv21|revell;89;ak_equiv21
-ak,S,11119,#98704A,8,4,5,ak_equiv21,,Cork,,,tamiya;XF52;ak_equiv21|humbrol;62;ak_equiv21|av;70.843;ak_equiv21|gunze;H66;ak_equiv21|testor;1737;ak_equiv21|rlm;RLM79;ak_equiv21|revell;85;ak_equiv21
-ak,S,11120,#654E31,8,4,5,ak_equiv21,,Mud Brown,,,av;70.825;ak_equiv21|gunze;H341;ak_equiv21|fs;FS30140;ak_equiv21
-ak,S,11121,#735534,8,4,5,ak_equiv21,,Tan Earth,,,tamiya;XF64;ak_equiv21|humbrol;119;ak_equiv21|av;70.874;ak_equiv21|gunze;H37;ak_equiv21|fs;FS30219;ak_equiv21
-ak,S,11122,#9C7D3E,8,4,5,ak_equiv21,,Green Ochre,,,tamiya;XF59;ak_equiv21|humbrol;94;ak_equiv21|av;70.914;ak_equiv21|gunze;H402;ak_equiv21|revell;88;ak_equiv21
-ak,S,11123,#8D6926,8,4,5,ak_equiv21,,Japanese Brown,,,humbrol;83;ak_equiv21|av;70.923;ak_equiv21|fs;FS30266;ak_equiv21
-ak,S,11124,#806B30,8,4,5,ak_equiv21,,Middle Stone,,,tamiya;XF60;ak_equiv21|av;70.882;ak_equiv21|gunze;H401;ak_equiv21|ral;RAL1027;ak_equiv21
+ak,S,11106,#5B280D,8,4,5,ak_equiv21,,Mahogany Brown,,,av;70.846;ak_equiv21|gunze;H344;ak_equiv21|humbrol;113;ak_equiv21|testor;1785;ak_equiv21|ral;8002;ak_equiv21|revell;83;ak_equiv21
+ak,S,11107,#4C210C,8,4,5,ak_equiv21,,Dark Rust,,,gunze;H17;ak_equiv21|tamiya;XF68;ak_equiv21
+ak,S,11108,#2D1107,8,4,5,ak_equiv21,,Hull Red,,,av;70.985;ak_equiv21|gunze;H84;ak_equiv21|ral;8017;ak_equiv21|fs;30059;ak_equiv21
+ak,S,11109,#4A3414,8,4,5,ak_equiv21,,Dark Brown,,,av;70.826;ak_equiv21|tamiya;XF64;ak_equiv21|fs;30140;ak_equiv21
+ak,S,11110,#3D2C1A,8,4,5,ak_equiv21,,Leather Brown,,,av;70.871;ak_equiv21|gunze;H456;ak_equiv21|ral;8027;ak_equiv21|fs;30051;ak_equiv21
+ak,S,11111,#211609,8,4,5,ak_equiv21,,Burnt Umber,,,av;70.941;ak_equiv21|tamiya;XF51;ak_equiv21|fs;30097;ak_equiv21|real;RC323;ak_equiv21
+ak,S,11112,#120904,8,4,5,ak_equiv21,,Grim Brown,,,av;70.822;ak_equiv21|gunze;H462;ak_equiv21|ral;8019;ak_equiv21|fs;37056;ak_equiv21
+ak,S,11113,#291809,8,4,5,ak_equiv21,,Chocolate (Chipping),,,av;70.872;ak_equiv21|tamiya;XF10;ak_equiv21|humbrol;98;ak_equiv21|testor;1540;ak_equiv21|ral;8017;ak_equiv21|fs;20062;ak_equiv21
+ak,S,11114,#C3BDA9,8,4,5,ak_equiv21,,Deck Tan,,,av;70.986;ak_equiv21|gunze;H53;ak_equiv21|tamiya;XF55;ak_equiv21|humbrol;128;ak_equiv21|testor;1741;ak_equiv21|ral;7038;ak_equiv21|fs;26496;ak_equiv21|revell;374;ak_equiv21|real;RC019;ak_equiv21
+ak,S,11115,#C7AD7D,8,4,5,ak_equiv21,,Light Earth,,,av;70.819;ak_equiv21|gunze;H79;ak_equiv21|fs;22446;ak_equiv21
+ak,S,11116,#CC944F,8,4,5,ak_equiv21,,Tan Yellow,,,av;70.912;ak_equiv21|gunze;H44;ak_equiv21|ral;1011;ak_equiv21|fs;33245;ak_equiv21
+ak,S,11117,#A47425,8,4,5,ak_equiv21,,Golden Brown,,,av;70.877;ak_equiv21|fs;33275;ak_equiv21|citadel;51004;ak_equiv21
+ak,S,11118,#C0903A,8,4,5,ak_equiv21,,Ochre,,,av;70.913;ak_equiv21|gunze;H34;ak_equiv21|humbrol;63;ak_equiv21|testor;1706;ak_equiv21|fs;33434;ak_equiv21|revell;89;ak_equiv21
+ak,S,11119,#98704A,8,4,5,ak_equiv21,,Cork,,,av;70.843;ak_equiv21|gunze;H66;ak_equiv21|tamiya;XF52;ak_equiv21|humbrol;62;ak_equiv21|testor;1737;ak_equiv21|rlm;79;ak_equiv21|revell;85;ak_equiv21
+ak,S,11120,#654E31,8,4,5,ak_equiv21,,Mud Brown,,,av;70.825;ak_equiv21|gunze;H341;ak_equiv21|fs;30140;ak_equiv21
+ak,S,11121,#735534,8,4,5,ak_equiv21,,Tan Earth,,,av;70.874;ak_equiv21|gunze;H37;ak_equiv21|tamiya;XF64;ak_equiv21|humbrol;119;ak_equiv21|fs;30219;ak_equiv21
+ak,S,11122,#9C7D3E,8,4,5,ak_equiv21,,Green Ochre,,,av;70.914;ak_equiv21|gunze;H402;ak_equiv21|tamiya;XF59;ak_equiv21|humbrol;94;ak_equiv21|revell;88;ak_equiv21
+ak,S,11123,#8D6926,8,4,5,ak_equiv21,,Japanese Brown,,,av;70.923;ak_equiv21|humbrol;83;ak_equiv21|fs;30266;ak_equiv21
+ak,S,11124,#806B30,8,4,5,ak_equiv21,,Middle Stone,,,av;70.882;ak_equiv21|gunze;H401;ak_equiv21|tamiya;XF60;ak_equiv21|ral;1027;ak_equiv21
 ak,S,11125,#65543B,8,4,5,ak_equiv21,,Grey-Brown,,,tamiya;XF72;ak_equiv21
-ak,S,11126,#655425,8,4,5,ak_equiv21,,Green-Brown,,,tamiya;XF49;ak_equiv21|humbrol;26;ak_equiv21|av;70.879;ak_equiv21|gunze;H81;ak_equiv21|ral;RAL8000;ak_equiv21|revell;86;ak_equiv21
-ak,S,11127,#5D4820,8,4,5,ak_equiv21,,British Khaki,,,humbrol;29;ak_equiv21|av;70.921;ak_equiv21|revell;87;ak_equiv21|gunze;H72;ak_equiv21
+ak,S,11126,#655425,8,4,5,ak_equiv21,,Green-Brown,,,av;70.879;ak_equiv21|gunze;H81;ak_equiv21|tamiya;XF49;ak_equiv21|humbrol;26;ak_equiv21|ral;8000;ak_equiv21|revell;86;ak_equiv21
+ak,S,11127,#5D4820,8,4,5,ak_equiv21,,British Khaki,,,av;70.921;ak_equiv21|gunze;H72;ak_equiv21|humbrol;29;ak_equiv21|revell;87;ak_equiv21
 ak,S,11128,#C2D954,8,4,5,ak_equiv21,,Luminous Green,,,
-ak,S,11129,#8FC740,8,64,5,ak_equiv21,,Fluorescent Green,,,gunze;H100;ak_equiv21|fs;FS38901;ak_equiv21
+ak,S,11129,#8FC740,8,64,5,ak_equiv21,,Fluorescent Green,,,gunze;H100;ak_equiv21|fs;38901;ak_equiv21
 ak,S,11130,#D5D13D,8,4,5,ak_equiv21,,Pistachio,,,
-ak,S,11132,#D5E0B8,8,4,5,ak_equiv21,,Green-Grey,,,tamiya;XF21;ak_equiv21|humbrol;65;ak_equiv21|av;70.971;ak_equiv21|gunze;H74;ak_equiv21|fs;FS34414;ak_equiv21|revell;55;ak_equiv21
-ak,S,11133,#324A3C,8,4,5,ak_equiv21,,Dark Green-Grey,,,humbrol;149;ak_equiv21|gunze;H302;ak_equiv21|testor;1764;ak_equiv21|fs;FS34092;ak_equiv21|real;RC230;ak_equiv21
-ak,S,11134,#80B086,8,4,5,ak_equiv21,,Green Sky,,,humbrol;120;ak_equiv21|av;70.974;ak_equiv21|gunze;H50;ak_equiv21|testor;1716;ak_equiv21|fs;FS24272;ak_equiv21
-ak,S,11135,#738571,8,4,5,ak_equiv21,,Faded Green,,,tamiya;XF76;ak_equiv21|gunze;H48;ak_equiv21
+ak,S,11132,#D5E0B8,8,4,5,ak_equiv21,,Green-Grey,,,av;70.971;ak_equiv21|gunze;H74;ak_equiv21|tamiya;XF21;ak_equiv21|humbrol;65;ak_equiv21|fs;34414;ak_equiv21|revell;55;ak_equiv21
+ak,S,11133,#324A3C,8,4,5,ak_equiv21,,Dark Green-Grey,,,gunze;H302;ak_equiv21|humbrol;149;ak_equiv21|testor;1764;ak_equiv21|fs;34092;ak_equiv21|real;RC230;ak_equiv21
+ak,S,11134,#80B086,8,4,5,ak_equiv21,,Green Sky,,,av;70.974;ak_equiv21|gunze;H50;ak_equiv21|humbrol;120;ak_equiv21|testor;1716;ak_equiv21|fs;24272;ak_equiv21
+ak,S,11135,#738571,8,4,5,ak_equiv21,,Faded Green,,,gunze;H48;ak_equiv21|tamiya;XF76;ak_equiv21
 ak,S,11136,#91BC3E,8,4,5,ak_equiv21,,Frog Green,,,
-ak,S,11137,#7E9F3D,8,4,5,ak_equiv21,,Lime Green,,,tamiya;X15;ak_equiv21|humbrol;38;ak_equiv21|av;70.827;ak_equiv21|gunze;H16;ak_equiv21|revell;60;ak_equiv21
-ak,S,11138,#A39F31,8,4,5,ak_equiv21,,Interior Yellow Green,,,tamiya;XF4;ak_equiv21|gunze;H58;ak_equiv21|fs;FS33481;ak_equiv21
+ak,S,11137,#7E9F3D,8,4,5,ak_equiv21,,Lime Green,,,av;70.827;ak_equiv21|gunze;H16;ak_equiv21|tamiya;X15;ak_equiv21|humbrol;38;ak_equiv21|revell;60;ak_equiv21
+ak,S,11138,#A39F31,8,4,5,ak_equiv21,,Interior Yellow Green,,,gunze;H58;ak_equiv21|tamiya;XF4;ak_equiv21|fs;33481;ak_equiv21
 ak,S,11139,#6D7932,8,4,5,ak_equiv21,,Golden Olive,,,av;70.857;ak_equiv21
 ak,S,11140,#5F8339,8,4,5,ak_equiv21,,Grass Green,,,
-ak,S,11141,#5A9541,8,4,5,ak_equiv21,,Light Green,,,tamiya;X28;ak_equiv21|humbrol;80;ak_equiv21|av;70.942;ak_equiv21|fs;FS24190;ak_equiv21|citadel;51024;ak_equiv21
+ak,S,11141,#5A9541,8,4,5,ak_equiv21,,Light Green,,,av;70.942;ak_equiv21|tamiya;X28;ak_equiv21|humbrol;80;ak_equiv21|fs;24190;ak_equiv21|citadel;51024;ak_equiv21
 ak,S,11143,#159269,8,4,5,ak_equiv21,,Mint Green,,,
 ak,S,11144,#0A6447,8,4,5,ak_equiv21,,Emerald,,,av;70.838;ak_equiv21|gunze;H46;ak_equiv21
 ak,S,11145,#125A35,8,4,5,ak_equiv21,,Lizard Green,,,
-ak,S,11146,#19441F,8,4,5,ak_equiv21,,Dark Green,,,humbrol;2;ak_equiv21|av;70.970;ak_equiv21|testor;1524;ak_equiv21|ral;RAL6029;ak_equiv21|fs;FS24108;ak_equiv21|revell;61;ak_equiv21
-ak,S,11147,#455E2A,8,4,5,ak_equiv21,,Olive Green,,,tamiya;XF5;ak_equiv21|av;70.967;ak_equiv21
-ak,S,11148,#374E23,8,4,5,ak_equiv21,,Medium Olive Green,,,av;70.850;ak_equiv21|gunze;H464;ak_equiv21|fs;FS34128;ak_equiv21
-ak,S,11149,#4D6E39,8,4,5,ak_equiv21,,Intermediate Green,,,humbrol;82;ak_equiv21|av;70.891;ak_equiv21|ral;RAL6011;ak_equiv21|fs;FS34138;ak_equiv21|gunze;H312;ak_equiv21
-ak,S,11150,#3F4F35,8,4,5,ak_equiv21,,Gunship Green,,,tamiya;XF26;ak_equiv21|humbrol;30;ak_equiv21|av;70.895;ak_equiv21|fs;FS34092;ak_equiv21|gunze;H6;ak_equiv21
+ak,S,11146,#19441F,8,4,5,ak_equiv21,,Dark Green,,,av;70.970;ak_equiv21|humbrol;2;ak_equiv21|testor;1524;ak_equiv21|ral;6029;ak_equiv21|fs;24108;ak_equiv21|revell;61;ak_equiv21
+ak,S,11147,#455E2A,8,4,5,ak_equiv21,,Olive Green,,,av;70.967;ak_equiv21|tamiya;XF5;ak_equiv21
+ak,S,11148,#374E23,8,4,5,ak_equiv21,,Medium Olive Green,,,av;70.850;ak_equiv21|gunze;H464;ak_equiv21|fs;34128;ak_equiv21
+ak,S,11149,#4D6E39,8,4,5,ak_equiv21,,Intermediate Green,,,av;70.891;ak_equiv21|gunze;H312;ak_equiv21|humbrol;82;ak_equiv21|ral;6011;ak_equiv21|fs;34138;ak_equiv21
+ak,S,11150,#3F4F35,8,4,5,ak_equiv21,,Gunship Green,,,av;70.895;ak_equiv21|gunze;H6;ak_equiv21|tamiya;XF26;ak_equiv21|humbrol;30;ak_equiv21|fs;34092;ak_equiv21
 ak,S,11151,#4C4215,8,4,5,ak_equiv21,,Brownish Green,,,
-ak,S,11152,#4E5C27,8,4,5,ak_equiv21,,Alga Green,,,av;70.833;ak_equiv21|gunze;H422;ak_equiv21|ral;RAL6025;ak_equiv21
-ak,S,11153,#182D27,8,4,5,ak_equiv21,,Extra Dark Green,,,tamiya;XF27;ak_equiv21|humbrol;91;ak_equiv21|av;70.896;ak_equiv21|rlm;RLM73;ak_equiv21|ral;RAL6012;ak_equiv21
-ak,S,11154,#383923,8,4,5,ak_equiv21,,German Field Grey,,,tamiya;XF65;ak_equiv21|humbrol;92;ak_equiv21|av;70.830;ak_equiv21|gunze;H73;ak_equiv21|ral;RAL7009;ak_equiv21|fs;FS34086;ak_equiv21|revell;79;ak_equiv21
-ak,S,11155,#272A13,8,4,5,ak_equiv21,,Command Green,,,tamiya;XF67;ak_equiv21|av;70.888;ak_equiv21|gunze;H80;ak_equiv21|rlm;RLM71;ak_equiv21|ral;RAL6006;ak_equiv21|fs;FS24079;ak_equiv21
-ak,S,11156,#443C1B,8,4,5,ak_equiv21,,Camouﬂage Green,,,tamiya;XF81;ak_equiv21|av;70.887;ak_equiv21|gunze;H52;ak_equiv21|rlm;RLM81;ak_equiv21|fs;FS34087;ak_equiv21
-ak,S,11157,#3A3514,8,4,5,ak_equiv21,,US Dark Green,,,tamiya;XF13;ak_equiv21|humbrol;116;ak_equiv21|av;70.893;ak_equiv21|gunze;H64;ak_equiv21|testor;1710;ak_equiv21|fs;FS34079;ak_equiv21|revell;67;ak_equiv21
-ak,S,11158,#2D2A12,8,4,5,ak_equiv21,,Reﬂective Green,,,tamiya;XF58;ak_equiv21|humbrol;102;ak_equiv21|av;70.890;ak_equiv21|testor;1716;ak_equiv21|ral;RAL6003;ak_equiv21|fs;FS34082;ak_equiv21|revell;45;ak_equiv21|gunze;H320;ak_equiv21
-ak,S,11159,#1F2411,8,4,5,ak_equiv21,,Russian Green,,,tamiya;XF62;ak_equiv21|av;70.894;ak_equiv21|gunze;H420;ak_equiv21|rlm;RLM80;ak_equiv21|fs;FS34083;ak_equiv21
-ak,S,11160,#061A0E,8,4,5,ak_equiv21,,Black Green,,,tamiya;XF11;ak_equiv21|av;70.980;ak_equiv21|gunze;H59;ak_equiv21|real;RC034;ak_equiv21|citadel;50013;ak_equiv21
-ak,S,11161,#AABEB2,8,4,5,ak_equiv21,,Pale Blue,,,tamiya;XF23;ak_equiv21|av;70.906;ak_equiv21|gunze;H418;ak_equiv21|rlm;RLM65;ak_equiv21|fs;FS35352;ak_equiv21
+ak,S,11152,#4E5C27,8,4,5,ak_equiv21,,Alga Green,,,av;70.833;ak_equiv21|gunze;H422;ak_equiv21|ral;6025;ak_equiv21
+ak,S,11153,#182D27,8,4,5,ak_equiv21,,Extra Dark Green,,,av;70.896;ak_equiv21|tamiya;XF27;ak_equiv21|humbrol;91;ak_equiv21|rlm;73;ak_equiv21|ral;6012;ak_equiv21
+ak,S,11154,#383923,8,4,5,ak_equiv21,,German Field Grey,,,av;70.830;ak_equiv21|gunze;H73;ak_equiv21|tamiya;XF65;ak_equiv21|humbrol;92;ak_equiv21|ral;7009;ak_equiv21|fs;34086;ak_equiv21|revell;79;ak_equiv21
+ak,S,11155,#272A13,8,4,5,ak_equiv21,,Command Green,,,av;70.888;ak_equiv21|gunze;H80;ak_equiv21|tamiya;XF67;ak_equiv21|rlm;71;ak_equiv21|ral;6006;ak_equiv21|fs;24079;ak_equiv21
+ak,S,11156,#443C1B,8,4,5,ak_equiv21,,Camouﬂage Green,,,av;70.887;ak_equiv21|gunze;H52;ak_equiv21|tamiya;XF81;ak_equiv21|rlm;81;ak_equiv21|fs;34087;ak_equiv21
+ak,S,11157,#3A3514,8,4,5,ak_equiv21,,US Dark Green,,,av;70.893;ak_equiv21|gunze;H64;ak_equiv21|tamiya;XF13;ak_equiv21|humbrol;116;ak_equiv21|testor;1710;ak_equiv21|fs;34079;ak_equiv21|revell;67;ak_equiv21
+ak,S,11158,#2D2A12,8,4,5,ak_equiv21,,Reﬂective Green,,,av;70.890;ak_equiv21|gunze;H320;ak_equiv21|tamiya;XF58;ak_equiv21|humbrol;102;ak_equiv21|testor;1716;ak_equiv21|ral;6003;ak_equiv21|fs;34082;ak_equiv21|revell;45;ak_equiv21
+ak,S,11159,#1F2411,8,4,5,ak_equiv21,,Russian Green,,,av;70.894;ak_equiv21|gunze;H420;ak_equiv21|tamiya;XF62;ak_equiv21|rlm;80;ak_equiv21|fs;34083;ak_equiv21
+ak,S,11160,#061A0E,8,4,5,ak_equiv21,,Black Green,,,av;70.980;ak_equiv21|gunze;H59;ak_equiv21|tamiya;XF11;ak_equiv21|real;RC034;ak_equiv21|citadel;50013;ak_equiv21
+ak,S,11161,#AABEB2,8,4,5,ak_equiv21,,Pale Blue,,,av;70.906;ak_equiv21|gunze;H418;ak_equiv21|tamiya;XF23;ak_equiv21|rlm;65;ak_equiv21|fs;35352;ak_equiv21
 ak,S,11162,#A8B7B6,8,4,5,ak_equiv21,,Spectrum Blue,,,gunze;H67;ak_equiv21
-ak,S,11163,#5E6363,8,4,5,ak_equiv21,,Intermediate Blue,,,tamiya;XF25;ak_equiv21|humbrol;144;ak_equiv21|av;70.903;ak_equiv21|testor;1720;ak_equiv21|fs;FS35164;ak_equiv21|revell;79;ak_equiv21
-ak,S,11164,#435A51,8,4,5,ak_equiv21,,Dark Blue-Grey,,,humbrol;157;ak_equiv21|av;70.904;ak_equiv21|fs;FS35189;ak_equiv21
-ak,S,11165,#58646E,8,4,5,ak_equiv21,,Grey-Blue,,,humbrol;109;ak_equiv21|av;70.943;ak_equiv21|gunze;H42;ak_equiv21|fs;FS35177;ak_equiv21|real;RC256;ak_equiv21
-ak,S,11166,#4B5250,8,4,5,ak_equiv21,,French Blue,,,av;70.900;ak_equiv21|fs;FS36176;ak_equiv21|gunze;H305;ak_equiv21
-ak,S,11167,#0F262B,8,4,5,ak_equiv21,,Anthracite Grey,,,tamiya;XF18;ak_equiv21|real;RC297;ak_equiv21|gunze;H42;ak_equiv21
-ak,S,11169,#33867A,8,4,5,ak_equiv21,,Blue-Green,,,av;70.808;ak_equiv21|ral;RAL5018;ak_equiv21|fs;FS35275;ak_equiv21|citadel;51020;ak_equiv21
+ak,S,11163,#5E6363,8,4,5,ak_equiv21,,Intermediate Blue,,,av;70.903;ak_equiv21|tamiya;XF25;ak_equiv21|humbrol;144;ak_equiv21|testor;1720;ak_equiv21|fs;35164;ak_equiv21|revell;79;ak_equiv21
+ak,S,11164,#435A51,8,4,5,ak_equiv21,,Dark Blue-Grey,,,av;70.904;ak_equiv21|humbrol;157;ak_equiv21|fs;35189;ak_equiv21
+ak,S,11165,#58646E,8,4,5,ak_equiv21,,Grey-Blue,,,av;70.943;ak_equiv21|gunze;H42;ak_equiv21|humbrol;109;ak_equiv21|fs;35177;ak_equiv21|real;RC256;ak_equiv21
+ak,S,11166,#4B5250,8,4,5,ak_equiv21,,French Blue,,,av;70.900;ak_equiv21|gunze;H305;ak_equiv21|fs;36176;ak_equiv21
+ak,S,11167,#0F262B,8,4,5,ak_equiv21,,Anthracite Grey,,,gunze;H42;ak_equiv21|tamiya;XF18;ak_equiv21|real;RC297;ak_equiv21
+ak,S,11169,#33867A,8,4,5,ak_equiv21,,Blue-Green,,,av;70.808;ak_equiv21|ral;5018;ak_equiv21|fs;35275;ak_equiv21|citadel;51020;ak_equiv21
 ak,S,11170,#056659,8,4,5,ak_equiv21,,Aquatic Turquoise,,,av;70.840;ak_equiv21
 ak,S,11171,#02494C,8,4,5,ak_equiv21,,Turquoise,,,av;70.966;ak_equiv21
 ak,S,11172,#003639,8,4,5,ak_equiv21,,Archaic Turquoise,,,
 ak,S,11173,#123434,8,4,5,ak_equiv21,,Ocean Blue,,,tamiya;XF50;ak_equiv21
 ak,S,11174,#BBE0DB,8,4,5,ak_equiv21,,Snow Blue,,,
-ak,S,11175,#7AC0C8,8,4,5,ak_equiv21,,Sky Blue,,,humbrol;47;ak_equiv21|av;70.961;ak_equiv21|testor;1508;ak_equiv21|revell;50;ak_equiv21
-ak,S,11176,#61B4C3,8,4,5,ak_equiv21,,Deep Sky Blue,,,av;70.844;ak_equiv21|gunze;H323;ak_equiv21|fs;FS35250;ak_equiv21
-ak,S,11177,#3A889D,8,4,5,ak_equiv21,,Ducat Blue,,,av;70.841;ak_equiv21|ral;RAL5012;ak_equiv21|gunze;H25;ak_equiv21
+ak,S,11175,#7AC0C8,8,4,5,ak_equiv21,,Sky Blue,,,av;70.961;ak_equiv21|humbrol;47;ak_equiv21|testor;1508;ak_equiv21|revell;50;ak_equiv21
+ak,S,11176,#61B4C3,8,4,5,ak_equiv21,,Deep Sky Blue,,,av;70.844;ak_equiv21|gunze;H323;ak_equiv21|fs;35250;ak_equiv21
+ak,S,11177,#3A889D,8,4,5,ak_equiv21,,Ducat Blue,,,av;70.841;ak_equiv21|gunze;H25;ak_equiv21|ral;5012;ak_equiv21
 ak,S,11178,#014566,8,64,5,ak_equiv21,,Fluorescent Blue,,,av;70.736;ak_equiv21
 ak,S,11179,#21407E,8,4,5,ak_equiv21,,Ultramarine,,,av;70.839;ak_equiv21
 ak,S,11180,#1C2652,8,4,5,ak_equiv21,,Imperial Blue,,,gunze;H465;ak_equiv21
-ak,S,11181,#112E4D,8,4,5,ak_equiv21,,Dark Blue,,,humbrol;25;ak_equiv21|av;70.925;ak_equiv21|gunze;H5;ak_equiv21|fs;FS35095;ak_equiv21|revell;56;ak_equiv21|citadel;51015;ak_equiv21
+ak,S,11181,#112E4D,8,4,5,ak_equiv21,,Dark Blue,,,av;70.925;ak_equiv21|gunze;H5;ak_equiv21|humbrol;25;ak_equiv21|fs;35095;ak_equiv21|revell;56;ak_equiv21|citadel;51015;ak_equiv21
 ak,S,11183,#2D2948,8,4,5,ak_equiv21,,Amethyst Blue,,,gunze;H35;ak_equiv21
-ak,S,11184,#083947,8,4,5,ak_equiv21,,Medium Blue,,,tamiya;X13;ak_equiv21|humbrol;52;ak_equiv21|av;70.963;ak_equiv21|gunze;H88;ak_equiv21|testor;2702;ak_equiv21|rlm;RLM24;ak_equiv21|ral;RAL5019;ak_equiv21|fs;FS25102;ak_equiv21|revell;98;ak_equiv21
+ak,S,11184,#083947,8,4,5,ak_equiv21,,Medium Blue,,,av;70.963;ak_equiv21|gunze;H88;ak_equiv21|tamiya;X13;ak_equiv21|humbrol;52;ak_equiv21|testor;2702;ak_equiv21|rlm;24;ak_equiv21|ral;5019;ak_equiv21|fs;25102;ak_equiv21|revell;98;ak_equiv21
 ak,S,11185,#044960,8,4,5,ak_equiv21,,Star Blue,,,gunze;H322;ak_equiv21
-ak,S,11186,#022737,8,4,5,ak_equiv21,,Light Prussian Blue,,,tamiya;XF8;ak_equiv21|humbrol;25;ak_equiv21|av;70.965;ak_equiv21|ral;RAL5000;ak_equiv21|fs;FS35052;ak_equiv21|revell;156;ak_equiv21
-ak,S,11187,#00081D,8,4,5,ak_equiv21,,Strong Dark Blue,,,gunze;H326;ak_equiv21|fs;FS35044;ak_equiv21
-ak,S,11188,#2D3540,8,4,5,ak_equiv21,,Oxford,,,humbrol;104;ak_equiv21|av;70.807;ak_equiv21|revell;350;ak_equiv21|real;RC257;ak_equiv21
-ak,S,11189,#000016,8,4,5,ak_equiv21,,Dark Prussian Blue,,,tamiya;X3;ak_equiv21|humbrol;15;ak_equiv21|av;70.899;ak_equiv21|gunze;H5;ak_equiv21|testor;1511;ak_equiv21|fs;FS35048;ak_equiv21|revell;54;ak_equiv21
-ak,S,11190,#010F0E,8,4,5,ak_equiv21,,Dark Sea Blue,,,tamiya;XF17;ak_equiv21|humbrol;79;ak_equiv21|av;70.898;ak_equiv21|ral;RAL5004;ak_equiv21|fs;FS35042;ak_equiv21|revell;77;ak_equiv21|gunze;H54;ak_equiv21
+ak,S,11186,#022737,8,4,5,ak_equiv21,,Light Prussian Blue,,,av;70.965;ak_equiv21|tamiya;XF8;ak_equiv21|humbrol;25;ak_equiv21|ral;5000;ak_equiv21|fs;35052;ak_equiv21|revell;156;ak_equiv21
+ak,S,11187,#00081D,8,4,5,ak_equiv21,,Strong Dark Blue,,,gunze;H326;ak_equiv21|fs;35044;ak_equiv21
+ak,S,11188,#2D3540,8,4,5,ak_equiv21,,Oxford,,,av;70.807;ak_equiv21|humbrol;104;ak_equiv21|revell;350;ak_equiv21|real;RC257;ak_equiv21
+ak,S,11189,#000016,8,4,5,ak_equiv21,,Dark Prussian Blue,,,av;70.899;ak_equiv21|gunze;H5;ak_equiv21|tamiya;X3;ak_equiv21|humbrol;15;ak_equiv21|testor;1511;ak_equiv21|fs;35048;ak_equiv21|revell;54;ak_equiv21
+ak,S,11190,#010F0E,8,4,5,ak_equiv21,,Dark Sea Blue,,,av;70.898;ak_equiv21|gunze;H54;ak_equiv21|tamiya;XF17;ak_equiv21|humbrol;79;ak_equiv21|ral;5004;ak_equiv21|fs;35042;ak_equiv21|revell;77;ak_equiv21
 ak,S,11213,#C92026,8,16,5,ak_equiv21,,Clear Red,,,av;70.934;ak_equiv21|gunze;H90;ak_equiv21
 ak,S,11214,#1C305B,8,16,5,ak_equiv21,,Clear Blue,,,av;70.938;ak_equiv21|gunze;H93;ak_equiv21
 ak,S,11215,#6C4A25,8,16,5,ak_equiv21,,Clear Smoke,,,av;70.939;ak_equiv21|gunze;H95;ak_equiv21
