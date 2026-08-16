@@ -253,45 +253,45 @@
 
 	<!-- 官标等价 -->
 	<div>
-		<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
-			{t('stock.directEquiv')}
-		</h3>
-		<div class="flex flex-wrap gap-2">
-			{#each directEquivalences as equiv (equiv.idx)}
-				{@const p = getPaintByIndex(equiv.idx)}
-				{#if p}
-					<div class="relative">
-						<button
-							type="button"
-							onclick={() => toggleCompare(p)}
-							class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
-							p.id
-								? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
-								: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
-						>
-							<div
-								class="h-5 w-5 shrink-0 rounded"
-								style="background-color: {rgbToHex(p.rgb)}"
-							></div>
-							<span class="text-xs uppercase">{p.brand}/{p.code}</span>
-						</button>
-						{const src = getSourceMeta(equiv.source)}
-						{#if src}
+		{#if directIds.size > 0}
+			<h3 class="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
+				{t('stock.directEquiv')}
+			</h3>
+			<div class="flex flex-wrap gap-2">
+				{#each directEquivalences as equiv (equiv.idx)}
+					{@const p = getPaintByIndex(equiv.idx)}
+					{#if p}
+						<div class="relative">
 							<button
 								type="button"
-								onclick={() => openExternal(src.url)}
-								title={src.title}
-								class="absolute -top-1.5 -right-1.5 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-gray-800/80 text-white shadow-sm transition-colors hover:bg-gray-800 dark:bg-gray-700/90 dark:hover:bg-gray-700"
+								onclick={() => toggleCompare(p)}
+								class="flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1 {compareCode ===
+								p.id
+									? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
+									: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 							>
-								<ExternalLink class="size-2.5" />
+								<div
+									class="h-5 w-5 shrink-0 rounded"
+									style="background-color: {rgbToHex(p.rgb)}"
+								></div>
+								<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 							</button>
-						{/if}
-					</div>
-				{/if}
-			{:else}
-				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noDirectEquiv')}</div>
-			{/each}
-		</div>
+							{const src = getSourceMeta(equiv.source)}
+							{#if src}
+								<button
+									type="button"
+									onclick={() => openExternal(src.url)}
+									title={src.title}
+									class="absolute -top-1.5 -right-1.5 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-gray-800/80 text-white shadow-sm transition-colors hover:bg-gray-800 dark:bg-gray-700/90 dark:hover:bg-gray-700"
+								>
+									<ExternalLink class="size-2.5" />
+								</button>
+							{/if}
+						</div>
+					{/if}
+				{/each}
+			</div>
+		{/if}
 	</div>
 
 	<!-- 相近同色漆 -->
@@ -323,7 +323,7 @@
 					<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 				</button>
 			{:else}
-				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.noSimilar')}</div>
+				<div class="text-xs text-gray-500 dark:text-gray-400">{t('stock.notFound')}</div>
 			{/each}
 		</div>
 	</div>

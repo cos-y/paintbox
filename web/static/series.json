@@ -73,6 +73,12 @@
   },
   {
     "brand": "gunze",
+    "serie": "MC",
+    "name": "Mr.Metal Color",
+    "desc": "Metallic paints"
+  },
+  {
+    "brand": "gunze",
     "serie": "V",
     "name": "Various",
     "desc": "Paints from various ranges"

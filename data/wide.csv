@@ -2444,8 +2444,14 @@ gunze,H,H338,#B4BBBF,2,2,5,gunze24_25,,LIGHT GRAY FS36495,,ライトグレー FS
 gunze,H,H339,#58554E,2,1,5,gunze24_25,,ENGINE GRAY FS16081,,エンジングレー FS16081,gunze;C339;gunze26
 gunze,H,H34,#E4A024,2,1,5,gunze24_25,,CREAM YELLOW,,クリームイエロー,gunze;N34;gunze26
 gunze,H,H340,#645E41,2,2,5,gunze24_25,,FIELD GREEN FS34097,,フィールドグリーン FS34097,gunze;C340;gunze26
+gunze,H,H341,#543532,2,2,5,gh_minp,,Mud,,,
+gunze,H,H342,#4C4948,2,2,5,gh_minp,,Oil,,,
+gunze,H,H343,#000000,2,2,5,gh_minp,,Soot,,,
+gunze,H,H345,#595757,2,2,5,gh_minp,,Rough Gray,,,
+gunze,H,H346,#BE8B5E,2,2,5,gh_minp,,Rough Sand,,,
 gunze,H,H35,#2E3092,2,1,5,gunze24_25,,COBALT BLUE,,コバルトブルー,gunze;C80;gunze26|gunze;N35;gunze26
 gunze,H,H36,#44503D,2,1,5,gunze24_25,,DARK GREEN,,ダークグリーン,
+gunze,H,H367,#A82C29,2,2,5,gh_minp,,Carmine Red,,,
 gunze,H,H37,#71513A,2,1,5,gunze24_25,,WOOD BROWN,,ウッドブラウン,gunze;C43;gunze26|gunze;N37;gunze26
 gunze,H,H38,#4C3540,2,8,5,gunze24_25,,STEEL RED,,赤鉄色,gunze;N38;gunze26
 gunze,H,H39,#483087,2,1,5,gunze24_25,,PURPLE,,パープル（紫）,gunze;C67;gunze26|gunze;N39;gunze26
@@ -2471,7 +2477,22 @@ gunze,H,H423,#346756,2,2,5,gunze24_25,,RLM83 DARK GREEN,,RLM83 ダークグリ�
 gunze,H,H43,#C9252B,2,1,5,gunze24_25,,WINE RED,,ワインレッド（マルーン）,gunze;C100;gunze26|gunze;N43;gunze26
 gunze,H,H44,#E3AC7C,2,2,5,gunze24_25,,FLESH,,薄茶色,gunze;C51;gunze26|gunze;N44;gunze26
 gunze,H,H45,#00C0F3,2,1,5,gunze24_25,,LIGHT BLUE,,みず色,gunze;N45;gunze26
+gunze,H,H451,#FFFFFF,2,2,5,gh_minp,,Chalky White,,,
+gunze,H,H452,#000000,2,2,5,gh_minp,,Soot Black,,,
+gunze,H,H453,#C4641F,2,2,5,gh_minp,,Rust Red,,,
+gunze,H,H455,#B1A991,2,2,5,gh_minp,,Cement Gray,,,
+gunze,H,H456,#6A4832,2,2,5,gh_minp,,Dust Brown,,,
+gunze,H,H457,#765730,2,2,5,gh_minp,,Earth Brown,,,
+gunze,H,H458,#484B44,2,2,5,gh_minp,,Machine Gray,,,
+gunze,H,H459,#D6AE58,2,2,5,gh_minp,,Sand Yellow,,,
 gunze,H,H46,#00AD8E,2,1,5,gunze24_25,,EMERALD GREEN,,エメラルドグリーン,gunze;N46;gunze26
+gunze,H,H460,#8C412B,2,2,5,gh_minp,,Red Brown (1),,,
+gunze,H,H461,#E0F1EF,2,2,5,gh_minp,mini 采样颜色可疑，待核,Oxide Green,,,
+gunze,H,H462,#4E3C33,2,2,5,gh_minp,,Black Brown,,,
+gunze,H,H463,#7C422F,2,2,5,gh_minp,,Red Brown (2),,,
+gunze,H,H464,#56673A,2,2,5,gh_minp,,Chrome Green,,,
+gunze,H,H465,#003559,2,2,5,gh_minp,,Cobalt Blue,,,
+gunze,H,H466,#9B080A,2,2,5,gh_minp,,Purple Red,,,
 gunze,H,H47,#743237,2,1,5,gunze24_25,,RED BROWN,,レッドブラウン,gunze;C41;gunze26|gunze;N47;gunze26
 gunze,H,H48,#405651,2,1,5,gunze24_25,,FIELD GRAY (2),,オリーブグレー,gunze;C52;gunze26
 gunze,H,H49,#6F85C2,2,1,5,gunze24_25,,VIOLET,,すみれ色,gunze;N49;gunze26
@@ -2711,6 +2732,15 @@ gunze,M,XGM204,#00BAF2,2,8,8,gunze26,,,,光の翼ホロブルー,
 gunze,M,XGM205,#93CC84,2,8,8,gunze26,,,,サイコフレームホログリーン,
 gunze,M,XGM301,#E8E7DC,2,32,8,gunze26,,,,パールホワイト,
 gunze,M,XGM302,#DBBC54,2,32,8,gunze26,,,,パールゴールド,
+gunze,MC,MC211,#A4A4A5,1,8,1,gh_minp,,Chrome Silver,,,
+gunze,MC,MC212,#193F45,1,8,1,gh_minp,mini 采样颜色可疑，待核,Iron,,,
+gunze,MC,MC213,#514F4F,1,8,1,gh_minp,,Stainless,,,
+gunze,MC,MC214,#000000,1,8,1,gh_minp,,Dark Iron,,,
+gunze,MC,MC215,#C96549,1,8,1,gh_minp,,Copper,,,
+gunze,MC,MC216,#378854,1,8,1,gh_minp,mini 采样颜色可疑，待核,Bronze,,,
+gunze,MC,MC217,#D9AE00,1,8,1,gh_minp,,Gold,,,
+gunze,MC,MC218,#A4A4A5,1,8,1,gh_minp,,Aluminium,,,
+gunze,MC,MC219,#975829,1,8,1,gh_minp,,Brass,,,
 gunze,N,BN01,#FFFFFF,8,4,5,gunze24_25,,BASE WHITE,,白色系統下地色,
 gunze,N,BN02,#4E5E64,8,4,5,gunze24_25,,BASE GRAY,,灰色系統下地色,
 gunze,N,BN03,#AF3446,8,4,5,gunze24_25,,BASE RED,,赤色系統下地色,
@@ -2836,9 +2866,11 @@ gunze,S,S115,#6D92A0,1,2,2,gunze24_25,,RLM65 LIGHT BLUE A,,RLM65 ライトブル
 gunze,S,S117,#AFCBC9,1,2,2,gunze24_25,,RLM76 LIGHT BLUE A,,RLM76 ライトブルー,
 gunze,S,S12,#6F5F3C,1,2,2,gunze24_25,,OLIVE DRAB (1) A,,オリーブドラブ（1）,
 gunze,S,S124,#22473F,1,2,2,gunze24_25,,DARK GREEN (MITSUBISHI) A,,暗緑色（三菱系）,
+gunze,S,S129,#45644D,1,2,2,gh_minp,,Dark Green (Nakajima),,,
 gunze,S,S13,#677A83,1,2,2,gunze24_25,,NEUTRAL GRAY A,,ニュートラルグレー,
 gunze,S,S14,#234F5B,1,2,2,gunze24_25,,NAVY BLUE A,,ネイビーブルー,
 gunze,S,S15,#44503D,1,2,2,gunze24_25,,IJN GREEN (NAKAJIMA) A,,暗緑色（中島系）,
+gunze,S,S151,#FFFFFF,1,2,2,gh_minp,,White Pearl,,,
 gunze,S,S16,#22543F,1,2,2,gunze24_25,,IJA GREEN A,,濃緑色,
 gunze,S,S2,#231F20,1,1,2,gunze24_25,,BLACK,,ブラック（黒）,
 gunze,S,S28,#231F20,1,8,2,gunze24_25,,STEEL,,黒鉄色,
@@ -2892,6 +2924,7 @@ gunze,S,S92,#231F20,1,2,2,gunze24_25,,SEMI GLOSS BLACK,,セミグロスブラッ
 gunze,S,S97,#AAB7AF,1,1,2,gunze24_25,,LIGHT GRAY,,灰色９号,
 gunze,S,SJ01,#60727A,1,4,2,gunze24_25,,JAPANESE NAVAL ARSENAL COLOR,,呉海軍工廠標準色,
 gunze,S,SJ02,#515254,1,4,2,gunze24_25,,JAPANESE NAVAL ARSENAL COLOR,,佐世保海軍工廠標準色,
+gunze,SM,SM08,#E8E7E7,1,8,1,gh_minp,,Plate Silver Next,,,
 gunze,SM,SM201,#CCCDCF,1,8,1,gunze24_25,,SUPER FINE SILVER 2,,スーパーファインシルバー2,
 gunze,SM,SM202,#CBAC77,1,8,1,gunze24_25,,SUPER GOLD 2,,スーパーゴールド2,
 gunze,SM,SM203,#B7B8BB,1,8,1,gunze24_25,,SUPER IRON 2,,スーパーアイアン2,
