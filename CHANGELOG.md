@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.11] - 2026-08-16
+
+### Added
+
+- 574 new Vallejo paints from 11 official catalog PDFs (cc063, cc064, cc069, cc070, cc081, cc095, cc266, cc298, cc329, cc339, cc340), growing the Vallejo catalog from 4 to 12 series: Model Air, Primers, Mecha Color, Hobby Paint, Metal Color, Model Wash, Premium Color and True Metallic Metal join the existing Model Color, Liquid Metal, Game Color and Game Air.
+
+### Changed
+
+- Wide table moved to CSV storage (data/wide.csv) so bulk column edits stay possible with a text editor's column mode.
+- Timestamps removed from data files — git itself is the change history, keeping diffs clean and line-oriented.
+
+### Fixed
+
+- Corrected series labels in the series picker: existing series names now include their color-code prefix (e.g. "Model Air [71.x]"), and Game Air had the wrong description (it previously repeated Game Color's).
+- Surface-type bit order unified to the front-end convention (FL/PA bits swapped in the wide table), so fluorescent and pearlescent paints now show the correct surface label.
+
 ## [0.3.10] - 2026-08-15
 
 ### Added
@@ -304,6 +320,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 
 - Initial release: color picker, paint data loading via WebAssembly, project scaffolding.
 
+[0.3.11]: https://github.com/cos-y/paintbox/releases/tag/v0.3.11
 [0.3.10]: https://github.com/cos-y/paintbox/releases/tag/v0.3.10
 [0.3.9]: https://github.com/cos-y/paintbox/releases/tag/v0.3.9
 [0.3.8]: https://github.com/cos-y/paintbox/releases/tag/v0.3.8
