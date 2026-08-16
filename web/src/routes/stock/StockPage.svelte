@@ -493,7 +493,7 @@
 						</div>
 					{/key}
 				{:else}
-					{#key `${level}-${selectedBrand}`}
+					{#key selectedBrand}
 						<!-- 手机：筛选条横跨整页（第 1、2 列上方）；PC：位于第 2 列（油漆区）上方 -->
 						<div class="flex h-full flex-col sm:flex-row">
 							{#if !isMedia().sm && stockNav.filterOpen}
@@ -502,9 +502,6 @@
 							<div class="flex min-h-0 flex-1">
 								{@render seriesNav()}
 								<div class="flex min-w-0 flex-1 flex-col">
-									{#if isMedia().sm && stockNav.filterOpen}
-										{@render filterBar()}
-									{/if}
 									<div
 										class="grid min-h-0 flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-2.5 overflow-y-auto p-2"
 									>
@@ -533,18 +530,23 @@
 			<!-- 右栏：详情面板（品牌层及以上常驻；根路由纯列表不加分栏） -->
 			{#if isMedia().sm && level > 0}
 				<aside
-					class="border-theme dark:border-theme w-[clamp(18rem,28vw,26rem)] shrink-0 overflow-y-auto border-l"
+					class="flex w-[clamp(18rem,28vw,26rem)] shrink-0 flex-col border-l border-theme dark:border-theme"
 				>
-					{#if selectedPaint}
-						{@const paint = selectedPaint}
-						{#key paint.id}
-							<div class="p-4">
-								<PaintDetail {paint} isStockPage />
-							</div>
-						{/key}
-					{:else}
-						<DetailEmpty hint={t('stock.selectPaintHint')} />
+					{#if stockNav.filterOpen}
+						{@render filterBar()}
 					{/if}
+					<div class="min-h-0 flex-1 overflow-y-auto">
+						{#if selectedPaint}
+							{@const paint = selectedPaint}
+							{#key paint.id}
+								<div class="p-4">
+									<PaintDetail {paint} isStockPage />
+								</div>
+							{/key}
+						{:else}
+							<DetailEmpty hint={t('stock.selectPaintHint')} />
+						{/if}
+					</div>
 				</aside>
 			{/if}
 		</div>

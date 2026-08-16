@@ -30,18 +30,17 @@ export const stockNav = $state<StockNavState>({
 });
 
 /**
- * 返回手势/返回按钮：逐层回退（详情→品牌内列表→品牌列表）。
- * UI 上 serie 选择只是品牌内的高亮切换（非独立层级），
- * 返回 = 离开当前品牌，直接回到品牌列表（避免 fallback 系列造成的假层级）。
+ * 返回手势/返回按钮：直接离开当前品牌，回到品牌列表。
+ * UI 上 serie/code 都只是品牌内的高亮切换（非独立层级）：
+ * 详情面板是预览（桌面右侧栏 / 移动端抽屉），返回 = 退出品牌，
+ * 避免 fallback 系列造成的假层级（一次返回即回到品牌根页）。
+ * 系列内回退可用标题栏面包屑（goToLevel1）。
  */
 export function goBackOneLevel(): boolean {
-	if (stockNav.code) {
-		stockNav.code = '';
-		return true;
-	}
 	if (stockNav.brand) {
 		stockNav.brand = '';
 		stockNav.serie = '';
+		stockNav.code = '';
 		return true;
 	}
 	return false;

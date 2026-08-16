@@ -15,3 +15,4 @@ English / 中文 / 日本語 / Español
 PaintBox is a color search & mixing toolbox designed for scale modelers.
 
 ![](./pics/1.jpg)
+![](./pics/2.jpg)
