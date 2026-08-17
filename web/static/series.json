@@ -340,5 +340,65 @@
     "serie": "TL",
     "name": "Tactical Label",
     "desc": "タクティカル レーベル"
+  },
+  {
+    "brand": "citadel",
+    "serie": "B",
+    "name": "Base",
+    "desc": "Acrylic paints for base coat"
+  },
+  {
+    "brand": "citadel",
+    "serie": "L",
+    "name": "Layer",
+    "desc": "Acrylic paints"
+  },
+  {
+    "brand": "citadel",
+    "serie": "D",
+    "name": "Dry",
+    "desc": "Acrylic paints for drybrushing"
+  },
+  {
+    "brand": "citadel",
+    "serie": "S",
+    "name": "Shade",
+    "desc": "Acrylic paints for shading"
+  },
+  {
+    "brand": "citadel",
+    "serie": "G",
+    "name": "Glaze",
+    "desc": "Acrylic paints for intensifying color"
+  },
+  {
+    "brand": "citadel",
+    "serie": "T",
+    "name": "Technical",
+    "desc": "Acrylic paints for special effects"
+  },
+  {
+    "brand": "citadel",
+    "serie": "57",
+    "name": "Edge",
+    "desc": "Acrylic paints for highlight"
+  },
+  {
+    "brand": "citadel",
+    "serie": "A",
+    "name": "Air",
+    "desc": "Acrylic paints for airbrush"
+  },
+  {
+    "brand": "citadel",
+    "serie": "C",
+    "name": "Contrast",
+    "desc": "Acrylic paints for base, shade and highlight"
+  },
+  {
+    "brand": "citadel",
+    "serie": "SP",
+    "name": "Sprays",
+    "desc": "Acrylic spray paints for basecoating"
   }
 ]

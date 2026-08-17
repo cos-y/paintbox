@@ -173,8 +173,10 @@ def main() -> None:
         old[lang] = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     raw: dict[str, dict] = {}
     missing_zh: list[tuple[str, str]] = []
+    valid_codes: dict[str, set[str]] = {}
     for r in rows:
         b, c = r["brand"], r["code"]
+        valid_codes.setdefault(b, set()).add(c)
         for lang, name in (r.get("desc") or {}).items():
             raw.setdefault(lang, {}).setdefault(b, {})[c] = name  # raw 保持源语言原文
             if lang == "en":
@@ -183,6 +185,14 @@ def main() -> None:
                 old[lang].setdefault(b, {})[c] = name
         if "zh" not in (r.get("desc") or {}) and c not in old["zh"].get(b, {}):
             missing_zh.append((b, c))
+    # 裁剪：wide 中已不存在的行（如删除的系列）从翻译文件清除，避免残留
+    for lang in ("en", "zh", "ja", "es"):
+        for b in list(old[lang]):
+            if b not in valid_codes:
+                old[lang].pop(b)
+                continue
+            kept = {c: n for c, n in old[lang][b].items() if c in valid_codes[b]}
+            old[lang][b] = kept
     for lang in ("en", "zh", "ja", "es"):
         (PAINTS_DIR / f"{lang}.json").write_text(
             json.dumps(old[lang], ensure_ascii=False, indent=1),
