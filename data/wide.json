@@ -1,6 +1,6 @@
 {
  "schema": "paintbox.wide.v2",
- "generatedAt": "2026-08-17T01:07:19.538722+00:00",
+ "generatedAt": "2026-08-17T13:46:41.107707+00:00",
  "sources": {
   "gunze24_25": {
    "id": "gunze24_25",
@@ -101,6 +101,11 @@
    "id": "gh_minp",
    "url": "https://github.com/Arcturus5404/miniature-paints",
    "title": "Miniature Painter Pro"
+  },
+  "hcc": {
+   "id": "hcc",
+   "url": "",
+   "title": "Hobby Color Converter"
   }
  }
 }
