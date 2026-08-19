@@ -35,7 +35,7 @@
 			stock.toggle(paint.id);
 			e.currentTarget.blur();
 		}}
-		class="absolute top-0 right-0 z-200 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
+		class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
 			? 'scale-100 opacity-100'
 			: ''}"
 	>
@@ -53,7 +53,7 @@
 		</span>
 	</button>
 	<div
-		class="pointer-events-none absolute inset-x-0 bottom-0 z-200 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
+		class="pointer-events-none absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]"
 	>
 		<div class="truncate text-[10px] leading-tight font-semibold text-white">
 			{paint.code}
