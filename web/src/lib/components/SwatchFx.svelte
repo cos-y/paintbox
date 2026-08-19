@@ -13,12 +13,12 @@
 	// 视觉语言刻意保持"美术示意"而非拟真（数据只有 hex，不能假装对实际观感负责）：
 	// 金属=全局跟随光带 / 透明=叠层+网格 / 珠光=全局跟随光晕 / 荧光=呼吸
 	const mode = $derived(
-		paint.surfaces & SURFACE_BITS.C
-			? 'clear'
+		paint.surfaces & SURFACE_BITS.PA
+			? 'pearl'
 			: paint.surfaces & SURFACE_BITS.ME
 				? 'metallic'
-				: paint.surfaces & SURFACE_BITS.PA
-					? 'pearl'
+				: paint.surfaces & SURFACE_BITS.C
+					? 'clear'
 					: paint.surfaces & SURFACE_BITS.FL
 						? 'fluo'
 						: 'flat'
