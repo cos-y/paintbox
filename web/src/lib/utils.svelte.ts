@@ -1,7 +1,7 @@
 import { z, ZodType } from 'zod';
 import { isTauri } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { useMode, modeHsl, modeHwb, modeRgb, modeOklch } from 'culori/fn';
+import { useMode, modeHsl, modeHwb, modeRgb, modeOklch, modeOklab } from 'culori/fn';
 
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
@@ -68,6 +68,7 @@ export const openExternal = (url: string) => {
 
 export const toHsl = useMode(modeHsl);
 export const toOklch = useMode(modeOklch);
+export const toOklab = useMode(modeOklab);
 export const toRgb = useMode(modeRgb);
 export const toHwb = useMode(modeHwb);
 

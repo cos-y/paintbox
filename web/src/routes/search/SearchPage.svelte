@@ -28,13 +28,13 @@
 	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { drawer } from '$lib/drawer.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
-	import { clamp, similarity, toRgb, toOklch, toHwb, isMedia } from '$lib/utils.svelte';
+	import { clamp, toRgb, toOklch, toOklab, toHwb, isMedia } from '$lib/utils.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import TagSelect from '$lib/components/TagSelect.svelte';
 	import TagButtonGroup from '$lib/components/TagButtonGroup.svelte';
 	import SeriesPicker from '$lib/components/SeriesPicker.svelte';
 	import { store, rt } from './search.svelte';
-	import { t } from '$lib/i18n.svelte';
+	import { t, type MessageKey } from '$lib/i18n.svelte';
 	import { untrack } from 'svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
@@ -150,6 +150,74 @@
 			stops.push(`${c} ${start}%`, `${c} ${end}%`);
 		}
 		return `linear-gradient(to right, ${stops.join(', ')})`;
+	};
+
+	/** 相似度分级：ΔE → 主观化等级标签（替代纯数值百分比），颜色绿→红递减 */
+	const SIM_LEVELS: Record<string, string> = {
+		exact: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300',
+		near: 'bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300',
+		close: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+		different: 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300'
+	};
+	const simLevel = (deltaE: number): 'exact' | 'near' | 'close' | 'different' => {
+		if (deltaE < 0.5) return 'exact';
+		if (deltaE < 4) return 'near';
+		if (deltaE < 10) return 'close';
+		return 'different';
+	};
+	const simLevelClass = (deltaE: number) => SIM_LEVELS[simLevel(deltaE)];
+	const SIM_KEYS = {
+		exact: 'search.simLevel.exact',
+		near: 'search.simLevel.near',
+		close: 'search.simLevel.close',
+		different: 'search.simLevel.different'
+	} satisfies Record<string, MessageKey>;
+	const OFFSET_KEYS = {
+		redder: 'search.offset.redder',
+		yellower: 'search.offset.yellower',
+		greener: 'search.offset.greener',
+		bluer: 'search.offset.bluer',
+		vivid: 'search.offset.vivid',
+		grayer: 'search.offset.grayer'
+	} satisfies Record<string, MessageKey>;
+
+	/** 结果相对目标的 oklab 偏移方向。
+	    用直角坐标 a/b 轴（绿↔红、蓝↔黄）做主成分比较，不用色相角划扇区：
+	    色相角在圆上不均匀，且最近邻搜索的色相偏移通常 <45°，全落进固定扇区造成标签单一；
+	    a/b 两轴尺度一致（不均匀的是 L 轴，本函数不涉及）。色度方向 = 极径差。 */
+	type OffsetTag = 'redder' | 'yellower' | 'greener' | 'bluer' | 'vivid' | 'grayer';
+	type RgbInput = { mode: 'rgb'; r: number; g: number; b: number };
+
+	const offsetTags = (target: RgbInput, result: [number, number, number]): OffsetTag[] => {
+		const t = toOklab(target); // l 0-1，a/b -0.4~0.4（culori 直转）
+		const p = toOklab({ mode: 'rgb', r: result[0], g: result[1], b: result[2] });
+		const da = (p.a ?? 0) - (t.a ?? 0); // +红/-绿
+		const db = (p.b ?? 0) - (t.b ?? 0); // +黄/-蓝
+		const dc = Math.hypot(p.a ?? 0, p.b ?? 0) - Math.hypot(t.a ?? 0, t.b ?? 0);
+		const tags: OffsetTag[] = [];
+		// 色度方向（更艳/更灰）：阈值偏小，小幅色度差也给出方向提示
+		if (Math.abs(dc) > 0.015) tags.push(dc > 0 ? 'vivid' : 'grayer');
+		// 色相轴：双方有足够色度且偏移超过最小量才判定，主成分决定红绿 or 黄蓝。
+		// 黄蓝轴（b）感知比红绿轴（a）更敏感：比较时 db 按 0.8 打折，黄蓝方向的偏移更容易主导
+		if (
+			Math.hypot(t.a ?? 0, t.b ?? 0) > 0.03 &&
+			Math.hypot(p.a ?? 0, p.b ?? 0) > 0.03 &&
+			(Math.abs(da) > 0.006 || Math.abs(db) > 0.006)
+		) {
+			if (Math.abs(da) * 0.8 >= Math.abs(db)) tags.push(da > 0 ? 'redder' : 'greener');
+			else tags.push(db > 0 ? 'yellower' : 'bluer');
+		}
+		return tags;
+	};
+
+	/** 偏移标签文本着色：色相标签用对应颜色，更艳/更灰用中性灰（无方向色） */
+	const OFFSET_COLORS: Record<OffsetTag, string> = {
+		redder: 'text-red-600 dark:text-red-400',
+		yellower: 'text-yellow-600 dark:text-yellow-400',
+		greener: 'text-green-600 dark:text-green-400',
+		bluer: 'text-blue-600 dark:text-blue-400',
+		vivid: 'text-purple-600 dark:text-purple-400',
+		grayer: 'text-gray-500 dark:text-gray-400'
 	};
 
 	let seriesOpen = $state(false);
@@ -687,10 +755,20 @@
 										</div>
 									{/if}
 									<div
-										class="mt-auto flex items-center justify-between pt-1.5 text-[10px] text-gray-500 dark:text-gray-400"
+										class="mt-auto flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 pt-1.5 text-[10px]"
 									>
-										<span>ΔE {r.delta_e.toFixed(2)}</span>
-										<span>{t('search.similarity', { n: similarity(r.delta_e).toFixed(0) })}</span>
+										<span
+											class="rounded-sm px-1 py-px text-[9px] font-medium {simLevelClass(
+												r.delta_e
+											)}"
+										>
+											{t(SIM_KEYS[simLevel(r.delta_e)])}
+										</span>
+										{#each offsetTags(rgb, r.rgb) as tag}
+											<span class="text-[9px] font-medium {OFFSET_COLORS[tag]}">
+												{t(OFFSET_KEYS[tag])}
+											</span>
+										{/each}
 									</div>
 								</div>
 							</div>
