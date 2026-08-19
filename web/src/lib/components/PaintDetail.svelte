@@ -194,15 +194,17 @@
 			{@const srcs = paint.sources?.map(getSourceMeta).filter((x) => !!x) ?? []}
 			{#if srcs.length > 0}
 				<div class="absolute top-1.5 right-1.5 flex gap-1">
-					{#each srcs as s (s.url)}
-						<button
-							type="button"
-							onclick={() => openExternal(s.url)}
-							title={s.title}
-							class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-black/30 text-white/90 backdrop-blur-[2px] transition-colors hover:bg-black/50"
-						>
-							<ExternalLink class="h-3.5 w-3.5" />
-						</button>
+					{#each srcs as s}
+						{#if s.url}
+							<button
+								type="button"
+								onclick={() => openExternal(s.url)}
+								title={s.title}
+								class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-black/30 text-white/90 backdrop-blur-[2px] transition-colors hover:bg-black/50"
+							>
+								<ExternalLink class="h-3.5 w-3.5" />
+							</button>
+						{/if}
 					{/each}
 				</div>
 			{/if}
