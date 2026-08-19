@@ -1,21 +1,16 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { ChevronLeft, Check, Plus, Search, X, Funnel, ExternalLink } from '@lucide/svelte';
+	import { ChevronLeft, Search, X, Funnel, ExternalLink } from '@lucide/svelte';
 	import { Card, Badge } from 'flowbite-svelte';
-	import {
-		getCatalog,
-		rgbToHex,
-		SURFACE_BITS,
-		MEDIUM_BITS,
-		type PaintInfo
-	} from '$lib/paints.svelte';
+	import { getCatalog, SURFACE_BITS, MEDIUM_BITS, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav, goBackOneLevel } from '$lib/stocknav.svelte';
-	import { isMedia, openExternal } from '$lib/utils.svelte';
+	import { clamp, isMedia, openExternal } from '$lib/utils.svelte';
 	import { drawer } from '$lib/drawer.svelte';
 	import { registerBackHandler, unregisterBackHandler } from '$lib/back.svelte';
 	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
+	import StockPaintCard from '$lib/components/StockPaintCard.svelte';
 	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
@@ -338,52 +333,7 @@
 {/snippet}
 
 {#snippet paintCard(paint: PaintInfo)}
-	{@const inStock = stock.has(paint.id)}
-	<div
-		role="button"
-		tabindex="0"
-		onclick={() => selectPaint(paint)}
-		onkeydown={(e) => e.key === 'Enter' && selectPaint(paint)}
-		class="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-md shadow-md transition-transform hover:scale-105 {inStock
-			? 'ring-[3px] ring-primary-500'
-			: 'ring-1 ring-black/10 hover:ring-black/30 dark:ring-white/10 dark:hover:ring-white/30'}"
-		style="background-color: {rgbToHex(paint.rgb)}"
-		title={paintDesc(paint)}
-	>
-		<button
-			type="button"
-			title={inStock ? t('stock.removeFromStock') : t('stock.addToStock')}
-			onclick={(e) => {
-				e.stopPropagation();
-				stock.toggle(paint.id);
-				e.currentTarget.blur();
-			}}
-			class="absolute top-0 right-0 h-6 w-6 scale-75 cursor-pointer text-white opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 focus:scale-100 focus:opacity-100 {inStock
-				? 'scale-100 opacity-100'
-				: ''}"
-		>
-			<span
-				class="absolute inset-0 [clip-path:polygon(100%_0,0_0,100%_100%)] {inStock
-					? 'bg-primary-500'
-					: 'bg-black/60 hover:bg-black/75'}"
-			></span>
-			<span class="absolute top-0.5 right-0.5">
-				{#if inStock}
-					<Check class="h-2.5 w-2.5" />
-				{:else}
-					<Plus class="h-2.5 w-2.5" />
-				{/if}
-			</span>
-		</button>
-		<div class="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 backdrop-blur-[1px]">
-			<div class="truncate text-[10px] leading-tight font-semibold text-white">
-				{paint.code}
-			</div>
-			<div class="truncate text-[9px] leading-tight text-white/75">
-				{paintDesc(paint)}
-			</div>
-		</div>
-	</div>
+	<StockPaintCard {paint} onSelect={selectPaint} />
 {/snippet}
 
 <div class="flex h-full flex-col">
@@ -530,7 +480,7 @@
 			<!-- 右栏：详情面板（品牌层及以上常驻；根路由纯列表不加分栏） -->
 			{#if isMedia().sm && level > 0}
 				<aside
-					class="flex w-[clamp(18rem,28vw,26rem)] shrink-0 flex-col border-l border-theme dark:border-theme"
+					class="border-theme dark:border-theme flex w-[clamp(18rem,28vw,26rem)] shrink-0 flex-col border-l"
 				>
 					{#if stockNav.filterOpen}
 						{@render filterBar()}

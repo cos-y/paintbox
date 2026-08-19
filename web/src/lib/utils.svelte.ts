@@ -26,9 +26,9 @@ export const hexToRgb = (hex: string | number): number[] => {
 		}
 		rgb = rgbs.map((s) => parseInt(s, 16));
 	} else {
-		const r = ((hex >> 16) & 0xff) / 255;
-		const g = ((hex >> 8) & 0xff) / 255;
-		const b = (hex & 0xff) / 255;
+		const r = (hex >> 16) & 0xff;
+		const g = (hex >> 8) & 0xff;
+		const b = hex & 0xff;
 		rgb = [r, g, b];
 	}
 	return rgb.map((c) => clamp(c / 255, 0, 1));
