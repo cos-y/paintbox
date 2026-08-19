@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.13] - 2026-08-18
+
+### Added
+
+- Citadel brand added (404 paints), sourced from the Miniature Painter Pro community database plus Hobby Color Converter cross-references, with full en/zh/ja/es translations and letter-coded series thumbnails (A–T).
+- Illustrative rendering for special-finish swatches: metallic paints get a light band, pearlescent paints a dual-hue highlight (tinted away from the base color in both directions) with subtle sparkle, clear paints render as translucent color over a metallic grid, and fluorescent paints get a soft rectangular glow — a visual hint for the finish, without pretending to be photorealistic.
+
+### Changed
+
+- Citadel series thumbnails now use their letter series codes (A–T) instead of numeric suffixes.
+
 ## [0.3.12] - 2026-08-17
 
 ### Added
@@ -353,6 +364,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 [0.2.10]: https://github.com/cos-y/paintbox/releases/tag/v0.2.10
 [0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9
 [0.2.7]: https://github.com/cos-y/paintbox/releases/tag/v0.2.7
+[0.3.13]: https://github.com/cos-y/paintbox/releases/tag/v0.3.13
 [0.2.6]: https://github.com/cos-y/paintbox/releases/tag/v0.2.6
 [0.2.5]: https://github.com/cos-y/paintbox/releases/tag/v0.2.5
 [0.2.4]: https://github.com/cos-y/paintbox/releases/tag/v0.2.4
