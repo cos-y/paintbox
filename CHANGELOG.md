@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.3.14] - 2026-08-18
+
+### Added
+
+- Semantic color comparison on search results: the raw ΔE and similarity percentage are replaced by a subjective similarity grade (Match / Very close / Close / Different, colored green→red) plus direction tags computed in Oklab — hue-axis offsets (redder / yellower / greener / bluer, with the blue-yellow axis weighted since it is perceptually more sensitive) and chroma direction (more vivid / grayer), localized in all four languages.
+
+### Fixed
+
+- Corrected element stacking on stock paint cards (removed an over-aggressive z-index from the stock badge and label overlay).
+
 ## [0.3.13] - 2026-08-18
 
 ### Added
@@ -364,6 +374,7 @@ into the **"What's new"** field of Google Play Console when publishing a release
 [0.2.10]: https://github.com/cos-y/paintbox/releases/tag/v0.2.10
 [0.2.9]: https://github.com/cos-y/paintbox/releases/tag/v0.2.9
 [0.2.7]: https://github.com/cos-y/paintbox/releases/tag/v0.2.7
+[0.3.14]: https://github.com/cos-y/paintbox/releases/tag/v0.3.14
 [0.3.13]: https://github.com/cos-y/paintbox/releases/tag/v0.3.13
 [0.2.6]: https://github.com/cos-y/paintbox/releases/tag/v0.2.6
 [0.2.5]: https://github.com/cos-y/paintbox/releases/tag/v0.2.5
