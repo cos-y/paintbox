@@ -3,7 +3,7 @@ use std::sync::Mutex;
 use empfindung::cie00;
 use once_cell::sync::Lazy;
 use wasm_bindgen::prelude::*;
-use web_sys::js_sys::Float32Array;
+use web_sys::js_sys::{Float32Array, Uint32Array};
 use web_time::Instant;
 
 use crate::{
@@ -88,7 +88,39 @@ impl Gamut {
 }
 
 #[wasm_bindgen]
+pub struct ScatterOut(crate::gamut::ScatterOut);
+
+#[wasm_bindgen]
+impl ScatterOut {
+    pub fn matrices(&self) -> Float32Array {
+        unsafe { Float32Array::view(&self.0.matrices) }
+    }
+
+    pub fn colors(&self) -> Float32Array {
+        unsafe { Float32Array::view(&self.0.colors) }
+    }
+
+    pub fn members(&self) -> Uint32Array {
+        unsafe { Uint32Array::view(&self.0.members) }
+    }
+
+    pub fn offsets(&self) -> Uint32Array {
+        unsafe { Uint32Array::view(&self.0.offsets) }
+    }
+}
+
+#[wasm_bindgen]
+pub fn scatter(ndiv: usize, li: &[u32]) -> ScatterOut {
+    timed(&format!(":: Gamut :: scatter ({}, {:?})", ndiv, li), || {
+        let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();
+        ScatterOut(crate::gamut::scatter(ndiv, rgbs))
+    })
+}
+
+#[wasm_bindgen]
 pub fn new_gamut(ndiv: usize, li: &[u32]) -> Result<Gamut, JsError> {
+    // 预期行为：JS 的 ndiv 是 UI 分辨率，网格分割数 = ndiv - 1（与 make_grid 的
+    // size=100/(ndiv-1) 挂钩）。JS 侧调 scatter 时必须传 ndiv-1 保持同一网格。
     let ndiv = ndiv - 1;
     timed(&format!(":: Gamut :: new ({}, {:?})", ndiv, li), || {
         let rgbs = li.iter().map(|x| hex_to_rgb(*x)).collect();

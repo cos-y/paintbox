@@ -106,6 +106,8 @@ const en = {
 	'gamut.sources': 'Source Colors',
 	'gamut.colorsInGamut': (p: Params) => `${p.n} color${p.n == 1 ? '' : 's'} in gamut`,
 	'gamut.noSources': 'No source colors yet',
+	'gamut.modeGamut': 'Color gamut',
+	'gamut.modeScatter': 'Scatter',
 	'gamut.clickAddHint': 'Click <span class="font-bold">Add</span> to start',
 
 	// ---- about page ----
@@ -281,6 +283,8 @@ const zh = {
 	'gamut.sources': '基础色',
 	'gamut.colorsInGamut': (p: Params) => `色域内 ${p.n} 个基础色`,
 	'gamut.noSources': '还没有基础色',
+	'gamut.modeGamut': '色域',
+	'gamut.modeScatter': '散点',
 	'gamut.clickAddHint': '点击 <span class="font-bold">添加</span> 开始',
 
 	'about.privacyTitle': '隐私安全承诺',
@@ -450,6 +454,8 @@ const ja = {
 	'gamut.sources': '基準色',
 	'gamut.colorsInGamut': (p: Params) => `色域内 ${p.n} 色`,
 	'gamut.noSources': 'まだ基準色がありません',
+	'gamut.modeGamut': '色域',
+	'gamut.modeScatter': '散布',
 	'gamut.clickAddHint': '<span class="font-bold">追加</span> をクリックして開始',
 
 	'about.privacyTitle': 'プライバシーとセキュリティ',
@@ -620,6 +626,8 @@ const es = {
 	'gamut.sources': 'Colores fuente',
 	'gamut.colorsInGamut': (p: Params) => `${p.n} colores en gama`,
 	'gamut.noSources': 'Aún no hay colores fuente',
+	'gamut.modeGamut': 'Gama de color',
+	'gamut.modeScatter': 'Dispersión',
 	'gamut.clickAddHint': 'Haz clic en <span class="font-bold">Añadir</span> para empezar',
 
 	'about.privacyTitle': 'Compromiso de privacidad y seguridad',

@@ -1,7 +1,21 @@
 <script lang="ts">
 	import { getPaintById, getPaintByIndex, searchPaints, type PaintInfo } from '$lib/paints.svelte';
 	import { stock } from '$lib/stock.svelte';
-	import { Plus, X, Search, Droplet, Package, GripVertical, Eye, EyeOff } from '@lucide/svelte';
+	import {
+		Plus,
+		X,
+		Search,
+		Droplet,
+		Package,
+		GripVertical,
+		Eye,
+		EyeOff,
+		Boxes,
+		Shapes,
+		Eclipse,
+		LayoutFreeform
+	} from '@lucide/svelte';
+	import { ButtonGroup, Button } from 'flowbite-svelte';
 	import RangeSlider from '$lib/components/RangeSlider.svelte';
 	import { tick, type Snippet } from 'svelte';
 	import CollapseGroup from '$lib/components/CollapseGroup.svelte';
@@ -117,14 +131,37 @@
 		return li;
 	});
 
-	// gamut 维护流程（重建/增量/句柄生命周期）在 gamut.svelte.ts 的 sceneProps 里，
-	// 这里只把颜色集合喂给它；切页回来输入相同则不重算。
+	// gamut 维护流程（重建/增量/句柄生命周期）在 gamut.svelte.ts 的 sceneProps 路由里，
+	// 这里只把颜色集合和显示模式喂给它；切页回来输入相同则不重算。
+	// 模式持久化走 store.setMode（settings 同款 setter-persist），此处只读 store.mode。
 	$effect(() => {
-		sceneProps.updateColors(colors);
+		sceneProps.updateColors(colors, store.mode);
 	});
 
 	const hasStock = $derived(sources.some((s) => s.type === 'stock'));
 	const stockCount = $derived([...stock.entries()].length);
+
+	// rgb → 油漆列表：点击 voxel 时反查落在这个格子内的油漆（paint 来源 + 库存油漆）。
+	// 与 colors 推导保持一致：跳过 hidden 来源。
+	const paintsByRgb = $derived.by<Map<number, PaintInfo[]>>(() => {
+		const m = new Map<number, PaintInfo[]>();
+		const push = (p: PaintInfo) => {
+			const arr = m.get(p.rgb);
+			if (arr) arr.push(p);
+			else m.set(p.rgb, [p]);
+		};
+		for (const src of sources) {
+			if (src.hidden) continue;
+			if (src.type === 'paint' && src.paint) push(src.paint);
+			else if (src.type === 'stock') {
+				for (const { index } of stock.entries()) {
+					const p = getPaintByIndex(index);
+					if (p) push(p);
+				}
+			}
+		}
+		return m;
+	});
 
 	function addColor() {
 		const id = String(nextId++);
@@ -271,9 +308,34 @@
 		highlightedIdx[src.id] = -1;
 	}
 
-	let selectedColor: { rgb: [number, number, number]; hex: string } | null = $state(null);
-	function handleSelect(rgb: [number, number, number], hex: string) {
-		selectedColor = { rgb, hex };
+	// ---- 3D 选中体素：左上角卡片展示（色卡 + hex + 格子内油漆列表）----
+	let selected: {
+		voxel: number;
+		rgb: [number, number, number];
+		hex: string;
+		paints: PaintInfo[];
+	} | null = $state(null);
+	function handleSelect(voxel: number, rgb: [number, number, number], hex: string) {
+		// 统一落点表：gamut/scatter 的体素矩阵平移都是网格坐标，用坐标反查该 cell 的输入色。
+		// gamut 的混合体素若没有输入色落点（纯混合产物）→ paints 为空，只显示色卡 + hex。
+		const mx = sceneProps.matrices[voxel * 16 + 12];
+		const my = sceneProps.matrices[voxel * 16 + 13];
+		const mz = sceneProps.matrices[voxel * 16 + 14];
+		const members = sceneProps.cellColors.get(`${mx},${my},${mz}`) ?? [];
+		const colorsArr = [...colors];
+		const seen = new Set<number>();
+		const paints: PaintInfo[] = [];
+		for (const i of members) {
+			const arr = paintsByRgb.get(colorsArr[i]);
+			if (!arr) continue;
+			for (const p of arr) {
+				if (!seen.has(p.index)) {
+					seen.add(p.index);
+					paints.push(p);
+				}
+			}
+		}
+		selected = { voxel, rgb, hex, paints };
 	}
 
 	function handleInputTab(e: KeyboardEvent, src: Source) {
@@ -616,6 +678,72 @@
 
 <div class="flex h-full flex-col sm:flex-row">
 	<div class="relative h-80 min-w-0 bg-transparent sm:h-auto sm:flex-1">
+		{#if selected}
+			<div
+				class="absolute top-2 left-2 z-10 w-60 rounded-xl border border-theme bg-white/95 p-2 shadow-lg backdrop-blur-sm dark:bg-gray-900/95"
+			>
+				<div class="flex items-center gap-2">
+					<div
+						class="h-8 w-8 shrink-0 rounded-md ring-1 ring-black/10 dark:ring-white/10"
+						style="background-color: rgb({selected.rgb[0]},{selected.rgb[1]},{selected.rgb[2]})"
+					></div>
+					<ColorCode
+						re="#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})"
+						text={selected.hex}
+						class="min-w-0 flex-1"
+						onfocus={(e) => (e.target as HTMLInputElement).select()}
+						inputClass="dark:bg-gray-800"
+					/>
+					<button
+						type="button"
+						class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+						onclick={() => (selected = null)}
+					>
+						<X class="h-3.5 w-3.5" />
+					</button>
+				</div>
+				{#if selected.paints.length > 0}
+					<div
+						class="mt-2 flex max-h-40 flex-col gap-0.5 overflow-y-auto border-t border-gray-200 pt-1.5 dark:border-gray-700"
+					>
+						{#each selected.paints as p}
+							<button
+								type="button"
+								class="flex w-full cursor-pointer items-center gap-1.5 rounded-sm px-1 py-0.5 text-left text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
+							>
+								<span
+									class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
+									style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
+								></span>
+								<span class="min-w-0 flex-1 truncate font-medium uppercase"
+									>{p.brand}/{p.code}</span
+								>
+							</button>
+						{/each}
+					</div>
+				{/if}
+			</div>
+		{/if}
+		<div class="absolute top-2 right-2 z-10">
+			<ButtonGroup size="sm">
+				<Button
+					onclick={() => store.setMode('gamut')}
+					class="cursor-pointer! {store.mode === 'gamut' ? 'bg-primary-500! text-white!' : ''}"
+					title={t('gamut.modeGamut')}
+				>
+					<Eclipse class="size-3.5" />
+				</Button>
+				<Button
+					onclick={() => store.setMode('scatter')}
+					class="cursor-pointer! {store.mode === 'scatter'
+						? 'bg-primary-500! text-white!'
+						: ''}"
+					title={t('gamut.modeScatter')}
+				>
+					<LayoutFreeform class="size-3.5" />
+				</Button>
+			</ButtonGroup>
+		</div>
 		{#await loadScene()}
 			<div class="flex h-full w-full items-center justify-center">
 				<div
@@ -678,25 +806,5 @@
 				</div>
 			{/each}
 		</CollapseGroup>
-
-		{#if selectedColor}
-			<div class="border-theme mt-auto border-t px-2 py-2">
-				<div class="flex items-center gap-2">
-					<div
-						class="h-7 w-7 shrink-0 rounded-md border border-black/10"
-						style="background-color: rgb({selectedColor.rgb[0]},{selectedColor
-							.rgb[1]},{selectedColor.rgb[2]})"
-					></div>
-					<ColorCode
-						re="#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})"
-						text={selectedColor.hex}
-						class="w-full"
-						onfocus={(e) => (e.target as HTMLInputElement).select()}
-						inputClass="dark:bg-gray-800"
-						readonly
-					/>
-				</div>
-			</div>
-		{/if}
 	</div>
 </div>

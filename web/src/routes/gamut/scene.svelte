@@ -23,7 +23,7 @@
 		colors: Float32Array;
 		clip: Vector3[];
 		range: Vector3[];
-		onselect?: (rgb: [number, number, number], hex: string) => void;
+		onselect?: (voxel: number, rgb: [number, number, number], hex: string) => void;
 	}
 
 	const { matrices, colors, ndiv, clip, range, onselect }: Props = $props();
@@ -52,12 +52,16 @@
 				if (item.instanceId !== undefined) {
 					const i = item.instanceId * 16;
 					const [x, y, z] = [matrices[i + 12], matrices[i + 13], matrices[i + 14]];
-					if (clip[0].x < x && x < clip[1].x) {
-						if (clip[0].y < y && y < clip[1].y) {
-							if (clip[0].z < z && z < clip[1].z) {
-								return [item];
-							}
-						}
+					// 体素立方体 [c-0.5, c+0.5] 与 clip 区间相交——与 shader 的 clipLow/High（±0.5）
+					// 一致，否则边界体素（中心恰好等于 clip 边界，如蓝色 gz=-15 == clipB[0]）
+					// 渲染可见却点不到。
+					const inside = (c: number, lo: number, hi: number) => c - 0.5 < hi && c + 0.5 > lo;
+					if (
+						inside(x, clip[0].x, clip[1].x) &&
+						inside(y, clip[0].y, clip[1].y) &&
+						inside(z, clip[0].z, clip[1].z)
+					) {
+						return [item];
 					}
 				}
 			}
@@ -163,7 +167,7 @@
 				const b = toByte(colors[id * 3 + 2]);
 				const hex = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
 				console.log('clicked voxel', id, hex);
-				onselect?.([r, g, b], hex);
+				onselect?.(id, [r, g, b], hex);
 			}
 		}}
 	>

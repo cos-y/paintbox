@@ -11,6 +11,16 @@ export class Gamut {
     matrices(): Float32Array;
 }
 
+export class ScatterOut {
+    private constructor();
+    free(): void;
+    [Symbol.dispose](): void;
+    colors(): Float32Array;
+    matrices(): Float32Array;
+    members(): Uint32Array;
+    offsets(): Uint32Array;
+}
+
 export function color_diff(a: number, b: number): number;
 
 export function init_panic_hook(): void;
@@ -21,6 +31,8 @@ export function list_paints(): any;
 
 export function new_gamut(ndiv: number, li: Uint32Array): Gamut;
 
+export function scatter(ndiv: number, li: Uint32Array): ScatterOut;
+
 export function search(rgb: number, opts: any): any;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -28,6 +40,7 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_gamut_free: (a: number, b: number) => void;
+    readonly __wbg_scatterout_free: (a: number, b: number) => void;
     readonly color_diff: (a: number, b: number) => number;
     readonly gamut_colors: (a: number) => any;
     readonly gamut_insert: (a: number, b: number) => number;
@@ -37,6 +50,11 @@ export interface InitOutput {
     readonly init_searcher: (a: number, b: number) => [number, number];
     readonly list_paints: () => [number, number, number];
     readonly new_gamut: (a: number, b: number, c: number) => [number, number, number];
+    readonly scatter: (a: number, b: number, c: number) => number;
+    readonly scatterout_colors: (a: number) => any;
+    readonly scatterout_matrices: (a: number) => any;
+    readonly scatterout_members: (a: number) => any;
+    readonly scatterout_offsets: (a: number) => any;
     readonly search: (a: number, b: any) => [number, number, number];
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

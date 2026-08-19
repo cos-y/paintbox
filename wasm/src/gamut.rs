@@ -2,6 +2,7 @@ use fixedbitset::FixedBitSet;
 use genawaiter::{rc::r#gen, *};
 use glam::Vec3;
 use oklab::oklab_to_linear_srgb;
+use std::collections::HashMap;
 
 use crate::{
     BoxError, Latent, Oklab, Rgb, latent_to_rgb, log, oklab_to_rgb, rgb_to_latent, rgb_to_oklab,
@@ -293,6 +294,31 @@ fn rgb_to_lab_vec(rgb: Rgb<f32>) -> Vec3 {
     Vec3::new(lab.l * 100.0, lab.a * 300.0, lab.b * 300.0)
 }
 
+/// 全色域固定栅格（散点与 gamut 共用同一坐标系）：Lab 范围 L 0..100、a/b -128..128，各方向留 padding
+fn make_grid(ndiv: usize) -> VoxelGrid {
+    let grid_size = 100f32 / ndiv as f32;
+    VoxelGrid::new(
+        Vec3::new(-4.0, -132.0, -132.0),
+        Vec3::new(104.0, 132.0, 132.0),
+        grid_size,
+    )
+}
+
+/// 体素中心 Lab → sRGB（散点与 gamut 共用同一颜色转换，保证两模式视觉一致）
+fn voxel_color(gx: i32, gy: i32, gz: i32, grid_size: f32) -> [f32; 3] {
+    let [l, a, b] = [gx, gy, gz].map(|x| (x as f32 + 0.5) * grid_size);
+    let rgb = oklab_to_linear_srgb(Oklab {
+        l: l / 100.0,
+        a: a / 300.0,
+        b: b / 300.0,
+    });
+    [
+        rgb.r.clamp(0.0, 1.0),
+        rgb.g.clamp(0.0, 1.0),
+        rgb.b.clamp(0.0, 1.0),
+    ]
+}
+
 fn sample_pair(a: &Latent, b: &Latent, spacing: f32, out: &mut Vec<Vec3>) {
     let la = latent_to_lab_vec(a);
     let lb = latent_to_lab_vec(b);
@@ -369,14 +395,9 @@ pub struct Gamut {
 
 impl Gamut {
     pub fn new(ndiv: usize, colors: Vec<Rgb<f32>>) -> Result<Self, BoxError> {
-        let grid_size = 100f32 / ndiv as f32;
         // 固定全色域栅格，原点锚定（坐标跨 insert 稳定）
-        // Lab 范围：L 0..100, a/b -128..128，各方向留 padding
-        let grid = VoxelGrid::new(
-            Vec3::new(-4.0, -132.0, -132.0),
-            Vec3::new(104.0, 132.0, 132.0),
-            grid_size,
-        );
+        let grid = make_grid(ndiv);
+        let grid_size = grid.size;
         let mut gamut = Gamut {
             grid_size,
             latents: Vec::new(),
@@ -552,13 +573,7 @@ impl Gamut {
             self.matrices.push(1.0);
 
             // 体素中心 Lab 直接转 sRGB（O(1)，不再扫所有颜色）
-            let [l, a, b] = [gx, gy, gz].map(|x| (x as f32 + 0.5) * self.grid_size);
-            let rgb = oklab_to_linear_srgb(Oklab {
-                l: l / 100.0,
-                a: a / 300.0,
-                b: b / 300.0,
-            });
-            let [r, g, b] = [rgb.r, rgb.g, rgb.b].map(|x| x.clamp(0.0, 1.0));
+            let [r, g, b] = voxel_color(gx, gy, gz, self.grid_size);
             self.colors.push(r);
             self.colors.push(g);
             self.colors.push(b);
@@ -658,6 +673,52 @@ fn iter_6_neighbours() -> impl Iterator<Item = (i32, i32, i32)> {
     .into_iter()
 }
 
+// ── 散点模式 ───────────────────────────────────────────────────────────────────
+
+#[derive(Debug, Default)]
+pub struct ScatterOut {
+    /// 体素实例矩阵（4x4 平移，与 gamut 输出格式一致）
+    pub matrices: Vec<f32>,
+    /// 体素中心 Lab→sRGB（与 gamut 同一转换，视觉一致）
+    pub colors: Vec<f32>,
+    /// 每 voxel 的输入色索引（平铺）
+    pub members: Vec<u32>,
+    /// 前缀和：voxel i 的成员为 members[offsets[i]..offsets[i+1]]
+    pub offsets: Vec<u32>,
+}
+
+/// 散点模式：输入颜色直接落点（无混合采样/无形态学，O(n)），
+/// 同一 cell 的多个输入色合并为一个 voxel（保留成员索引供 JS 查询）。
+/// 与 gamut 共用 make_grid 坐标系与 voxel_color 中心色。
+pub fn scatter(ndiv: usize, colors: Vec<Rgb<f32>>) -> ScatterOut {
+    let grid = make_grid(ndiv);
+    let mut map: HashMap<[i32; 3], Vec<usize>> = HashMap::new();
+    for (i, c) in colors.iter().enumerate() {
+        let lab = rgb_to_lab_vec(*c);
+        let g = grid.world_to_grid(lab);
+        if grid.grid_to_index(g[0], g[1], g[2]).is_some() {
+            map.entry(g).or_default().push(i);
+        }
+    }
+    // HashMap 无序，排序保证输出确定性
+    let mut cells: Vec<_> = map.into_iter().collect();
+    cells.sort_by_key(|(g, _)| *g);
+
+    let mut out = ScatterOut::default();
+    out.offsets.push(0);
+    for (g, members) in cells {
+        out.matrices.extend([
+            1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, g[0] as f32, g[1] as f32,
+            g[2] as f32, 1.0,
+        ]);
+        let [r, gg, b] = voxel_color(g[0], g[1], g[2], grid.size);
+        out.colors.extend([r, gg, b]);
+        out.members.extend(members.iter().map(|&i| i as u32));
+        out.offsets.push(out.members.len() as u32);
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -671,7 +732,27 @@ mod tests {
         ];
         let gamut = Gamut::new(30, colors).unwrap();
         assert!(!gamut.matrices.is_empty());
-        assert_eq!(gamut.matrices.len() / 3, gamut.colors.len() / 3);
+        assert_eq!(gamut.matrices.len() / 16, gamut.colors.len() / 3);
+    }
+
+    #[test]
+    fn test_scatter() {
+        let colors = vec![
+            crate::hex_to_rgb(0xffffff),
+            crate::hex_to_rgb(0x000000),
+            crate::hex_to_rgb(0xff0000),
+            crate::hex_to_rgb(0x00ff00),
+        ];
+        let out = scatter(30, colors);
+        // 每个输入色至少落一格，同 cell 合并后 voxel 数不超过输入数
+        assert!(!out.matrices.is_empty());
+        assert!(out.matrices.len() / 16 <= 4);
+        assert_eq!(out.matrices.len() / 16, out.colors.len() / 3);
+        assert_eq!(out.offsets.len(), out.matrices.len() / 16 + 1);
+        assert_eq!(out.offsets[0], 0);
+        assert_eq!(*out.offsets.last().unwrap() as usize, out.members.len());
+        // 所有成员索引都在输入范围内
+        assert!(out.members.iter().all(|&i| (i as usize) < 4));
     }
 }
 

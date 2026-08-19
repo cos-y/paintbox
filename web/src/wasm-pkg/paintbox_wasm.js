@@ -52,6 +52,54 @@ export class Gamut {
 }
 if (Symbol.dispose) Gamut.prototype[Symbol.dispose] = Gamut.prototype.free;
 
+export class ScatterOut {
+    static __wrap(ptr) {
+        const obj = Object.create(ScatterOut.prototype);
+        obj.__wbg_ptr = ptr;
+        ScatterOutFinalization.register(obj, obj.__wbg_ptr, obj);
+        return obj;
+    }
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        ScatterOutFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_scatterout_free(ptr, 0);
+    }
+    /**
+     * @returns {Float32Array}
+     */
+    colors() {
+        const ret = wasm.scatterout_colors(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {Float32Array}
+     */
+    matrices() {
+        const ret = wasm.scatterout_matrices(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {Uint32Array}
+     */
+    members() {
+        const ret = wasm.scatterout_members(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {Uint32Array}
+     */
+    offsets() {
+        const ret = wasm.scatterout_offsets(this.__wbg_ptr);
+        return ret;
+    }
+}
+if (Symbol.dispose) ScatterOut.prototype[Symbol.dispose] = ScatterOut.prototype.free;
+
 /**
  * @param {number} a
  * @param {number} b
@@ -102,6 +150,18 @@ export function new_gamut(ndiv, li) {
         throw takeFromExternrefTable0(ret[1]);
     }
     return Gamut.__wrap(ret[0]);
+}
+
+/**
+ * @param {number} ndiv
+ * @param {Uint32Array} li
+ * @returns {ScatterOut}
+ */
+export function scatter(ndiv, li) {
+    const ptr0 = passArray32ToWasm0(li, wasm.__wbindgen_malloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.scatter(ndiv, ptr0, len0);
+    return ScatterOut.__wrap(ret);
 }
 
 /**
@@ -373,11 +433,16 @@ function __wbg_get_imports() {
             return ret;
         },
         __wbindgen_cast_0000000000000004: function(arg0, arg1) {
+            // Cast intrinsic for `Ref(Slice(U32)) -> NamedExternref("Uint32Array")`.
+            const ret = getArrayU32FromWasm0(arg0, arg1);
+            return ret;
+        },
+        __wbindgen_cast_0000000000000005: function(arg0, arg1) {
             // Cast intrinsic for `Ref(String) -> Externref`.
             const ret = getStringFromWasm0(arg0, arg1);
             return ret;
         },
-        __wbindgen_cast_0000000000000005: function(arg0) {
+        __wbindgen_cast_0000000000000006: function(arg0) {
             // Cast intrinsic for `U64 -> Externref`.
             const ret = BigInt.asUintN(64, arg0);
             return ret;
@@ -401,6 +466,9 @@ function __wbg_get_imports() {
 const GamutFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_gamut_free(ptr, 1));
+const ScatterOutFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_scatterout_free(ptr, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
@@ -476,6 +544,11 @@ function debugString(val) {
 function getArrayF32FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getFloat32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
+}
+
+function getArrayU32FromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
+    return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
 }
 
 function getArrayU8FromWasm0(ptr, len) {
