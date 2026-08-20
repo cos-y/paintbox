@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.4.1] - 2026-08-21
+
+### Added
+
+- Finish-aware paint rendering (pearl / metallic / clear / fluorescent) now covers the whole app, not just the stock gallery: the detail page's main swatch and comparison swatch (halves aligned so the finish pattern flows continuously across both), equivalent-paint rows, search-result cards, and the paint-search dropdowns.
+- A shared mini-swatch component keeps list rows and dropdown thumbnails visually consistent.
+
+### Changed
+
+- Finish patterns now scale uniformly across swatch sizes, from 16px list thumbnails to full detail cards, keeping the light band, glow and sparkle geometry consistent.
+- Gaia paint data calibration tweaks.
+
 ## [0.4.0] - 2026-08-21
 
 ### Added
@@ -392,3 +404,4 @@ into the **"What's new"** field of Google Play Console when publishing a release
 [0.2.0]: https://github.com/cos-y/paintbox/releases/tag/v0.2.0
 [0.1.0]: https://github.com/cos-y/paintbox/releases/tag/v0.1.0
 [0.4.0]: https://github.com/cos-y/paintbox/releases/tag/v0.4.0
+[0.4.1]: https://github.com/cos-y/paintbox/releases/tag/v0.4.1
