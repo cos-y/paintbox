@@ -30,6 +30,8 @@
 	import { Button } from 'flowbite-svelte';
 	import Tag from './Tag.svelte';
 	import { getSourceMeta } from '$lib/paintSources';
+	import PaintThumb from './PaintThumb.svelte';
+	import SwatchFx from './SwatchFx.svelte';
 
 	const FEEDBACK_EMAIL = 'zack.studios.15@gmail.com';
 
@@ -163,10 +165,10 @@
 	<!-- 色卡 + 对比条（外层 relative 定位容器不裁剪，供多源来源下拉弹出） -->
 	<div class="relative">
 		<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
-			<div
-				class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}"
-				style="background-color: {rgbToHex(paint.rgb)}"
-			>
+			<div class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}">
+				<div class="relative h-40">
+					<SwatchFx {paint} pagingStyle="right:40px;top:12px" />
+				</div>
 				<img
 					src="/brands/{paint.brand}.png"
 					alt=""
@@ -174,18 +176,16 @@
 				/>
 			</div>
 			{#if comparePaint}
-				<button
-					type="button"
-					onclick={() => toggleCompare(comparePaint)}
-					class="absolute inset-x-0 bottom-0 h-1/2 cursor-pointer"
-					style="background-color: {rgbToHex(comparePaint.rgb)}"
-				>
+				<div class="absolute inset-x-0 bottom-0 h-1/2">
+					<div class="relative bottom-0 h-40">
+						<SwatchFx paint={comparePaint} />
+					</div>
 					<img
 						src="/brands/{comparePaint.brand}.png"
 						alt=""
 						class="absolute right-1.5 bottom-1.5 h-8 w-8 object-contain drop-shadow"
 					/>
-				</button>
+				</div>
 			{/if}
 		</div>
 
@@ -272,10 +272,7 @@
 									? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 									: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 							>
-								<div
-									class="h-5 w-5 shrink-0 rounded"
-									style="background-color: {rgbToHex(p.rgb)}"
-								></div>
+								<PaintThumb paint={p} class="h-5 w-5" />
 								<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 							</button>
 							{const src = getSourceMeta(equiv.source)}
@@ -321,7 +318,7 @@
 						? 'border-primary-500 bg-primary-50 dark:bg-gray-700'
 						: 'border-theme hover:bg-gray-50 dark:hover:bg-gray-800'}"
 				>
-					<div class="h-5 w-5 shrink-0 rounded" style="background-color: {rgbToHex(p.rgb)}"></div>
+					<PaintThumb paint={p} class="h-5 w-5" />
 					<span class="text-xs uppercase">{p.brand}/{p.code}</span>
 				</button>
 			{:else}

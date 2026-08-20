@@ -20,14 +20,20 @@
 	import { Button, Dropdown, Tooltip } from 'flowbite-svelte';
 	import CameraPicker from '$lib/components/CameraPicker.svelte';
 	import PanText from '$lib/components/PanText.svelte';
-	import { getCatalog, floatRgbToCss, type PaintInfo, getPaintById } from '$lib/paints.svelte';
+	import {
+		getCatalog,
+		floatRgbToCss,
+		type PaintInfo,
+		getPaintById,
+		paintId
+	} from '$lib/paints.svelte';
 	import { baseLabels, mediumLabels, surfaceLabels } from '$lib/paintInfo';
 	import PaintSearch from '$lib/components/PaintSearch.svelte';
 	import ColorCode from '$lib/components/ColorCode.svelte';
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
 	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
 	import { drawer } from '$lib/drawer.svelte';
-	import { getBrandMeta, getSerieMeta, serieThumb } from '$lib/meta';
+	import { getBrandMeta, getSerieMeta } from '$lib/meta';
 	import { clamp, toRgb, toOklch, toOklab, toHwb, isMedia } from '$lib/utils.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import TagSelect from '$lib/components/TagSelect.svelte';
@@ -39,6 +45,8 @@
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { isTauri } from '@tauri-apps/api/core';
 	import Tag from '$lib/components/Tag.svelte';
+	import SwatchFx from '$lib/components/SwatchFx.svelte';
+	import PaintThumb from '$lib/components/PaintThumb.svelte';
 
 	/** store.color（rgb int）与色板 oklch 互转 */
 	const oklchToInt = (c: Oklch): number => {
@@ -715,7 +723,17 @@
 						{#each rt.results as r, i (i)}
 							{@const isMix = r.portions.length > 1}
 							<div class="border-theme flex flex-col overflow-hidden rounded-lg border shadow-xs">
-								<div class="h-16 w-full" style="background-color: {floatRgbToCss(r.rgb)}"></div>
+								<div class="relative h-16 w-full overflow-hidden">
+									{#if isMix}
+										<div
+											class="h-full w-full"
+											style="background-color: {floatRgbToCss(r.rgb)}"
+										></div>
+									{:else}
+										{@const paint = getPaintById(paintId(r.portions[0]))!}
+										<SwatchFx {paint} />
+									{/if}
+								</div>
 								{#if isMix}
 									<div
 										class="h-1.5 w-full border-t border-gray-200/40 dark:border-gray-700/40"
@@ -725,15 +743,13 @@
 								<div class="flex flex-1 flex-col p-2">
 									<div class="flex flex-col gap-1">
 										{#each r.portions as p}
+											{@const paint = getPaintById(paintId(p))!}
 											<button
 												type="button"
 												onclick={() => openDetail(p.brand, p.code)}
 												class="flex w-full cursor-pointer items-center gap-1.5 rounded-sm text-left text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
 											>
-												<span
-													class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
-													style="background-color: {floatRgbToCss(p.rgb)}"
-												></span>
+												<PaintThumb {paint} />
 												<span class="min-w-0 flex-1 truncate font-medium uppercase"
 													>{p.brand}/{p.code}</span
 												>

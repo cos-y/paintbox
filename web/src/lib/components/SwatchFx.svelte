@@ -5,6 +5,8 @@
 
 	interface Props {
 		paint: PaintInfo;
+		disablePaging?: boolean;
+		pagingStyle?: string;
 		// provider 输出（bindable）：每页的语义色名（对应 layout.css 的 --pa-base-*）
 		bases?: string[];
 		/** 当前页（多页模式，外部可读写） */
@@ -22,7 +24,15 @@
 		dragResistance?: number;
 	}
 
-	let { paint, bases = $bindable(), idx = 0, dragSensitivity, dragResistance }: Props = $props();
+	let {
+		paint,
+		disablePaging,
+		pagingStyle,
+		bases = $bindable(),
+		idx = 0,
+		dragSensitivity,
+		dragResistance
+	}: Props = $props();
 
 	const hex = $derived(rgbToHex(paint.rgb));
 
@@ -45,16 +55,13 @@
 	// base = 语义色名（渲染 var(--pa-base-<base>)，token 定义在 layout.css :root）；
 	// css  = 该页的 CSS 变量串（--t0/--t1/--t2）。
 	// 单页时 pages 为空 → 走原有单 div 渲染，行为不变。
-	let exPages: { base: string; css: string }[] = $state([]);
-
-	$effect(() => {
+	let exPages: { base: string; css: string }[] = $derived.by(() => {
 		if (mode != 'pearl') {
-			exPages = [];
-			return;
+			return [];
 		}
 
 		const li: any = paint.extra?.pa ?? [];
-		exPages = li.map(({ base, t0, t1, t2 }: any) => {
+		return li.map(({ base, t0, t1, t2 }: any) => {
 			let css = `--t1:${t1};`;
 			if (t2) {
 				css += ` --t2:${t2};`;
@@ -73,7 +80,7 @@
 
 	const N = $derived(exPages.length);
 	const useEx = $derived(N > 0);
-	const useExTrack = $derived(useEx);
+	const useExTrack = $derived(useEx && !disablePaging);
 	const prev = $derived(useExTrack ? (idx - 1 + N) % N : 0);
 	const cur = $derived(useExTrack ? idx % N : 0);
 	const next = $derived(useExTrack ? (idx + 1) % N : 0);
@@ -361,9 +368,7 @@
 	tabindex="-1"
 	bind:this={el}
 	style="--c: {hex}; {useEx && !useExTrack ? exPages[0].css : ''}"
-	class="fx-root rounded-md {useExTrack
-		? 'fx-swatch-ex-track'
-		: `${mode} fx-swatch ${useEx ? 'fx-ex' : ''}`}"
+	class="fx-root {useExTrack ? 'fx-swatch-ex-track' : `${mode} fx-swatch ${useEx ? 'fx-ex' : ''}`}"
 	class:gesture={useExTrack}
 	{...handlers}
 >
@@ -373,7 +378,12 @@
 			<div class="{mode} fx-swatch fx-ex" style={exPages[cur].css}>{@render swatch()}</div>
 			<div class="{mode} fx-swatch fx-ex" style={exPages[next].css}>{@render swatch()}</div>
 		</div>
-		<div class="fx-dots" role="tablist" aria-label="pages">
+		<div
+			class="fx-dots"
+			role="tablist"
+			aria-label="pages"
+			style={pagingStyle ?? 'left:6px;top:6px'}
+		>
 			{#each exPages as { base }, i}
 				<button
 					type="button"
@@ -413,6 +423,8 @@
 		pointer-events: none;
 		user-select: none; /* 防拖选文本残留 → 原生拖拽（not-allowed 光标 + 拖拽失效） */
 		-webkit-user-drag: none;
+		/* 容器查询：图案尺寸用 cqmax（容器最小边）等比缩放，跨尺寸/aspect 几何一致 */
+		container-type: size;
 	}
 
 	.fx-root {
@@ -446,42 +458,66 @@
 
 	.fx-band {
 		position: absolute;
-		left: 20%;
-		top: 0%;
-		top: -25%;
-		bottom: -25%;
+		transform-origin: 50% 50%;
+		inset: 50%;
+		translate: calc(-50% + var(--trans-x, 0px)) calc(-50% + var(--trans-y, 0px));
+		rotate: 45deg;
+		--hypot: hypot(100cqmax, 100cqmin);
+		width: var(--hypot);
+		height: var(--hypot);
 	}
 
 	/* ---- 金属：平涂基色 + 全局跟随光带（高光即立体感，无静态渐变） ---- */
 	.fx-swatch.metallic {
 		--c0: oklch(from var(--c) 0.9 c h);
-		--c1: color-mix(in srgb, var(--c0) 40%, transparent);
-		--c2: color-mix(in srgb, var(--c0) 10%, transparent);
+		/* --c1: color-mix(in srgb, var(--c0) 60%, white); */
+		--c1: oklch(from var(--c) 0.95 calc(c * 0.6) h);
+		--c2: oklch(from var(--c) calc(l * 1.2 + 0.2) calc(c * 0.8) h);
 	}
-	.fx-swatch.metallic .fx-band {
-		width: 50%;
-		rotate: 45deg;
-		translate: 40% 0;
-		background: linear-gradient(to right, transparent, var(--c2), transparent);
+	/* .fx-swatch.metallic .fx-band {
+		width: 50cqmax;
+		height: var(--hypot);
+		background: linear-gradient(
+			to right,
+			transparent,
+			color-mix(in srgb, var(--c2) 10%, transparent) 50%,
+			transparent
+		);
+		--trans-x: 18cqmax;
+	} */
+	.fx-swatch.metallic .fx-band::before {
+		content: '';
+		position: absolute;
+		height: var(--hypot);
+		width: 50cqmax;
+		margin-left: -25cqmax;
+		left: 60%;
+		background: linear-gradient(
+			to right,
+			/* */ /* */ transparent,
+			color-mix(in srgb, var(--c2) 10%, transparent) 50%,
+			transparent
+		);
 	}
 	.fx-swatch.metallic .fx-band::after {
 		content: '';
 		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 50%;
-		width: 3px;
-		margin-left: -1.5px;
-		background: linear-gradient(to bottom, var(--c2), var(--c1), var(--c2));
+		height: 100%;
+		width: 2%;
+		margin-left: -1%;
+		left: 60%;
+		background: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--c2) 30%, transparent),
+			color-mix(in srgb, var(--c1) 75%, transparent),
+			color-mix(in srgb, var(--c2) 50%, transparent)
+		);
 		/* background: var(--c2); */
-		box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+		box-shadow: 0 0 10cqmax var(--c2);
 	}
 
 	/* ---- 珠光：光带几何与金属一致（斜向高光），两端偏色相反色相（双色性），
 	   表面叠加微量闪粉。无 flip 数据，示意性近似 ---- */
-	.fx-swatch.pearl {
-		--band-width: 8px;
-	}
 	.fx-swatch.pearl:not(.fx-ex) {
 		--v1: oklch(from var(--c) calc(l * 1.5) c calc(h + 60));
 		--v0: oklch(from var(--v1) calc(l * 1.5) c h);
@@ -496,19 +532,16 @@
 		background-color: var(--t0, var(--c));
 	}
 	.fx-swatch.pearl .fx-band {
-		width: 200%;
-		rotate: 45deg;
-		left: -50%;
 		background: linear-gradient(
 			/* */ to right,
 			var(--v2) 15%,
 			color-mix(in srgb, var(--v2) 50%, transparent) 28%,
 			transparent 45%,
-			transparent 50%,
-			color-mix(in srgb, var(--v1) 30%, transparent) 54%,
-			var(--v1) 58%,
-			color-mix(in srgb, var(--v1) 50%, transparent) 70%,
-			transparent 90%
+			transparent 52%,
+			color-mix(in srgb, var(--v1) 30%, transparent) 56%,
+			var(--v1) 60%,
+			color-mix(in srgb, var(--v1) 50%, transparent) 72%,
+			transparent 92%
 		);
 	}
 	.fx-swatch.pearl .fx-band::after {
@@ -516,39 +549,174 @@
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		left: calc(58% - var(--band-width) / 2);
-		width: var(--band-width);
+		left: 0;
+		left: calc(60% - 4%);
+		width: 8%;
 		background: linear-gradient(to bottom, var(--v1), var(--v0), var(--v1));
 	}
-	/* 微量闪粉：单一大 tile 内 18 个错位点（位置/大小/透明度各异），平铺后呈伪随机分布，
-	   避免规律网格的机械感 */
-	.fx-swatch.pearl::after {
+	/* 生成闪粉表（cqmax 直书格式）：27 点，半径 1-2.5 正态分布（μ=1.75 σ=0.3 拒绝采样），
+	 位置 halton 低差异序列均匀覆盖（百分比），透明度伪随机 0.3-0.75
+	 const N = 27;
+	 function norm() {
+	   let u = 0, v = 0;
+	   while (u === 0) u = Math.random();
+	   while (v === 0) v = Math.random();
+	   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+	 }
+	 function radius() {
+	   while (true) {
+	     const r = 1.75 + norm() * 0.3;
+	     if (r >= 1 && r <= 2.5) return r;
+	   }
+	 }
+	 function halton(idx, base) {
+	   let f = 1, r = 0;
+	   while (idx > 0) { f /= base; r += f * (idx % base); idx = Math.floor(idx / base); }
+	   return r;
+	 }
+	 const rows = [];
+	 for (let i = 0; i < N; i++) {
+	   const x = halton(i + 1, 2) * 100;
+	   const y = halton(i + 1, 3) * 100;
+	   const r = radius();
+	   const a = 0.3 + Math.random() * 0.45;
+	   rows.push(`\t\t\tradial-gradient(circle ${r.toFixed(1)}cqmax at ${x.toFixed(2)}% ${y.toFixed(2)}%, rgba(255, 255, 255, ${a.toFixed(2)}) 50%, transparent 51%),`);
+	 }
+	 console.log(rows.join('\n')); */
+	/* 微量闪粉：单一大 tile 内 27 个错位点（halton 低差异序列均匀覆盖，位置/透明度伪随机），
+	   平铺后呈伪随机分布，避免规律网格的机械感。半径 1-2.5cqmax 正态分布（μ=1.75 σ=0.3），
+	   半径直书 cqmax、坐标百分比化，tile 尺寸随容器等比缩放 */
+	/* .fx-swatch.pearl::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background-image:
-			radial-gradient(circle 1.4px at 2px 4px, rgba(255, 255, 255, 0.75) 50%, transparent 51%),
-			radial-gradient(circle 1px at 12px 2px, rgba(255, 255, 255, 0.4) 50%, transparent 51%),
-			radial-gradient(circle 1.2px at 22px 5px, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
-			radial-gradient(circle 0.9px at 28px 1px, rgba(255, 255, 255, 0.35) 50%, transparent 51%),
-			radial-gradient(circle 1px at 7px 10px, rgba(255, 255, 255, 0.45) 50%, transparent 51%),
-			radial-gradient(circle 1.3px at 17px 12px, rgba(255, 255, 255, 0.65) 50%, transparent 51%),
-			radial-gradient(circle 0.8px at 26px 9px, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
-			radial-gradient(circle 1.1px at 3px 17px, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
-			radial-gradient(circle 0.9px at 14px 20px, rgba(255, 255, 255, 0.42) 50%, transparent 51%),
-			radial-gradient(circle 1.4px at 24px 16px, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
-			radial-gradient(circle 1px at 29px 21px, rgba(255, 255, 255, 0.45) 50%, transparent 51%),
-			radial-gradient(circle 0.8px at 9px 25px, rgba(255, 255, 255, 0.33) 50%, transparent 51%),
-			radial-gradient(circle 1.2px at 18px 27px, rgba(255, 255, 255, 0.58) 50%, transparent 51%),
-			radial-gradient(circle 0.9px at 26px 29px, rgba(255, 255, 255, 0.38) 50%, transparent 51%),
-			radial-gradient(circle 1.1px at 5px 30px, rgba(255, 255, 255, 0.52) 50%, transparent 51%),
-			radial-gradient(circle 1.3px at 21px 24px, rgba(255, 255, 255, 0.6) 50%, transparent 51%),
-			radial-gradient(circle 0.7px at 30px 13px, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
-			radial-gradient(circle 1px at 11px 15px, rgba(255, 255, 255, 0.47) 50%, transparent 51%);
-		background-size: 32px 33px;
+			radial-gradient(circle 2.1cqmax at 50% 33.33%, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
+			radial-gradient(circle 2.2cqmax at 25% 66.67%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+			radial-gradient(circle 1.6cqmax at 75% 11.11%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+			radial-gradient(
+				circle 2.1cqmax at 12.5% 44.44%,
+				rgba(255, 255, 255, 0.42) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.9cqmax at 62.5% 77.78%,
+				rgba(255, 255, 255, 0.67) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.6cqmax at 37.5% 22.22%,
+				rgba(255, 255, 255, 0.51) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.5cqmax at 87.5% 55.56%,
+				rgba(255, 255, 255, 0.57) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.7cqmax at 6.25% 88.89%,
+				rgba(255, 255, 255, 0.42) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.5cqmax at 56.25% 3.7%,
+				rgba(255, 255, 255, 0.3) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.5cqmax at 31.25% 37.04%,
+				rgba(255, 255, 255, 0.53) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2cqmax at 81.25% 70.37%,
+				rgba(255, 255, 255, 0.58) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.1cqmax at 18.75% 14.81%,
+				rgba(255, 255, 255, 0.69) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.6cqmax at 68.75% 48.15%,
+				rgba(255, 255, 255, 0.42) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.8cqmax at 43.75% 81.48%,
+				rgba(255, 255, 255, 0.6) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.3cqmax at 93.75% 25.93%,
+				rgba(255, 255, 255, 0.35) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.4cqmax at 3.13% 59.26%,
+				rgba(255, 255, 255, 0.47) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.1cqmax at 53.13% 92.59%,
+				rgba(255, 255, 255, 0.56) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.1cqmax at 28.13% 7.41%,
+				rgba(255, 255, 255, 0.59) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.1cqmax at 78.13% 40.74%,
+				rgba(255, 255, 255, 0.52) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.7cqmax at 15.63% 74.07%,
+				rgba(255, 255, 255, 0.31) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.9cqmax at 65.63% 18.52%,
+				rgba(255, 255, 255, 0.49) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.7cqmax at 40.63% 51.85%,
+				rgba(255, 255, 255, 0.51) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.8cqmax at 90.63% 85.19%,
+				rgba(255, 255, 255, 0.67) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.5cqmax at 9.38% 29.63%,
+				rgba(255, 255, 255, 0.44) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.4cqmax at 59.38% 62.96%,
+				rgba(255, 255, 255, 0.44) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 2.1cqmax at 34.38% 96.3%,
+				rgba(255, 255, 255, 0.63) 50%,
+				transparent 51%
+			),
+			radial-gradient(
+				circle 1.9cqmax at 84.38% 1.23%,
+				rgba(255, 255, 255, 0.54) 50%,
+				transparent 51%
+			);
 		opacity: 0.25;
 		pointer-events: none;
-	}
+	} */
 
 	/* ---- 透明：金属灰底 + 半透色 + 网格（图层隐喻，示意而非拟真） ---- */
 	.fx-swatch.clear {
@@ -566,7 +734,7 @@
 		background-image:
 			linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
 			linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px);
-		background-size: 16px 16px;
+		background-size: 25cqmin 25cqmin;
 	}
 
 	/* ---- 荧光：平涂基色 + 圆角矩形辉光。
@@ -579,9 +747,8 @@
 		height: 100%;
 		left: 0;
 		top: 0;
-		border-radius: 12%;
 		background: radial-gradient(
-			circle,
+			ellipse,
 			oklch(from var(--c) calc(l * 1.2) c h),
 			oklch(from var(--c) calc(l * 1.1) c h) 40%,
 			oklch(from var(--c) calc(l * 1) c h) 60%,
@@ -591,11 +758,16 @@
 	}
 
 	/* ---- 左上角页指示器：半透明胶囊 + 圆点，尽量少压色卡视觉 ---- */
+	/* 圆点是 UI 控件（固定尺寸），图案才随容器缩放；超小容器（<56px）隐藏分页指示，翻页靠拖拽 */
 	.fx-dots {
 		position: absolute;
-		inset: 6px;
-		display: flex;
+		display: none;
 		gap: 7px;
+	}
+	@container (min-width: 56px) {
+		.fx-dots {
+			display: flex;
+		}
 	}
 	.fx-dot {
 		position: relative;

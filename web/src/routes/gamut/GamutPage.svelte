@@ -10,8 +10,6 @@
 		GripVertical,
 		Eye,
 		EyeOff,
-		Boxes,
-		Shapes,
 		Eclipse,
 		LayoutFreeform
 	} from '@lucide/svelte';
@@ -33,6 +31,7 @@
 	import { t } from '$lib/i18n.svelte';
 	import { isMedia } from '$lib/utils.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
+	import PaintThumb from '$lib/components/PaintThumb.svelte';
 
 	// Canvas/Scene 动态加载：切换页面时先渲染 UI，Three.js 模块加载和
 	// WebGL 场景初始化（shader 编译等）在后台异步进行，不阻塞主线程。
@@ -458,10 +457,7 @@
 {#snippet paintCard(src: any)}
 	{#if src.paint}
 		<div class="flex items-center gap-2">
-			<div
-				class="h-7 w-7 shrink-0 rounded-md border border-black/10"
-				style="background-color: #{src.paint.rgb.toString(16).padStart(6, '0')}"
-			></div>
+			<PaintThumb paint={src.paint} class="h-7 w-7 border border-black/10 ring-0!" />
 			<div class="min-w-0 flex-1 text-xs">
 				<div class="font-semibold uppercase">{src.paint.brand}/{src.paint.code}</div>
 				<div class="truncate text-gray-500 dark:text-gray-400">{paintDesc(src.paint)}</div>
@@ -543,10 +539,7 @@
 								: 'hover:bg-gray-100 dark:hover:bg-gray-600'}"
 							onclick={() => selectPaint(src, p)}
 						>
-							<span
-								class="h-4 w-4 shrink-0 rounded-sm border border-black/10"
-								style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
-							></span>
+							<PaintThumb paint={p} />
 							<span class="font-semibold uppercase">{p.brand}/{p.code}</span>
 							<span class="truncate text-gray-500 dark:text-gray-400">{paintDesc(p)}</span>
 						</button>
@@ -680,7 +673,7 @@
 	<div class="relative h-80 min-w-0 bg-transparent sm:h-auto sm:flex-1">
 		{#if selected}
 			<div
-				class="absolute top-2 left-2 z-10 w-60 rounded-xl border border-theme bg-white/95 p-2 shadow-lg backdrop-blur-sm dark:bg-gray-900/95"
+				class="border-theme absolute top-2 left-2 z-10 w-60 rounded-xl border bg-white/95 p-2 shadow-lg backdrop-blur-sm dark:bg-gray-900/95"
 			>
 				<div class="flex items-center gap-2">
 					<div
@@ -711,12 +704,8 @@
 								type="button"
 								class="flex w-full cursor-pointer items-center gap-1.5 rounded-sm px-1 py-0.5 text-left text-[11px] hover:bg-gray-50 dark:hover:bg-gray-800"
 							>
-								<span
-									class="h-4 w-4 shrink-0 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
-									style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
-								></span>
-								<span class="min-w-0 flex-1 truncate font-medium uppercase"
-									>{p.brand}/{p.code}</span
+								<PaintThumb paint={p} />
+								<span class="min-w-0 flex-1 truncate font-medium uppercase">{p.brand}/{p.code}</span
 								>
 							</button>
 						{/each}
@@ -735,9 +724,7 @@
 				</Button>
 				<Button
 					onclick={() => store.setMode('scatter')}
-					class="cursor-pointer! {store.mode === 'scatter'
-						? 'bg-primary-500! text-white!'
-						: ''}"
+					class="cursor-pointer! {store.mode === 'scatter' ? 'bg-primary-500! text-white!' : ''}"
 					title={t('gamut.modeScatter')}
 				>
 					<LayoutFreeform class="size-3.5" />

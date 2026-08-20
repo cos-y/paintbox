@@ -3,6 +3,7 @@
 	import { searchPaints, listPaints, type PaintInfo } from '$lib/paints.svelte';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
+	import PaintThumb from './PaintThumb.svelte';
 
 	interface Props {
 		onselect: (paint: PaintInfo) => void;
@@ -102,10 +103,7 @@
 						: 'hover:bg-gray-100 dark:hover:bg-gray-600'}"
 					onclick={() => select(p)}
 				>
-					<span
-						class="h-4 w-4 shrink-0 rounded-sm border border-black/10"
-						style="background-color: #{p.rgb.toString(16).padStart(6, '0')}"
-					></span>
+					<PaintThumb paint={p} />
 					<span class="font-semibold uppercase">{p.brand}/{p.code}</span>
 					<span class="truncate text-gray-500 dark:text-gray-400">{paintDesc(p)}</span>
 				</button>
