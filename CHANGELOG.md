@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.4.0] - 2026-08-21
+
+### Added
+
+- Pearl-finish swatch cards are now rendered from real color data with multi-base support; the Gaia pearl paints apply this calibration.
+- The Gamut page gains a scatter mode and reverse paint-code lookup.
+
 ## [0.3.14] - 2026-08-18
 
 ### Added
@@ -384,3 +391,4 @@ into the **"What's new"** field of Google Play Console when publishing a release
 [0.2.1]: https://github.com/cos-y/paintbox/releases/tag/v0.2.1
 [0.2.0]: https://github.com/cos-y/paintbox/releases/tag/v0.2.0
 [0.1.0]: https://github.com/cos-y/paintbox/releases/tag/v0.1.0
+[0.4.0]: https://github.com/cos-y/paintbox/releases/tag/v0.4.0
