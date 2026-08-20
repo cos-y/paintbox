@@ -3,9 +3,11 @@
 
 	interface Props {
 		paint: PaintInfo;
+		paExBases?: string[];
+		paExIdx?: number;
 	}
 
-	let { paint }: Props = $props();
+	let { paint, paExBases = $bindable(), paExIdx = 0 }: Props = $props();
 
 	const hex = $derived(rgbToHex(paint.rgb));
 
@@ -23,12 +25,53 @@
 						? 'fluo'
 						: 'flat'
 	);
+
+	let paExs = $state([]);
+
+	$effect(() => {
+		if (mode != 'pearl') {
+			return;
+		}
+
+		let li: any = [];
+		if (!paint.extra?.pa) {
+			if (!paint.extra?.base) {
+				return;
+			}
+			li.push(paint.extra);
+		} else {
+			li = paint.extra?.pa;
+			if (!li.length) {
+				return;
+			}
+		}
+
+		paExBases = li.map(({ base }: any) => base);
+		paExs = li.map(({ t0, t1, t2 }: any) => {
+			let s = `--t1:${t1};`;
+			if (t2) {
+				s += ` --t2:${t2};`;
+			}
+			if (t0) {
+				s += ` --t0:${t0};`;
+			}
+			return s;
+		});
+	});
 </script>
 
-<div class="swatch-fx base rounded-md {mode}" style="--c: {hex};">
+<div
+	class="swatch-fx rounded-md {mode}"
+	data-pearl-ex={paExs.length ? '' : undefined}
+	style="
+	--c: {hex};
+	{paExs?.[paExIdx]}
+	"
+>
 	{#if mode === 'metallic' || mode === 'pearl'}
 		<div class="fx-band"></div>
 	{/if}
+
 	{#if mode === 'clear'}
 		<div class="fx-tint"></div>
 		<div class="fx-grid"></div>
@@ -43,7 +86,7 @@
 		pointer-events: none;
 	}
 
-	.swatch-fx.base {
+	.swatch-fx {
 		background-color: var(--c);
 	}
 
@@ -83,26 +126,45 @@
 	/* ---- 珠光：光带几何与金属一致（斜向高光），两端偏色相反色相（双色性），
 	   表面叠加微量闪粉。无 flip 数据，示意性近似 ---- */
 	.swatch-fx.pearl {
-		--c0: oklch(from var(--c) 0.8 c calc(h + 60));
-		--c1: color-mix(in srgb, var(--c0) 75%, transparent);
-		--c2: color-mix(in srgb, var(--c0) 10%, transparent);
-		--c3: oklch(from var(--c) l calc(c * 1.5) calc(h - 60) / 80%);
+		--band-width: 8px;
+	}
+	.swatch-fx.pearl:not([data-pearl-ex]) {
+		--v1: oklch(from var(--c) calc(l * 1.5) c calc(h + 60));
+		--v0: oklch(from var(--v1) calc(l * 1.5) c h);
+		--v2: oklch(from var(--c) l calc(c * 1.5) calc(h - 60));
+		background-color: var(--c);
+	}
+	.swatch-fx.pearl[data-pearl-ex] {
+		--b: var(--t0, var(--c));
+		--v1: var(--t1);
+		--v0: oklch(from var(--v1) calc(l * 1.5) c h);
+		--v2: var(--t2, color-mix(in srgb, var(--v1) 60%, transparent));
+		background-color: var(--b);
 	}
 	.swatch-fx.pearl .fx-band {
 		width: 200%;
 		rotate: 45deg;
-		translate: -30% 0%;
-		background: linear-gradient(to right, var(--c3), var(--c2), var(--c));
+		left: -50%;
+		background: linear-gradient(
+			/* */ to right,
+			var(--v2) 15%,
+			color-mix(in srgb, var(--v2) 50%, transparent) 28%,
+			transparent 45%,
+			transparent 50%,
+			color-mix(in srgb, var(--v1) 30%, transparent) 54%,
+			var(--v1) 58%,
+			color-mix(in srgb, var(--v1) 50%, transparent) 70%,
+			transparent 90%
+		);
 	}
 	.swatch-fx.pearl .fx-band::after {
 		content: '';
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		left: 50%;
-		width: 8px;
-		margin-left: -1.5px;
-		background: linear-gradient(to bottom, var(--c2), var(--c1), var(--c2));
+		left: calc(58% - var(--band-width) / 2);
+		width: var(--band-width);
+		background: linear-gradient(to bottom, var(--v1), var(--v0), var(--v1));
 	}
 	/* 微量闪粉：单一大 tile 内 18 个错位点（位置/大小/透明度各异），平铺后呈伪随机分布，
 	   避免规律网格的机械感 */

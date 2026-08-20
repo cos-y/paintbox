@@ -18,6 +18,8 @@ export interface PaintInfo {
 	id: string;
 	// 阶段3：来自 paints.bin 全列（wasm 不返回）
 	sources?: string[];
+	/** 特殊漆料额外元信息（extra 列 compact JSON 解析结果）；无 = undefined，不渲染具体 key */
+	extra?: Record<string, unknown>;
 }
 
 // SurfaceType 位定义，与 wasm 端 bitflags 对齐
@@ -115,10 +117,11 @@ export const listPaints = (): PaintInfo[] => {
 	return paints!;
 };
 
-// ---- paints.bin 补充字段（sources）：JS 直接解码，wasm 不返回 ----
+// ---- paints.bin 补充字段（sources/extra）：JS 直接解码，wasm 不返回 ----
 
 interface PaintExtras {
 	sources: string[][];
+	extra: (Record<string, unknown> | null)[];
 }
 
 let extras: PaintExtras | null = null;
@@ -130,6 +133,8 @@ export const loadPaintExtras = async (fetchFn: typeof fetch = fetch): Promise<vo
 	const b = decode(new Uint8Array(buf)) as unknown[];
 	const dictSources = b[4] as string[];
 	const bitmaps = b[12] as number[];
+	// 末尾追加列（extra）：旧 blob 无此列时降级为空数组，保持兼容
+	const rawExtra = Array.isArray(b[13]) ? (b[13] as string[]) : [];
 	extras = {
 		sources: bitmaps.map((mask) => {
 			const out: string[] = [];
@@ -138,15 +143,18 @@ export const loadPaintExtras = async (fetchFn: typeof fetch = fetch): Promise<vo
 			}
 			return out;
 		}),
+		extra: rawExtra.map((s) => (s ? (JSON.parse(s) as Record<string, unknown>) : null))
 	};
 };
 
-const paintExtrasOf = (index: number) =>
-	extras
-		? {
-				sources: extras.sources[index]
-			}
-		: {};
+const paintExtrasOf = (index: number) => {
+	if (!extras) return {};
+	const out: { sources: string[]; extra?: Record<string, unknown> } = {
+		sources: extras.sources[index]
+	};
+	if (extras.extra[index]) out.extra = extras.extra[index];
+	return out;
+};
 
 export const getPaintByIndex = (index: number): PaintInfo | null => {
 	const li = listPaints();

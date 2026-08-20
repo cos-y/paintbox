@@ -211,8 +211,10 @@ pub struct Searcher {
 
 /// paints.bin（msgpack 列式，见 scripts/build_data.py）。
 /// tuple struct 字段顺序 = msgpack 数组位置；wasm 只用前 7 列，
-/// sources/updated 用 IgnoredAny 消费即弃（msgpack 数组无字段名，必须按序消费才能到达下一元素）。
-#[derive(Debug, serde::Deserialize)]
+/// sources/extra 用 IgnoredAny 消费即弃（msgpack 数组无字段名，必须按序消费才能到达下一元素）。
+/// 自定义 Deserialize（deserialize_seq）：读取已知列后显式排空尾部——
+/// 末尾追加列（如 JS 用的 extra）不破坏解析，因此 blob 追加列不升 schema 版本。
+#[derive(Debug)]
 #[allow(clippy::type_complexity)]
 struct PaintsBlob(
     String,                // 0 schema
@@ -229,6 +231,55 @@ struct PaintsBlob(
     Vec<u16>,              // 11 col mediums
     serde::de::IgnoredAny, // 12 col sources bitmap（JS 用）
 );
+
+impl<'de> serde::Deserialize<'de> for PaintsBlob {
+    fn deserialize<D>(d: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::{Error as _, IgnoredAny, Visitor};
+
+        struct V;
+        impl<'de> Visitor<'de> for V {
+            type Value = PaintsBlob;
+
+            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                f.write_str("a paints.bin msgpack array")
+            }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+            where
+                A: serde::de::SeqAccess<'de>,
+            {
+                macro_rules! field {
+                    ($t:ty, $i:expr) => {
+                        seq.next_element::<$t>()?
+                            .ok_or_else(|| A::Error::invalid_length($i, &"paints.bin array"))?
+                    };
+                }
+                let blob = PaintsBlob(
+                    field!(String, 0),
+                    field!(u32, 1),
+                    field!(Vec<String>, 2),
+                    field!(Vec<String>, 3),
+                    field!(IgnoredAny, 4),
+                    field!(Vec<u8>, 5),
+                    field!(Vec<u8>, 6),
+                    field!(Vec<String>, 7),
+                    field!(Vec<u32>, 8),
+                    field!(Vec<u16>, 9),
+                    field!(Vec<u16>, 10),
+                    field!(Vec<u16>, 11),
+                    field!(IgnoredAny, 12),
+                );
+                // 排空尾部（extra 等追加列），避免 rmp_serde 报 LengthMismatch
+                while seq.next_element::<IgnoredAny>()?.is_some() {}
+                Ok(blob)
+            }
+        }
+        d.deserialize_seq(V)
+    }
+}
 
 #[derive(Debug, Serialize)]
 pub struct SearchResultPortion {

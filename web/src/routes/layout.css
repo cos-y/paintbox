@@ -75,6 +75,12 @@ body {
   @apply border-gray-200 dark:border-gray-700;
 }
 
+:root {
+  --pa-base-black: var(--color-gray-900);
+  --pa-base-blue: var(--color-blue-700);
+  --pa-base-red: var(--color-red-700);
+}
+
 @theme {
   --color-primary-50: var(--color-blue-50);
   --color-primary-100: var(--color-blue-100);

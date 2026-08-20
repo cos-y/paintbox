@@ -2,6 +2,7 @@
 
 约定（用户指定）：
 - 固定列 + desc 动态语言列（所有记录 desc key 的并集，排序后成列）+ equivs 列
+- extra 列存 compact JSON（含逗号/引号时 csv 模块自动加引号转义，读取无损还原）；空 = 无
 - 列表分隔符 |（元素之间）；字段分隔符 ;（元素内 brand;code;source）
 - color 用 #RRGGBB（可读、可列编辑），导入转回 int
 - 空字符串 = None / 空集合；desc 空语言列不产生 key
@@ -18,10 +19,10 @@ from pathlib import Path
 
 from .schema import Equiv, Row, SCHEMA, Wide
 
-# 固定列（desc 语言列动态生成，插在 note 与 equivs 之间）
+# 固定列（desc 语言列动态生成，插在 extra 与 equivs 之间）
 FIXED = [
     "brand", "serie", "code", "color", "bases", "surfaces", "mediums",
-    "sources", "note", "equivs",
+    "sources", "note", "extra", "equivs",
 ]
 LIST_SEP = "|"  # 列表分隔（元素之间）
 FIELD_SEP = ";"  # 字段分隔（元素内）
@@ -43,6 +44,8 @@ def row_to_fields(r: Row, desc_cols: list[str]) -> dict[str, str]:
     f["mediums"] = str(r.mediums)
     f["sources"] = LIST_SEP.join(r.sources)
     f["note"] = r.note or ""
+    # extra 存 compact JSON；含逗号/引号时由 csv 模块自动加引号转义，读取无损还原
+    f["extra"] = json.dumps(r.extra, ensure_ascii=False, separators=(",", ":")) if r.extra else ""
     for dc in desc_cols:
         f[dc] = r.desc.get(dc[len("desc_"):], "")
     f["equivs"] = LIST_SEP.join(
@@ -59,6 +62,17 @@ def fields_to_row(f: dict[str, str]) -> Row:
         if len(parts) == 3:
             equivs.append(Equiv(brand=parts[0], code=parts[1], source=parts[2]))
     color = int(f["color"][1:], 16) if f.get("color") else None
+    extra = None
+    if f.get("extra"):
+        try:
+            parsed = json.loads(f["extra"])
+        except json.JSONDecodeError as e:
+            raise ValueError(
+                f"extra JSON 解析失败 ({f.get('brand')}:{f.get('code')}): {e}") from e
+        if not isinstance(parsed, dict):
+            raise ValueError(
+                f"extra 必须是 JSON 对象 ({f.get('brand')}:{f.get('code')}): {parsed!r}")
+        extra = parsed or None  # 空对象 {} 视同无
     return Row(
         brand=f["brand"],
         serie=f.get("serie") or None,
@@ -71,6 +85,7 @@ def fields_to_row(f: dict[str, str]) -> Row:
         mediums=int(f.get("mediums") or 0),
         sources=[s for s in (f.get("sources") or "").split(LIST_SEP) if s],
         note=f.get("note") or None,
+        extra=extra,
     )
 
 

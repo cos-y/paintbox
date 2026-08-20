@@ -11,6 +11,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field
 
 SCHEMA = "paintbox.wide.v2"
@@ -44,6 +46,7 @@ class Row(BaseModel):
     mediums: int = 0  # bitflags，可 OR
     sources: list[str] = Field(default_factory=list)  # 引用 sources.json 的 id
     note: str | None = None  # 人工维护说明，merge 不生成
+    extra: dict[str, Any] | None = None  # 特殊漆料额外元信息（如透明度/类型），CSV 存 compact JSON，空 = 无
 
     def key(self) -> tuple[str, str]:
         return (self.brand, self.code)

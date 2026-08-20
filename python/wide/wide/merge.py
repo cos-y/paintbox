@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import time
@@ -16,6 +17,13 @@ from .schema import Equiv, Row, Wide, SCHEMA
 
 # 互斥位组：光泽度。merge 时组内多位亮起视为数据冲突（人为报告，仍按规则应用）
 MUTEX_GROUPS: dict[str, list[int]] = {"surface_gloss": [1 << 0, 1 << 1, 1 << 2]}
+
+# 禁止冲突的 replace 键（替换式语义，冲突行为由 merge 的 conflict 参数指定：
+# update=新值覆盖 / ignore=旧值保留 / error=报错退出）。当前只有 extra；
+# 后续新增此类键时在此登记。
+REPLACE_CONFLICT_KEYS: tuple[str, ...] = ("extra",)
+# 允许的 conflict 取值
+CONFLICT_MODES = ("update", "ignore", "error")
 
 # 增量更新允许缺失的字段（有 key 即可），但 wide cli 应统计并 warn
 # brand/code/serie 缺失 = 空串；color/bases 缺失 = None；surfaces/mediums 缺失 = 0
@@ -146,7 +154,7 @@ def summarize_conflicts(report: MergeReport) -> ConflictSummary:
     """
     import re as _re
 
-    by_type: dict[str, int] = {"serie": 0, "color": 0, "mutex": 0}
+    by_type: dict[str, int] = {"serie": 0, "color": 0, "mutex": 0, "extra": 0}
     deltas: list[int] = []
     samples: dict[str, list[str]] = {"serie": [], "color": [], "mutex": []}
     for c in report.conflicts:
@@ -198,9 +206,12 @@ def _mutex_conflict(flags: dict[str, int], group_name: str) -> list[str]:
     return [group_name] if len(lit) > 1 else []
 
 
-def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row, RowDiff]:
+def merge_row(old: Optional[Row], new: Row, overwrite: bool = True,
+              conflict: str = "error") -> tuple[Row, RowDiff]:
     """合并一行。overwrite=True（默认）时新行覆盖旧行的同名冲突字段；
     overwrite=False 时旧列优先（只补缺，surfaces/mediums/equivs/sources 仍 union）。
+    conflict 指定禁止冲突的 replace 键（REPLACE_CONFLICT_KEYS）在双方都有值且
+    不同时的行为：update=新值覆盖 / ignore=旧值保留 / error=记入 conflicts（调用方报错退出）。
     更新时间不入文件（由 build_data 从 git 派生）。
     """
     if old is None:
@@ -224,6 +235,13 @@ def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row
     else:
         merged_sources = _dedupe(old.sources + new.sources)
 
+    # 禁止冲突的 replace 键：双方都有值且不同 -> 按 conflict 参数处理
+    extra = old.extra if old.extra is not None else new.extra
+    extra_conflict = (old.extra is not None and new.extra is not None
+                      and new.extra != old.extra)
+    if extra_conflict and conflict != "ignore":
+        extra = new.extra
+
     merged = Row(
         brand=old.brand,
         serie=serie,
@@ -236,6 +254,7 @@ def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row
         mediums=old.mediums | new.mediums,
         sources=merged_sources,
         note=old.note or new.note,
+        extra=extra,
     )
 
     fields: list[FieldDiff] = []
@@ -259,10 +278,17 @@ def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row
         o, n = getattr(old, f), getattr(merged, f)
         if n != o:
             fields.append(FieldDiff(f, o, n, "updated"))
+    if merged.extra != old.extra:
+        kind = "added" if old.extra is None else (
+            "rejected" if extra_conflict and conflict == "ignore" else "updated")
+        fields.append(FieldDiff("extra", old.extra, merged.extra, kind))
 
     # 冲突检测
     if old.serie and new.serie and old.serie != new.serie:
         conflicts.append(f"{old.brand}:{old.code} serie {old.serie} -> {new.serie}")
+    if extra_conflict:
+        fmt = lambda v: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
+        conflicts.append(f"{old.brand}:{old.code} extra {fmt(old.extra)} -> {fmt(new.extra)}")
     if old.color and new.color and old.color != new.color:
         delta = _channel_delta(old.color, new.color)
         if delta > MergeFlags().color_delta:
@@ -285,12 +311,13 @@ def merge_row(old: Optional[Row], new: Row, overwrite: bool = True) -> tuple[Row
     return merged, RowDiff(old.brand, old.code, "updated", fields, conflicts)
 
 
-def merge_wide(old: Optional[Wide], new: Wide, overwrite: bool = True) -> MergeResult:
+def merge_wide(old: Optional[Wide], new: Wide, overwrite: bool = True,
+               conflict: str = "error") -> MergeResult:
     by_key = old.by_key() if old else {}
     diffs: list[RowDiff] = []
     conflicts: list[str] = []
     for row in new.paints:
-        merged, diff = merge_row(by_key.get(row.key()), row, overwrite)
+        merged, diff = merge_row(by_key.get(row.key()), row, overwrite, conflict)
         by_key[row.key()] = merged
         diffs.append(diff)
         conflicts += diff.conflicts
@@ -316,7 +343,7 @@ def _only_equivs(r: Row) -> bool:
     """该行是否只携带等价声明（无其他数据字段）。"""
     return (r.serie is None and r.color is None and not r.desc
             and r.bases is None and r.surfaces == 0 and r.mediums == 0
-            and r.note is None)
+            and r.note is None and r.extra is None)
 
 
 def _dedupe(items: list[str]) -> list[str]:

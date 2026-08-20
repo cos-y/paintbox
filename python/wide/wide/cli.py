@@ -3,6 +3,9 @@
 用法：
   wide merge raw/gunze/gunze26/wide.csv [--source raw/gunze/gunze26/source.json] \
         [--keep] [--apply]
+  wide extra --key brand:code --json extra.json   # 单行：json 为 extra 对象，已有值会 prompt
+  wide extra --json batch.json                    # 批量：json = {brand:code: extra, ...}
+        [--conflict prompt|replace|reject] [--merge-policy prompt|replace|reject]
 
 第一个参数是小宽表 CSV 路径（相对项目根），也接受目录（自动找 wide.csv）。
 --source 指定该源的 meta（默认小宽表同目录 source.json），注册进大宽表 sources。
@@ -24,6 +27,7 @@ from pathlib import Path
 
 from .csvio import load_wide, read_paints_csv, save_wide
 from .merge import (
+    CONFLICT_MODES,
     DanglingResult,
     REQUIRED_FIELDS,
     MergeReport,
@@ -134,7 +138,7 @@ def print_report(report: MergeReport, *, show_diffs: bool = True) -> None:
         s = summarize_conflicts(report)
         print(f"\n[conflicts] {len(report.conflicts)}  "
               f"(serie {s.by_type.get('serie', 0)} / color {s.by_type.get('color', 0)}"
-              f" / mutex {s.by_type.get('mutex', 0)})")
+              f" / mutex {s.by_type.get('mutex', 0)} / extra {s.by_type.get('extra', 0)})")
         if s.color_delta:
             ds = s.color_delta
             print(f"  color delta: min {ds[0]} / median "
@@ -152,7 +156,7 @@ def print_report(report: MergeReport, *, show_diffs: bool = True) -> None:
         if s.by_type.get("color", 0) > 5 and (not s.color_delta or s.color_delta[-1] > 30):
             print("  建议: color 冲突多且 delta 大(疑似版本差异)，"
                   "可用 --keep 保留现有值，新源只补缺")
-        for t in ("serie", "color", "mutex"):
+        for t in ("serie", "color", "mutex", "extra"):
             for c in s.samples.get(t, [])[:3]:
                 print(f"  ! {c}")
         if len(report.conflicts) > 9:
@@ -221,6 +225,135 @@ def _resolve_dangling(dangling) -> str:
         print("  please enter 1, 2 or 3")
 
 
+def _extra_command(args) -> None:
+    """wide extra：更新一行或批量行的 extra 字段（见 main 的用法注释）。
+
+    单行 --key：json 文件为 extra 对象本身；批量：json 为 {brand:code: extra} 字典。
+    --conflict 控制已有 extra 时的行为（prompt 逐行问 y/n/m，m 触发 merge）；
+    --merge-policy 控制 merge 键冲突（同 key 不同值）时的行为。
+    """
+    wide = _load_wide(Path(args.wide))
+    if wide is None:
+        print(f"wide not found: {args.wide}")
+        raise SystemExit(1)
+
+    jpath = Path(args.json)
+    if not jpath.exists():
+        print(f"[error] json not found: {jpath}")
+        raise SystemExit(1)
+    try:
+        data = json.loads(jpath.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        print(f"[error] invalid JSON in {jpath}: {e}")
+        raise SystemExit(1)
+
+    # 解析目标：[(key, extra), ...]
+    targets: list[tuple[str, dict]] = []
+    if args.key:
+        if not isinstance(data, dict):
+            print(f"[error] {jpath} must contain a JSON object (the extra for {args.key})")
+            raise SystemExit(1)
+        targets.append((args.key, data))
+    else:
+        if not isinstance(data, dict):
+            print(f"[error] batch mode needs a JSON object mapping brand:code -> extra: {jpath}")
+            raise SystemExit(1)
+        for k, v in data.items():
+            if ":" not in k:
+                print(f"[error] invalid batch key: {k} (expected brand:code)")
+                raise SystemExit(1)
+            if not isinstance(v, dict):
+                print(f"[error] batch extra for {k} must be a JSON object, "
+                      f"got {type(v).__name__}")
+                raise SystemExit(1)
+            targets.append((k, v))
+    if not targets:
+        print("[error] nothing to do (empty batch dict)")
+        raise SystemExit(1)
+
+    def _ask(prompt: str, *choices: str) -> str:
+        while True:
+            try:
+                ans = input(prompt).strip().lower()
+            except EOFError:
+                print("\n[abort] input exhausted, wide untouched")
+                raise SystemExit(1)
+            if ans in choices:
+                return ans
+            print(f"  please enter {'/'.join(choices)}")
+
+    fmt = lambda v: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
+    paints = list(wide.paints)
+    rows = {(r.brand, r.code): i for i, r in enumerate(paints)}
+    stats = {"set": 0, "merged": 0, "skipped": 0, "unchanged": 0, "not_found": 0}
+
+    for key, new_extra in targets:
+        brand, _, code = key.partition(":")
+        i = rows.get((brand, code))
+        if i is None:
+            if args.key:
+                print(f"[error] no row {key} in wide")
+                raise SystemExit(1)
+            print(f"[warn] no row {key} in wide, skipped")
+            stats["not_found"] += 1
+            continue
+        row = paints[i]
+
+        if new_extra == row.extra:
+            print(f"  - {key} extra unchanged")
+            stats["unchanged"] += 1
+            continue
+        if not row.extra:
+            final, action = new_extra, "set"
+        elif args.conflict == "replace":
+            final, action = new_extra, "set"
+        elif args.conflict == "reject":
+            print(f"  - {key} extra conflict, skipped (--conflict reject): {fmt(row.extra)}")
+            stats["skipped"] += 1
+            continue
+        else:  # prompt
+            print(f"[extra] {key} already has {fmt(row.extra)}")
+            print(f"  new: {fmt(new_extra)}")
+            choice = _ask("  [y] overwrite  [n] keep old  [m] merge: ", "y", "n", "m")
+            if choice == "n":
+                stats["skipped"] += 1
+                continue
+            if choice == "y":
+                final, action = new_extra, "set"
+            else:
+                final = dict(row.extra)
+                for k, v in new_extra.items():
+                    if k in final and final[k] != v:
+                        if args.merge_policy == "replace":
+                            final[k] = v
+                        elif args.merge_policy == "reject":
+                            pass
+                        else:
+                            c = _ask(f"    merge conflict on '{k}': [r] replace (new) "
+                                     f"/ [j] reject (keep old): ", "r", "j")
+                            if c == "r":
+                                final[k] = v
+                    else:
+                        final[k] = v
+                action = "merged" if final != row.extra else "unchanged"
+
+        if final == row.extra:
+            print(f"  - {key} extra unchanged")
+            stats["unchanged"] += 1
+            continue
+        paints[i] = row.model_copy(update={"extra": final})
+        stats[action] += 1
+        print(f"  + {key} extra {action}: {fmt(final)}")
+
+    if not (stats["set"] or stats["merged"]):
+        print("[ok] nothing changed, wide untouched")
+        return
+    _save_wide(wide.model_copy(update={"paints": paints}), Path(args.wide))
+    print(f"[ok] {stats['set']} set, {stats['merged']} merged, {stats['skipped']} skipped, "
+          f"{stats['unchanged']} unchanged, {stats['not_found']} not found "
+          f"(saved {args.wide})")
+
+
 def main() -> None:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -234,6 +367,10 @@ def main() -> None:
                          help="source id conflict resolution (required when id changes)")
     p_merge.add_argument("--keep", action="store_true",
                          help="on conflicts keep existing columns (default: new data overwrites)")
+    p_merge.add_argument("--conflict", choices=CONFLICT_MODES, default="error",
+                         help="behavior for replace keys with both values set and different "
+                              "(extra): update=new wins / ignore=old wins / error=abort "
+                              "(default: error)")
     p_merge.add_argument("--apply", action="store_true", help="write back the wide table")
     p_merge.add_argument("--wide", default=str(DEFAULT_WIDE), help="target wide JSON path")
 
@@ -241,6 +378,24 @@ def main() -> None:
     p_check.add_argument("wide", nargs="?", default=str(DEFAULT_WIDE), help="wide JSON path")
     p_check.add_argument("--brand", default="",
                          help="list all dangling equivs targeting this brand")
+
+    p_extra = sub.add_parser("extra",
+                             help="set/merge the extra field of paints")
+    p_extra.add_argument("--key", default="",
+                         help="row to update, format brand:code (omit for batch mode)")
+    p_extra.add_argument("--json", required=True,
+                         help="JSON file: extra object (with --key), or "
+                              "{brand:code: extra} dict (batch mode)")
+    p_extra.add_argument("--conflict", choices=["prompt", "replace", "reject"],
+                         default="prompt",
+                         help="behavior when the row already has extra: prompt (ask "
+                              "y/n/m per row) / replace (overwrite) / reject (skip)")
+    p_extra.add_argument("--merge-policy", choices=["prompt", "replace", "reject"],
+                         default="prompt",
+                         help="behavior on merge key conflicts (same key, different value): "
+                              "prompt (ask replace/reject) / replace (new wins) / "
+                              "reject (keep old)")
+    p_extra.add_argument("--wide", default=str(DEFAULT_WIDE), help="target wide JSON path")
 
     args = ap.parse_args()
     if args.cmd == "check":
@@ -251,6 +406,11 @@ def main() -> None:
         print_dangling(check_dangling(wide))
         print_equiv_audit(check_equivs(wide), args.brand or None)
         return
+
+    if args.cmd == "extra":
+        _extra_command(args)
+        return
+
 
     # merge
     new_path = Path(args.new)
@@ -320,7 +480,19 @@ def main() -> None:
             if args.source_mode == "replace":
                 renamed = (old_id, sid)
 
-    result = merge_wide(old, Wide(paints=new_paints), overwrite=not args.keep)
+    result = merge_wide(old, Wide(paints=new_paints), overwrite=not args.keep,
+                        conflict=args.conflict)
+
+    # 禁止冲突的 replace 键（extra）：conflict=error（默认）时双方都有值且不同 -> 直接报错退出
+    # （dry-run 同样退出，强制显式选择 update/ignore；--apply 时未写盘）
+    extra_conflicts = [c for c in result.report.conflicts
+                       if len(c.split()) > 1 and c.split()[1] == "extra"]
+    if args.conflict == "error" and extra_conflicts:
+        print(f"[error] {len(extra_conflicts)} 处 extra 字段冲突（replace 键默认报错退出，"
+              f"可用 --conflict update|ignore 指定行为）:")
+        for c in extra_conflicts:
+            print(f"  ! {c}")
+        raise SystemExit(1)
     if renamed:
         # 删除被替换的旧注册，行引用旧 id -> 新 id
         old_sources = {k: v for k, v in old_sources.items() if k != renamed[0]}

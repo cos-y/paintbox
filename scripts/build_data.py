@@ -1,7 +1,8 @@
 """阶段3：大宽表 data/wide.json → app 数据文件。
 
 产出（web/static/）：
-- paints.bin      主数据，msgpack 列式（10 字段，Rust wasm 用前 7 列，JS 用全列）
+- paints.bin      主数据，msgpack 列式（Rust wasm 用前 7 数据列，JS 用全列；末尾 extra 列存
+  compact JSON 字符串，空 = 无）。追加列不升 schema 版本（wasm 宽容解析 + JS 位置索引兼容）
 - equivs.bin      等价表，msgpack [n_pairs, dict_sources, src_idx[], dst_idx[], source_id[]]（双向展开，每条源声明方向 + 反向，按对去重 source 取 publishTs 最新）
 - paints/<lang>.json  i18n 名称字典（en/zh/ja/es 合并 wide 源语言 + 现有翻译；raw 重建）
 
@@ -95,7 +96,7 @@ def main() -> None:
     source_id = {s: 1 << i for i, s in enumerate(sources_all)}
 
     cols = {k: [] for k in ("brand", "serie", "code", "color", "bases",
-                            "surfaces", "mediums", "sources")}
+                            "surfaces", "mediums", "sources", "extra")}
     stats = Counter()
     for r in rows:
         cols["brand"].append(brand_id[r["brand"]])
@@ -109,6 +110,9 @@ def main() -> None:
         for s in r.get("sources", []):
             mask |= source_id[s]
         cols["sources"].append(mask)
+        # extra：compact JSON 字符串，空 = 无；JS 端按需解析（wasm 不消费）
+        cols["extra"].append(json.dumps(r.get("extra"), ensure_ascii=False,
+                                        separators=(",", ":")) if r.get("extra") else "")
         stats[r["brand"]] += 1
 
     blob = [
@@ -116,7 +120,7 @@ def main() -> None:
         brands, series_list, sources_all,
         cols["brand"], cols["serie"], cols["code"],
         cols["color"], cols["bases"], cols["surfaces"], cols["mediums"],
-        cols["sources"],
+        cols["sources"], cols["extra"],
     ]
     (OUT / "paints.bin").write_bytes(msgpack.packb(blob, use_bin_type=False))
     print(f"paints.bin: {len(msgpack.packb(blob, use_bin_type=False))} bytes, {n} rows, "
