@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 	import { ChevronLeft, Search, X, Funnel, ExternalLink } from '@lucide/svelte';
 	import { Card, Badge } from 'flowbite-svelte';
 	import { getCatalog, SURFACE_BITS, MEDIUM_BITS, type PaintInfo } from '$lib/paints.svelte';
+	import { searchPaintIds, whenExtraLoaded } from '$lib/paintSearch';
 	import { stock } from '$lib/stock.svelte';
 	import { stockNav, goBackOneLevel } from '$lib/stocknav.svelte';
 	import { clamp, isMedia, openExternal } from '$lib/utils.svelte';
@@ -12,7 +14,6 @@
 	import PaintDetail from '$lib/components/PaintDetail.svelte';
 	import StockPaintCard from '$lib/components/StockPaintCard.svelte';
 	import DetailEmpty from '$lib/components/DetailEmpty.svelte';
-	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import StockFilterPanel from '$lib/components/StockFilterPanel.svelte';
 
@@ -142,17 +143,13 @@
 		}
 	};
 
-	const matches = (p: PaintInfo): boolean => {
-		const q = query.trim().toLowerCase();
-		if (!q) return true;
-		return p.code.toLowerCase().includes(q) || paintDesc(p).toLowerCase().includes(q);
-	};
-
 	const isSearching = $derived(searchOpen && query.trim().length > 0);
 	// 筛选激活（无搜索时也启用搜索式联动：左侧栏过滤 + 自动切换系列）
 	const isFiltering = $derived(filterCount > 0);
 	const isActiveFilter = $derived(isSearching || isFiltering);
-	const filterMatch = (p: PaintInfo): boolean => passFilter(p) && (!isSearching || matches(p));
+	// Fuse 搜索命中集合（分词/模糊/tag/多语言；浏览式页面取全量，不截断）
+	const hitIds = $derived(isSearching ? searchPaintIds(query) : null);
+	const filterMatch = (p: PaintInfo): boolean => passFilter(p) && (!isSearching || !!hitIds?.has(p.id));
 	// 搜索/筛选时左侧栏：仅显示有匹配的系列（品牌内联动）
 	const visibleSeries = $derived.by(() => {
 		const entries = Object.entries(currentBrandGroup ?? {});
@@ -172,6 +169,11 @@
 		}
 	});
 	const sortedCurrentSerie = $derived(sortPaints(currentSerieGroup.filter(passFilter)));
+
+	// 挂载时预载源语言色名（raw.json）：首次搜索即可命中跨语言色名
+	onMount(() => {
+		whenExtraLoaded();
+	});
 </script>
 
 {#snippet filterBar()}

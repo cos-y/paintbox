@@ -1,5 +1,4 @@
 import { list_paints, search, color_diff } from '../wasm-pkg/paintbox_wasm';
-import { paintDesc } from './i18ndyn.svelte';
 import { hexToRgb, toHsl } from './utils.svelte';
 import { decode } from '@msgpack/msgpack';
 
@@ -192,19 +191,4 @@ export const getCatalog = (): PaintCatalog => {
 		catalog = c;
 	}
 	return catalog;
-};
-
-// TODO: better fuzzy search
-export const searchPaints = (query: string): PaintInfo[] => {
-	if (!query) return [];
-	const q = query.toLowerCase();
-	return listPaints()
-		.filter(
-			(p) =>
-				p.code.toLowerCase().includes(q) ||
-				p.brand.toLowerCase().includes(q) ||
-				paintDesc(p).toLowerCase().includes(q) ||
-				`${p.brand} ${p.code}`.toLowerCase().includes(q)
-		)
-		.slice(0, 20);
 };

@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { getPaintById, getPaintByIndex, searchPaints, type PaintInfo } from '$lib/paints.svelte';
+	import { getPaintById, getPaintByIndex, type PaintInfo } from '$lib/paints.svelte';
+	import { searchPaints, whenExtraLoaded } from '$lib/paintSearch';
+	import { onMount } from 'svelte';
 	import { stock } from '$lib/stock.svelte';
 	import {
 		Plus,
@@ -301,10 +303,14 @@
 
 	let paintResults: Record<string, PaintInfo[]> = $state({});
 	let highlightedIdx: Record<string, number> = $state({});
+	const searchTimers: Record<string, ReturnType<typeof setTimeout>> = {};
 	function updatePaintSearch(src: PaintSource, text: string) {
 		src.searchText = text;
-		paintResults[src.id] = searchPaints(text);
-		highlightedIdx[src.id] = -1;
+		clearTimeout(searchTimers[src.id]);
+		searchTimers[src.id] = setTimeout(() => {
+			paintResults[src.id] = searchPaints(text);
+			highlightedIdx[src.id] = -1;
+		}, 100);
 	}
 
 	// ---- 3D 选中体素：左上角卡片展示（色卡 + hex + 格子内油漆列表）----
@@ -427,6 +433,11 @@
 		store.clipB = sceneProps.clipB;
 		store.nextId = nextId;
 		store.persist();
+	});
+
+	// 挂载时预载源语言色名（raw.json）：首次搜索即可命中跨语言色名
+	onMount(() => {
+		whenExtraLoaded();
 	});
 </script>
 

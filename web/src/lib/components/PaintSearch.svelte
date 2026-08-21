@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { Search } from '@lucide/svelte';
-	import { searchPaints, listPaints, type PaintInfo } from '$lib/paints.svelte';
+	import { type PaintInfo } from '$lib/paints.svelte';
+	import { searchPaints, whenExtraLoaded } from '$lib/paintSearch';
 	import { paintDesc } from '$lib/i18ndyn.svelte';
 	import { t } from '$lib/i18n.svelte';
 	import PaintThumb from './PaintThumb.svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	interface Props {
 		onselect: (paint: PaintInfo) => void;
@@ -17,17 +19,30 @@
 	let results: PaintInfo[] = $state([]);
 	let highlighted = $state(-1);
 	let inputEl: HTMLInputElement | undefined = $state();
+	let debounceTimer: ReturnType<typeof setTimeout> | undefined;
 
 	// 挂载即聚焦（弹层场景直接输入）
 	$effect(() => {
 		inputEl?.focus();
 	});
 
+	// 挂载时预载源语言色名（raw.json）进搜索：首次搜索即可命中跨语言色名
+	onMount(() => {
+		whenExtraLoaded();
+	});
+
+	onDestroy(() => {
+		clearTimeout(debounceTimer);
+	});
+
 	const handleInput = (e: Event) => {
 		text = (e.target as HTMLInputElement).value;
-		results = searchPaints(text);
-		// 有结果时默认高亮第一项，与 Enter 默认选中的心智一致
-		highlighted = results.length > 0 ? 0 : -1;
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => {
+			results = searchPaints(text);
+			// 有结果时默认高亮第一项，与 Enter 默认选中的心智一致
+			highlighted = results.length > 0 ? 0 : -1;
+		}, 100);
 	};
 
 	const select = (p: PaintInfo) => {
