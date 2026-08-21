@@ -120,12 +120,41 @@
 		}
 	};
 
+	// hover 动画：补间当前 scale 到目标（旧 hover 回 1，新 hover 放大到 1.3）
+	const curScale = new Map<number, number>();
+	const animTokens = new Map<number, number>();
+	let animSeq = 0;
+	const animateScale = (id: number, from: number, to: number, duration = 150) => {
+		const token = ++animSeq;
+		animTokens.set(id, token);
+		const start = performance.now();
+		const step = (now: number) => {
+			if (animTokens.get(id) !== token) return; // 被新动画取代
+			if (!mesh) {
+				animTokens.delete(id);
+				return;
+			}
+			const t = Math.min(1, (now - start) / duration);
+			const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+			const s = from + (to - from) * eased;
+			writeMatrix(id, s);
+			curScale.set(id, s);
+			mesh.instanceMatrix.needsUpdate = true;
+			invalidate();
+			if (t < 1) requestAnimationFrame(step);
+			else animTokens.delete(id);
+		};
+		requestAnimationFrame(step);
+	};
+
 	const setHovered = (id: number) => {
+		// hover 到 voxel 时光标变小手（pointermove 每帧触发，id 相同也保持）
+		renderer.domElement.style.cursor = id >= 0 ? 'pointer' : '';
 		if (id === hoveredId || !mesh) return;
-		if (hoveredId >= 0) writeMatrix(hoveredId, 1);
-		if (id >= 0) writeMatrix(id, 1.3);
+		// 从当前实际 scale 补间（避免动画中途切走时跳变）
+		if (hoveredId >= 0) animateScale(hoveredId, curScale.get(hoveredId) ?? 1.3, 1);
+		if (id >= 0) animateScale(id, curScale.get(id) ?? 1, 1.3);
 		hoveredId = id;
-		mesh.instanceMatrix.needsUpdate = true;
 		invalidate();
 	};
 </script>
