@@ -62,7 +62,10 @@
 
 		const li: any = paint.extra?.pa ?? [];
 		return li.map(({ base, t0, t1, t2 }: any) => {
-			let css = `--t1:${t1};`;
+			let css = '';
+			if (t1) {
+				css += `--t1:${t1};`;
+			}
 			if (t2) {
 				css += ` --t2:${t2};`;
 			}
@@ -519,17 +522,17 @@
 	/* ---- 珠光：光带几何与金属一致（斜向高光），两端偏色相反色相（双色性），
 	   表面叠加微量闪粉。无 flip 数据，示意性近似 ---- */
 	.fx-swatch.pearl:not(.fx-ex) {
-		--v1: oklch(from var(--c) calc(l * 1.5) c calc(h + 60));
-		--v0: oklch(from var(--v1) calc(l * 1.5) c h);
-		--v2: oklch(from var(--c) l calc(c * 1.5) calc(h - 60));
+		--v1: oklch(from var(--c) calc(l * 1.5) calc(c * 0.8) h);
+		--v0: oklch(from var(--v1) calc(l * 2) calc(c * 0.5) h);
+		--v2: color-mix(in srgb, var(--v1) 75%, transparent);
 		background-color: var(--c);
 	}
 	.fx-swatch.pearl.fx-ex {
-		--v1: var(--t1);
-		--v0: oklch(from var(--v1) calc(l * 2) c h);
-		--v2: var(--t2, var(--v1));
-		/* --v2: var(--t2, color-mix(in srgb, var(--v1) 60%, transparent)); */
-		background-color: var(--t0, var(--c));
+		--bg: var(--t0, var(--c));
+		--v1: var(--t1, oklch(from var(--bg) calc(l * 1.5) calc(c * 0.8) h));
+		--v0: oklch(from var(--v1) calc(l * 2) calc(c * 0.5) h);
+		--v2: var(--t2, color-mix(in srgb, var(--v1) 75%, transparent));
+		background-color: var(--bg);
 	}
 	.fx-swatch.pearl .fx-band {
 		background: linear-gradient(
