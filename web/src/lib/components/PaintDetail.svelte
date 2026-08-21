@@ -165,8 +165,8 @@
 	<!-- 色卡 + 对比条（外层 relative 定位容器不裁剪，供多源来源下拉弹出） -->
 	<div class="relative">
 		<div class="relative h-40 overflow-hidden rounded-lg shadow-inner">
-			<div class="absolute inset-x-0 top-0 {comparePaint ? 'h-1/2' : 'h-full'}">
-				<div class="relative h-40">
+			<div class="relative inset-x-0 top-0 overflow-hidden {comparePaint ? 'h-1/2' : 'h-full'}">
+				<div class="absolute h-40 w-full">
 					<SwatchFx {paint} pagingStyle="right:40px;top:12px" />
 				</div>
 				<img
@@ -176,9 +176,9 @@
 				/>
 			</div>
 			{#if comparePaint}
-				<div class="absolute inset-x-0 bottom-0 h-1/2">
-					<div class="relative bottom-0 h-40">
-						<SwatchFx paint={comparePaint} />
+				<div class="relative inset-x-0 bottom-0 h-1/2 overflow-hidden">
+					<div class="absolute bottom-0 h-40 w-full">
+						<SwatchFx paint={comparePaint} pagingStyle="left:12px;bottom:12px" />
 					</div>
 					<img
 						src="/brands/{comparePaint.brand}.png"
