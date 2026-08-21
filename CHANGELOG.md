@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release notes are written in English and are intended to be copied directly
 into the **"What's new"** field of Google Play Console when publishing a release.
 
+## [0.4.2] - 2026-08-21
+
+### Added
+
+- Fuzzy search engine (Fuse.js) with tokenized AND matching ("gaia 042"), fuzzy subsequence matching ("prl" → Prism series), field-weighted scoring (code > serie > brand > tags > names), and debounced input.
+- Finish/medium tags in multiple languages derived from paint surface bits: searching "珠光", "pearl" or "パール" finds pearl paints, "金属"/"metallic" finds metallic ones, etc.
+- Cross-language name search: source-language color names (en/es/ja) load lazily on search-widget mount and merge into the index, so an English name like "brown" matches even in a Chinese UI.
+- Browse-style search on the stock page uses the same engine while keeping series grouping and filter linkage.
+
+### Changed
+
+- Gunze PA (pearl) colors now prefer ground-truth data over interpolated values.
+- Gaia paint data calibration tweaks.
+
+### Fixed
+
+- Detail-page comparison swatch now renders both halves in one coordinate space, so the finish pattern (light band / glow) flows continuously across the two cards.
+
 ## [0.4.1] - 2026-08-21
 
 ### Added
@@ -405,3 +423,4 @@ into the **"What's new"** field of Google Play Console when publishing a release
 [0.1.0]: https://github.com/cos-y/paintbox/releases/tag/v0.1.0
 [0.4.0]: https://github.com/cos-y/paintbox/releases/tag/v0.4.0
 [0.4.1]: https://github.com/cos-y/paintbox/releases/tag/v0.4.1
+[0.4.2]: https://github.com/cos-y/paintbox/releases/tag/v0.4.2
