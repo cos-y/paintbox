@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>flake alpha sampler</title>
+</head>
+<body style="margin:0;font-family:monospace;font-size:12px">
+<pre id="out">sampling...</pre>
+<script>
+// 采样 feTurbulence(fractalNoise 0.85, 1oct, seed37) → RGB 求和到 alpha 的分布
+// 对不同系数采样，输出直方图 + CDF + 建议 table
+const N = 1000; // 渲染尺寸
+
+function svgFor(scale) {
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="${N}" height="${N}">
+  <defs>
+    <filter id="f">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="37"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${scale} ${scale} ${scale} 0 0"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" filter="url(#f)"/>
+</svg>`;
+}
+
+// 应用 table 均匀化后的输出分布验证
+function svgWithTable(scale, table) {
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="${N}" height="${N}">
+  <defs>
+    <filter id="f">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="37"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${scale} ${scale} ${scale} 0 0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="${table}"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" filter="url(#f)"/>
+</svg>`;
+}
+
+async function sample(scale) {
+	const url = URL.createObjectURL(new Blob([svgFor(scale)], { type: 'image/svg+xml' }));
+	const img = new Image();
+	await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('img load fail')); img.src = url; });
+	const c = document.createElement('canvas');
+	c.width = img.width; c.height = img.height;
+	const ctx = c.getContext('2d');
+	ctx.drawImage(img, 0, 0);
+	const d = ctx.getImageData(0, 0, c.width, c.height).data;
+	const hist = new Array(256).fill(0);
+	for (let i = 3; i < d.length; i += 4) hist[d[i]]++;
+	return hist;
+}
+
+// 应用 table + discrete 截断的完整 flake 链输出分布验证
+function svgFullChain(scale, table, discrete) {
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="${N}" height="${N}">
+  <defs>
+    <filter id="f">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="37"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${scale} ${scale} ${scale} 0 0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="${table}"/></feComponentTransfer>
+      <feComponentTransfer><feFuncA type="discrete" tableValues="${discrete}"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" filter="url(#f)"/>
+</svg>`;
+}
+
+async function sampleSvg(svg) {
+	const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+	const img = new Image();
+	await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('img load fail')); img.src = url; });
+	const c = document.createElement('canvas');
+	c.width = img.width; c.height = img.height;
+	const ctx = c.getContext('2d');
+	ctx.drawImage(img, 0, 0);
+	const d = ctx.getImageData(0, 0, c.width, c.height).data;
+	const hist = new Array(256).fill(0);
+	for (let i = 3; i < d.length; i += 4) hist[d[i]]++;
+	return hist;
+}
+
+function cdfOf(hist) {
+	const total = hist.reduce((a, b) => a + b, 0);
+	const cdf = new Array(256);
+	let acc = 0;
+	for (let i = 0; i < 256; i++) { acc += hist[i]; cdf[i] = acc / total; }
+	return cdf;
+}
+
+function tableFromCdf(cdf, n) {
+	// table[i] = CDF(i/(n-1))——直方图均衡（输出均匀分布）
+	const t = [];
+	for (let i = 0; i < n; i++) {
+		const x = i / (n - 1);
+		const xi = Math.round(x * 255);
+		t.push(Number(cdf[xi].toFixed(4)));
+	}
+	return t.join(' ');
+}
+
+(async () => {
+	const out = [];
+	const histByScale = {};
+	for (const scale of [0.333, 0.25, 0.2, 0.15]) {
+		const hist = await sample(scale);
+		histByScale[scale] = hist;
+		const cdf = cdfOf(hist);
+		const total = hist.reduce((a,b)=>a+b,0);
+		const clamp = (hist[255] / total * 100).toFixed(1);
+		out.push(`--- scale=${scale} (alpha clamped at 1: ${clamp}%) ---`);
+		out.push(`CDF@0.5=${cdf[128].toFixed(3)}  @0.9=${cdf[230].toFixed(3)}  @1.0=${cdf[255].toFixed(3)}`);
+		out.push(`table8 : ${tableFromCdf(cdf, 8)}`);
+		out.push(`table16: ${tableFromCdf(cdf, 16)}`);
+	}
+	// 验证：scale=0.333 应用 table16 后输出分布
+	const t16 = tableFromCdf(cdfOf(histByScale[0.333]), 16);
+	const vh = await sampleSvg(svgWithTable(0.333, t16));
+	const total = vh.reduce((a,b)=>a+b,0);
+	const vcdf = cdfOf(vh);
+	const bins = [];
+	for (let i = 0; i < 10; i++) {
+		const lo = Math.floor(i*256/10), hi = Math.floor((i+1)*256/10)-1;
+		let s = 0; for (let j = lo; j <= hi; j++) s += vh[j];
+		bins.push((s/total*100).toFixed(1));
+	}
+	out.push(`--- verify table16 on 0.333 (decile % of output) ---`);
+	out.push('[' + bins.join(' ') + ']  (均匀应为 ~10 每格)');
+	out.push(`verify CDF@0.5=${vcdf[128].toFixed(3)}`);
+	// 完整链：table16 → discrete 截断（flake1 高段 / flake2 低段）
+	for (const [name, discrete] of [['flake1(高段)', '0 0 0 0 0 0.33 0.66 1'], ['flake2(低段)', '1 0.66 0.33 0 0 0 0 0']]) {
+		const fh = await sampleSvg(svgFullChain(0.333, t16, discrete));
+		const ft = fh.reduce((a,b)=>a+b,0);
+		const levels = [0, 0.33, 0.66, 1].map((lv) => (fh[Math.round(lv*255)] / ft * 100).toFixed(1));
+		out.push(`--- ${name} 各级占比 [0, 0.33, 0.66, 1] = [${levels.join(' ')}]% (理想 [62.5 12.5 12.5 12.5]) ---`);
+	}
+	document.getElementById('out').textContent = out.join('\n');
+	window.__result = out.join('\n');
+})().catch((e) => { document.getElementById('out').textContent = 'ERR: ' + e.message; });
+</script>
+</body>
+</html>

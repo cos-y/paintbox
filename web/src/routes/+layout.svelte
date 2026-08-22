@@ -74,7 +74,10 @@
 {/if} -->
 <!-- TODO: -->
 
-<div class="relative flex h-dvh w-screen overflow-hidden">
+<div
+	class="relative flex h-dvh w-screen overflow-hidden"
+	style="--dpr: {window.devicePixelRatio ?? 1};"
+>
 	<!-- desktop sidebar -->
 	<aside class="hidden h-full w-16 shrink-0 overflow-y-auto bg-gray-50 sm:block dark:bg-gray-800">
 		<ul class="flex h-full w-full flex-col space-y-1 overflow-hidden py-2">
@@ -134,4 +137,106 @@
 			</div>
 		</nav>
 	{/if}
+
+	<svg
+		shape-rendering="crispEdges"
+		style="
+		position:absolute; 
+		inset:0; 
+		z-index:-1000; 
+		pointer-events:none;
+		width: calc(100% / var(--dpr));
+		height: calc(100% / var(--dpr));
+		image-rendering:pixelated;
+	"
+		aria-hidden="true"
+	>
+		<defs>
+			<filter id="flake-filter1" x="0%" y="0%" width="100%" height="100%">
+				<feTurbulence
+					type="fractalNoise"
+					baseFrequency="0.85"
+					numOctaves="1"
+					seed="37"
+					result="noise"
+				/>
+				<feColorMatrix
+					in="noise"
+					type="matrix"
+					values="
+					0 0 0 0 0
+					0 0 0 0 0
+					0 0 0 0 0
+					1 0 0 0 0
+					"
+					result="noiseMask"
+				/>
+				<feComponentTransfer in="noiseMask" result="noiseMaskUniform">
+					<feFuncA
+						type="table"
+						tableValues="0 0 0 0 0.0001 0.0049 0.0579 0.2904 0.7345 0.9521 0.9973 1 1 1 1 1"
+					/>
+				</feComponentTransfer>
+				<feComponentTransfer in="noiseMaskUniform" result="flake1">
+					<feFuncA
+						type="discrete"
+						tableValues="
+						0 0 0 0 0 0 0 0 0 
+						0 0 0 0 0 0 0 0 1
+						0 0 0 0 0 0 0 0 0.66 
+						0 0 0 0 0 0 0 0 0.33 
+						0 0 0 0 0 0 0 0 0 
+						"
+					/>
+				</feComponentTransfer>
+			</filter>
+
+			<filter id="flake-filter2" x="0%" y="0%" width="100%" height="100%">
+				<feTurbulence
+					type="fractalNoise"
+					baseFrequency="0.85"
+					numOctaves="1"
+					seed="37"
+					result="noise"
+				/>
+				<feColorMatrix
+					in="noise"
+					type="matrix"
+					values="
+					0 0 0 0 0
+					0 0 0 0 0
+					0 0 0 0 0
+					1 0 0 0 0
+					"
+					result="noiseMask"
+				/>
+				<feComponentTransfer in="noiseMask" result="noiseMaskUniform">
+					<feFuncA
+						type="table"
+						tableValues="0 0 0 0 0.0001 0.0049 0.0579 0.2904 0.7345 0.9521 0.9973 1 1 1 1 1"
+					/>
+				</feComponentTransfer>
+				<feComponentTransfer in="noiseMaskUniform" result="flake2">
+					<feFuncA
+						type="discrete"
+						tableValues="
+						0 0 0 0 0 0 0 0 0 
+						0 0 0 0 0 0 1 0 0
+						0 0 0 0 0 0 0.66 0 0 
+						0 0 0 0 0 0 0.33 0 0 
+						0 0 0 0 0 0 0 0 0 
+						"
+					/>
+				</feComponentTransfer>
+			</filter>
+
+			<mask id="flake-mask-1">
+				<rect width="100%" height="100%" fill="white" filter="url(#flake-filter1)" />
+			</mask>
+
+			<mask id="flake-mask-2">
+				<rect width="100%" height="100%" fill="white" filter="url(#flake-filter2)" />
+			</mask>
+		</defs>
+	</svg>
 </div>

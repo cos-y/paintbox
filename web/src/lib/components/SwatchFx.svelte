@@ -61,16 +61,24 @@
 		}
 
 		const li: any = paint.extra?.pa ?? [];
-		return li.map(({ base, t0, t1, t2 }: any) => {
+		return li.map(({ base, f, t0, t1, t2 }: any) => {
 			let css = '';
+			if (f) {
+				const rat = parseFloat(f);
+				if (isNaN(rat)) {
+					css += ` --pa-flake:${f};`;
+				} else {
+					css += ` --pa-flake-ratio: ${rat};`;
+				}
+			}
 			if (t1) {
-				css += `--t1:${t1};`;
+				css += ` --pa-tint1:${t1};`;
 			}
 			if (t2) {
-				css += ` --t2:${t2};`;
+				css += ` --pa-tint2:${t2};`;
 			}
 			if (t0) {
-				css += ` --t0:${t0};`;
+				css += ` --pa-base:${t0};`;
 			}
 			return { base, css };
 		});
@@ -231,7 +239,7 @@
 			const dy = t.clientY - sy;
 			// 未横向接管：微动或纵向手势 → 放行（浏览器滚动 / 保住 tap）
 			if (Math.abs(dx) * dragSens < DRAG_START || Math.abs(dx) <= Math.abs(dy)) return;
-			e.preventDefault();
+			// e.preventDefault();
 			dragging = true;
 			grabX = t.clientX;
 			lastX = t.clientX;
@@ -408,6 +416,10 @@
 </div>
 
 {#snippet swatch()}
+	{#if mode === 'pearl'}
+		<div class="fx-flake"></div>
+	{/if}
+
 	{#if mode === 'metallic' || mode === 'pearl'}
 		<div class="fx-band"></div>
 	{/if}
@@ -470,6 +482,39 @@
 		height: var(--hypot);
 	}
 
+	.fx-tint,
+	.fx-flake,
+	.fx-grid {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.fx-flake::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		--v: var(--flake, transparent);
+		background: oklch(from var(--v) calc(l * 1.5) calc(c * 0.5) h);
+		mask: url(#flake-mask-1) alpha;
+		image-rendering: pixelated;
+		mix-blend-mode: screen;
+		scale: calc(1 * var(--dpr));
+		transform-origin: top left;
+	}
+	.fx-flake::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		--v: var(--flake, transparent);
+		background: oklch(from var(--v) calc(l * 0.75) calc(c * 1.25) h);
+		mask: url(#flake-mask-2) alpha;
+		image-rendering: pixelated;
+		mix-blend-mode: screen;
+		scale: calc(1 * var(--dpr));
+		transform-origin: top left;
+	}
+
 	/* ---- 金属：平涂基色 + 全局跟随光带（高光即立体感，无静态渐变） ---- */
 	.fx-swatch.metallic {
 		--c0: oklch(from var(--c) 0.9 c h);
@@ -477,17 +522,6 @@
 		--c1: oklch(from var(--c) 0.95 calc(c * 0.6) h);
 		--c2: oklch(from var(--c) calc(l * 1.2 + 0.2) calc(c * 0.8) h);
 	}
-	/* .fx-swatch.metallic .fx-band {
-		width: 50cqmax;
-		height: var(--hypot);
-		background: linear-gradient(
-			to right,
-			transparent,
-			color-mix(in srgb, var(--c2) 10%, transparent) 50%,
-			transparent
-		);
-		--trans-x: 18cqmax;
-	} */
 	.fx-swatch.metallic .fx-band::before {
 		content: '';
 		position: absolute;
@@ -522,16 +556,22 @@
 	/* ---- 珠光：光带几何与金属一致（斜向高光），两端偏色相反色相（双色性），
 	   表面叠加微量闪粉。无 flip 数据，示意性近似 ---- */
 	.fx-swatch.pearl:not(.fx-ex) {
+		--bg: var(--c);
 		--v1: oklch(from var(--c) calc(l * 1.5) calc(c * 0.8) h);
 		--v0: oklch(from var(--v1) calc(l * 2) calc(c * 0.5) h);
 		--v2: color-mix(in srgb, var(--v1) 75%, transparent);
-		background-color: var(--c);
+		background-color: var(--bg);
 	}
 	.fx-swatch.pearl.fx-ex {
-		--bg: var(--t0, var(--c));
-		--v1: var(--t1, oklch(from var(--bg) calc(l * 1.5) calc(c * 0.8) h));
+		--bg: var(--pa-base, var(--c));
+		--flake-ratio: var(--pa-flake-ratio, 0);
+		--flake: var(
+			--pa-flake,
+			color-mix(in srgb, var(--bg) calc(var(--flake-ratio) * 100%), transparent)
+		);
+		--v1: var(--pa-tint1, oklch(from var(--bg) calc(l * 1.5) calc(c * 0.8) h));
 		--v0: oklch(from var(--v1) calc(l * 2) calc(c * 0.5) h);
-		--v2: var(--t2, color-mix(in srgb, var(--v1) 75%, transparent));
+		--v2: var(--pa-tint2, color-mix(in srgb, var(--v1) 75%, transparent));
 		background-color: var(--bg);
 	}
 	.fx-swatch.pearl .fx-band {
@@ -557,183 +597,16 @@
 		width: 8%;
 		background: linear-gradient(to bottom, var(--v1), var(--v0), var(--v1));
 	}
-	/* 生成闪粉表（cqmax 直书格式）：27 点，半径 1-2.5 正态分布（μ=1.75 σ=0.3 拒绝采样），
-	 位置 halton 低差异序列均匀覆盖（百分比），透明度伪随机 0.3-0.75
-	 const N = 27;
-	 function norm() {
-	   let u = 0, v = 0;
-	   while (u === 0) u = Math.random();
-	   while (v === 0) v = Math.random();
-	   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-	 }
-	 function radius() {
-	   while (true) {
-	     const r = 1.75 + norm() * 0.3;
-	     if (r >= 1 && r <= 2.5) return r;
-	   }
-	 }
-	 function halton(idx, base) {
-	   let f = 1, r = 0;
-	   while (idx > 0) { f /= base; r += f * (idx % base); idx = Math.floor(idx / base); }
-	   return r;
-	 }
-	 const rows = [];
-	 for (let i = 0; i < N; i++) {
-	   const x = halton(i + 1, 2) * 100;
-	   const y = halton(i + 1, 3) * 100;
-	   const r = radius();
-	   const a = 0.3 + Math.random() * 0.45;
-	   rows.push(`\t\t\tradial-gradient(circle ${r.toFixed(1)}cqmax at ${x.toFixed(2)}% ${y.toFixed(2)}%, rgba(255, 255, 255, ${a.toFixed(2)}) 50%, transparent 51%),`);
-	 }
-	 console.log(rows.join('\n')); */
-	/* 微量闪粉：单一大 tile 内 27 个错位点（halton 低差异序列均匀覆盖，位置/透明度伪随机），
-	   平铺后呈伪随机分布，避免规律网格的机械感。半径 1-2.5cqmax 正态分布（μ=1.75 σ=0.3），
-	   半径直书 cqmax、坐标百分比化，tile 尺寸随容器等比缩放 */
-	/* .fx-swatch.pearl::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background-image:
-			radial-gradient(circle 2.1cqmax at 50% 33.33%, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
-			radial-gradient(circle 2.2cqmax at 25% 66.67%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
-			radial-gradient(circle 1.6cqmax at 75% 11.11%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
-			radial-gradient(
-				circle 2.1cqmax at 12.5% 44.44%,
-				rgba(255, 255, 255, 0.42) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.9cqmax at 62.5% 77.78%,
-				rgba(255, 255, 255, 0.67) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.6cqmax at 37.5% 22.22%,
-				rgba(255, 255, 255, 0.51) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.5cqmax at 87.5% 55.56%,
-				rgba(255, 255, 255, 0.57) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.7cqmax at 6.25% 88.89%,
-				rgba(255, 255, 255, 0.42) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.5cqmax at 56.25% 3.7%,
-				rgba(255, 255, 255, 0.3) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.5cqmax at 31.25% 37.04%,
-				rgba(255, 255, 255, 0.53) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2cqmax at 81.25% 70.37%,
-				rgba(255, 255, 255, 0.58) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.1cqmax at 18.75% 14.81%,
-				rgba(255, 255, 255, 0.69) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.6cqmax at 68.75% 48.15%,
-				rgba(255, 255, 255, 0.42) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.8cqmax at 43.75% 81.48%,
-				rgba(255, 255, 255, 0.6) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.3cqmax at 93.75% 25.93%,
-				rgba(255, 255, 255, 0.35) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.4cqmax at 3.13% 59.26%,
-				rgba(255, 255, 255, 0.47) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.1cqmax at 53.13% 92.59%,
-				rgba(255, 255, 255, 0.56) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.1cqmax at 28.13% 7.41%,
-				rgba(255, 255, 255, 0.59) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.1cqmax at 78.13% 40.74%,
-				rgba(255, 255, 255, 0.52) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.7cqmax at 15.63% 74.07%,
-				rgba(255, 255, 255, 0.31) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.9cqmax at 65.63% 18.52%,
-				rgba(255, 255, 255, 0.49) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.7cqmax at 40.63% 51.85%,
-				rgba(255, 255, 255, 0.51) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.8cqmax at 90.63% 85.19%,
-				rgba(255, 255, 255, 0.67) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.5cqmax at 9.38% 29.63%,
-				rgba(255, 255, 255, 0.44) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.4cqmax at 59.38% 62.96%,
-				rgba(255, 255, 255, 0.44) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 2.1cqmax at 34.38% 96.3%,
-				rgba(255, 255, 255, 0.63) 50%,
-				transparent 51%
-			),
-			radial-gradient(
-				circle 1.9cqmax at 84.38% 1.23%,
-				rgba(255, 255, 255, 0.54) 50%,
-				transparent 51%
-			);
-		opacity: 0.25;
-		pointer-events: none;
-	} */
 
 	/* ---- 透明：金属灰底 + 半透色 + 网格（图层隐喻，示意而非拟真） ---- */
 	.fx-swatch.clear {
 		background-image: linear-gradient(to bottom, #e8e8e8, #bcbcbc 45%, #8c8c8c);
 	}
 	.fx-swatch.clear .fx-tint {
-		position: absolute;
-		inset: 0;
 		background-color: var(--c);
 		opacity: 0.72;
 	}
 	.fx-swatch.clear .fx-grid {
-		position: absolute;
-		inset: 0;
 		background-image:
 			linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
 			linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px);
@@ -746,10 +619,7 @@
 	.fx-swatch.fluo::after {
 		content: '';
 		position: absolute;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
+		inset: 0;
 		background: radial-gradient(
 			ellipse,
 			oklch(from var(--c) calc(l * 1.2) c h),
