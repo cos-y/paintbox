@@ -32,26 +32,26 @@
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
 		"prettier-plugin-tailwindcss": "^0.8.0",
-		"svelte": "^5.56.10",
+		"svelte": "^5.57.0",
 		"svelte-check": "^4.7.6",
 		"tailwindcss": "^4.3.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.68.0",
+		"typescript-eslint": "^8.69.0",
 		"vite": "^8.2.2"
 	},
 	"dependencies": {
-		"@lucide/svelte": "^1.34.0",
+		"@lucide/svelte": "^1.38.0",
 		"@msgpack/msgpack": "^3.1.3",
-		"@tauri-apps/plugin-dialog": "^2.7.2",
-		"@tauri-apps/plugin-fs": "^2.5.1",
-		"@tauri-apps/plugin-http": "^2.5.9",
-		"@tauri-apps/plugin-opener": "^2.5.4",
-		"@threlte/core": "^8.5.16",
-		"@threlte/extras": "^9.21.0",
+		"@tauri-apps/plugin-dialog": "^2.7.3",
+		"@tauri-apps/plugin-fs": "^2.5.2",
+		"@tauri-apps/plugin-http": "^2.6.0",
+		"@tauri-apps/plugin-opener": "^2.5.5",
+		"@threlte/core": "^8.6.0",
+		"@threlte/extras": "^9.21.1",
 		"@types/three": "^0.185.4",
 		"culori": "^4.0.2",
 		"fuse.js": "^7.5.0",
 		"three": "^0.185.1",
-		"zod": "^4.4.3"
+		"zod": "^4.5.4"
 	}
 }
